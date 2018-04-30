@@ -1,0 +1,447 @@
+package Visual;
+
+import java.util.Date;
+import java.util.List;
+import Logica.ControladoraL;
+import Logica.CoeficienteDorm;
+import Persistencia.exceptions.NonexistentEntityException;
+
+public class ControladoraV {
+    private final ControladoraL unaControladora = new ControladoraL();
+    
+/*------------------------------------------------------------------------------
+                           NOTIFICACIONES
+------------------------------------------------------------------------------*/
+    public String[] notificaciones(){
+        return unaControladora.notificaciones();
+    }
+    
+/*------------------------------------------------------------------------------
+                           INTERES POR ATRASO
+------------------------------------------------------------------------------*/
+    public float interesPorAtraso(float montoTotalAlquiler, int mesAlquiler){
+        return unaControladora.interesPorAtraso(montoTotalAlquiler, mesAlquiler);
+    }
+
+/*------------------------------------------------------------------------------
+                           CONVERSOR STRING A FLOAT
+------------------------------------------------------------------------------*/
+    public String reemplazarString(String valor){
+        return unaControladora.reemplazarString(valor);
+    }
+    
+/*------------------------------------------------------------------------------
+                                ALQUILER
+------------------------------------------------------------------------------*/
+    public void altaAlquiler(Date fecha, long cochera, long departamento, float monto, float otraFactura, float total, String descripcion, Logica.Pago unPago, long idInquilino) throws Exception{
+        unaControladora.altaAlquiler(fecha, cochera, departamento, monto, otraFactura, total, descripcion, unPago, idInquilino);
+    }
+    
+    public void modificarAlquiler(long id, Date fecha, long cochera, long departamento, float monto, float otraFactura, float total, String descripcion, Logica.Pago unPago) throws Exception{
+        unaControladora.modificarAlquiler(id, fecha, cochera, departamento, monto, otraFactura, total, descripcion, unPago);
+    }
+    
+    public void bajaAlquiler(long idAlquiler, long idInquilino) throws Exception{
+        unaControladora.bajaAlquiler(idAlquiler, idInquilino);
+    }
+    
+    public Logica.Alquiler obtenerAlquiler(long id){
+        return unaControladora.obtenerAlquiler(id);
+    }
+    
+    public List <Logica.Alquiler> obtenerAlquileres(){
+        return unaControladora.obtenerAlquileres();
+    }
+    
+    public List<Logica.Alquiler> obtenerAlquileresInpagos(long idInquilino){
+        return unaControladora.obtenerAlquileresInpagos(idInquilino);
+    }
+    
+    public List<Logica.Alquiler> obtenerAlquileresEdificio(long idEdificio){
+        return unaControladora.obtenerAlquileresEdificio(idEdificio);
+    }
+    
+    public void generarAlquiler() throws Exception{
+        unaControladora.generarAlquiler();
+    }
+    
+/*------------------------------------------------------------------------------
+                                COCHERA
+------------------------------------------------------------------------------*/
+    public void altaCochera(String ubicacion, float precio, String descripcion, Logica.Inquilino unInquilino, long idEdificio) throws Exception{
+        unaControladora.altaCochera(ubicacion, precio, descripcion, unInquilino, idEdificio);
+    }
+    
+    public void modificarCochera(long id, String ubicacion, float precio, String descripcion, Logica.Inquilino unInquilino) throws Exception{
+        unaControladora.modificarCochera(id, ubicacion, precio, descripcion, unInquilino);
+    }
+    
+    public void bajaCochera(long id, long idEdificio) throws Exception{
+        unaControladora.bajaCochera(id, idEdificio);
+    }
+    
+    public Logica.Cochera obtenerCochera(long id){
+        return unaControladora.obtenerCochera(id);
+    }
+    
+    public List<Logica.Cochera> obtenerCocheras(){
+        return unaControladora.obtenerCocheras();
+    }
+    
+    public Logica.Cochera obtenerCocheraInquilino(long idEdificio, long idInquilino){
+        return unaControladora.obtenerCocheraInquilino(idEdificio, idInquilino);
+    }
+    
+    public List<Logica.Cochera> obtenerCocherasDisponibles(long idEdificio){
+        return unaControladora.obtenerCocherasDisponibles(idEdificio);
+    }
+    
+    public boolean existeCochera(String ubicacionCochera, long idEdificio){
+        return unaControladora.existeCochera(ubicacionCochera, idEdificio);
+    }
+    
+/*------------------------------------------------------------------------------
+                                COEFICIENTE
+------------------------------------------------------------------------------*/
+    public void altaCoeficiente(String nombre, float valor) throws Exception{
+        unaControladora.altaCoeficiente(nombre, valor);
+    }
+    
+    public void modificarCoeficiente(long id, String nombre, float valor) throws Exception{
+        unaControladora.modificarCoeficiente(id, nombre, valor);
+    }
+    
+    public void bajaCoeficiente(long id) throws Exception{
+        unaControladora.bajaCoeficiente(id);
+    }
+    
+    public Logica.Coeficiente obtenerCoeficiente(long id){
+        return unaControladora.obtenerCoeficiente(id);
+    }
+    
+    public List<Logica.Coeficiente> obtenerCoeficientes(){
+        return unaControladora.obtenerCoeficientes();
+    }
+    
+    public Logica.Coeficiente obtenerCoeficiente(){
+        return unaControladora.obtenerCoeficiente();
+    }
+    
+/*------------------------------------------------------------------------------
+                            COEFICIENTE DORMITORIO
+------------------------------------------------------------------------------*/
+    public void altaCoeficienteDorm(String nombre, float valor, int cantDorm, String descripcion, long idEdificio) throws Exception{
+        unaControladora.altaCoeficienteDorm(nombre, valor, cantDorm, descripcion, idEdificio);
+    }
+    
+    public void modificarCoeficienteDorm(long idCoeficienteDorm, int cantDorm, String nombre, float valor, String descripcion) throws Exception{
+        unaControladora.modificarCoeficienteDorm(idCoeficienteDorm, cantDorm, nombre, valor, descripcion);
+    }
+    
+    public void bajaCoeficienteDorm(long idCoeficienteDorm, long idEdificio) throws Exception{
+        unaControladora.bajaCoeficienteDorm(idCoeficienteDorm, idEdificio);
+    }
+    
+    public Logica.CoeficienteDorm obtenerCoeficienteDorm(long idCoeficienteDorm){
+        return unaControladora.obtenerCoeficienteDorm(idCoeficienteDorm);
+    }
+    
+    public List<Logica.CoeficienteDorm> obtenerCoeficientesDorm(){
+        return unaControladora.obtenerCoeficientesDorm();
+    }
+    
+    public Logica.CoeficienteDorm obtenerCoeficienteDorm(long idEdificio, Logica.Departamento unDepartamento){
+        return unaControladora.obtenerCoeficienteDorm(idEdificio, unDepartamento);
+    }
+    
+    public boolean existeCoeficienteDorm(String nombreCoeficienteDorm, long idEdificio){
+        return unaControladora.existeCoeficienteDorm(nombreCoeficienteDorm, idEdificio);
+    }
+    
+/*------------------------------------------------------------------------------
+                                DEPARTAMENTO
+------------------------------------------------------------------------------*/
+    public void altaDepartamento(String ubicacion, int cantDormitorios, String descripcion, List<Logica.Expensa> expensas, Logica.Inquilino unInquilino, long idEdificio) throws Exception{
+        unaControladora.altaDepartamento(ubicacion, cantDormitorios, descripcion, expensas, unInquilino, idEdificio);
+    }
+    
+    public void modificarDepartamento(long idDepartamento, String ubicacion, int cantDormitorios, String descripcion, List<Logica.Expensa> expensas, Logica.Inquilino unInquilino) throws Exception{
+        unaControladora.modificarDepartamento(idDepartamento, ubicacion, cantDormitorios, descripcion, expensas, unInquilino);
+    }
+    
+    public void bajaDepartamento(long idDepartamento, long idEdificio) throws Exception{
+        unaControladora.bajaDepartamento(idDepartamento, idEdificio);
+    }
+    
+    public Logica.Departamento obtenerDepartamento(long idDepartamento){
+        return unaControladora.obtenerDepartamento(idDepartamento);
+    }
+    
+    public List<Logica.Departamento> obtenerDepartamentos(){
+        return unaControladora.obtenerDepartamentos();
+    }
+    
+    public Logica.Departamento obtenerDepartamento(long idDepartamento, String ubicacion){
+        return unaControladora.obtenerDepartamento(idDepartamento, ubicacion);
+    }
+    
+    public Logica.Departamento obtenerDepartamentoInquilino(long idInquilino){
+        return unaControladora.obtenerDepartamentoInquilino(idInquilino);
+    }
+    
+    public int departamentosOcupados(long idEdificio){
+        return unaControladora.departamentosOcupados(idEdificio);
+    }
+    
+    public List <Logica.Departamento> departamentosDisponibles(long idEdificio){
+        return unaControladora.departamentosDisponibles(idEdificio);
+    }
+    
+    public List <Logica.Departamento> departamentosSinExpensas(int mes, long idEdificio){
+        return unaControladora.departamentosSinExpensas(mes, idEdificio);
+    }
+    
+    public Logica.Departamento obtenerDepartamentoPorExpensa(long idEdificio, long idExpensa){
+        return unaControladora.obtenerDepartamentoPorExpensa(idEdificio, idExpensa);
+    }
+    
+    public Logica.Departamento obtenerDepartamentoPorAlquiler(long idAlquiler, long idEdificio){
+        return unaControladora.obtenerDepartamentoPorAlquiler(idAlquiler, idEdificio);
+    }
+    
+    public boolean existeDepartamento(String ubicacionDepto, long idEdificio){
+        return unaControladora.existeDepartamento(ubicacionDepto, idEdificio);
+    }
+/*------------------------------------------------------------------------------
+                                EDIFICIO
+------------------------------------------------------------------------------*/
+    public void altaEdificio(String nombre, String direccion, String descripcion, List<Logica.Departamento> departamentos, List<Logica.Cochera> cocheras, List<Logica.Servicio> servicios, List<CoeficienteDorm> coeficientesDorm) throws Exception{
+        unaControladora.altaEdificio(nombre, direccion, descripcion, departamentos, cocheras, servicios, coeficientesDorm);
+    }
+    
+    public void modificarEdificio(long idEdificio, String nombre, String direccion, String descripcion, List<Logica.Departamento> departamentos, List<Logica.Cochera> cocheras, List<Logica.Servicio> servicios, List<Logica.CoeficienteDorm> coeficientesDorm) throws Exception{
+        unaControladora.modificarEdificio(idEdificio, nombre, direccion, descripcion, departamentos, cocheras, servicios, coeficientesDorm);
+    }
+    
+    public void bajaEdificio(long idEdificio) throws Exception{
+        unaControladora.bajaEdificio(idEdificio);
+    }
+    
+    public Logica.Edificio obtenerEdificio(long idEdificio){
+        return unaControladora.obtenerEdificio(idEdificio);
+    }
+    
+    public List<Logica.Edificio> obtenerEdificios(){
+        return unaControladora.obtenerEdificios();
+    }
+    
+    public Logica.Edificio buscarEdificioPorNombre(String nombreEdificio){
+        return unaControladora.buscarEdificioPorNombre(nombreEdificio);
+    }
+    
+    public Logica.Edificio obtenerEdificioSegunDepartamento(long idDepartamento){
+        return unaControladora.obtenerEdificioSegunDepartamento(idDepartamento);
+    }
+    
+    public boolean existeEdificio(String nombreEdificio){
+        return unaControladora.existeEdificio(nombreEdificio);
+    }
+    
+/*------------------------------------------------------------------------------
+                                EXPENSA
+------------------------------------------------------------------------------*/
+    public void altaExpensa(float monto, int periodo, int anio, String descripcion, List<Logica.ServicioExpensa> serviciosExpensa, long idInquilino) throws Exception{
+        unaControladora.altaExpensa(monto, periodo, anio, descripcion, serviciosExpensa, idInquilino);
+    }
+    
+    public void modificarExpensa(long idExpensa, float monto, int periodo, int anio, String descripcion, List<Logica.ServicioExpensa> serviciosExpensa) throws Exception{
+        unaControladora.modificarExpensa(idExpensa, monto, periodo, anio, descripcion, serviciosExpensa);
+    }
+    
+    public void bajaExpensa(long idExpensa, long idDepartamento) throws Exception{
+        unaControladora.bajaExpensa(idExpensa, idDepartamento);
+    }
+    
+    public Logica.Expensa obtenerExpensa(long idExpensa){
+        return unaControladora.obtenerExpensa(idExpensa);
+    }
+    
+    public List<Logica.Expensa> obtenerExpensas(){
+        return unaControladora.obtenerExpensas();
+    }
+    
+    public float calcularMonto(List<Logica.ServicioExpensa> serviciosExpensa){
+        return unaControladora.calcularMonto(serviciosExpensa);
+    }
+    
+    public List<Logica.ServicioExpensa> calcularExpensa(long idEdificio, Logica.Departamento unDepartamento, int periodo, int anio, boolean alta) throws Exception{
+        return unaControladora.calcularExpensa(idEdificio, unDepartamento, periodo, anio, alta);
+    }
+    
+    public List<Logica.Expensa> obtenerExpensasEdificio(long idEdificio){
+        return unaControladora.obtenerExpensasEdificio(idEdificio);
+    }
+    
+    public List<Logica.Expensa> obtenerExpensasFechaActual(long idEdificio){
+        return unaControladora.obtenerExpensasFechaActual(idEdificio);
+    }
+    
+    public Logica.Expensa obtenerExpensa(long idDepartamento, int mesAlquiler, int anioAlquiler){
+         return unaControladora.obtenerExpensa(idDepartamento, mesAlquiler, anioAlquiler);
+    }
+    
+    public boolean existenExpensas(long idEdificio){
+        return unaControladora.existenExpensas(idEdificio);
+    }
+/*------------------------------------------------------------------------------
+                                GARANTE
+------------------------------------------------------------------------------*/
+    public void altaGarante(String apellido, String nombre, String dni, String direccion, String telefono, String cuit, String email, String descripcion, long idInquilino) throws Exception{
+        unaControladora.altaGarante(apellido, nombre, dni, direccion, telefono, cuit, email, descripcion, idInquilino);
+    }
+    
+    public void modificarGarante(long idGarante, String apellido, String nombre, String dni, String direccion, String telefono, String cuit, String email, String descripcion, long idInquilino) throws Exception{
+        unaControladora.modificarGarante(idGarante, apellido, nombre, dni, direccion, telefono, cuit, email, descripcion, idInquilino);
+    }
+    
+    public void bajaGarante(long idGarante, long idInquilino) throws NonexistentEntityException, Exception{
+        unaControladora.bajaGarante(idGarante, idInquilino);
+    }
+    
+    public Logica.Garante obtenerGarante(long idGarante){
+        return unaControladora.obtenerGarante(idGarante);
+    }
+    
+    public List<Logica.Garante> obtenerGarantes(){
+        return unaControladora.obtenerGarantes();
+    }
+    
+    public List<Logica.Garante> obtenerGarantesInquilinos(List<Logica.Inquilino> inquilinos){
+        return unaControladora.obtenerGarantesInquilinos(inquilinos);
+    }
+    
+    public List<Logica.Garante> obtenerGarantesEdificio(long idEdificio){
+        return unaControladora.obtenerGarantesEdificio(idEdificio);
+    }
+    
+    public boolean existeGarante(String dniGarante, long idEdificio){
+        return unaControladora.existeGarante(dniGarante, idEdificio);
+    }
+    
+/*------------------------------------------------------------------------------
+                                INQUILINO
+------------------------------------------------------------------------------*/
+    public void altaInquilino(int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, String descripcion, Logica.Garante unGarante, List<Logica.Alquiler> alquileres, long idDepartamento, long idCochera) throws Exception{
+        unaControladora.altaInquilino(cantidadPersonas, apellido, nombre, dni, email, telefono, cuit, saldoMesAnt, descripcion, unGarante, alquileres, idDepartamento, idCochera);
+    }
+    
+    public void modificarInquilino(long idInquilino, int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, String descripcion, Logica.Garante unGarante, List<Logica.Alquiler> alquileres, long idDepartamento, long idCochera) throws Exception{
+        unaControladora.modificarInquilino(idInquilino, cantidadPersonas, apellido, nombre, dni, email, telefono, cuit, saldoMesAnt, descripcion, unGarante, alquileres, idDepartamento, idCochera);
+    }
+    
+    public void modificarSaldo(long idInquilino, float saldoMesAnt) throws Exception{
+        unaControladora.modificarSaldo(idInquilino, saldoMesAnt);
+    }
+    
+    public void bajaInquilino(long idInquilino, long idDepartamento, long idCochera) throws NonexistentEntityException, Exception{
+        unaControladora.bajaInquilino(idInquilino, idDepartamento, idCochera);
+    }
+    
+    public Logica.Inquilino obtenerInquilino(long idInquilino){        
+        return unaControladora.obtenerInquilino(idInquilino);
+    }
+    
+    public List<Logica.Inquilino> obtenerInquilinos(){
+        return unaControladora.obtenerInquilinos();
+    }
+    
+    // Obtiene todos los inquilinos de un Edificio dado.
+    public List<Logica.Inquilino> obtenerInquilinosEdificio(long idEdificio){
+        return unaControladora.obtenerInquilinosEdificio(idEdificio);
+    }
+    
+    public boolean obtenerInquilinoPorDni(String dni, long idEdificio){
+        return unaControladora.obtenerInquilinoPorDni(dni, idEdificio);
+    }
+    
+    public Logica.Inquilino obtenerInquilinoPorAlquiler(long idEdificio, long idAlquiler){
+        return unaControladora.obtenerInquilinoPorAlquiler(idEdificio, idAlquiler);
+    }
+    
+    public Logica.Inquilino obtenerInquilinoGarante(long idGarante, long idEdificio){
+        return unaControladora.obtenerInquilinoGarante(idGarante, idEdificio);
+    }
+    
+    public List<Logica.Inquilino> obtenerInquilinosSinAlquiler(long idEdificio){
+        return unaControladora.obtenerInquilinosSinAlquiler(idEdificio);
+    }
+/*------------------------------------------------------------------------------
+                                PAGO
+------------------------------------------------------------------------------*/
+    public void altaPago(Date fecha, float efectivo, float tarjeta, float banco, float saldo, float interesPorAtraso, float monto, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
+        unaControladora.altaPago(fecha, efectivo, tarjeta, banco, saldo, interesPorAtraso, monto, descripcion, idAlquiler, idExpensa, idInquilino);
+    }
+    
+    public void modificarPago(long idPago, Date fecha, float efectivo, float tarjeta, float banco, float saldo, float interesPorAtraso, float monto, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
+        unaControladora.modificarPago(idPago, fecha, efectivo, tarjeta, banco, saldo, interesPorAtraso, monto, descripcion, idAlquiler, idExpensa, idInquilino);
+    }
+    
+    public void bajaPago(long idPago) throws Exception{
+        unaControladora.bajaPago(idPago);
+    }
+    
+    public Logica.Pago obtenerPago(long idPago){        
+        return unaControladora.obtenerPago(idPago);
+    }
+    
+    public List<Logica.Pago> obtenerPagos(){
+        return unaControladora.obtenerPagos();
+    }
+    
+    public List<Logica.Pago> obtenerPagosInquilino(long idInquilino){
+        return unaControladora.obtenerPagosInquilino(idInquilino);
+    }
+    
+    public List<Logica.Pago> obtenerPagosEdificio(long idEdificio){
+        return unaControladora.obtenerPagosEdificio(idEdificio);
+    }
+    
+    public float obtenerTotalPago(){
+        return unaControladora.obtenerTotalPago();
+    }
+    
+/*------------------------------------------------------------------------------
+                                SERVICIO
+------------------------------------------------------------------------------*/
+    public void altaServicio(String nombre, int mes, int anio, Date fechaEmision, Date fechaVencimiento, float monto, String descripcion, long idEdificio) throws Exception{
+        unaControladora.altaServicio(nombre, mes, anio, fechaEmision, fechaVencimiento, monto, descripcion, idEdificio);
+    }
+    
+    public void modificarServicio(long idServicio, String nombre, int mes, int anio, Date fechaEmision, Date fechaVencimiento, float monto, String descripcion) throws Exception{
+        unaControladora.modificarServicio(idServicio, nombre, mes, anio, fechaEmision, fechaVencimiento, monto, descripcion);
+    }
+    
+    public void bajaServicio(long idServicio, long idEdificio) throws Exception{
+        unaControladora.bajaServicio(idServicio, idEdificio);
+    }
+    
+    public Logica.Servicio obtenerServicio(long idServicio){        
+        return unaControladora.obtenerServicio(idServicio);
+    }
+    
+    public Logica.Servicio obtenerServicio(long idServicio, String nombreServicio){        
+        return unaControladora.obtenerServicio(idServicio, nombreServicio);
+    }
+    
+    public List<Logica.Servicio> obtenerServicios(){
+        return unaControladora.obtenerServicios();
+    }
+    
+    public List<Logica.Servicio> obtenerServEdifMes(int mes, long idEdificio){
+        return unaControladora.obtenerServEdifMes(mes, idEdificio);
+    }
+    
+    /*public boolean existeServicio(String nombreServicio, long idEdificio){
+        return unaControladora.existeServicio(nombreServicio, idEdificio);
+    }*/
+}
