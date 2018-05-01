@@ -291,6 +291,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
