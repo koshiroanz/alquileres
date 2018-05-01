@@ -19,8 +19,8 @@ public class ControladoraV {
 /*------------------------------------------------------------------------------
                            INTERES POR ATRASO
 ------------------------------------------------------------------------------*/
-    public float interesPorAtraso(float montoTotalAlquiler, int mesAlquiler){
-        return unaControladora.interesPorAtraso(montoTotalAlquiler, mesAlquiler);
+    public float interesPorAtraso(Date fechaPago, float montoTotalAlquiler, int mesAlquiler){
+        return unaControladora.interesPorAtraso(fechaPago, montoTotalAlquiler, mesAlquiler);
     }
 
 /*------------------------------------------------------------------------------
