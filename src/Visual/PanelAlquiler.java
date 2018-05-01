@@ -99,6 +99,11 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         jTextFieldMonto.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldMonto.setText("0");
         jTextFieldMonto.setBorder(null);
+        jTextFieldMonto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldMontoMouseClicked(evt);
+            }
+        });
         jTextFieldMonto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextFieldMontoKeyTyped(evt);
@@ -144,6 +149,11 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         jTextFieldOtraFactura.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldOtraFactura.setText("0");
         jTextFieldOtraFactura.setBorder(null);
+        jTextFieldOtraFactura.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldOtraFacturaMouseClicked(evt);
+            }
+        });
         jTextFieldOtraFactura.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextFieldOtraFacturaKeyTyped(evt);
@@ -589,7 +599,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                 }
             } catch (Exception ex) {
                 Logger.getLogger(Logica.Alquiler.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación.");
+                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. Error: "+ex);
             }
         }
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
@@ -673,6 +683,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
 
     private void jTextFieldTotalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldTotalMouseClicked
         if(!modificar){
+            float total = 0;
             if(jComboBoxInquilino.getSelectedItem() == "Seleccione una opción" || jComboBoxDepartamento.getSelectedItem() == "Seleccione una opción" || jComboBoxCochera.getSelectedItem() == "Seleccione una opción"){
                 JOptionPane.showMessageDialog(null, "No es posible calcular el Total. Debido a que no se encuentra seleccionado un Inquilino, Departamento o Cochera");
             }else{
@@ -684,15 +695,15 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                         montoCochera = 0;
                     }
 
-                    if(Float.valueOf(jTextFieldMonto.getText()) != 0){
-                        montoAlquiler = Float.valueOf(jTextFieldMonto.getText());
+                    if(!jTextFieldMonto.getText().isEmpty()){
+                        montoAlquiler = Float.valueOf(jTextFieldMonto.getText());   // Es 0
                     }
 
-                    if(Float.valueOf(jTextFieldOtraFactura.getText()) != 0){
+                    if(!jTextFieldMonto.getText().isEmpty()){
                         otrasFacturas = Float.valueOf(jTextFieldOtraFactura.getText());
                     }
 
-                    float total = montoCochera+montoAlquiler+otrasFacturas;
+                    total = montoCochera+montoAlquiler+otrasFacturas;
                     jTextFieldTotal.setText(null);
 
                     jTextFieldTotal.setText(String.valueOf(total));
@@ -704,8 +715,16 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTextFieldTotalMouseClicked
 
+    private void jTextFieldMontoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldMontoMouseClicked
+        jTextFieldMonto.setText(null);
+    }//GEN-LAST:event_jTextFieldMontoMouseClicked
+
+    private void jTextFieldOtraFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldOtraFacturaMouseClicked
+        jTextFieldOtraFactura.setText(null);
+    }//GEN-LAST:event_jTextFieldOtraFacturaMouseClicked
+
     private boolean validar(){
-        boolean validar = false, departamento = false, cochera = false;
+        boolean validar = false, departamento = false, cochera = false, validarTotal = false;
         Date fecha = jDateChooserFecha.getDate();
         
         if(jComboBoxDepartamento.getSelectedItem() != "Seleccione una opción"){
@@ -728,9 +747,17 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             }
         }
         
+        if(!jTextFieldTotal.getText().isEmpty()){
+            try{
+                float total = Float.valueOf(jTextFieldTotal.getText());
+                validarTotal = true;
+            }catch(Exception e){
+                System.out.println("Error: "+e);
+            }
+        }
         //float total = Float.valueOf(jTextFieldTotal.getText());
         
-        if(fecha != null && !jTextFieldMonto.getText().isEmpty() && !jTextFieldOtraFactura.getText().isEmpty() && departamento && cochera){
+        if(fecha != null && !jTextFieldMonto.getText().isEmpty() && !jTextFieldOtraFactura.getText().isEmpty() && departamento && cochera && validarTotal){
             validar = true;
         }else if(fecha == null){
             JOptionPane.showMessageDialog(null, "Debe seleccionar una Fecha.");
@@ -740,6 +767,8 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Debe cargar un valor en Otras Facturas.");
         }else if(!departamento && !cochera){
             JOptionPane.showMessageDialog(null, "Debe seleccionar una opción en Departamento y Cochera.");
+        }else if(!validarTotal){
+            JOptionPane.showMessageDialog(null, "Debe cliquear en Total para obtener su resultado antes de Guardar.");
         }
         
         return validar;
@@ -764,6 +793,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     
     private void cargarTablaAlquiler(int mesBusqueda, int anioBusqueda){
         limpiarComponentes();
+        //float totalMonto = 0, totalOtrasFacturas = 0;
         int mesAlquiler, anioAlquiler;
         String datos[] = new String[8];
         List<Logica.Alquiler> alquileres = new LinkedList();
@@ -789,6 +819,8 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         }
         
         for(Logica.Alquiler unAlquiler : alquileres){
+            /*totalMonto += unAlquiler.getMonto();
+            totalOtrasFacturas += unAlquiler.getOtraFactura();*/
             datos[0] = String.valueOf(unAlquiler.getId());
             datos[1] = String.valueOf(dateFormat.format(unAlquiler.getFecha()));
             datos[2] = String.valueOf(unAlquiler.getMonto());
@@ -811,6 +843,8 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             
             tablaAlquiler.addRow(datos);
         }
+        
+        //System.out.print("Total de Monto: $"+totalMonto+" - Total de Otras Facturas: $"+totalOtrasFacturas);
         
         this.jTableAlquiler.setModel(tablaAlquiler);
     }
