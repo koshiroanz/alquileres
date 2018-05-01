@@ -23,7 +23,7 @@ public final class PanelPago extends javax.swing.JPanel {
     private final DefaultComboBoxModel comboInquilino = new DefaultComboBoxModel();
     private final DefaultComboBoxModel comboAlquiler = new DefaultComboBoxModel();
     private final DefaultComboBoxModel comboAnio = new DefaultComboBoxModel();
-    private final String colTablaPago[] = {"Id", "Fecha", "Interés por atraso", "Saldo mes ant.", "Monto", "Efectivo", "Tarjeta", "Banco", "Saldo"};
+    private final String colTablaPago[] = {"Id", "Fecha", "Interés por atraso", "Saldo mes ant.", "Total", "Efectivo", "Tarjeta", "Banco", "Saldo"};
     private final DefaultTableModel tablaPago = new DefaultTableModel(null, colTablaPago);
     
     public PanelPago(long idEdificio) {
@@ -112,7 +112,13 @@ public final class PanelPago extends javax.swing.JPanel {
         jLabel4.setText("Efectivo");
 
         jTextFieldTarjeta.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jTextFieldTarjeta.setText("0");
         jTextFieldTarjeta.setBorder(null);
+        jTextFieldTarjeta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldTarjetaMouseClicked(evt);
+            }
+        });
         jTextFieldTarjeta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextFieldTarjetaKeyTyped(evt);
@@ -123,7 +129,13 @@ public final class PanelPago extends javax.swing.JPanel {
         jLabel5.setText("Tarjeta");
 
         jTextFieldEfectivo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jTextFieldEfectivo.setText("0");
         jTextFieldEfectivo.setBorder(null);
+        jTextFieldEfectivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldEfectivoMouseClicked(evt);
+            }
+        });
         jTextFieldEfectivo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextFieldEfectivoKeyTyped(evt);
@@ -134,7 +146,13 @@ public final class PanelPago extends javax.swing.JPanel {
         jLabel6.setText("Banco");
 
         jTextFieldBanco.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jTextFieldBanco.setText("0");
         jTextFieldBanco.setBorder(null);
+        jTextFieldBanco.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldBancoMouseClicked(evt);
+            }
+        });
         jTextFieldBanco.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextFieldBancoKeyTyped(evt);
@@ -675,7 +693,6 @@ public final class PanelPago extends javax.swing.JPanel {
                     unaControladora.altaPago(fechaPago, efectivo, tarjeta, banco, saldoMesAnterior, interesPorAtraso, total, jTextAreaDescripcion.getText(), idAlquiler, idExpensa, unInquilino.getId());
                     cargarTablaPago(0, 0);
                     JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente.");
-                    //VentanaMensaje vtnMensaje = new VentanaMensaje("Se ha cargado exitosamente.");
                 }else{
                     int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){
@@ -703,8 +720,7 @@ public final class PanelPago extends javax.swing.JPanel {
                 }
             }catch(Exception ex){
                 Logger.getLogger(Logica.Pago.class.getName()).log(Level.SEVERE, null, ex);
-                //VentanaMensaje vtnMensaje = new VentanaMensaje("No se ha podido eliminar el Edificio.");
-                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.");
+                JOptionPane.showMessageDialog(null, "No se ha podido eliminar. Ha ocurrido un error: "+ex);
             }
         }else{
              JOptionPane.showMessageDialog(null, "Debe seleccionar un Pago de la tabla.");
@@ -799,7 +815,7 @@ public final class PanelPago extends javax.swing.JPanel {
             SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy"), monthFormat = new SimpleDateFormat("MM");
             float totalPago, precioCochera = 0;
             int mes, anio;
-            
+   
             Logica.Alquiler unAlquiler = (Logica.Alquiler)jComboBoxAlquiler.getSelectedItem();
             
             mes = Integer.parseInt(monthFormat.format(unAlquiler.getFecha()));
@@ -821,7 +837,13 @@ public final class PanelPago extends javax.swing.JPanel {
                 jTextFieldSaldoMesAnterior.setText(unaControladora.reemplazarString(String.valueOf(unInquilino.getSaldoMesAnt())));
                 jTextFieldMontoExpensa.setText(unaControladora.reemplazarString(formatoDecimal.format(unaControladora.calcularMonto(unaExpensa.getServiciosExpensa()))));
                 totalPago = precioCochera+Float.valueOf(jTextFieldTotalAlquiler.getText())+Float.valueOf(jTextFieldSaldoMesAnterior.getText())+Float.valueOf(jTextFieldMontoExpensa.getText());
-                jTextFieldInteres.setText(formatoDecimal.format(unaControladora.interesPorAtraso(totalPago, mes)));
+                
+                float interes = unaControladora.interesPorAtraso(jDateChooserFecha.getDate(), totalPago, mes);
+                if(interes > 0){
+                    jTextFieldInteres.setText(unaControladora.reemplazarString(formatoDecimal.format(interes)));
+                }else{
+                    jTextFieldInteres.setText(unaControladora.reemplazarString(String.valueOf(interes)));
+                }
                 totalPago += Float.valueOf(unaControladora.reemplazarString(jTextFieldInteres.getText()));
                 jTextFieldTotal.setText(formatoDecimal.format(totalPago));
             }else{
@@ -876,6 +898,18 @@ public final class PanelPago extends javax.swing.JPanel {
     private void jComboBoxInquilinoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBoxInquilinoFocusGained
         entro = true;
     }//GEN-LAST:event_jComboBoxInquilinoFocusGained
+
+    private void jTextFieldEfectivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldEfectivoMouseClicked
+        jTextFieldEfectivo.setText(null);
+    }//GEN-LAST:event_jTextFieldEfectivoMouseClicked
+
+    private void jTextFieldTarjetaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldTarjetaMouseClicked
+        jTextFieldTarjeta.setText(null);
+    }//GEN-LAST:event_jTextFieldTarjetaMouseClicked
+
+    private void jTextFieldBancoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldBancoMouseClicked
+        jTextFieldBanco.setText(null);
+    }//GEN-LAST:event_jTextFieldBancoMouseClicked
 
     public void cargarComboInquilino(){
         List<Logica.Inquilino> inquilinos = unaControladora.obtenerInquilinosEdificio(idEdificio);
@@ -956,7 +990,15 @@ public final class PanelPago extends javax.swing.JPanel {
            && !jTextFieldSaldoMesAnterior.getText().isEmpty() && !jTextFieldMontoExpensa.getText().isEmpty()
            && !jTextFieldInteres.getText().isEmpty() && !jTextFieldTotal.getText().isEmpty() && !jTextFieldEfectivo.getText().isEmpty()
            && !jTextFieldBanco.getText().isEmpty() && !jTextFieldTarjeta.getText().isEmpty()){
-            validar = true;
+            if(!jTextFieldEfectivo.getText().isEmpty() || !jTextFieldBanco.getText().isEmpty() || !jTextFieldTarjeta.getText().isEmpty()){
+                validar = true;
+            }
+        }else if(fecha == null){
+            JOptionPane.showMessageDialog(null, "Debe ingresar una Fecha.");
+        }else if(jComboBoxInquilino.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Inquilino válido.");
+        }else if(jComboBoxAlquiler.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Alquiler válido.");
         }
         
         return validar;
@@ -1003,14 +1045,14 @@ public final class PanelPago extends javax.swing.JPanel {
     
     private void limpiarComponentes(){
         jDateChooserFecha.setDate(null);
-        jTextFieldBanco.setText(null);
-        jTextFieldEfectivo.setText(null);
+        jTextFieldBanco.setText("0");
+        jTextFieldEfectivo.setText("0");
         jTextFieldCochera.setText(null);
         jTextFieldInteres.setText(null);
         jTextFieldTotalAlquiler.setText(null);
         jTextFieldMontoExpensa.setText(null);
         jTextFieldSaldoMesAnterior.setText(null);
-        jTextFieldTarjeta.setText(null);
+        jTextFieldTarjeta.setText("0");
         jTextFieldTotal.setText(null);
         jTextFieldDepartamento.setText(null);
         
