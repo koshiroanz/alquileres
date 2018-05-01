@@ -44,7 +44,7 @@ public class ControladoraL {
 /*------------------------------------------------------------------------------
                            INTERES POR ATRASO
 ------------------------------------------------------------------------------*/
-    public float interesPorAtraso(float montoTotalPago, int mesAlquiler){
+    public float interesPorAtraso(Date fechaPago, float montoTotalPago, int mesAlquiler){
         Date fechaActual = new Date();
         SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
         SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
@@ -53,9 +53,9 @@ public class ControladoraL {
               interesTotal = 0,
               interesMes = (30 * (coeficienteInteres/30) * montoTotalPago);
               
-        int dia = Integer.parseInt(dayFormat.format(fechaActual)),
+        int dia = Integer.parseInt(dayFormat.format(/*fechaActual*/fechaPago)),
             difDias = dia - 10,
-            mes = Integer.parseInt(monthFormat.format(fechaActual)),
+            mes = Integer.parseInt(monthFormat.format(/*fechaActual*/fechaPago)),
             difMes = mes - mesAlquiler;
         
         if(difMes >= 0){
@@ -561,7 +561,6 @@ public class ControladoraL {
         Date fechaActual = new Date();
         SimpleDateFormat formatoAnio = new SimpleDateFormat("yyyy");
         int anioActual = Integer.valueOf(formatoAnio.format(fechaActual)), tamExpensas = 0;
-        //Calendar calendario = Calendar.getInstance();
         List <Departamento> departamentos = obtenerEdificio(idEdificio).getDepartamentos();
         //List <Departamento> departamentosFinal = obtenerEdificio(idEdificio).getDepartamentos();
         List<Departamento> departamentosSinExpensa = new LinkedList();
