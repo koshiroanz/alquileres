@@ -689,7 +689,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
                 mes = jComboBoxMes.getSelectedIndex();
             
             List<Logica.ServicioExpensa> serviciosExpensa = unaControladora.calcularExpensa(idEdificio, unaControladora.obtenerDepartamento(idDepartamento), mes, anio, alta);
-            
+            //List<Logica.ServicioExpensa> serviciosExpensa = unaControladora.obtenerExpensa(idDepartamento, mes, anio).getServiciosExpensa();
             for (Logica.ServicioExpensa unServicioExpensa : serviciosExpensa) {
                 datos[0] = String.valueOf(unServicioExpensa.getId());
                 datos[1] = unServicioExpensa.getNombre();
@@ -758,6 +758,10 @@ public final class PanelExpensa extends javax.swing.JPanel {
     
     private void cargarPanelDatos(long idExpensa) throws Exception{
         modificar = true;
+        String datos[] = new String[5];
+        jLabelAceptar.setText("Actualizar");
+        DecimalFormat formatoDecimal = new DecimalFormat("#.00");
+        formatoDecimal.setMinimumFractionDigits(2);
         Logica.Expensa unaExpensa = unaControladora.obtenerExpensa(idExpensa);
         Logica.Departamento unDepartamento = unaControladora.obtenerDepartamentoPorExpensa(idEdificio, idExpensa);
         
@@ -769,8 +773,19 @@ public final class PanelExpensa extends javax.swing.JPanel {
         comboDepartamento.addElement(unDepartamento);
         jComboBoxDepartamento.setModel(comboDepartamento);
         /*------------------------------------------------*/
-        
-        cargarTablaExpensa(idEdificio, unDepartamento.getId());
+        limpiarTablaExpensa();
+        for (Logica.ServicioExpensa unServicioExpensa : unaExpensa.getServiciosExpensa()) {
+            datos[0] = String.valueOf(unServicioExpensa.getId());
+            datos[1] = unServicioExpensa.getNombre();
+            datos[2] = String.valueOf(unServicioExpensa.getMes());
+            datos[3] = String.valueOf(unServicioExpensa.getAnio());
+            datos[4] = formatoDecimal.format(unServicioExpensa.getMonto());
+
+            this.tablaExpensa.addRow(datos);
+        }
+
+        this.jTableExpensa.setModel(tablaExpensa);
+        jTextFieldMonto.setText(formatoDecimal.format(unaExpensa.getMonto()));
         
         icono("afuera");
     }
@@ -780,6 +795,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
         comboDepartamento.removeAllElements();
         comboDepartamento.addElement("Seleccione una opción");
         jTableExpensa.removeAll();
+        jLabelAceptar.setText("Aceptar");
         jTextAreaDescripcion.setText(null);
         cargarTablaBuscarExpensa(0, 0);
         cargarTablaExpensa(idEdificio, 0);
