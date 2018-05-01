@@ -743,9 +743,13 @@ public final class PanelServicio extends javax.swing.JPanel {
             datos[3] = String.valueOf(unServicio.getAnio());
             if(unServicio.getFechaEmision() != null){
                 datos[4] = String.valueOf(dateFormat.format(unServicio.getFechaEmision()));
-                datos[5] = String.valueOf(dateFormat.format(unServicio.getFechaVencimiento()));
             }else{
                 datos[4] = "";
+            }
+            
+            if(unServicio.getFechaVencimiento() != null){
+                datos[5] = String.valueOf(dateFormat.format(unServicio.getFechaVencimiento()));
+            }else{
                 datos[5] = "";
             }
             datos[6] = String.valueOf(unServicio.getMonto());
