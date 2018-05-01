@@ -555,22 +555,51 @@ public class ControladoraL {
         return depDisponibles;
     }
     
+    // Modifiqué este método porque trae mal las expensas..
     public List <Departamento> departamentosSinExpensas(int mes, long idEdificio){
-        int i = 0;
-        Calendar calendario = Calendar.getInstance();
+        
+        Date fechaActual = new Date();
+        SimpleDateFormat formatoAnio = new SimpleDateFormat("yyyy");
+        int anioActual = Integer.valueOf(formatoAnio.format(fechaActual)), tamExpensas = 0;
+        //Calendar calendario = Calendar.getInstance();
         List <Departamento> departamentos = obtenerEdificio(idEdificio).getDepartamentos();
-        List <Departamento> departamentosFinal = obtenerEdificio(idEdificio).getDepartamentos();
+        //List <Departamento> departamentosFinal = obtenerEdificio(idEdificio).getDepartamentos();
+        List<Departamento> departamentosSinExpensa = new LinkedList();
+        boolean tieneEsteMes = false;
         
         for(Departamento unDepartamento : departamentos){
-            for(Expensa unaExpensa : unDepartamento.getExpensas()){
-                if(unaExpensa.getMes() == mes && unaExpensa.getAnio() == calendario.get(Calendar.YEAR)){
-                    departamentosFinal.remove(i); // Se va de rango si elimina de mas..
+            if(unDepartamento.getExpensas().size() > 0){
+                int i = 0;
+                tamExpensas = unDepartamento.getExpensas().size();
+                while(i < tamExpensas){
+                    if(unDepartamento.getExpensas().get(i).getMes() == mes && unDepartamento.getExpensas().get(i).getAnio() == anioActual){
+                        tieneEsteMes = true;
+                        i = tamExpensas;
+                    }else{
+                        i++;
+                    }
                 }
+                
+                if(!tieneEsteMes){
+                    departamentosSinExpensa.add(unDepartamento);
+                }
+                tieneEsteMes = false;
+            }else{  // Si el Departamento no tiene niguna Expensa se agrega a la lista (Escenario: Nuevo Departamento)
+                departamentosSinExpensa.add(unDepartamento); 
             }
-            i++;
+            
+            /*
+            for(Expensa unaExpensa : unDepartamento.getExpensas()){
+                if(unaExpensa.getMes() == mes && unaExpensa.getAnio() == anioActual){
+                    departamentosFinal.remove(i); // Se va de rango si elimina de mas..
+                }else{
+                    i++;
+                }
+            }*/
+            
         }
-        
-        return departamentosFinal;
+        return departamentosSinExpensa;
+        //return departamentosFinal;
     }
     
     public Departamento obtenerDepartamentoPorExpensa(long idEdificio, long idExpensa){
@@ -1086,6 +1115,16 @@ public class ControladoraL {
             Departamento unDepartamento = obtenerDepartamento(idDepartamento);
             unDepartamento.setUnInquilino(unInqui);
             unaControladora.modificarDepartamento(unDepartamento);
+        }else{
+            try{
+                Departamento unDepartamento = obtenerDepartamentoInquilino(idInquilino);
+                if(unDepartamento != null){
+                    unDepartamento.setUnInquilino(null);
+                    unaControladora.modificarDepartamento(unDepartamento);
+                }
+            }catch(Exception e){
+                System.out.println("Error: "+e);
+            }
         }
         
         if(idCochera != 0){
