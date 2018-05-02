@@ -51,8 +51,6 @@ public class PanelCochera extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jTextFieldBuscar = new javax.swing.JTextField();
         jSeparatorBuscar = new javax.swing.JSeparator();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTableCochera = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jPanelButtonEliminar = new javax.swing.JPanel();
         jLabelEliminar = new javax.swing.JLabel();
@@ -60,6 +58,8 @@ public class PanelCochera extends javax.swing.JPanel {
         jLabelAceptar = new javax.swing.JLabel();
         jPanelButtonBuscar = new javax.swing.JPanel();
         jLabelBuscar = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableCochera = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -236,33 +236,6 @@ public class PanelCochera extends javax.swing.JPanel {
             }
         });
 
-        jScrollPane2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-
-        jTableCochera.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jTableCochera = new javax.swing.JTable(){
-            public boolean isCellEditable(int row, int col){
-                return false;
-            }
-        };
-        jTableCochera.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTableCochera.setPreferredSize(new java.awt.Dimension(300, 205));
-        jTableCochera.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableCocheraMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jTableCochera);
-
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanelButtonEliminar.setBackground(new java.awt.Color(51, 51, 51));
@@ -355,7 +328,7 @@ public class PanelCochera extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelButtonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanelButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
 
         jPanelButtonBuscar.setBackground(new java.awt.Color(51, 51, 51));
@@ -389,15 +362,38 @@ public class PanelCochera extends javax.swing.JPanel {
             .addComponent(jLabelBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+        jTableCochera = new javax.swing.JTable(){
+            public boolean isCellEditable(int row, int col){
+                return false;
+            }
+        };
+        jTableCochera.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTableCochera.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableCocheraMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTableCochera);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -418,9 +414,10 @@ public class PanelCochera extends javax.swing.JPanel {
                     .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(jSeparatorBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -434,8 +431,8 @@ public class PanelCochera extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -461,21 +458,6 @@ public class PanelCochera extends javax.swing.JPanel {
         this.jPanelButtonEliminar.setBackground(new Color(51,51,51));
         this.jLabelEliminar.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_jPanelButtonEliminarMouseExited
-
-    private void jTableCocheraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCocheraMouseClicked
-        int fila = jTableCochera.getSelectedRow();
-        
-        if(fila >= 0){
-            idCochera = Long.parseLong(tablaCochera.getValueAt(fila, 0).toString());
-        
-            if(evt.getClickCount() == 1){
-                eliminar = true;
-            }else if(evt.getClickCount() == 2){
-                cargarPanelDatos(idCochera);
-                eliminar = false;
-            }
-        }
-    }//GEN-LAST:event_jTableCocheraMouseClicked
 
     private void jPanelButtonAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonAgregarMouseClicked
         if(validar()){
@@ -572,6 +554,21 @@ public class PanelCochera extends javax.swing.JPanel {
             evt.consume();
         }
     }//GEN-LAST:event_jTextFieldUbicacionKeyTyped
+
+    private void jTableCocheraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCocheraMouseClicked
+        int fila = jTableCochera.getSelectedRow();
+        
+        if(fila >= 0){
+            idCochera = Long.parseLong(tablaCochera.getValueAt(fila, 0).toString());
+        
+            if(evt.getClickCount() == 1){
+                eliminar = true;
+            }else if(evt.getClickCount() == 2){
+                cargarPanelDatos(idCochera);
+                eliminar = false;
+            }
+        }
+    }//GEN-LAST:event_jTableCocheraMouseClicked
 
     private void cargarTablaCochera(String buscar){
         limpiarComponentes();
@@ -672,7 +669,6 @@ public class PanelCochera extends javax.swing.JPanel {
         }
         
         this.jTableCochera.setModel(tablaCochera);
-        
     }
     
     public boolean validar(){
@@ -682,7 +678,7 @@ public class PanelCochera extends javax.swing.JPanel {
             if(!modificar){
                 boolean existeCochera = unaControladora.existeCochera(jTextFieldUbicacion.getText().toUpperCase(), this.idEdificio);
                 if(existeCochera){
-                    JOptionPane.showMessageDialog(null, "La Cochera: "+jTextFieldUbicacion.getText().toUpperCase()+" ya se encuentra registrada.");
+                    JOptionPane.showMessageDialog(null, "La cochera: "+jTextFieldUbicacion.getText().toUpperCase()+" ya se encuentra registrada.");
                 }else{
                     validar = true;
                 }
@@ -717,7 +713,7 @@ public class PanelCochera extends javax.swing.JPanel {
     private javax.swing.JPanel jPanelButtonRefresh;
     private javax.swing.JPanel jPanelDatosCochera;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparatorBuscar;
     private javax.swing.JSeparator jSeparatorPrecio;
