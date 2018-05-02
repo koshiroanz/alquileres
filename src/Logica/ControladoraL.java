@@ -152,6 +152,24 @@ public class ControladoraL {
         return alquileresInpagos;
     }
     
+    public Alquiler obtenerAlquilerPago(long idPago){
+        int i = 0;
+        Alquiler unAlquiler = null,
+                 unAlqui = null;
+        
+        while(unAlquiler == null && i < obtenerAlquileres().size()){
+            unAlqui = obtenerAlquileres().get(i);
+            if(unAlqui.getUnPago() != null){
+                if(unAlqui.getUnPago().getId() == idPago){
+                    unAlquiler = unAlqui;
+                }
+            }
+            i++;
+        }
+        
+        return unAlquiler;
+    }
+    
     public List<Alquiler> obtenerAlquileresEdificio(long idEdificio){
         List<Inquilino> inquilinos = obtenerInquilinosEdificio(idEdificio);
         List<Departamento> departamentos = obtenerEdificio(idEdificio).getDepartamentos();
@@ -221,24 +239,6 @@ public class ControladoraL {
             }
         }
         
-    }
-    
-    public Alquiler obtenerAlquilerPago(long idPago){
-        int i = 0;
-        Alquiler unAlquiler = null,
-                 unAlqui = null;
-        
-        while(unAlquiler == null && i < obtenerAlquileres().size()){
-            unAlqui = obtenerAlquileres().get(i);
-            if(unAlqui.getUnPago() != null){
-                if(unAlqui.getUnPago().getId() == idPago){
-                    unAlquiler = unAlqui;
-                }
-            }
-            i++;
-        }
-        
-        return unAlquiler;
     }
     
 /*------------------------------------------------------------------------------
@@ -518,13 +518,19 @@ public class ControladoraL {
     // Debería devolver solo 1 DEPARTAMENTO por INQUILINO
     public Departamento obtenerDepartamentoInquilino(long idInquilino){
         Departamento unDepartamento = null;
+        List<Departamento> departamentos = obtenerDepartamentos();
+        int i = 0, tam = departamentos.size();
         
-        for(Departamento unDepa : obtenerDepartamentos()){
-            if(unDepa.getUnInquilino() != null){
-                if(unDepa.getUnInquilino().getId() == idInquilino){
-                    unDepartamento = unDepa;
+        while(i < tam){
+            if(departamentos.get(i) != null){
+                if(departamentos.get(i).getUnInquilino().getId() == idInquilino){
+                    unDepartamento = departamentos.get(i);
+                    i = tam;
+                }else{
+                    i++;
                 }
             }
+            
         }
         
         return unDepartamento;
@@ -924,6 +930,31 @@ public class ControladoraL {
         return unaExpensa;
     }
     
+    // SE OCUPA PARA COMPROBAR LA EXISTENCIA EN PANEL EXPENSA
+    public boolean existeExpensa(long idDepto, int mesExpensa, int anioExpensa){
+        boolean respuesta = false;
+        Departamento unDepto = null;
+        int i = 0;
+        unDepto = obtenerDepartamento(idDepto);
+        
+        if(unDepto != null){
+            if(unDepto.getExpensas().size() > 0){
+                int tam = unDepto.getExpensas().size();
+                while(i < tam){
+                    if(unDepto.getExpensas().get(i).getMes() == mesExpensa && unDepto.getExpensas().get(i).getAnio() == anioExpensa){
+                        respuesta = true;
+                        i = tam;
+                    }else{
+                        i++;
+                    }
+                }
+            }
+        }
+        
+        return respuesta;
+    }
+    
+    // SE OCUPA EN EL PANEL PRINCIPAL PARA GENERAR EL REPORTE
     public boolean existenExpensas(long idEdificio){
         boolean respuesta = false;
         int i = 0, tam = obtenerEdificio(idEdificio).getDepartamentos().size()-1;
@@ -1230,7 +1261,6 @@ public class ControladoraL {
                 }
             }
         }
-        System.out.println(cantidadPersonas);
         /*for(Departamento unDepartamento : obtenerEdificio(idEdificio).getDepartamentos()){
             if(unDepartamento.getUnInquilino() != null && !unDepartamento.getUnInquilino().getAlquileres().isEmpty()){
                 for(Alquiler unAlquiler : unDepartamento.getUnInquilino().getAlquileres()){
@@ -1346,7 +1376,9 @@ public class ControladoraL {
         Inquilino unInquilino = obtenerInquilino(idInquilino);
         
         for(Alquiler unAlquiler : unInquilino.getAlquileres()){
-            pagos.add(unAlquiler.getUnPago());
+            if(unAlquiler.getUnPago() != null){
+                pagos.add(unAlquiler.getUnPago());
+            }
         }
         
         return pagos;
