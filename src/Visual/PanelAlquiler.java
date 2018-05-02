@@ -793,7 +793,6 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     
     private void cargarTablaAlquiler(int mesBusqueda, int anioBusqueda){
         limpiarComponentes();
-        //float totalMonto = 0, totalOtrasFacturas = 0;
         int mesAlquiler, anioAlquiler;
         String datos[] = new String[8];
         List<Logica.Alquiler> alquileres = new LinkedList();
@@ -819,8 +818,6 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         }
         
         for(Logica.Alquiler unAlquiler : alquileres){
-            /*totalMonto += unAlquiler.getMonto();
-            totalOtrasFacturas += unAlquiler.getOtraFactura();*/
             datos[0] = String.valueOf(unAlquiler.getId());
             datos[1] = String.valueOf(dateFormat.format(unAlquiler.getFecha()));
             datos[2] = String.valueOf(unAlquiler.getMonto());
