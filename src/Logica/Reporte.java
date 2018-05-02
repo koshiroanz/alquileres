@@ -36,14 +36,14 @@ public class Reporte {
         XSSFFont fuente1, fuente2, fuente3, fuente4, fuente5;
         
         // Se genera una hoja para la Tabla ALQUILERES
-        Sheet hojaAlquiler = libro.createSheet("RESUMEN A COB"); // Se crea la hoja para la Tabla ALQUILERES
+        //Sheet hojaAlquiler = libro.createSheet("RESUMEN A COB"); // Se crea la hoja para la Tabla ALQUILERES
         // Se definen estilos para la Tabla ALQUILERES
         
         // Se generan automaticamente las filas
         int mesActual = Integer.valueOf(formatoMes.format(fechaActual)), anioActual = Integer.valueOf(formatoAnio.format(fechaActual));
         
         // FILA 0
-        Row fila = hojaAlquiler.createRow(0);
+        /*Row fila = hojaAlquiler.createRow(0);
         fila.createCell(0).setCellValue("EDIFICIO "+unEdificio.getNombre());
         
         fila = hojaAlquiler.createRow(1);
@@ -61,7 +61,7 @@ public class Reporte {
                 
             }
             
-        }
+        }*/
         
         //ESTILOS TABLA EXPENSAS (GENERADOR DE HOJAS DENTRO DEL LIBRO)
         // EXPANDIR el tamaño de la Columna n° 2 y 3 de todas las filas que abarquen la Expensa.
