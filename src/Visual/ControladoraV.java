@@ -290,6 +290,10 @@ public class ControladoraV {
          return unaControladora.obtenerExpensa(idDepartamento, mesAlquiler, anioAlquiler);
     }
     
+    public boolean existeExpensa(long idDepto, int mesExpensa, int anioExpensa){
+        return unaControladora.existeExpensa(idDepto, mesExpensa, anioExpensa);
+    }
+    
     public boolean existenExpensas(long idEdificio){
         return unaControladora.existenExpensas(idEdificio);
     }
