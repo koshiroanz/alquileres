@@ -358,6 +358,7 @@ public class PanelInquilino extends javax.swing.JPanel {
             }
         });
 
+        jScrollPane1.setAutoscrolls(true);
         jScrollPane1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
 
         jTableInquilino.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
@@ -630,6 +631,8 @@ public class PanelInquilino extends javax.swing.JPanel {
                 cargarPanelDatos(idInquilino);
                 eliminar = false;
             }
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe cliquear una fila válida.");
         }
     }//GEN-LAST:event_jTableInquilinoMouseClicked
 
@@ -722,10 +725,14 @@ public class PanelInquilino extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldBuscarMouseClicked
 
     private void jPanelButtonBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonBuscarMouseClicked
-        if(!"".equals(jTextFieldBuscar.getText())){
-            cargarTablaInquilino(jTextFieldBuscar.getText().toUpperCase());
+        if(!jTextFieldBuscar.getText().equals("Ingrese un apellido para buscar")){
+            if(!jTextFieldBuscar.getText().isEmpty()){
+                cargarTablaInquilino(jTextFieldBuscar.getText().toUpperCase());
+            }else{
+                JOptionPane.showMessageDialog(null, "Ingrese un apellido para buscar");
+            }
         }else{
-            JOptionPane.showMessageDialog(null, "Ingrese un Apellido para buscar.");
+            JOptionPane.showMessageDialog(null, "Ingrese un apellido para buscar");
         }
     }//GEN-LAST:event_jPanelButtonBuscarMouseClicked
 
@@ -764,7 +771,7 @@ public class PanelInquilino extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldCuitKeyTyped
 
     public void cargarTablaInquilino(String buscar){
-        String colTablaInquilino[] = {"Id", "Apellido", "Nombre", "DNI", "CUIT", "Tel.", "E-mail", "Cant. Familiares", "Departamento", "Cochera"};
+        String colTablaInquilino[] = {"Id", "Apellido", "Nombre", "DNI", "CUIT", "Tel.", "E-mail", "Cant. Familiares", "Departamento", "Cochera", "Descripción"};
         
         if(unaControladora.obtenerInquilinosEdificio(idEdificio).size() > 0){
             List<Logica.Inquilino> inquilinos = new LinkedList();
@@ -777,7 +784,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                 }
 
                 if(inquilinos.size() < 1){
-                    JOptionPane.showMessageDialog(null, "No se ha encontrado el Inquilino.");
+                    JOptionPane.showMessageDialog(null, "No se ha encontrado el Inquilino: "+buscar);
                     inquilinos = unaControladora.obtenerInquilinosEdificio(idEdificio);
                 }
             }else{
@@ -785,7 +792,7 @@ public class PanelInquilino extends javax.swing.JPanel {
             }
 
             int tamanio = inquilinos.size();
-            Object[][] filas = new Object[tamanio][10];
+            Object[][] filas = new Object[tamanio][11];
             Logica.Departamento unDepto = null;
             Logica.Cochera unaCochera = null;
             
@@ -811,6 +818,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                 }else{
                     filas[i][9] = "";
                 }
+                filas[i][10] = inquilinos.get(i).getDescripcion();
             }
 
             modelo = new DefaultTableModel(filas,colTablaInquilino)/*{
@@ -868,6 +876,7 @@ public class PanelInquilino extends javax.swing.JPanel {
         modificar = true;
         Logica.Inquilino unInquilino = unaControladora.obtenerInquilino(idInquilino);
         
+        jTextAreaDescripcion.setText(unInquilino.getDescripcion());
         jTextFieldNombre.setText(unInquilino.getNombre());
         jTextFieldApellido.setText(unInquilino.getApellido());
         jTextFieldDni.setText(unInquilino.getDni());
@@ -986,6 +995,7 @@ public class PanelInquilino extends javax.swing.JPanel {
         jTextFieldTelefono.setText(null);
         jTextFieldEmail.setText(null);
         jTextFieldCantFamiliares.setText(null);
+        jTextAreaDescripcion.setText(null);
         jTextFieldBuscar.setText("Ingrese un apellido para buscar");
         cargarComboDepartamento(idEdificio);
         cargarComboCochera(idEdificio);
