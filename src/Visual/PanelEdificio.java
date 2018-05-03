@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
 
-public class PanelEdificio extends javax.swing.JPanel {
+public final class PanelEdificio extends javax.swing.JPanel {
     private long idEdificio, id;
     private final ControladoraV unaControladora = new ControladoraV();
      private boolean busqueda = false, modificar = false, eliminar = false;    
@@ -491,6 +491,8 @@ public class PanelEdificio extends javax.swing.JPanel {
                     JButton boton;
                     //JOptionPane.showMessageDialog(null, "Fila: "+fila+" Columna: "+columna+" Valor es igual a: "+textoBoton);
                 }
+            }else{
+                JOptionPane.showMessageDialog(null, "Debe cliquear una fila válida.");
             }
         }
     }//GEN-LAST:event_jTableEdificioMouseClicked
@@ -546,11 +548,15 @@ public class PanelEdificio extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelTablaMouseClicked
 
     private void jPanelButtonBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonBuscarMouseClicked
-        if(!"".equals(jTextFieldBuscar.getText())){
-            busqueda = true;
-            cargarTablaEdificio(jTextFieldBuscar.getText().toUpperCase());
+        if(!jTextFieldBuscar.getText().equals("Ingrese un nombre para buscar")){
+            if(!jTextFieldBuscar.getText().isEmpty()){
+                busqueda = true;
+                cargarTablaEdificio(jTextFieldBuscar.getText().toUpperCase());
+            }else{
+                JOptionPane.showMessageDialog(null, "Ingrese un nombre para buscar");
+            }
         }else{
-            JOptionPane.showMessageDialog(null, "Ingrese un nombre para buscar.");
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre para buscar");
         }
     }//GEN-LAST:event_jPanelButtonBuscarMouseClicked
 
@@ -603,8 +609,9 @@ public class PanelEdificio extends javax.swing.JPanel {
                     }
 
                     if(!bandera){
-                        JOptionPane.showMessageDialog(null, "No se ha encontrado el Edificio.");
+                        JOptionPane.showMessageDialog(null, "No se ha encontrado el Edificio: "+buscar);
                     }else{
+                        busqueda = false;
                         edificios.clear();
                         edificios = edificioBusqueda;
                     }
