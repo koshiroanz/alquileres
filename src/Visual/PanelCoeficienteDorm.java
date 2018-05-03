@@ -12,7 +12,7 @@ import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_PERIOD;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
 
-public class PanelCoeficienteDorm extends javax.swing.JPanel {
+public final class PanelCoeficienteDorm extends javax.swing.JPanel {
     private int fila = 0;
     private final long idEdificio;
     private long idCoeficienteDorm;
@@ -54,8 +54,6 @@ public class PanelCoeficienteDorm extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jTextFieldBuscar = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableCoeficienteDorm = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jPanelButtonEliminar = new javax.swing.JPanel();
         jLabelEliminar = new javax.swing.JLabel();
@@ -63,6 +61,8 @@ public class PanelCoeficienteDorm extends javax.swing.JPanel {
         jLabelAceptar = new javax.swing.JLabel();
         jPanelButtonBuscar = new javax.swing.JPanel();
         jLabelBuscar = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableCoeficienteDorm = new javax.swing.JTable();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(872, 315));
@@ -228,34 +228,13 @@ public class PanelCoeficienteDorm extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jTextFieldBuscar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        jTextFieldBuscar.setText("Ingrese un nombre para buscar");
         jTextFieldBuscar.setBorder(null);
-
-        jScrollPane1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-
-        jTableCoeficienteDorm.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jTableCoeficienteDorm = new javax.swing.JTable(){
-            public boolean isCellEditable(int row, int col){
-                return false;
-            }
-        };
-        jTableCoeficienteDorm.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTableCoeficienteDorm.setPreferredSize(new java.awt.Dimension(300, 212));
-        jTableCoeficienteDorm.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTextFieldBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableCoeficienteDormMouseClicked(evt);
+                jTextFieldBuscarMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTableCoeficienteDorm);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -382,6 +361,29 @@ public class PanelCoeficienteDorm extends javax.swing.JPanel {
             .addComponent(jLabelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
         );
 
+        jTableCoeficienteDorm = new javax.swing.JTable(){
+            public boolean isCellEditable(int row, int col){
+                return false;
+            }
+        };
+        jTableCoeficienteDorm.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTableCoeficienteDorm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableCoeficienteDormMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTableCoeficienteDorm);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -389,9 +391,9 @@ public class PanelCoeficienteDorm extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 581, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -409,10 +411,9 @@ public class PanelCoeficienteDorm extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanelButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -481,19 +482,6 @@ public class PanelCoeficienteDorm extends javax.swing.JPanel {
         this.jLabelEliminar.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_jPanelButtonEliminarMouseExited
 
-    private void jTableCoeficienteDormMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCoeficienteDormMouseClicked
-        fila = jTableCoeficienteDorm.getSelectedRow();
-        
-        idCoeficienteDorm = Long.valueOf(jTableCoeficienteDorm.getValueAt(fila, 0).toString());
-        
-        if(evt.getClickCount() == 1){
-            eliminar = true;
-        }else if(evt.getClickCount() == 2){
-            cargarPanelDatos(idCoeficienteDorm);
-            eliminar = false;
-       }
-    }//GEN-LAST:event_jTableCoeficienteDormMouseClicked
-
     private void jPanelButtonEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseClicked
         if(eliminar){
             try{
@@ -520,7 +508,7 @@ public class PanelCoeficienteDorm extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldValorKeyTyped
 
     private void jTextFieldCantDormitorioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCantDormitorioKeyTyped
-        if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
+        if(!Character.isDigit(evt.getKeyChar()) /*&& (evt.getKeyChar() != VK_SPACE)*/ && (evt.getKeyChar() != VK_BACK_SPACE)){
             getToolkit().beep();
             evt.consume();
         }
@@ -542,11 +530,14 @@ public class PanelCoeficienteDorm extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonRefreshMouseExited
 
     private void jPanelButtonBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonBuscarMouseClicked
-        if(jTextFieldBuscar.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe ingresar una clave de busqueda.");
-            jTextFieldBuscar.requestFocus();
+        if(!jTextFieldBuscar.getText().equals("Ingrese un nombre para buscar")){
+            if(!jTextFieldBuscar.getText().isEmpty()){
+                cargarTablaCoeficienteDorm(jTextFieldBuscar.getText().toUpperCase());
+            }else{
+                JOptionPane.showMessageDialog(null, "Ingrese un nombre para buscar");
+            }
         }else{
-            cargarTablaCoeficienteDorm(jTextFieldBuscar.getText().toUpperCase());
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre para buscar");
         }
     }//GEN-LAST:event_jPanelButtonBuscarMouseClicked
 
@@ -569,10 +560,31 @@ public class PanelCoeficienteDorm extends javax.swing.JPanel {
             evt.consume();
         }
     }//GEN-LAST:event_jTextFieldNombreKeyTyped
+
+    private void jTableCoeficienteDormMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCoeficienteDormMouseClicked
+        fila = jTableCoeficienteDorm.getSelectedRow();
+        
+        if(fila >= 0){
+            idCoeficienteDorm = Long.valueOf(jTableCoeficienteDorm.getValueAt(fila, 0).toString());
+        
+            if(evt.getClickCount() == 1){
+                eliminar = true;
+            }else if(evt.getClickCount() == 2){
+                cargarPanelDatos(idCoeficienteDorm);
+                eliminar = false;
+           }
+        }else{
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar esta operación.");
+        }
+    }//GEN-LAST:event_jTableCoeficienteDormMouseClicked
+
+    private void jTextFieldBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldBuscarMouseClicked
+        jTextFieldBuscar.setText(null);
+    }//GEN-LAST:event_jTextFieldBuscarMouseClicked
     
     public void cargarTablaCoeficienteDorm(String buscar){
         limpiarComponentes();
-        String datos[] = new String[5];
+        Object datos[] = new Object[5];
         List<Logica.CoeficienteDorm> coeficientes = new LinkedList();
 
         if(!buscar.isEmpty()){
@@ -583,7 +595,7 @@ public class PanelCoeficienteDorm extends javax.swing.JPanel {
             }
             
             if(coeficientes.isEmpty()){
-                JOptionPane.showMessageDialog(null, "No se ha encontrado el Servicio.");
+                JOptionPane.showMessageDialog(null, "No se ha encontrado el Coeficiente: "+buscar);
                 coeficientes = unaControladora.obtenerEdificio(idEdificio).getCoeficientesDorm();
             }
         }else{
@@ -591,11 +603,12 @@ public class PanelCoeficienteDorm extends javax.swing.JPanel {
         }
         
         for(Logica.CoeficienteDorm unCoeficienteDorm : coeficientes){
-            datos[0] = String.valueOf(unCoeficienteDorm.getId());
+            datos[0] = unCoeficienteDorm.getId();
             datos[1] = unCoeficienteDorm.getNombre();
-            datos[2] = String.valueOf(unCoeficienteDorm.getCantDorm());
-            datos[3] = String.valueOf(unCoeficienteDorm.getValor());
+            datos[2] = unCoeficienteDorm.getCantDorm();
+            datos[3] = unCoeficienteDorm.getValor();
             datos[4] = unCoeficienteDorm.getDescripcion();
+            
             tablaCoeficiente.addRow(datos);
         }
 
@@ -606,6 +619,7 @@ public class PanelCoeficienteDorm extends javax.swing.JPanel {
         modificar = true;
         Logica.CoeficienteDorm unCoeficienteDorm = unaControladora.obtenerCoeficienteDorm(idCoeficienteDorm);
         
+        jLabelAceptar.setText("Actualizar");
         jTextFieldNombre.setText(unCoeficienteDorm.getNombre());
         jTextFieldValor.setText(String.valueOf(unCoeficienteDorm.getValor()));
         jTextFieldCantDormitorio.setText(String.valueOf(unCoeficienteDorm.getCantDorm()));
@@ -641,6 +655,8 @@ public class PanelCoeficienteDorm extends javax.swing.JPanel {
     
     private void limpiarComponentes(){
         jTextFieldNombre.setText(null);
+        jTextFieldBuscar.setText("Ingrese un nombre para buscar");
+        jLabelAceptar.setText("Aceptar");
         jTextFieldValor.setText(null);
         jTextFieldCantDormitorio.setText(null);
         jTextAreaDescripcion.setText(null);
@@ -704,7 +720,7 @@ public class PanelCoeficienteDorm extends javax.swing.JPanel {
     private javax.swing.JPanel jPanelButtonBuscar;
     private javax.swing.JPanel jPanelButtonEliminar;
     private javax.swing.JPanel jPanelButtonRefresh;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
