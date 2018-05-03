@@ -61,8 +61,6 @@ public final class PanelExpensa extends javax.swing.JPanel {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTableBuscarExpensa = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jPanelButtonEliminar = new javax.swing.JPanel();
         jLabelEliminar = new javax.swing.JLabel();
@@ -72,6 +70,8 @@ public final class PanelExpensa extends javax.swing.JPanel {
         jComboBoxMesBusqueda = new javax.swing.JComboBox<>();
         jPanelButtonBuscar = new javax.swing.JPanel();
         jLabelBuscar = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTableBuscarExpensa = new javax.swing.JTable();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(896, 315));
@@ -279,34 +279,6 @@ public final class PanelExpensa extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(896, 315));
 
-        jScrollPane2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
-
-        jTableBuscarExpensa.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jTableBuscarExpensa = new javax.swing.JTable(){
-            public boolean isCellEditable(int row, int col){
-                return false;
-            }
-        };
-        jTableBuscarExpensa.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTableBuscarExpensa.setPreferredSize(new java.awt.Dimension(300, 212));
-        jTableBuscarExpensa.getTableHeader().setReorderingAllowed(false);
-        jTableBuscarExpensa.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableBuscarExpensaMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jTableBuscarExpensa);
-
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanelButtonEliminar.setBackground(new java.awt.Color(51, 51, 51));
@@ -442,6 +414,29 @@ public final class PanelExpensa extends javax.swing.JPanel {
             .addComponent(jLabelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
         );
 
+        jTableBuscarExpensa = new javax.swing.JTable(){
+            public boolean isCellEditable(int row, int col){
+                return false;
+            }
+        };
+        jTableBuscarExpensa.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTableBuscarExpensa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableBuscarExpensaMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jTableBuscarExpensa);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -449,33 +444,33 @@ public final class PanelExpensa extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jComboBoxMesBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBoxAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanelButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanelButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane4))))
                 .addGap(22, 22, 22))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jComboBoxMesBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanelButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -490,7 +485,8 @@ public final class PanelExpensa extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -536,23 +532,6 @@ public final class PanelExpensa extends javax.swing.JPanel {
              JOptionPane.showMessageDialog(null, "Debe seleccionar una Expensa.");
         }
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
-
-    private void jTableBuscarExpensaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableBuscarExpensaMouseClicked
-        int fila = jTableBuscarExpensa.getSelectedRow();
-        
-        idExpensa = Long.parseLong(jTableBuscarExpensa.getValueAt(fila, 0).toString());
-        
-        if(evt.getClickCount() == 1){
-            eliminar = true;
-        }else if(evt.getClickCount() == 2){
-            try {
-                cargarPanelDatos(idExpensa);
-            } catch (Exception ex) {
-                Logger.getLogger(PanelExpensa.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            eliminar = false;
-        }
-    }//GEN-LAST:event_jTableBuscarExpensaMouseClicked
 
     private void jPanelButtonAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonAgregarMouseClicked
         if(validar()){
@@ -677,6 +656,25 @@ public final class PanelExpensa extends javax.swing.JPanel {
     private void jComboBoxMesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxMesMouseClicked
         entro = true;
     }//GEN-LAST:event_jComboBoxMesMouseClicked
+
+    private void jTableBuscarExpensaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableBuscarExpensaMouseClicked
+        int fila = jTableBuscarExpensa.getSelectedRow();
+        
+        if(fila >= 0){
+            idExpensa = Long.parseLong(jTableBuscarExpensa.getValueAt(fila, 0).toString());
+        
+            if(evt.getClickCount() == 1){
+                eliminar = true;
+            }else if(evt.getClickCount() == 2){
+                try {
+                    cargarPanelDatos(idExpensa);
+                } catch (Exception ex) {
+                    Logger.getLogger(PanelExpensa.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                eliminar = false;
+            }
+        }
+    }//GEN-LAST:event_jTableBuscarExpensaMouseClicked
     
     public void cargarTablaExpensa(long idEdificio, long idDepartamento) throws Exception{
         limpiarTablaExpensa();
@@ -752,7 +750,6 @@ public final class PanelExpensa extends javax.swing.JPanel {
 
                 this.tablaBuscarExpensa.addRow(datos);
         }
-
         this.jTableBuscarExpensa.setModel(tablaBuscarExpensa);
     }
     
@@ -792,6 +789,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
     
     private void limpiarComponentes() throws Exception{
         jComboBoxMes.setSelectedIndex(0);
+        jComboBoxMesBusqueda.setSelectedIndex(0);
         comboDepartamento.removeAllElements();
         comboDepartamento.addElement("Seleccione una opción");
         jTableExpensa.removeAll();
@@ -865,7 +863,19 @@ public final class PanelExpensa extends javax.swing.JPanel {
         }
         
         if(mes && departamento && expensa && !jTextFieldAnio.getText().isEmpty()){
-            validar = true;
+            if(!modificar){
+                Logica.Departamento unDepto = (Logica.Departamento)comboDepartamento.getSelectedItem();
+                boolean existeExpensa = unaControladora.existeExpensa(unDepto.getId(), jComboBoxMes.getSelectedIndex(), Integer.valueOf(jTextFieldAnio.getText()));
+                if(existeExpensa){
+                    // En teoría esto nunca debería pasar..
+                    JOptionPane.showMessageDialog(null, "La Expensa "+jComboBoxMes.getSelectedIndex()+"/"+Integer.valueOf(jTextFieldAnio.getText())+" del Departamento: "+unDepto.getUbicacion()+" ya se encuentra registrado.");
+                }else{
+                    validar = true;
+                }
+            }else{
+                validar = true;
+            }
+            
         }
         
         return validar;
@@ -907,8 +917,8 @@ public final class PanelExpensa extends javax.swing.JPanel {
     private javax.swing.JPanel jPanelButtonEliminar;
     private javax.swing.JPanel jPanelButtonRefresh;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTableBuscarExpensa;
