@@ -667,10 +667,14 @@ public class PanelGarante extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldApellidoKeyTyped
 
     private void jPanelButtonBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonBuscarMouseClicked
-        if(!jTextFieldBuscar.getText().isEmpty()){
-            cargarTablaGarante(jTextFieldBuscar.getText().toUpperCase());
+        if(!jTextFieldBuscar.getText().equals("Ingrese un apellido para buscar")){
+            if(!jTextFieldBuscar.getText().isEmpty()){
+                cargarTablaGarante(jTextFieldBuscar.getText().toUpperCase());
+            }else{
+                JOptionPane.showMessageDialog(null, "Ingrese un apellido para buscar");
+            }
         }else{
-            JOptionPane.showMessageDialog(null, "Ingrese un Apellido para buscar");
+            JOptionPane.showMessageDialog(null, "Ingrese un apellido para buscar");
         }
     }//GEN-LAST:event_jPanelButtonBuscarMouseClicked
 
@@ -708,10 +712,10 @@ public class PanelGarante extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldBuscarKeyTyped
 
     private void jTableGaranteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableGaranteMouseClicked
-        try{
-            int fila = jTableGarante.getSelectedRow();
-            
-            if(fila >= 0){
+        int fila = jTableGarante.getSelectedRow();
+
+        if(fila >= 0){
+            try{
                 idGarante = Long.parseLong(tablaGarante.getValueAt(fila, 0).toString());
 
                 if(evt.getClickCount() == 1){
@@ -720,9 +724,11 @@ public class PanelGarante extends javax.swing.JPanel {
                     cargarPanelDatos(idGarante);
                     eliminar = false;
                 }
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+e);
             }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Debe clickear una fila.");
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe cliquear una fila válida.");
         }
     }//GEN-LAST:event_jTableGaranteMouseClicked
 
@@ -731,42 +737,46 @@ public class PanelGarante extends javax.swing.JPanel {
             limpiarTabla(tablaGarante);
         }
         
-        List<Logica.Inquilino> inquilinosEdificio = new LinkedList();
-        Object datos[] = new Object[10];
-        
-        if(!buscar.isEmpty()){
-            List<Logica.Inquilino> inquilinos = unaControladora.obtenerInquilinosEdificio(idEdificio);
+        if(unaControladora.obtenerInquilinosEdificio(idEdificio).size() > 0){
+            List<Logica.Inquilino> inquilinosEdificio = new LinkedList();
             
-            for(Logica.Inquilino unInquilino : inquilinos){
-                if(unInquilino.getUnGarante() != null){
-                    if(unInquilino.getUnGarante().getApellido().equals(buscar)){
-                        inquilinosEdificio.add(unInquilino);
+            if(!buscar.isEmpty()){
+                for(Logica.Inquilino unInquilino : unaControladora.obtenerInquilinosEdificio(idEdificio)){
+                    if(unInquilino.getUnGarante() != null){
+                        if(unInquilino.getUnGarante().getApellido().equals(buscar)){
+                            inquilinosEdificio.add(unInquilino);
+                        }
                     }
                 }
+                
+                if(inquilinosEdificio.size() < 1){
+                    JOptionPane.showMessageDialog(null, "No se ha encontrado el Garante: "+buscar);
+                    inquilinosEdificio = unaControladora.obtenerInquilinosEdificio(idEdificio);
+                }
+            }else{
+                inquilinosEdificio = unaControladora.obtenerInquilinosEdificio(idEdificio);
             }
-        }
-        
-        if(inquilinosEdificio.isEmpty()){
-            inquilinosEdificio = unaControladora.obtenerInquilinosEdificio(idEdificio);
-        }
-        
-        for(Logica.Inquilino unInquilino : inquilinosEdificio){
-            if(unInquilino.getUnGarante() != null){
-                datos[0] = unInquilino.getUnGarante().getId();
-                datos[1] = unInquilino.getUnGarante().getApellido();
-                datos[2] = unInquilino.getUnGarante().getNombre();
-                datos[3] = unInquilino.getUnGarante().getDni();
-                datos[4] = unInquilino.getUnGarante().getCuit();
-                datos[5] = unInquilino.getUnGarante().getDireccion();
-                datos[6] = unInquilino.getUnGarante().getTelefono();
-                datos[7] = unInquilino.getUnGarante().getEmail();
-                datos[8] = unInquilino.getApellido()+", "+unInquilino.getNombre();
-                datos[9] = unInquilino.getUnGarante().getDescripcion();
+            
+            Object datos[] = new Object[10];
+            for(Logica.Inquilino unInquilino : inquilinosEdificio){
+                if(unInquilino.getUnGarante() != null){
+                    datos[0] = unInquilino.getUnGarante().getId();
+                    datos[1] = unInquilino.getUnGarante().getApellido();
+                    datos[2] = unInquilino.getUnGarante().getNombre();
+                    datos[3] = unInquilino.getUnGarante().getDni();
+                    datos[4] = unInquilino.getUnGarante().getCuit();
+                    datos[5] = unInquilino.getUnGarante().getDireccion();
+                    datos[6] = unInquilino.getUnGarante().getTelefono();
+                    datos[7] = unInquilino.getUnGarante().getEmail();
+                    datos[8] = unInquilino.getApellido()+", "+unInquilino.getNombre();
+                    datos[9] = unInquilino.getUnGarante().getDescripcion();
 
-                tablaGarante.addRow(datos);
+                    tablaGarante.addRow(datos);
+                }
             }
+            
+            this.jTableGarante.setModel(tablaGarante);
         }
-        this.jTableGarante.setModel(tablaGarante);
     }
     
     private void limpiarTabla(DefaultTableModel tablaGarante){
