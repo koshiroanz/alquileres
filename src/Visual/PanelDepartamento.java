@@ -11,12 +11,12 @@ import javax.swing.table.DefaultTableModel;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
 
-public class PanelDepartamento extends javax.swing.JPanel {
+public final class PanelDepartamento extends javax.swing.JPanel {
     private final long idEdificio;
     private long idDepartamento = 0;
     private boolean modificar = false, eliminar = false;
     private final ControladoraV unaControladora = new ControladoraV();
-    private final String colTablaDepartamento[] = {"Id", "Ubicación", "N° Dormitorios"};
+    private final String colTablaDepartamento[] = {"Id", "Ubicación", "N° Dormitorios", "Descripción"};
     private final DefaultTableModel tablaDepartamento = new DefaultTableModel(null, colTablaDepartamento);
     
     public PanelDepartamento(long idEdificio) {
@@ -47,8 +47,6 @@ public class PanelDepartamento extends javax.swing.JPanel {
         jSeparator2 = new javax.swing.JSeparator();
         jLabelUbicacion = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableDepartamento = new javax.swing.JTable();
         jTextFieldBuscar = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
@@ -58,6 +56,8 @@ public class PanelDepartamento extends javax.swing.JPanel {
         jLabelAceptar = new javax.swing.JLabel();
         jPanelButtonBuscar = new javax.swing.JPanel();
         jLabelBuscar = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableDepartamento = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(204, 204, 255));
 
@@ -196,38 +196,11 @@ public class PanelDepartamento extends javax.swing.JPanel {
                         .addGap(0, 0, 0)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setPreferredSize(new java.awt.Dimension(890, 315));
-
-        jScrollPane1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-
-        jTableDepartamento.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jTableDepartamento = new javax.swing.JTable(){
-            public boolean isCellEditable(int row, int col){
-                return false;
-            }
-        };
-        jTableDepartamento.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTableDepartamento.getTableHeader().setReorderingAllowed(false);
-        jTableDepartamento.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableDepartamentoMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTableDepartamento);
 
         jTextFieldBuscar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jTextFieldBuscar.setText("Ingrese una ubicación para buscar");
@@ -363,6 +336,29 @@ public class PanelDepartamento extends javax.swing.JPanel {
             .addComponent(jLabelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
         );
 
+        jTableDepartamento = new javax.swing.JTable(){
+            public boolean isCellEditable(int row, int col){
+                return false;
+            }
+        };
+        jTableDepartamento.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTableDepartamento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDepartamentoMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTableDepartamento);
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -376,13 +372,13 @@ public class PanelDepartamento extends javax.swing.JPanel {
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanelButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
                             .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane3))))
                 .addGap(22, 22, 22))
         );
         jPanel9Layout.setVerticalGroup(
@@ -392,13 +388,11 @@ public class PanelDepartamento extends javax.swing.JPanel {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanelButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -413,7 +407,7 @@ public class PanelDepartamento extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -464,21 +458,6 @@ public class PanelDepartamento extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
 
-    private void jTableDepartamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDepartamentoMouseClicked
-        int fila = jTableDepartamento.getSelectedRow();
-        
-        if(fila >= 0){
-            idDepartamento = Long.parseLong(tablaDepartamento.getValueAt(fila, 0).toString());
-        
-            if(evt.getClickCount() == 1){
-                eliminar = true;
-            }else if(evt.getClickCount() == 2){
-                cargarPanelDatos(idDepartamento);
-                eliminar = false;
-            }
-        }
-    }//GEN-LAST:event_jTableDepartamentoMouseClicked
-
     private void jPanelButtonEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseClicked
         if(eliminar){
             try{
@@ -520,11 +499,14 @@ public class PanelDepartamento extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonRefreshMouseClicked
 
     private void jPanelButtonBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonBuscarMouseClicked
-        if(jTextFieldBuscar.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe ingresar una ubicación para buscar.");
-            jTextFieldBuscar.requestFocus();
+        if(!jTextFieldBuscar.getText().equals("Ingrese una ubicación para buscar")){
+            if(!jTextFieldBuscar.getText().isEmpty()){
+                cargarTablaDepartamento(jTextFieldBuscar.getText().toUpperCase());
+            }else{
+                JOptionPane.showMessageDialog(null, "Ingrese una ubicación para buscar");
+            }
         }else{
-            cargarTablaDepartamento(jTextFieldBuscar.getText().toUpperCase());
+            JOptionPane.showMessageDialog(null, "Ingrese una ubicación para buscar");
         }
     }//GEN-LAST:event_jPanelButtonBuscarMouseClicked
 
@@ -551,11 +533,26 @@ public class PanelDepartamento extends javax.swing.JPanel {
             evt.consume();
         }
     }//GEN-LAST:event_jTextFieldUbicacionKeyTyped
+
+    private void jTableDepartamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDepartamentoMouseClicked
+        int fila = jTableDepartamento.getSelectedRow();
+        
+        if(fila >= 0){
+            idDepartamento = Long.parseLong(tablaDepartamento.getValueAt(fila, 0).toString());
+        
+            if(evt.getClickCount() == 1){
+                eliminar = true;
+            }else if(evt.getClickCount() == 2){
+                cargarPanelDatos(idDepartamento);
+                eliminar = false;
+            }
+        }
+    }//GEN-LAST:event_jTableDepartamentoMouseClicked
     
     public void cargarTablaDepartamento(String buscar){
         limpiarComponentes();
         List<Logica.Departamento> departamentos = new LinkedList();
-        String datos[] = new String[3];
+        Object datos[] = new Object[4];
         
         if(!buscar.isEmpty()){
             for(Logica.Departamento unDepartamento : unaControladora.obtenerEdificio(idEdificio).getDepartamentos()){
@@ -565,7 +562,7 @@ public class PanelDepartamento extends javax.swing.JPanel {
             }
             
             if(departamentos.isEmpty()){
-                JOptionPane.showMessageDialog(null, "No se ha encontrado el Departamento.");
+                JOptionPane.showMessageDialog(null, "No se ha encontrado el Departamento: "+buscar);
                 departamentos = unaControladora.obtenerEdificio(idEdificio).getDepartamentos();
             }
         }else{
@@ -574,9 +571,10 @@ public class PanelDepartamento extends javax.swing.JPanel {
         
         if(departamentos.size() > 0){
             for(Logica.Departamento unDepartamento : departamentos){
-                datos[0] = String.valueOf(unDepartamento.getId());
+                datos[0] = unDepartamento.getId();
                 datos[1] = unDepartamento.getUbicacion();
-                datos[2] = String.valueOf(unDepartamento.getCantDormitorios());
+                datos[2] = unDepartamento.getCantDormitorios();
+                datos[3] = unDepartamento.getDescripcion();
 
                 tablaDepartamento.addRow(datos);
             }
@@ -592,6 +590,7 @@ public class PanelDepartamento extends javax.swing.JPanel {
         Logica.Edificio unEdificio = unaControladora.obtenerEdificioSegunDepartamento(idDepartamento);
         
         this.jTextFieldUbicacion.setText(unDepartamento.getUbicacion());
+        this.jTextAreaDescripcion.setText(unDepartamento.getDescripcion());
         this.jTextFieldNumDormitorios.setText(String.valueOf(unDepartamento.getCantDormitorios()));
         this.jTextFieldEdificio.setText("  "+unEdificio.getNombre());
         this.jTextFieldNumDormitorios.setText(String.valueOf(unDepartamento.getCantDormitorios()));
@@ -625,9 +624,10 @@ public class PanelDepartamento extends javax.swing.JPanel {
     public void limpiarComponentes(){
         this.jTextFieldUbicacion.setText(null);
         this.jTextFieldNumDormitorios.setText(null);
+        this.jTextAreaDescripcion.setText(null);
         this.jTextFieldBuscar.setText("Ingrese una ubicación para buscar");
         this.jLabelAceptar.setText("Aceptar");
-        jTextFieldEdificio.setText("  "+unaControladora.obtenerEdificio(idEdificio).getNombre());
+        this.jTextFieldEdificio.setText("  "+unaControladora.obtenerEdificio(idEdificio).getNombre());
         limpiarTabla();
         
         icono("afuera");
@@ -685,8 +685,8 @@ public class PanelDepartamento extends javax.swing.JPanel {
     private javax.swing.JPanel jPanelButtonBuscar;
     private javax.swing.JPanel jPanelButtonEliminar;
     private javax.swing.JPanel jPanelButtonRefresh;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparatorNumDormitorios;
