@@ -12,6 +12,7 @@ import static java.awt.event.KeyEvent.VK_MINUS;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_PERIOD;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
+import java.util.LinkedList;
 
 public class PanelGarante extends javax.swing.JPanel {
     private final long idEdificio;
@@ -36,8 +37,6 @@ public class PanelGarante extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jTextFieldBuscar = new javax.swing.JTextField();
         jSeparatorBuscar = new javax.swing.JSeparator();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableGarante = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jPanelButtonEliminar = new javax.swing.JPanel();
         jLabelEliminar = new javax.swing.JLabel();
@@ -45,6 +44,8 @@ public class PanelGarante extends javax.swing.JPanel {
         jLabelAceptar = new javax.swing.JLabel();
         jPanelButtonBuscar = new javax.swing.JPanel();
         jLabelBuscar = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableGarante = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabelTitutlo = new javax.swing.JLabel();
         jLabelNombre = new javax.swing.JLabel();
@@ -87,33 +88,11 @@ public class PanelGarante extends javax.swing.JPanel {
                 jTextFieldBuscarMouseClicked(evt);
             }
         });
-
-        jScrollPane1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-
-        jTableGarante.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jTableGarante = new javax.swing.JTable(){
-            public boolean isCellEditable(int row, int col){
-                return false;
-            }
-        };
-        jTableGarante.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTableGarante.setPreferredSize(new java.awt.Dimension(300, 212));
-        jTableGarante.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableGaranteMouseClicked(evt);
+        jTextFieldBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldBuscarKeyTyped(evt);
             }
         });
-        jScrollPane1.setViewportView(jTableGarante);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -243,15 +222,35 @@ public class PanelGarante extends javax.swing.JPanel {
             .addComponent(jLabelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
         );
 
+        jTableGarante = new javax.swing.JTable(){
+            public boolean isCellEditable(int row, int col){
+                return false;
+            }
+        };
+        jTableGarante.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTableGarante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableGaranteMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTableGarante);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap(609, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -261,7 +260,10 @@ public class PanelGarante extends javax.swing.JPanel {
                                     .addComponent(jSeparatorBuscar)
                                     .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanelButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jPanelButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jScrollPane3)))
                 .addGap(22, 22, 22))
         );
         jPanel2Layout.setVerticalGroup(
@@ -273,8 +275,8 @@ public class PanelGarante extends javax.swing.JPanel {
                     .addComponent(jTextFieldBuscar))
                 .addGap(0, 0, 0)
                 .addComponent(jSeparatorBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -396,6 +398,11 @@ public class PanelGarante extends javax.swing.JPanel {
 
         jTextFieldTelefono.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldTelefono.setBorder(null);
+        jTextFieldTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldTelefonoKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -422,7 +429,7 @@ public class PanelGarante extends javax.swing.JPanel {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jSeparatorDireccion)
                                     .addComponent(jSeparatorNombre)
-                                    .addComponent(jScrollPane2)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
                                     .addComponent(jTextFieldEmail)
                                     .addComponent(jTextFieldNombre, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jTextFieldDni, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -443,7 +450,7 @@ public class PanelGarante extends javax.swing.JPanel {
                             .addComponent(jSeparatorApellido)
                             .addComponent(jSeparatorCuit)
                             .addComponent(jSeparatorTelefono)
-                            .addComponent(jComboBoxInquilino, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jComboBoxInquilino, 0, 238, Short.MAX_VALUE))))
                 .addGap(22, 22, 22))
         );
         jPanel1Layout.setVerticalGroup(
@@ -512,7 +519,7 @@ public class PanelGarante extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -574,22 +581,6 @@ public class PanelGarante extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
 
-    private void jTableGaranteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableGaranteMouseClicked
-        try{
-            int fila = jTableGarante.getSelectedRow();
-            idGarante = Long.parseLong(tablaGarante.getValueAt(fila, 0).toString());
-
-            if(evt.getClickCount() == 1){
-                eliminar = true;
-            }else if(evt.getClickCount() == 2){
-                cargarPanelDatos(idGarante);
-                eliminar = false;
-            }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Debe clickear una fila.");
-        }
-    }//GEN-LAST:event_jTableGaranteMouseClicked
-
     private void jPanelButtonEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseClicked
         if(eliminar){
             try{
@@ -604,7 +595,6 @@ public class PanelGarante extends javax.swing.JPanel {
                     unaControladora.bajaGarante(idGarante, idInqui);
                     cargarTablaGarante("");
                     cargarComboInquilino(idEdificio);
-                    JOptionPane.showMessageDialog(null, "Se ha eliminado exitosamente.");
                     eliminar = false;
                 }
             }catch(Exception e){
@@ -663,14 +653,14 @@ public class PanelGarante extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldCuitKeyTyped
 
     private void jTextFieldNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNombreKeyTyped
-        if(!Character.isLetterOrDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
+        if(!Character.isLetter(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
             getToolkit().beep();
             evt.consume();
         }
     }//GEN-LAST:event_jTextFieldNombreKeyTyped
 
     private void jTextFieldApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldApellidoKeyTyped
-        if(!Character.isLetterOrDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
+        if(!Character.isLetter(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
             getToolkit().beep();
             evt.consume();
         }
@@ -703,63 +693,80 @@ public class PanelGarante extends javax.swing.JPanel {
         this.jLabelBuscar.setIcon(buscar);
     }//GEN-LAST:event_jPanelButtonBuscarMouseExited
 
+    private void jTextFieldTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldTelefonoKeyTyped
+        if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_MINUS) && (evt.getKeyChar() != VK_BACK_SPACE)){
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldTelefonoKeyTyped
+
+    private void jTextFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBuscarKeyTyped
+        if(!Character.isLetter(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldBuscarKeyTyped
+
+    private void jTableGaranteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableGaranteMouseClicked
+        try{
+            int fila = jTableGarante.getSelectedRow();
+            
+            if(fila >= 0){
+                idGarante = Long.parseLong(tablaGarante.getValueAt(fila, 0).toString());
+
+                if(evt.getClickCount() == 1){
+                    eliminar = true;
+                }else if(evt.getClickCount() == 2){
+                    cargarPanelDatos(idGarante);
+                    eliminar = false;
+                }
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Debe clickear una fila.");
+        }
+    }//GEN-LAST:event_jTableGaranteMouseClicked
+
     private void cargarTablaGarante(String buscar){
         if(tablaGarante.getRowCount() > 0){
             limpiarTabla(tablaGarante);
         }
         
-        List<Logica.Departamento> departamentosEdificio = unaControladora.obtenerEdificio(idEdificio).getDepartamentos();
-        String datos[] = new String[10];
+        List<Logica.Inquilino> inquilinosEdificio = new LinkedList();
+        Object datos[] = new Object[10];
         
         if(!buscar.isEmpty()){
-            for(Logica.Departamento unDepartamento : departamentosEdificio){
-                if(unDepartamento.getUnInquilino() != null){
-                    if(unDepartamento.getUnInquilino().getUnGarante() != null){
-                        if(unDepartamento.getUnInquilino().getUnGarante().getApellido() == buscar){
-                            datos[0] = String.valueOf(unDepartamento.getUnInquilino().getUnGarante().getId());
-                            datos[1] = unDepartamento.getUnInquilino().getUnGarante().getApellido();
-                            datos[2] = unDepartamento.getUnInquilino().getUnGarante().getNombre();
-                            datos[3] = unDepartamento.getUnInquilino().getUnGarante().getDni();
-                            datos[4] = unDepartamento.getUnInquilino().getUnGarante().getCuit();
-                            datos[5] = unDepartamento.getUnInquilino().getUnGarante().getDireccion();
-                            datos[6] = unDepartamento.getUnInquilino().getUnGarante().getTelefono();
-                            datos[7] = unDepartamento.getUnInquilino().getUnGarante().getEmail();
-                            datos[8] = unDepartamento.getUnInquilino().getApellido()+", "+unDepartamento.getUnInquilino().getNombre();
-                            datos[9] = unDepartamento.getUnInquilino().getUnGarante().getDescripcion();
-
-                            tablaGarante.addRow(datos);
-                        }
+            List<Logica.Inquilino> inquilinos = unaControladora.obtenerInquilinosEdificio(idEdificio);
+            
+            for(Logica.Inquilino unInquilino : inquilinos){
+                if(unInquilino.getUnGarante() != null){
+                    if(unInquilino.getUnGarante().getApellido().equals(buscar)){
+                        inquilinosEdificio.add(unInquilino);
                     }
                 }
             }
-            
-            this.jTableGarante.setModel(tablaGarante);
-            
-        }else{
-            if(departamentosEdificio.size() > 0){
-                for(Logica.Departamento unDepartamento : departamentosEdificio){
-                    if(unDepartamento.getUnInquilino() != null){
-                        if(unDepartamento.getUnInquilino().getUnGarante() != null){
-                            datos[0] = String.valueOf(unDepartamento.getUnInquilino().getUnGarante().getId());
-                            datos[1] = unDepartamento.getUnInquilino().getUnGarante().getApellido();
-                            datos[2] = unDepartamento.getUnInquilino().getUnGarante().getNombre();
-                            datos[3] = unDepartamento.getUnInquilino().getUnGarante().getDni();
-                            datos[4] = unDepartamento.getUnInquilino().getUnGarante().getCuit();
-                            datos[5] = unDepartamento.getUnInquilino().getUnGarante().getDireccion();
-                            datos[6] = unDepartamento.getUnInquilino().getUnGarante().getTelefono();
-                            datos[7] = unDepartamento.getUnInquilino().getUnGarante().getEmail();
-                            datos[8] = unDepartamento.getUnInquilino().getApellido()+", "+unDepartamento.getUnInquilino().getNombre();
-                            datos[9] = unDepartamento.getUnInquilino().getUnGarante().getDescripcion();
-
-                            tablaGarante.addRow(datos);
-                        }
-                    }
-                }
-            
-                this.jTableGarante.setModel(tablaGarante);
-            }
-            
         }
+        
+        if(inquilinosEdificio.isEmpty()){
+            inquilinosEdificio = unaControladora.obtenerInquilinosEdificio(idEdificio);
+        }
+        
+        for(Logica.Inquilino unInquilino : inquilinosEdificio){
+            if(unInquilino.getUnGarante() != null){
+                datos[0] = unInquilino.getUnGarante().getId();
+                datos[1] = unInquilino.getUnGarante().getApellido();
+                datos[2] = unInquilino.getUnGarante().getNombre();
+                datos[3] = unInquilino.getUnGarante().getDni();
+                datos[4] = unInquilino.getUnGarante().getCuit();
+                datos[5] = unInquilino.getUnGarante().getDireccion();
+                datos[6] = unInquilino.getUnGarante().getTelefono();
+                datos[7] = unInquilino.getUnGarante().getEmail();
+                datos[8] = unInquilino.getApellido()+", "+unInquilino.getNombre();
+                datos[9] = unInquilino.getUnGarante().getDescripcion();
+
+                tablaGarante.addRow(datos);
+            }
+        }
+        this.jTableGarante.setModel(tablaGarante);
     }
     
     private void limpiarTabla(DefaultTableModel tablaGarante){
@@ -783,7 +790,6 @@ public class PanelGarante extends javax.swing.JPanel {
         }else{
             comboInquilino.addElement("Sin inquilino");
         }
-        
         
         this.jComboBoxInquilino.setModel(comboInquilino);
     }
@@ -830,7 +836,7 @@ public class PanelGarante extends javax.swing.JPanel {
             inquilino = true;
         }
         
-        if(!jTextFieldNombre.getText().isEmpty() && !jTextFieldApellido.getText().isEmpty() && !jTextFieldDni.getText().isEmpty() && !jTextFieldCuit.getText().isEmpty() && !jTextFieldDireccion.getText().isEmpty() && !jTextFieldTelefono.getText().isEmpty() && inquilino){
+        if(!jTextFieldNombre.getText().isEmpty() && !jTextFieldApellido.getText().isEmpty() && !jTextFieldDni.getText().isEmpty() && !jTextFieldTelefono.getText().isEmpty() && inquilino){
             if(!modificar){
                 boolean existeGarante = unaControladora.existeGarante(jTextFieldDni.getText(), this.idEdificio);
                 if(existeGarante){
@@ -847,6 +853,8 @@ public class PanelGarante extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Debe completar el campo: APELLIDO.");
         }else if(jTextFieldDni.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Debe completar el campo: DNI.");
+        }else if(jTextFieldTelefono.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: TELEFONO.");
         }else if(!inquilino){
             JOptionPane.showMessageDialog(null, "Debe seleccionar un Inquilino.");
         }
@@ -858,6 +866,7 @@ public class PanelGarante extends javax.swing.JPanel {
         modificar = false;
         eliminar = false;
         
+        this.jLabelAceptar.setText("Aceptar");
         this.jTextFieldNombre.setText(null);
         this.jTextFieldApellido.setText(null);
         this.jTextFieldDni.setText(null);
@@ -895,8 +904,8 @@ public class PanelGarante extends javax.swing.JPanel {
     private javax.swing.JPanel jPanelButtonBuscar;
     private javax.swing.JPanel jPanelButtonEliminar;
     private javax.swing.JPanel jPanelButtonRefrescar;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparatorApellido;
     private javax.swing.JSeparator jSeparatorBuscar;
     private javax.swing.JSeparator jSeparatorCuit;
