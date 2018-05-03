@@ -403,8 +403,8 @@ public class ControladoraL {
         int i = 0;
         
         while(unCoeficienteDorm != null){
-            if(unEdificio.getCocheras().get(i).getId() == unCoeficienteDorm.getId()){
-                unEdificio.getCocheras().remove(i);
+            if(unEdificio.getCoeficientesDorm().get(i).getId() == unCoeficienteDorm.getId()){
+                unEdificio.getCoeficientesDorm().remove(i);
                 unCoeficienteDorm = null;
             }
             i++;
@@ -522,15 +522,16 @@ public class ControladoraL {
         int i = 0, tam = departamentos.size();
         
         while(i < tam){
-            if(departamentos.get(i) != null){
+            if(departamentos.get(i).getUnInquilino() != null){
                 if(departamentos.get(i).getUnInquilino().getId() == idInquilino){
                     unDepartamento = departamentos.get(i);
                     i = tam;
                 }else{
                     i++;
                 }
+            }else{
+                i++;
             }
-            
         }
         
         return unDepartamento;
@@ -1440,7 +1441,7 @@ public class ControladoraL {
         
         while(unServicio != null){
             if(unEdificio.getServicios().get(i).getId() == unServicio.getId()){
-                unEdificio.getDepartamentos().remove(i);
+                unEdificio.getServicios().remove(i);
                 unServicio = null;
             }
             i++;
