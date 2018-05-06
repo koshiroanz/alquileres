@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import Logica.ControladoraL;
 import Logica.CoeficienteDorm;
+import Logica.ServicioExpensa;
 import Persistencia.exceptions.NonexistentEntityException;
 
 public class ControladoraV {
@@ -379,15 +380,19 @@ public class ControladoraV {
     public List<Logica.Inquilino> obtenerInquilinosSinAlquiler(long idEdificio){
         return unaControladora.obtenerInquilinosSinAlquiler(idEdificio);
     }
+    
+    public Logica.Inquilino obtenerInquilinoPago(long idEdificio, long idPago){
+        return unaControladora.obtenerInquilinoPago(idEdificio, idPago);
+    }
 /*------------------------------------------------------------------------------
                                 PAGO
 ------------------------------------------------------------------------------*/
-    public void altaPago(Date fecha, float efectivo, float tarjeta, float banco, float saldo, float interesPorAtraso, float monto, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
-        unaControladora.altaPago(fecha, efectivo, tarjeta, banco, saldo, interesPorAtraso, monto, descripcion, idAlquiler, idExpensa, idInquilino);
+    public void altaPago(Date fecha, float efectivo, float tarjeta, float banco, float saldoMesAnt, float interesPorAtraso, float monto, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
+        unaControladora.altaPago(fecha, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, monto, descripcion, idAlquiler, idExpensa, idInquilino);
     }
     
-    public void modificarPago(long idPago, Date fecha, float efectivo, float tarjeta, float banco, float saldo, float interesPorAtraso, float monto, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
-        unaControladora.modificarPago(idPago, fecha, efectivo, tarjeta, banco, saldo, interesPorAtraso, monto, descripcion, idAlquiler, idExpensa, idInquilino);
+    public void modificarPago(long idPago, Date fecha, float efectivo, float tarjeta, float banco, float saldoMesAnt, float interesPorAtraso, float monto, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
+        unaControladora.modificarPago(idPago, fecha, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, monto, descripcion, idAlquiler, idExpensa, idInquilino);
     }
     
     public void bajaPago(long idPago) throws Exception{
@@ -448,4 +453,16 @@ public class ControladoraV {
     /*public boolean existeServicio(String nombreServicio, long idEdificio){
         return unaControladora.existeServicio(nombreServicio, idEdificio);
     }*/
+    
+/*------------------------------------------------------------------------------
+                                SERVICIOEXPENSA
+------------------------------------------------------------------------------*/
+    
+    Logica.ServicioExpensa cargarListaServicioExpensa(String nombre, int mes, int anio, float monto, String descripcion) throws Exception{
+        return unaControladora.cargarListaServicioExpensa(nombre, mes, anio, monto, descripcion);
+    }
+    
+    List<Logica.ServicioExpensa> obtenerServiciosExpensaDepartamento(Logica.Departamento unDepartamento, int mes, int anio){
+        return unaControladora.obtenerServiciosExpensaDepartamento(unDepartamento, mes, anio);
+    }
 }
