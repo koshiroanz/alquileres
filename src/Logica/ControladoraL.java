@@ -2,10 +2,10 @@ package Logica;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Calendar;
 import java.util.LinkedList;
 import Persistencia.ControladoraP;
 import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 
 public class ControladoraL {
     
@@ -203,8 +203,8 @@ public class ControladoraL {
         Date fecha = new Date();
         int mesAlquiler, anioAlquiler,
             mesActual = Integer.valueOf(monthFormat.format(fecha))-1,
-            anioActual = Integer.valueOf(monthFormat.format(fecha));
-        Alquiler unAlquiler = null;
+            anioActual = Integer.valueOf(yearFormat.format(fecha));
+        Alquiler unAlquiler;
         
         List<Inquilino> inquilinos = obtenerInquilinos();
         
@@ -221,17 +221,24 @@ public class ControladoraL {
                     anioAlquiler = Integer.valueOf(yearFormat.format(unAlquiler.fecha));
                     
                     if(mesAlquiler == mesActual && anioAlquiler == anioActual){
-                        Alquiler nuevoAlquiler = unAlquiler;
-                        nuevoAlquiler.setGeneracionAuto(unAlquiler.getGeneracionAuto()+1);
-                        nuevoAlquiler.setUnPago(null);
-                        nuevoAlquiler.setFecha(fecha);
+                        Alquiler nuevoAlquiler = new Alquiler();
                         
+                        nuevoAlquiler.setFecha(fecha);
+                        nuevoAlquiler.setIdCochera(unAlquiler.getCochera());
+                        nuevoAlquiler.setIdDepartamento(unAlquiler.getDepartamento());
+                        nuevoAlquiler.setGeneracionAuto(unAlquiler.getGeneracionAuto()+1);
+                        nuevoAlquiler.setMonto(unAlquiler.getMonto());
+                        nuevoAlquiler.setOtraFactura(unAlquiler.getOtraFactura());
+                        nuevoAlquiler.setTotal(unAlquiler.getTotal());
+                        nuevoAlquiler.setDescripcion(unAlquiler.getDescripcion());
+                        nuevoAlquiler.setUnPago(null);
+                        
+                        unaControladora.altaAlquiler(nuevoAlquiler);
                         //
                         List<Alquiler> alquileresInquilino = unInquilino.getAlquileres();
                         alquileresInquilino.add(nuevoAlquiler);
                         unInquilino.setAlquileres(alquileresInquilino);
-                        //unaControladora.modificarInquilino(unInquilino);
-                        //
+                        unaControladora.modificarInquilino(unInquilino);
                         cantAlquileresGenerados++;
                     }
                 }
@@ -564,12 +571,10 @@ public class ControladoraL {
     
     // Modifiqué este método porque trae mal las expensas..
     public List <Departamento> departamentosSinExpensas(int mes, long idEdificio){
-        
         Date fechaActual = new Date();
         SimpleDateFormat formatoAnio = new SimpleDateFormat("yyyy");
-        int anioActual = Integer.valueOf(formatoAnio.format(fechaActual)), tamExpensas = 0;
+        int anioActual = Integer.valueOf(formatoAnio.format(fechaActual)), tamExpensas;
         List <Departamento> departamentos = obtenerEdificio(idEdificio).getDepartamentos();
-        //List <Departamento> departamentosFinal = obtenerEdificio(idEdificio).getDepartamentos();
         List<Departamento> departamentosSinExpensa = new LinkedList();
         boolean tieneEsteMes = false;
         
@@ -594,6 +599,9 @@ public class ControladoraL {
                 departamentosSinExpensa.add(unDepartamento); 
             }
             
+            /*for(Departamento unDept : ordenarPorUbicacion(departamentosSinExpensa)){
+                System.out.println("Ubicación: "+unDept.getUbicacion());
+            }*/
             /*
             for(Expensa unaExpensa : unDepartamento.getExpensas()){
                 if(unaExpensa.getMes() == mes && unaExpensa.getAnio() == anioActual){
@@ -607,6 +615,25 @@ public class ControladoraL {
         return departamentosSinExpensa;
         //return departamentosFinal;
     }
+    
+    /*public List<Departamento> ordenarPorUbicacion(List<Departamento> departamentos){
+        int tam = departamentos.size();
+        List<Departamento> departamentosOrdenados = new LinkedList();
+        
+        for(int i = 0; i < tam; i++){
+            for(int j = 0; j < tam; j++){                    
+                if(departamentos.get(i).getUbicacion().compareTo(departamentos.get(j).getUbicacion()) < 0){
+                    //JOptionPane.showMessageDialog(null, "Ubicación: "+departamentos.get(i)+" es menor a Ubicación: "+departamentos.get(j));
+                    
+                }else if(departamentos.get(i).getUbicacion().compareTo(departamentos.get(j).getUbicacion()) > 0){
+                    //JOptionPane.showMessageDialog(null, "Ubicación: "+departamentos.get(i)+" es mayor a Ubicación: "+departamentos.get(j));
+                    departamentosOrdenados.add(departamentos.get(j));
+                }
+            }
+        }
+        
+        return departamentosOrdenados;
+    }*/
     
     public Departamento obtenerDepartamentoPorExpensa(long idEdificio, long idExpensa){
         int i = 0, j = 0;
@@ -835,10 +862,10 @@ public class ControladoraL {
     public List <ServicioExpensa> calcularExpensa(long idEdificio, Departamento unDepartamento, int mes, int anio, boolean alta) throws Exception{
         List <ServicioExpensa> expensas = new LinkedList();
         List <Servicio> serviciosEdif = obtenerEdificio(idEdificio).getServicios();
-        float importeServicio = 0,
+        float importeServicio,
                coeficiente = obtenerCoeficienteDorm(idEdificio,unDepartamento).getValor(),
-               montoExpensa = 0;
-        float porcentajeDeptosOcupados = 0;
+               montoExpensa;
+        float porcentajeDeptosOcupados;
         int cantDeptos = obtenerEdificio(idEdificio).getDepartamentos().size(), 
             cantDeptosOcupados = departamentosOcupados(idEdificio);
         
@@ -914,7 +941,7 @@ public class ControladoraL {
     }
     
     public Expensa obtenerExpensa(long idDepartamento, int mesAlquiler, int anioAlquiler){
-        Expensa unaExpensa = new Expensa();
+        Expensa unaExpensa = null;
         mesAlquiler = mesAlquiler - 1;
         
         if(mesAlquiler == 0){
@@ -934,7 +961,7 @@ public class ControladoraL {
     // SE OCUPA PARA COMPROBAR LA EXISTENCIA EN PANEL EXPENSA
     public boolean existeExpensa(long idDepto, int mesExpensa, int anioExpensa){
         boolean respuesta = false;
-        Departamento unDepto = null;
+        Departamento unDepto;
         int i = 0;
         unDepto = obtenerDepartamento(idDepto);
         
@@ -1321,16 +1348,36 @@ public class ControladoraL {
         
         return respuesta;
     }
+    
+    public Inquilino obtenerInquilinoPago(long idEdificio, long idPago){
+        Inquilino unInquilino = new Inquilino();
+        List<Inquilino> inquilinos = obtenerInquilinosEdificio(idEdificio);
+        
+        for(Inquilino unInqui : inquilinos){
+            if(unInqui.getAlquileres().size() > 0){
+                for(Alquiler unAlquiler : unInqui.getAlquileres()){
+                    if(unAlquiler.getUnPago() != null){
+                        if(unAlquiler.getUnPago().getId() == idPago){
+                            unInquilino = unInqui;
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        return unInquilino;
+    }
 /*------------------------------------------------------------------------------
                                 PAGO
 ------------------------------------------------------------------------------*/
-    public void altaPago(Date fecha, float efectivo, float tarjeta, float banco, float saldo, float interesPorAtraso, float monto, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
-        Pago unPago = new Pago(fecha, efectivo, tarjeta, banco, saldo, interesPorAtraso, monto, descripcion, idAlquiler, idExpensa);
+    public void altaPago(Date fecha, float efectivo, float tarjeta, float banco, float saldoMesAnt, float interesPorAtraso, float monto, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
+        Pago unPago = new Pago(fecha, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, monto, descripcion, idAlquiler, idExpensa);
         
         unaControladora.altaPago(unPago);
         
         Inquilino unInquilino = obtenerInquilino(idInquilino);
-        unInquilino.setSaldoMesAnt(saldo);
+        unInquilino.setSaldoMesAnt(saldoMesAnt);
         unaControladora.modificarInquilino(unInquilino);
         
         Alquiler unAlquiler = obtenerAlquiler(idAlquiler);
@@ -1338,14 +1385,18 @@ public class ControladoraL {
         unaControladora.modificarAlquiler(unAlquiler);
     }
     
-    public void modificarPago(long idPago, Date fecha, float efectivo, float tarjeta, float banco, float saldo, float interesPorAtraso, float monto, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
+    public void modificarPago(long idPago, Date fecha, float efectivo, float tarjeta, float banco, float saldoMesAnt, float interesPorAtraso, float monto, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
+        Inquilino unInquilino = obtenerInquilino(idInquilino);
+        unInquilino.setSaldoMesAnt(saldoMesAnt);
+        unaControladora.modificarInquilino(unInquilino);
+        
         Pago unPago = obtenerPago(idPago);
         
         unPago.setFecha(fecha);
         unPago.setEfectivo(efectivo);
         unPago.setTarjeta(tarjeta);
         unPago.setBanco(banco);
-        unPago.setSaldo(saldo);
+        unPago.setSaldo(saldoMesAnt);
         unPago.setInteresPorAtraso(interesPorAtraso);
         unPago.setMonto(monto);
         unPago.setDescripcion(descripcion);
@@ -1358,7 +1409,8 @@ public class ControladoraL {
     public void bajaPago(long idPago) throws Exception{
         Alquiler unAlquiler = obtenerAlquilerPago(idPago);
         unAlquiler.setUnPago(null);
-        unaControladora.modificarAlquiler(unAlquiler);
+        // Si es el último pago a eliminar => Obtener el Inquilino para setear el MesAnterior en 0, no?
+        unaControladora.modificarAlquiler(unAlquiler);        
         
         unaControladora.bajaPago(idPago);
     }
@@ -1391,7 +1443,9 @@ public class ControladoraL {
         
         for(Departamento unDepartamento : departamentos){
             for(Alquiler unAlquiler : unDepartamento.getUnInquilino().getAlquileres()){
-                pagos.add(unAlquiler.getUnPago());
+                if(unAlquiler.getUnPago() != null){
+                    pagos.add(unAlquiler.getUnPago());
+                }
             }
         }
         
@@ -1509,12 +1563,46 @@ public class ControladoraL {
         unaControladora.bajaServicioExpensa(idServicioExpensa);
     }
     
+    // Se utiliza en PanelExpensa para crear una lista de ServiciosExpensa para una Expensa.
+    public ServicioExpensa cargarListaServicioExpensa(String nombre, int mes, int anio, float monto, String descripcion) throws Exception{
+        ServicioExpensa unServicioExpensa = new ServicioExpensa(nombre, mes, anio, monto, descripcion);
+        
+        unaControladora.altaServicioExpensa(unServicioExpensa);
+        
+        return unServicioExpensa;
+    }
+    
     public ServicioExpensa obtenerServicioExpensa(long id){
         return unaControladora.obtenerServicioExpensa(id);
     }
     
     public List<ServicioExpensa> obtenerServiciosExpensa(){
         return unaControladora.obtenerServiciosExpensa();
+    }
+    
+    public List<ServicioExpensa> obtenerServiciosExpensaDepartamento(Departamento unDepartamento, int mes, int anio){
+        List<ServicioExpensa> serviciosExpensa = new LinkedList();
+        
+        if(mes == 1){
+            mes = 12;
+            anio -= 1;
+        }else{
+            mes -= 1;
+        }
+        
+        if(unDepartamento.getExpensas().size() > 0){
+            for(Expensa unaExpensa : unDepartamento.getExpensas()){
+                if(unaExpensa.getMes() == mes && unaExpensa.getAnio() == anio){
+                    if(unaExpensa.getServiciosExpensa().size() > 0){
+                        for(ServicioExpensa unServicioExpensa : unaExpensa.getServiciosExpensa()){
+                            serviciosExpensa.add(unServicioExpensa);
+                        }
+                    }
+                }
+            }
+        }
+        
+        return serviciosExpensa;
     }
     
 }
