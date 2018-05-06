@@ -1,6 +1,9 @@
 package Visual;
 
+import Logica.ServicioExpensa;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -12,12 +15,13 @@ import javax.swing.JOptionPane;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.table.DefaultTableModel;
 
 public final class PanelExpensa extends javax.swing.JPanel {
     private long idExpensa;
     private final long idEdificio;
-    private boolean modificar = false, eliminar = false, entro = false, alta = false;
     private final Calendar calendario = Calendar.getInstance();
     private final ControladoraV unaControladora = new ControladoraV();
     private final DefaultComboBoxModel comboAnio = new DefaultComboBoxModel();
@@ -26,6 +30,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
     private final DefaultTableModel tablaExpensa = new DefaultTableModel(null, colTablaExpensa);
     private final String colTablaBuscarExpensa[] = {"Id", "Departamento", "Mes", "Año","Monto", "Descripción"};
     private final DefaultTableModel tablaBuscarExpensa = new DefaultTableModel(null, colTablaBuscarExpensa);
+    private boolean modificar = false, eliminar = false, entro = false, alta = false, eliminarSeleccion = false;
     
     public PanelExpensa(long idEdificio) throws Exception {
         initComponents();
@@ -33,6 +38,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
         cargarTablaExpensa(idEdificio,0);
         cargarTablaBuscarExpensa(0,0);
         cargarComboAnio();
+        eliminarServicioSeleccionado();
         jTextFieldAnio.setText(String.valueOf(calendario.get(Calendar.YEAR)));
     }
 
@@ -130,7 +136,6 @@ public final class PanelExpensa extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTableExpensa.setRowSelectionAllowed(false);
         jTableExpensa.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTableExpensa);
 
@@ -429,13 +434,28 @@ public final class PanelExpensa extends javax.swing.JPanel {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableBuscarExpensa.getTableHeader().setReorderingAllowed(false);
         jTableBuscarExpensa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableBuscarExpensaMouseClicked(evt);
             }
         });
         jScrollPane4.setViewportView(jTableBuscarExpensa);
+        jTableBuscarExpensa.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (jTableBuscarExpensa.getColumnModel().getColumnCount() > 0) {
+            jTableBuscarExpensa.getColumnModel().getColumn(0).setMinWidth(70);
+            jTableBuscarExpensa.getColumnModel().getColumn(0).setPreferredWidth(80);
+            jTableBuscarExpensa.getColumnModel().getColumn(0).setMaxWidth(90);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -539,37 +559,64 @@ public final class PanelExpensa extends javax.swing.JPanel {
             anio = Integer.valueOf(jTextFieldAnio.getText());
             Logica.Departamento unDepartamento = (Logica.Departamento) comboDepartamento.getSelectedItem();
             List<Logica.ServicioExpensa> serviciosExpensa = new LinkedList();
+            float montoExpensa;
             
-            try {
-                alta = true;
-                serviciosExpensa = unaControladora.calcularExpensa(idEdificio, unDepartamento, mes, anio, alta);
-            } catch (Exception ex) {
-                Logger.getLogger(PanelExpensa.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            float montoExpensa = unaControladora.calcularMonto(serviciosExpensa);
-            
-            try{
-                if(!modificar){
-                    unaControladora.altaExpensa(montoExpensa, mes, anio, jTextAreaDescripcion.getText(), serviciosExpensa, unDepartamento.getId());
-                    cargarTablaBuscarExpensa(0,0);
-                    JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente.");
-                    limpiarComponentes();
-                }else{
-                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if(confirmacion == 0){
-                        unaControladora.modificarExpensa(idExpensa, montoExpensa, mes, anio, jTextAreaDescripcion.getText(), serviciosExpensa);
-                        modificar = false;
-                        cargarTablaBuscarExpensa(0,0);
-                        limpiarComponentes();
-                    }
+            if(eliminarSeleccion){
+                if(tablaExpensa.getRowCount() > 0){
+                    float monto;
+                    String nombre, descripcion;
+                    int mesServicio, anioServicio;
                     
+                    for(int i = 0; i < tablaExpensa.getRowCount(); i++){
+                        nombre = String.valueOf(tablaExpensa.getValueAt(i, 1));
+                        mesServicio = Integer.parseInt((String) tablaExpensa.getValueAt(i, 2));
+                        anioServicio = Integer.parseInt((String) tablaExpensa.getValueAt(i, 3));
+                        monto = Float.valueOf(unaControladora.reemplazarString(((String) tablaExpensa.getValueAt(i, 4))));
+                        descripcion = String.valueOf(tablaExpensa.getValueAt(i, 5));
+                        //System.out.println(i+": "+nombre+" - "+mesServicio+"/"+anioServicio+" - $"+monto);
+                        try{
+                            serviciosExpensa.add(unaControladora.cargarListaServicioExpensa(nombre, mesServicio, anioServicio, monto, descripcion));
+                        }catch(Exception e){
+                            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar un servicio expensa: "+e);
+                        }
+                    }
+                    try{
+                        montoExpensa = Float.valueOf(unaControladora.reemplazarString(jTextFieldMonto.getText()));
+                        unaControladora.altaExpensa(montoExpensa, mes, anio, jTextAreaDescripcion.getText(), serviciosExpensa, unDepartamento.getId());
+                        
+                        JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente.");
+                    }catch(Exception e){
+                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar Expensa: "+e);
+                    }
                 }
-                alta = false;
-                limpiarComponentes();
-            }catch(Exception ex){
-                Logger.getLogger(Logica.Expensa.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación.");
+            }else{
+                try {
+                    alta = true;
+                    serviciosExpensa = unaControladora.calcularExpensa(idEdificio, unDepartamento, mes, anio, alta);
+                    montoExpensa = unaControladora.calcularMonto(serviciosExpensa);
+                    try {
+                        if (!modificar) {
+                            unaControladora.altaExpensa(montoExpensa, mes, anio, jTextAreaDescripcion.getText(), serviciosExpensa, unDepartamento.getId());
+                            JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente.");
+                        } else {
+                            int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                            if (confirmacion == 0) {
+                                unaControladora.modificarExpensa(idExpensa, montoExpensa, mes, anio, jTextAreaDescripcion.getText(), serviciosExpensa);
+                            }
+                        }
+                    } catch (Exception ex) {
+                        Logger.getLogger(Logica.Expensa.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. "+ex);
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al calcular la expensa. " + ex);
+                }
+                try {
+                    cargarTablaBuscarExpensa(0, 0);
+                    limpiarComponentes();
+                } catch (Exception ex) {
+                    Logger.getLogger(PanelExpensa.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }else{
             JOptionPane.showMessageDialog(null, "Para guardar debe seleccionar un mes y departamento.");
@@ -705,7 +752,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
             
             for (Logica.Servicio unServicio : servicios) {
                 datos[0] = String.valueOf(unServicio.getId());
-                datos[1] = unServicio.getNombre();
+                datos[1] = String.valueOf(unServicio.getNombre());
                 datos[2] = String.valueOf(unServicio.getMes());
                 datos[3] = String.valueOf(unServicio.getAnio());
                 datos[4] = formatoDecimal.format(unServicio.getMonto());
@@ -753,6 +800,29 @@ public final class PanelExpensa extends javax.swing.JPanel {
         this.jTableBuscarExpensa.setModel(tablaBuscarExpensa);
     }
     
+    private void eliminarServicioSeleccionado(){
+        JPopupMenu popupMenu = new JPopupMenu();
+        
+        JMenuItem menuItem = new JMenuItem("Eliminar");
+        menuItem.addActionListener((ActionEvent e) -> {
+            int fila = jTableExpensa.getSelectedRow();
+            
+            if(fila >= 0){
+                DecimalFormat formatoDecimal = new DecimalFormat("#.00");
+                String precioString = unaControladora.reemplazarString(jTableExpensa.getValueAt(fila, 4).toString());
+                float precioFloat = Float.parseFloat(precioString), total;
+                tablaExpensa.removeRow(fila);
+                total = Float.parseFloat(unaControladora.reemplazarString(jTextFieldMonto.getText()));
+                total -= precioFloat;
+                jTextFieldMonto.setText(formatoDecimal.format(total));
+                eliminarSeleccion = true;
+            }
+        });
+        
+        popupMenu.add(menuItem);
+        jTableExpensa.setComponentPopupMenu(popupMenu);
+    }
+    
     private void cargarPanelDatos(long idExpensa) throws Exception{
         modificar = true;
         String datos[] = new String[5];
@@ -781,13 +851,17 @@ public final class PanelExpensa extends javax.swing.JPanel {
             this.tablaExpensa.addRow(datos);
         }
 
-        this.jTableExpensa.setModel(tablaExpensa);
+        jTableExpensa.setModel(tablaExpensa);
+        jTextAreaDescripcion.setText(unaExpensa.getDescripcion());
         jTextFieldMonto.setText(formatoDecimal.format(unaExpensa.getMonto()));
         
         icono("afuera");
     }
     
     private void limpiarComponentes() throws Exception{
+        eliminarSeleccion = false;
+        modificar = false;
+        alta = false;
         jComboBoxMes.setSelectedIndex(0);
         jComboBoxMesBusqueda.setSelectedIndex(0);
         comboDepartamento.removeAllElements();
