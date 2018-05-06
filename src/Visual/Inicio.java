@@ -623,6 +623,7 @@ public final class Inicio extends javax.swing.JFrame {
                 new Inicio().setVisible(true);
             } catch (Exception ex) {
                 Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Error: "+ex);
             }
         });
     }
