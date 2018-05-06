@@ -1,20 +1,24 @@
 package Visual;
 
 import java.awt.Color;
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.ImageIcon;
+import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
+import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public final class PanelPrincipal extends javax.swing.JPanel {
     private final long idEdificio;
     private final String nombreEdificio;
     private final ControladoraV unaControladora = new ControladoraV();
-    private final String colTablaExpensa[] = {"SERVICIOS", "VENCIMIENTO", "TOTAL"};
+    private final String colTablaExpensa[] = {"SERVICIOS", "MES","VENCIMIENTO", "TOTAL"};
     private final String colTablaAlquiler[] = {"DPTO", "INQUILINO", "FECHA", "ALQUILER", "OTRAS FACTURAS", "EXPENSA", "COCHERA", "INT. POR ATRASO", "SALDO MES ANT.", "TOTAL"};
+    private TableModel modeloAlquiler;
     private final DefaultTableModel tablaExpensa = new DefaultTableModel(null, colTablaExpensa);
     private final DefaultTableModel tablaAlquiler = new DefaultTableModel(null, colTablaAlquiler);
     
@@ -24,7 +28,7 @@ public final class PanelPrincipal extends javax.swing.JPanel {
         this.nombreEdificio = nombreEdificio;
         this.jLabelTituloEdificio.setText(nombreEdificio);
         cargarTablaAlquiler(idEdificio);
-        //cargarTablaExpensa(idEdificio);
+        cargarTablaExpensa(idEdificio);
         this.jTableAlquiler.setRowSelectionAllowed(true);
         this.jTableExpensa.setEnabled(false);
     }
@@ -284,13 +288,16 @@ public final class PanelPrincipal extends javax.swing.JPanel {
 
     private void jTableAlquilerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAlquilerMouseClicked
         if(evt.getClickCount() == 2){
-            if(idEdificio != 0){
+            if(this.idEdificio != 0){
                 try{
                     int fila = jTableAlquiler.getSelectedRow();
-                    String depto = jTableAlquiler.getValueAt(fila, 0).toString();
-                    String periodo = jTableAlquiler.getValueAt(fila, 2).toString(); // Periodo = "03/18"
-                    cargarExpensaDepartamento(depto, periodo);
-
+                    if(fila >= 0){
+                        String ubicacionDepto = jTableAlquiler.getValueAt(fila, 0).toString();
+                        String periodo = jTableAlquiler.getValueAt(fila, 2).toString(); // Periodo = "03/18"
+                        cargarExpensaDepartamento(ubicacionDepto, periodo);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Debe seleccionar una fila válida.");
+                    }
                 }catch(Exception e){
                     JOptionPane.showMessageDialog(null, "Seleccione un Alquiler");
                 }
@@ -418,58 +425,51 @@ public final class PanelPrincipal extends javax.swing.JPanel {
     }
     
     public void cargarTablaExpensa(long idEdificio){
-        /*if(idEdificio != 0){
-            Logica.Edificio unEdificio = unaControladora.obtenerEdificio(idEdificio);
-            String datos[] = new String[3];
-            SimpleDateFormat fecha = new SimpleDateFormat("dd-MM-yy");
-            Calendar calendario = Calendar.getInstance();
-            int periodo = calendario.get(Calendar.MONTH),
-                anio = calendario.get(Calendar.YEAR);
-            List <Logica.Servicio> servicios = unaControladora.obtenerServEdifPeriodo(periodo, unEdificio);
-
-            //jLabelPeriodo.setText(periodo+"/"+anio);
-            //jLabelDepartamento.setText("N° DEPTOS: "+unaControladora.numeroDepartamentoEdificio(unEdificio)+"  ");
-
-            for(Logica.Servicio unServicio : servicios){
-
-                datos[0] = unServicio.getNombre();
-
-                if(unServicio.getFechaVencimiento() == null){
-                    datos[1] = "";
-                }else{
-                    datos[1] = fecha.format(unServicio.getFechaVencimiento());
-                }
-
-                datos[2] = String.valueOf(unServicio.getMonto());
-
-                tablaExpensa.addRow(datos);
+        this.jLabelExpensa.setText("Servicios");
+        List<Logica.Servicio> servicios = unaControladora.obtenerEdificio(idEdificio).getServicios();
+        Object datos[] = new Object[4];
+        
+        for(Logica.Servicio unServicio : servicios){
+            datos[0] = unServicio.getNombre();
+            datos[1] = unServicio.getMes();
+            if(unServicio.getFechaEmision() != null && unServicio.getFechaVencimiento() != null){
+                datos[2] = unServicio.getFechaEmision()+", "+unServicio.getFechaVencimiento();
+            }else{
+                datos[2] = "";
             }
-            this.jTableExpensa.setModel(tablaExpensa);
-        }*/
+            datos[3] = unServicio.getMonto();
+            
+            tablaExpensa.addRow(datos);
+        }
+        
+        this.jTableExpensa.setModel(tablaExpensa);
     }
     
-    public void cargarExpensaDepartamento(String depto, String periodoTabla){
-        /*String colTablaExpensaDep[] = {"SERVICIOS", "TOTAL"};
+    public void cargarExpensaDepartamento(String ubicacionDepto, String periodoTabla){
+        Object datos[] = new Object[3];
+        String periodoString[] = periodoTabla.split("/");
+        DecimalFormat formatoDecimal = new DecimalFormat("#.00");
+        String colTablaExpensaDep[] = {"ID", "SERVICIOS", "TOTAL"};
         DefaultTableModel tablaExpensaDep = new DefaultTableModel(null, colTablaExpensaDep);
-        String datos[] = new String[2],
-               periodoString[] = periodoTabla.split("/");;
-        this.jTableExpensa.setModel(tablaExpensaDep);
+        
         Logica.Edificio unEdificio = unaControladora.obtenerEdificio(idEdificio);
-        
-        Logica.Departamento unDepartamento = unaControladora.obtenerDepartamento(depto, unEdificio);
-        List<Logica.ServicioExpensa> expensaDepartamento = unaControladora.obtenerServiciosExpensaDepartamento(unDepartamento, Integer.parseInt(periodoString[0]), Integer.parseInt(periodoString[1]));
-        
+        Logica.Departamento unDepartamento = unaControladora.obtenerDepartamento(unEdificio.getId(), ubicacionDepto);
+        List<Logica.ServicioExpensa> expensaDepartamento = unaControladora.obtenerServiciosExpensaDepartamento(unDepartamento, Integer.parseInt(periodoString[1]), Integer.parseInt(periodoString[2]));
         
         while(tablaExpensaDep.getRowCount() != 0){
             tablaExpensaDep.removeRow(0);
         }
         
         for(Logica.ServicioExpensa unServicioExpensa : expensaDepartamento){
-                datos[0] = unServicioExpensa.getNombre();
-                datos[1] = String.valueOf(unServicioExpensa.getMonto());
+                datos[0] = unServicioExpensa.getId();
+                datos[1] = unServicioExpensa.getNombre();
+                datos[2] = formatoDecimal.format(unServicioExpensa.getMonto());
                 
                 tablaExpensaDep.addRow(datos);
-        }*/
+        }
+        
+        this.jLabelExpensa.setText("Expensa: "/*mesExpensa, anioExpensa*/);
+        this.jTableExpensa.setModel(tablaExpensaDep);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
