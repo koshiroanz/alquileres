@@ -17,7 +17,7 @@ import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_PERIOD;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
 
-public class PanelInquilino extends javax.swing.JPanel {
+public final class PanelInquilino extends javax.swing.JPanel {
     private TableModel modelo;
     private final long idEdificio;
     private boolean modificar = false, eliminar = false;
@@ -621,7 +621,7 @@ public class PanelInquilino extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
 
     private void jTableInquilinoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableInquilinoMouseClicked
-        int fila = jTableInquilino.getSelectedRow();
+        int fila = jTableInquilino.convertRowIndexToModel(jTableInquilino.getSelectedRow());
         
         if(fila >= 0){
             idInquilino = Long.parseLong(modelo.getValueAt(fila, 0).toString());
@@ -793,8 +793,8 @@ public class PanelInquilino extends javax.swing.JPanel {
 
             int tamanio = inquilinos.size();
             Object[][] filas = new Object[tamanio][11];
-            Logica.Departamento unDepto = null;
-            Logica.Cochera unaCochera = null;
+            Logica.Departamento unDepto;
+            Logica.Cochera unaCochera;
             
             for(int i = 0; i < tamanio; i++){
                 unDepto = unaControladora.obtenerDepartamentoInquilino(inquilinos.get(i).getId());
@@ -821,21 +821,8 @@ public class PanelInquilino extends javax.swing.JPanel {
                 filas[i][10] = inquilinos.get(i).getDescripcion();
             }
 
-            modelo = new DefaultTableModel(filas,colTablaInquilino)/*{
-                @Override
-                public Class getColumnClass(int column) {
-                    Class returnValue;
-                    if ((column >= 0) && (column < getColumnCount())) {
-                        returnValue = getValueAt(0, column).getClass();
-                    } else {
-                        returnValue = Object.class;
-                    }
-
-                    return returnValue;
-                }
-            }*/;
-
-            //JTable table = new JTable(modelo);
+            modelo = new DefaultTableModel(filas,colTablaInquilino);
+            
             RowSorter<TableModel> sorter = new TableRowSorter<>(modelo);
             jTableInquilino.setRowSorter(sorter);
             jTableInquilino.setModel(modelo);
