@@ -20,7 +20,7 @@ import static java.awt.event.KeyEvent.VK_BACK_SPACE;
 public final class PanelAlquiler extends javax.swing.JPanel {
     private int fila;
     private final long idEdificio;
-    private boolean eliminar = false, modificar = false;
+    private boolean eliminar = false, modificar = false, entro = false;
     private long idAlquiler, idDepartamento = 0, idCochera = 0;
     private float montoCochera = 0, montoAlquiler = 0, otrasFacturas = 0;
     private final ControladoraV unaControladora = new ControladoraV();
@@ -142,6 +142,14 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                 jComboBoxInquilinoItemStateChanged(evt);
             }
         });
+        jComboBoxInquilino.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jComboBoxInquilinoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jComboBoxInquilinoFocusLost(evt);
+            }
+        });
 
         jLabelOtraFactura.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelOtraFactura.setText("Otras Facturas");
@@ -227,7 +235,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextFieldMonto)
-                                    .addComponent(jTextFieldTotal)
+                                    .addComponent(jTextFieldTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                                     .addComponent(jSeparatorMonto, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jSeparator2))
                                 .addGap(114, 114, 114))
@@ -251,7 +259,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                                     .addComponent(jLabelDescripcion))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
                                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jTextFieldOtraFactura))))))
                 .addGap(22, 22, 22))
@@ -468,7 +476,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 630, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -479,7 +487,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                         .addComponent(jPanelButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1)))
                 .addGap(22, 22, 22))
         );
         jPanel2Layout.setVerticalGroup(
@@ -642,7 +650,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonBuscarMouseExited
 
     private void jComboBoxInquilinoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxInquilinoItemStateChanged
-        if(jComboBoxInquilino.getSelectedIndex() > 0){
+        if(jComboBoxInquilino.getSelectedIndex() > 0 && entro){
             Logica.Inquilino unInquilino = (Logica.Inquilino) comboInquilino.getElementAt(jComboBoxInquilino.getSelectedIndex());
             cargarCombos(unInquilino.getId());
         }
@@ -722,6 +730,14 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     private void jTextFieldOtraFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldOtraFacturaMouseClicked
         jTextFieldOtraFactura.setText(null);
     }//GEN-LAST:event_jTextFieldOtraFacturaMouseClicked
+
+    private void jComboBoxInquilinoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBoxInquilinoFocusGained
+        entro = true;
+    }//GEN-LAST:event_jComboBoxInquilinoFocusGained
+
+    private void jComboBoxInquilinoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBoxInquilinoFocusLost
+        entro = false;
+    }//GEN-LAST:event_jComboBoxInquilinoFocusLost
 
     private boolean validar(){
         boolean validar = false, departamento = false, cochera = false, validarTotal = false;
@@ -827,13 +843,13 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             if(unAlquiler.getDepartamento() != 0){
                 datos[5] = unaControladora.obtenerDepartamento(unAlquiler.getDepartamento()).getUbicacion();
             }else{
-                datos[5] = "Sin Departamento.";
+                datos[5] = "";
             }
             
             if(unAlquiler.getCochera() != 0){
                 datos[6] = String.valueOf(unaControladora.obtenerCochera(unAlquiler.getCochera()).toString());
             }else{
-                datos[6] = "Sin Cochera.";
+                datos[6] = "";
             }
             
             datos[7] = unaControladora.obtenerInquilinoPorAlquiler(idEdificio, unAlquiler.getId()).toString();
