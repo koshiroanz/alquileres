@@ -16,11 +16,16 @@ import static java.awt.event.KeyEvent.VK_BACK_SPACE;
 public final class PanelEdificio extends javax.swing.JPanel {
     private long idEdificio, id;
     private final ControladoraV unaControladora = new ControladoraV();
-     private boolean busqueda = false, modificar = false, eliminar = false;    
+    private boolean busqueda = false, modificar = false, eliminar = false, seleccionEdi = false;    
     
     public PanelEdificio(long idEdificio) {
         initComponents();
         this.idEdificio = idEdificio;
+        /*if(idEdificio > 0){
+            seleccionEdi = true;
+            modificar = true;
+            this.jLabelAceptar.setText("Actualizar");
+        }*/
         cargarTablaEdificio("");
     }
 
@@ -430,7 +435,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
     private void jPanelButtonAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonAgregarMouseClicked
         if(validar()){
             try {
-                if(!modificar){
+                if(!modificar && this.idEdificio == 0){
                     unaControladora.altaEdificio(jTextFieldNombre.getText().toUpperCase(), jTextFieldDireccion.getText().toUpperCase(), jTextAreaDescripcion.getText(), null, null, null, null);
                     idEdificio = 0;
                     limpiarComponentes();
@@ -532,7 +537,6 @@ public final class PanelEdificio extends javax.swing.JPanel {
                     id = 0;
                     this.idEdificio = id;
                     limpiarComponentes();
-                    eliminar = false;
                 }
             }catch(Exception ex){
                 Logger.getLogger(Logica.Edificio.class.getName()).log(Level.SEVERE, null, ex);
@@ -650,6 +654,9 @@ public final class PanelEdificio extends javax.swing.JPanel {
     }
     
     public void limpiarComponentes(){
+        busqueda = false;
+        eliminar = false;
+        modificar = false;
         ImageIcon refrescar = new ImageIcon(getClass().getResource("/Visual/img/cargando_blanco.png"));
         this.jLabelRefrescar.setIcon(refrescar);
         this.jLabelAceptar.setText("Aceptar");
@@ -659,19 +666,16 @@ public final class PanelEdificio extends javax.swing.JPanel {
         this.jTextFieldBuscar.setText("Ingrese un nombre para buscar");        
         this.jTextFieldNombre.requestFocus();   // Una vez seteado los input se gana el Foco en InputNombre.
         this.jTableEdificio.clearSelection();
-        busqueda = false;
-        modificar = false;
-        eliminar = false;
+        
         cargarTablaEdificio("");
     }
     
     public void cargarPanelDatos(long id){
+        modificar = true;
         this.jLabelAceptar.setText("Actualizar");
         ImageIcon cancelar = new ImageIcon(getClass().getResource("/Visual/img/cancelar_blanco.png"));
         this.jLabelRefrescar.setIcon(cancelar);
-        modificar = true;
         Logica.Edificio unEdificio = unaControladora.obtenerEdificio(id);
-        
         this.jTextFieldNombre.setText(unEdificio.getNombre());
         this.jTextFieldDireccion.setText(unEdificio.getDireccion());
     }
@@ -727,14 +731,11 @@ public final class PanelEdificio extends javax.swing.JPanel {
                 
                 tablaEdificio.addRow(obj);
             }
-
-            
             
             jtb.setModel(tablaEdificio);
             jtb.setRowHeight(25);
         }else{
             DefaultTableModel tablaEdificio = new DefaultTableModel(null, colTablaEdificio);
-            //Object[] obj = new Object[8];
             jtb.setModel(tablaEdificio);
             jtb.setRowHeight(25);
         }
