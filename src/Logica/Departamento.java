@@ -3,6 +3,7 @@ package Logica;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Observable;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Departamento implements Serializable {
+public class Departamento extends Observable implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -81,7 +82,6 @@ public class Departamento implements Serializable {
     public void setUnInquilino(Inquilino unInquilino) {
         this.unInquilino = unInquilino;
     }
-
     
     @Override
     public String toString(){
