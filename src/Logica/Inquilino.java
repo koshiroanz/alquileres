@@ -12,7 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Inquilino implements Serializable {
+public class Inquilino implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
