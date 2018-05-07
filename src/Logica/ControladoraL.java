@@ -248,6 +248,26 @@ public class ControladoraL {
         
     }
     
+    public Alquiler obtenerUltimoAlquiInquilino(long idInquilino){
+        Date fechaActual = new Date();
+        Inquilino unInquilino = obtenerInquilino(idInquilino);
+        SimpleDateFormat formatoMes = new SimpleDateFormat("MM"), formatoAnio = new SimpleDateFormat("yyyy");
+        int mesAlquiler, anioAlquiler, mesActual = Integer.parseInt(formatoMes.format(fechaActual)), anioActual = Integer.parseInt(formatoAnio.format(fechaActual));
+        Alquiler ultimoAlquiler = null;
+        
+        if(unInquilino.getAlquileres().size() > 0){
+            for(Alquiler unAlquiler : unInquilino.getAlquileres()){
+                mesAlquiler = Integer.parseInt(formatoMes.format(unAlquiler.getFecha()));
+                anioAlquiler = Integer.parseInt(formatoAnio.format(unAlquiler.getFecha()));
+                if((mesAlquiler == mesActual) && (anioAlquiler == anioActual)){
+                    ultimoAlquiler = unAlquiler;
+                }
+            }
+        }
+        
+        return ultimoAlquiler;
+    }
+    
 /*------------------------------------------------------------------------------
                                 COCHERA
 ------------------------------------------------------------------------------*/
