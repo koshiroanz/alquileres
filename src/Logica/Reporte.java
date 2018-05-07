@@ -29,18 +29,19 @@ public class Reporte {
         Edificio unEdificio = unaControladora.obtenerEdificio(idEdificio);
         int ultimaFila;
         boolean bandera = false;
-        SimpleDateFormat formatoMes = new SimpleDateFormat("MM"), formatoAnio = new SimpleDateFormat("yyyy"), formatoAnio2 = new SimpleDateFormat("yy");
+        SimpleDateFormat formatoMes = new SimpleDateFormat("MM"),
+                         formatoAnio2 = new SimpleDateFormat("yy"),
+                         formatoAnio = new SimpleDateFormat("yyyy");
         Date fechaActual = new Date();
         DecimalFormat formatoDecimal = new DecimalFormat("#.00");
-        formatoDecimal.setMinimumFractionDigits(2);
-        
-        XSSFWorkbook libro = new XSSFWorkbook(); // Se crea el Libro Excel
+        // Se crea el Libro Excel
+        XSSFWorkbook libro = new XSSFWorkbook(); 
+        // Se crean las variables de las fuentes a ocupar
+        XSSFFont fuente1, fuente2, fuente3;
+        // Se crean las variables de los estilos a ocupar
         CellStyle estilo, estilo2, estilo3, estilo4, estilo5, estilo6, estilo7, estilo8, estilo9;
-        XSSFFont fuente1, fuente2, fuente3, fuente4, fuente5;
         
-         //ESTILOS TABLA EXPENSAS (GENERADOR DE HOJAS DENTRO DEL LIBRO)
-        // EXPANDIR el tamaño de la Columna n° 2 y 3 de todas las filas que abarquen la Expensa.
-        // Estilo 1 Para "Nombre edificio": Bold-Calibri-14-italic
+        //ESTILOS TABLA EXPENSAS (GENERADOR DE HOJAS DENTRO DEL LIBRO)
         estilo = libro.createCellStyle();
         fuente1 = libro.createFont();
         fuente1.setBold(true);
@@ -66,7 +67,8 @@ public class Reporte {
         estilo4.setBorderLeft(BorderStyle.THIN);
         estilo4.setBorderBottom(BorderStyle.THIN);
         estilo4.setBorderRight(BorderStyle.THIN);
-        // FILA PARA ENCABEZADO
+        
+        // ESTILOS PARA TABLA ALQUILER
         estilo5 = libro.createCellStyle();
         estilo5.setBorderTop(BorderStyle.THIN);
         estilo5.setBorderLeft(BorderStyle.THIN);
@@ -79,15 +81,30 @@ public class Reporte {
         estilo6.setBorderBottom(BorderStyle.THIN);
         estilo6.setBorderRight(BorderStyle.THIN);
         estilo6.setAlignment(HorizontalAlignment.CENTER);
-        // Se genera una hoja para la Tabla ALQUILERES
-        //Sheet hojaAlquiler = libro.createSheet("RESUMEN A COB"); // Se crea la hoja para la Tabla ALQUILERES
-        // Se definen estilos para la Tabla ALQUILERES
         
-        // Se generan automaticamente las filas
+        estilo7 = libro.createCellStyle();
+        fuente3 = libro.createFont();
+        fuente3.setBold(true);
+        estilo7.setBorderTop(BorderStyle.THIN);
+        estilo7.setBorderLeft(BorderStyle.THIN);
+        estilo7.setBorderBottom(BorderStyle.THIN);
+        estilo7.setBorderRight(BorderStyle.THIN);
+        estilo7.setAlignment(HorizontalAlignment.CENTER);
+        estilo7.setFont(fuente3);
+        
+        estilo8 = libro.createCellStyle();
+        estilo8.setBorderTop(BorderStyle.THIN);
+        estilo8.setBorderLeft(BorderStyle.THIN);
+        estilo8.setBorderRight(BorderStyle.THIN);
+        
+        estilo9 = libro.createCellStyle();
+        estilo9.setBorderLeft(BorderStyle.THIN);
+        estilo9.setBorderRight(BorderStyle.THIN);
+        
         int mesActual = Integer.valueOf(formatoMes.format(fechaActual)),
             anioActual = Integer.valueOf(formatoAnio.format(fechaActual)),
             anioActual2 = Integer.valueOf(formatoAnio2.format(fechaActual)),
-            mesExpensa, anioExpensa = anioActual2, fi = 0;
+            mesExpensa, anioExpensa = anioActual2, fi;
         
         if(mesActual == 1){
             mesExpensa = 12;
@@ -96,11 +113,12 @@ public class Reporte {
             mesExpensa = mesActual-1;
         }
         
-        // FILA 0
-        Sheet hojaAlquiler = libro.createSheet("RESUMEN A COB"); // Se genera una hoja dentro del Libro Excel
-        hojaAlquiler.addMergedRegion(new CellRangeAddress(1, 1, 1, 12));
-        hojaAlquiler.addMergedRegion(new CellRangeAddress(2, 2, 1, 2));
+        // Se genera la hoja de ALQUILER
+        Sheet hojaAlquiler = libro.createSheet("RESUMEN A COB");
+        hojaAlquiler.addMergedRegion(new CellRangeAddress(1, 1, 1, 13));    // Fusiona las columnas de los 2 últimos parametros
+        hojaAlquiler.addMergedRegion(new CellRangeAddress(2, 2, 1, 13));
         
+        // Se setea el tamaño de las columnas
         hojaAlquiler.setColumnWidth(1, 1500); // Columna n° 1 (B), tamaño [DPTO]
         hojaAlquiler.setColumnWidth(2, 7500); // Columna n° 2 (B), tamaño [INQUILINO]
         hojaAlquiler.setColumnWidth(3, 2700); // Columna n° 3 (C), tamaño [ALQUILER]
@@ -124,56 +142,56 @@ public class Reporte {
         fila = hojaAlquiler.createRow(1);
         fila.createCell(0).setCellValue("");
         fila.createCell(1).setCellValue("EDIFICIO "+unEdificio.getNombre());
-        
+        fila.getCell(1).setCellStyle(estilo8);
         // FILA 2
         fila = hojaAlquiler.createRow(2);
         fila.createCell(0).setCellValue("");
         fila.createCell(1).setCellValue("PERIODO: "+mesActual+"/"+anioActual2);
-        
+        fila.getCell(1).setCellStyle(estilo9);
         //FILA 3
         fila = hojaAlquiler.createRow(3);
         fila.createCell(0).setCellValue("");
-        //ENCERRAR EN CAJA cell
+        // COLUMNA 1, FILA 3
         fila.createCell(1).setCellValue("DPTO");
-        fila.getCell(1).setCellStyle(estilo6);
-        
+        fila.getCell(1).setCellStyle(estilo7);
+        // COLUMNA 2, FILA 3
         fila.createCell(2).setCellValue("INQUILINO");
-        fila.getCell(2).setCellStyle(estilo6);
-        
+        fila.getCell(2).setCellStyle(estilo7);
+        // COLUMNA 3, FILA 3
         fila.createCell(3).setCellValue("ALQ. "+mesActual+"/"+anioActual2);
-        fila.getCell(3).setCellStyle(estilo6);
-        
+        fila.getCell(3).setCellStyle(estilo7);
+        // COLUMNA 4, FILA 3
         fila.createCell(4).setCellValue("OTRAS F.");
-        fila.getCell(4).setCellStyle(estilo6);
-        
+        fila.getCell(4).setCellStyle(estilo7);
+        // COLUMNA 5, FILA 3
         fila.createCell(5).setCellValue("EXPENSAS "+mesExpensa+"/"+anioExpensa);
-        fila.getCell(5).setCellStyle(estilo6);
-        
+        fila.getCell(5).setCellStyle(estilo7);
+        // COLUMNA 6, FILA 3
         fila.createCell(6).setCellValue("COCHERAS");
-        fila.getCell(6).setCellStyle(estilo6);
-        
+        fila.getCell(6).setCellStyle(estilo7);
+        // COLUMNA 7, FILA 3
         fila.createCell(7).setCellValue("interes por atr.");
-        fila.getCell(7).setCellStyle(estilo6);
-        
+        fila.getCell(7).setCellStyle(estilo7);
+        // COLUMNA 8, FILA 3
         fila.createCell(8).setCellValue("saldo mes ant.");
-        fila.getCell(8).setCellStyle(estilo6);
-        
+        fila.getCell(8).setCellStyle(estilo7);
+        // COLUMNA 9, FILA 3
         fila.createCell(9).setCellValue("TOTAL");
-        fila.getCell(9).setCellStyle(estilo6);
-        
+        fila.getCell(9).setCellStyle(estilo7);
+        // COLUMNA 10, FILA 3
         fila.createCell(10).setCellValue("PAGO EFECTIVO");
-        fila.getCell(10).setCellStyle(estilo6);
-        
+        fila.getCell(10).setCellStyle(estilo7);
+        // COLUMNA 11, FILA 3
         fila.createCell(11).setCellValue("PAGO TARJETA");
-        fila.getCell(11).setCellStyle(estilo6);
-        
+        fila.getCell(11).setCellStyle(estilo7);
+        // COLUMNA 12, FILA 3
         fila.createCell(12).setCellValue("PAGO BANCO");
-        fila.getCell(12).setCellStyle(estilo6);
-        
+        fila.getCell(12).setCellStyle(estilo7);
+        // COLUMNA 13, FILA 3
         fila.createCell(13).setCellValue("SALDO "+mesActual+"/"+anioActual2);
-        fila.getCell(13).setCellStyle(estilo6);
+        fila.getCell(13).setCellStyle(estilo7);
         
-        // DESDE FILA 3 SE GENERAN AUTOMATICAMENTE LA TABLA..
+        // DESDE FILA 3 SE GENERAN AUTOMATICAMENTE LAS FILAS
         fi = 4;
         Departamento unDepto;
         Cochera unaCochera;
@@ -231,19 +249,14 @@ public class Reporte {
                 fila.getCell(12).setCellStyle(estilo5);
                 fila.createCell(13).setCellValue("SALDO "+mesActual+"/"+anioActual2);
                 fila.getCell(13).setCellStyle(estilo5);
-                
             }
         }
-        
         
         for (Departamento unDepartamento : unEdificio.getDepartamentos()) {
             if (unDepartamento.getUnInquilino() != null){  // Si existe Inquilino se crea una hoja dentro del Libro Excel (Departamento-Expensa)
                 Sheet hoja = libro.createSheet("Expensa " + unDepartamento.getUbicacion()); // Se genera una hoja dentro del Libro Excel
                 hoja.setColumnWidth(1, 13700); // Columna n° 1 (B), tamaño
                 hoja.setColumnWidth(2, 7350); // Columna n° 2 (C), tamaño
-                
-                // FILA 0
-                fila = hoja.createRow(0);  // Se genera una Fila dentro de la hoja
                 
                 // FILA 1
                 fila = hoja.createRow(1);
@@ -304,7 +317,6 @@ public class Reporte {
                         fila.getCell(2).getNumericCellValue();
                         bandera = true;
                     }
-                    //JOptionPane.showMessageDialog(null, "tipo de dato: "+fila.get);
                     ultimaFila = f;
                     
                     fila = hoja.createRow(f++);
@@ -329,15 +341,15 @@ public class Reporte {
                 File archivoXLSX = Reporte.getSelectedFile();
                 String nombre = archivoXLSX.getName();
                 if (nombre.indexOf('.') == -1) {
-                //De no ser asi le agregamos
+                // Si en el nombre no existe la extensión Excel se agrega.
                     nombre += ".xlsx";
                     archivoXLSX = new File(archivoXLSX.getParentFile(), nombre);
                     FileOutputStream fileOut = new FileOutputStream(archivoXLSX);
-                    // 0 problema. Se van pisando los reportes
+                    // Se van pisando los reportes
                     libro.write(fileOut);
                     libro.close();
                 }else{
-                    JOptionPane.showMessageDialog(null, "No se ha creado el Reporte. Debido a que no es posible agregar 'punto' (.) en el nombre de archivo");
+                    JOptionPane.showMessageDialog(null, "No se ha creado el documento. Debido a que no es posible agregar punto (.) en el nombre del archivo");
                 }
             }
         } catch (IOException ex) {
@@ -347,5 +359,4 @@ public class Reporte {
         
         return bandera;
     }
-    
 }
