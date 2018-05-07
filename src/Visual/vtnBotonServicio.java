@@ -1,6 +1,8 @@
 package Visual;
 
 import java.awt.Color;
+import java.util.Collections;
+import java.util.List;
 import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -35,7 +37,6 @@ public final class vtnBotonServicio extends javax.swing.JFrame {
         jLabelCerrar = new javax.swing.JLabel();
         jLabelMontoTotal = new javax.swing.JLabel();
         jTextFieldMontoTotal = new javax.swing.JTextField();
-        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -140,9 +141,7 @@ public final class vtnBotonServicio extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabelMontoTotal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
-                            .addComponent(jTextFieldMontoTotal))
+                        .addComponent(jTextFieldMontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -158,9 +157,7 @@ public final class vtnBotonServicio extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jTextFieldMontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelMontoTotal))
-                        .addGap(0, 0, 0)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabelMontoTotal)))))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -213,22 +210,25 @@ public final class vtnBotonServicio extends javax.swing.JFrame {
 
     public void cargarTablaServicio(long idEdificio){
         float montoTotal = 0;
-        Logica.Edificio unEdificio = unaControladora.obtenerEdificio(idEdificio);
+        List<Logica.Servicio> servicios = unaControladora.obtenerEdificio(idEdificio).getServicios();
         String colTablaServicio[] = {"Id", "Nombre", "Mes", "Año", "Fecha Emisión.", "Fecha Vencimiento", "Monto", "Edificio"};
-        
-        int tamanio = unEdificio.getServicios().size();
+        String nombreEdi = unaControladora.obtenerEdificio(idEdificio).getNombre();
+        int i = 0, tamanio = servicios.size();
         Object[][] filas = new Object[tamanio][8];
         
-        for(int i = 0; i < tamanio; i++){
-            filas[i][0] = unEdificio.getServicios().get(i).getId();
-            filas[i][1] = unEdificio.getServicios().get(i).getNombre();
-            filas[i][2] = unEdificio.getServicios().get(i).getMes();
-            filas[i][3] = unEdificio.getServicios().get(i).getAnio();
-            filas[i][4] = unEdificio.getServicios().get(i).getFechaEmision();
-            filas[i][5] = unEdificio.getServicios().get(i).getFechaVencimiento();
-            filas[i][6] = unEdificio.getServicios().get(i).getMonto();
-            filas[i][7] = unEdificio.getNombre();
-            montoTotal += unEdificio.getServicios().get(i).getMonto();
+        Collections.sort(servicios, (Logica.Servicio s1, Logica.Servicio s2) -> s1.getNombre().compareTo(s2.getNombre()));
+
+        for(Logica.Servicio unServicio : servicios){
+            filas[i][0] = unServicio.getId();
+            filas[i][1] = unServicio.getNombre();
+            filas[i][2] = unServicio.getMes();
+            filas[i][3] = unServicio.getAnio();
+            filas[i][4] = unServicio.getFechaEmision();
+            filas[i][5] = unServicio.getFechaVencimiento();
+            filas[i][6] = unServicio.getMonto();
+            filas[i][7] = nombreEdi;
+            montoTotal += unServicio.getMonto();
+            i++;
         }
         
         TableModel modelo = new DefaultTableModel(filas,colTablaServicio);
@@ -249,7 +249,6 @@ public final class vtnBotonServicio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelButtonCerrar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTableServicio;
     private javax.swing.JTextField jTextFieldMontoTotal;
     // End of variables declaration//GEN-END:variables

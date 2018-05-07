@@ -91,10 +91,7 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabelMontoTotal" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jSeparator1" pref="59" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldMontoTotal" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="jTextFieldMontoTotal" min="-2" pref="59" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -116,8 +113,6 @@
                                   <Component id="jTextFieldMontoTotal" alignment="2" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabelMontoTotal" alignment="2" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -252,8 +247,6 @@
                   <Border info="null"/>
                 </Property>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JSeparator" name="jSeparator1">
             </Component>
           </SubComponents>
         </Container>
