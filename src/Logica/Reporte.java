@@ -15,6 +15,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Reporte {
@@ -22,48 +24,21 @@ public class Reporte {
     public Reporte(){
     }
 
-    public void crearLibro(long idEdificio){
+    public boolean crearLibro(long idEdificio){
         ControladoraL unaControladora = new ControladoraL();
         Edificio unEdificio = unaControladora.obtenerEdificio(idEdificio);
-        int ultimaFila = 0;
-        SimpleDateFormat formatoMes = new SimpleDateFormat("MM"), formatoAnio = new SimpleDateFormat("yyyy");
+        int ultimaFila;
+        boolean bandera = false;
+        SimpleDateFormat formatoMes = new SimpleDateFormat("MM"), formatoAnio = new SimpleDateFormat("yyyy"), formatoAnio2 = new SimpleDateFormat("yy");
         Date fechaActual = new Date();
         DecimalFormat formatoDecimal = new DecimalFormat("#.00");
         formatoDecimal.setMinimumFractionDigits(2);
         
         XSSFWorkbook libro = new XSSFWorkbook(); // Se crea el Libro Excel
-        CellStyle estilo, estilo2, estilo3, estilo4, estilo5, estilo6, estilo7;
+        CellStyle estilo, estilo2, estilo3, estilo4, estilo5, estilo6, estilo7, estilo8, estilo9;
         XSSFFont fuente1, fuente2, fuente3, fuente4, fuente5;
         
-        // Se genera una hoja para la Tabla ALQUILERES
-        //Sheet hojaAlquiler = libro.createSheet("RESUMEN A COB"); // Se crea la hoja para la Tabla ALQUILERES
-        // Se definen estilos para la Tabla ALQUILERES
-        
-        // Se generan automaticamente las filas
-        int mesActual = Integer.valueOf(formatoMes.format(fechaActual)), anioActual = Integer.valueOf(formatoAnio.format(fechaActual));
-        
-        // FILA 0
-        /*Row fila = hojaAlquiler.createRow(0);
-        fila.createCell(0).setCellValue("EDIFICIO "+unEdificio.getNombre());
-        
-        fila = hojaAlquiler.createRow(1);
-        fila.createCell(0).setCellValue("");
-        fila.createCell(1).setCellValue("PERIODO "+mesActual);
-        
-        
-        for(Inquilino unInquilino : unaControladora.obtenerInquilinosEdificio(idEdificio)){
-            int posUltimoAlquiler = unInquilino.getAlquileres().size()-1;
-            int mesAlquiler = Integer.valueOf(formatoMes.format(unInquilino.getAlquileres().get(posUltimoAlquiler).getFecha()));
-            int anioAlquiler = Integer.valueOf(formatoAnio.format(unInquilino.getAlquileres().get(posUltimoAlquiler).getFecha()));
-            Alquiler ultimoAlquiler = unInquilino.getAlquileres().get(posUltimoAlquiler);
-            
-            if(mesAlquiler == mesActual && anioAlquiler == anioActual){
-                
-            }
-            
-        }*/
-        
-        //ESTILOS TABLA EXPENSAS (GENERADOR DE HOJAS DENTRO DEL LIBRO)
+         //ESTILOS TABLA EXPENSAS (GENERADOR DE HOJAS DENTRO DEL LIBRO)
         // EXPANDIR el tamaño de la Columna n° 2 y 3 de todas las filas que abarquen la Expensa.
         // Estilo 1 Para "Nombre edificio": Bold-Calibri-14-italic
         estilo = libro.createCellStyle();
@@ -91,6 +66,175 @@ public class Reporte {
         estilo4.setBorderLeft(BorderStyle.THIN);
         estilo4.setBorderBottom(BorderStyle.THIN);
         estilo4.setBorderRight(BorderStyle.THIN);
+        // FILA PARA ENCABEZADO
+        estilo5 = libro.createCellStyle();
+        estilo5.setBorderTop(BorderStyle.THIN);
+        estilo5.setBorderLeft(BorderStyle.THIN);
+        estilo5.setBorderBottom(BorderStyle.THIN);
+        estilo5.setBorderRight(BorderStyle.THIN);
+        
+        estilo6 = libro.createCellStyle();
+        estilo6.setBorderTop(BorderStyle.THIN);
+        estilo6.setBorderLeft(BorderStyle.THIN);
+        estilo6.setBorderBottom(BorderStyle.THIN);
+        estilo6.setBorderRight(BorderStyle.THIN);
+        estilo6.setAlignment(HorizontalAlignment.CENTER);
+        // Se genera una hoja para la Tabla ALQUILERES
+        //Sheet hojaAlquiler = libro.createSheet("RESUMEN A COB"); // Se crea la hoja para la Tabla ALQUILERES
+        // Se definen estilos para la Tabla ALQUILERES
+        
+        // Se generan automaticamente las filas
+        int mesActual = Integer.valueOf(formatoMes.format(fechaActual)),
+            anioActual = Integer.valueOf(formatoAnio.format(fechaActual)),
+            anioActual2 = Integer.valueOf(formatoAnio2.format(fechaActual)),
+            mesExpensa, anioExpensa = anioActual2, fi = 0;
+        
+        if(mesActual == 1){
+            mesExpensa = 12;
+            anioExpensa = anioActual-1; 
+        }else{
+            mesExpensa = mesActual-1;
+        }
+        
+        // FILA 0
+        Sheet hojaAlquiler = libro.createSheet("RESUMEN A COB"); // Se genera una hoja dentro del Libro Excel
+        hojaAlquiler.addMergedRegion(new CellRangeAddress(1, 1, 1, 12));
+        hojaAlquiler.addMergedRegion(new CellRangeAddress(2, 2, 1, 2));
+        
+        hojaAlquiler.setColumnWidth(1, 1500); // Columna n° 1 (B), tamaño [DPTO]
+        hojaAlquiler.setColumnWidth(2, 7500); // Columna n° 2 (B), tamaño [INQUILINO]
+        hojaAlquiler.setColumnWidth(3, 2700); // Columna n° 3 (C), tamaño [ALQUILER]
+        hojaAlquiler.setColumnWidth(4, 2700); // Columna n° 4 (C), tamaño [OTRAS F.]
+        hojaAlquiler.setColumnWidth(5, 3900); // Columna n° 5 (C), tamaño [EXPENSAS]
+        hojaAlquiler.setColumnWidth(6, 2700); // Columna n° 6 (C), tamaño [COCHERAS]
+        hojaAlquiler.setColumnWidth(7, 3500); // Columna n° 7 (C), tamaño [INTERESESxATRASOS]
+        hojaAlquiler.setColumnWidth(8, 3500); // Columna n° 8 (C), tamaño [SALDOmesANTERIOR]
+        hojaAlquiler.setColumnWidth(9, 2600); // Columna n° 9 (C), tamaño [TOTAL]
+        hojaAlquiler.setColumnWidth(10, 3900); // Columna n° 10 (C), tamaño [PAGOEFECTIVO]
+        hojaAlquiler.setColumnWidth(11, 3700); // Columna n° 11 (C), tamaño [PAGOTARJETA]
+        hojaAlquiler.setColumnWidth(12, 3500); // Columna n° 12 (C), tamaño [PAGOBANCO]
+        hojaAlquiler.setColumnWidth(13, 3200); // Columna n° 13 (C), tamaño [SALDO]
+        
+        // FILA 0
+        Row fila = hojaAlquiler.createRow(0);
+        fila.createCell(0).setCellValue("");
+        fila.createCell(1).setCellValue("");
+        
+        // FILA 1
+        fila = hojaAlquiler.createRow(1);
+        fila.createCell(0).setCellValue("");
+        fila.createCell(1).setCellValue("EDIFICIO "+unEdificio.getNombre());
+        
+        // FILA 2
+        fila = hojaAlquiler.createRow(2);
+        fila.createCell(0).setCellValue("");
+        fila.createCell(1).setCellValue("PERIODO: "+mesActual+"/"+anioActual2);
+        
+        //FILA 3
+        fila = hojaAlquiler.createRow(3);
+        fila.createCell(0).setCellValue("");
+        //ENCERRAR EN CAJA cell
+        fila.createCell(1).setCellValue("DPTO");
+        fila.getCell(1).setCellStyle(estilo6);
+        
+        fila.createCell(2).setCellValue("INQUILINO");
+        fila.getCell(2).setCellStyle(estilo6);
+        
+        fila.createCell(3).setCellValue("ALQ. "+mesActual+"/"+anioActual2);
+        fila.getCell(3).setCellStyle(estilo6);
+        
+        fila.createCell(4).setCellValue("OTRAS F.");
+        fila.getCell(4).setCellStyle(estilo6);
+        
+        fila.createCell(5).setCellValue("EXPENSAS "+mesExpensa+"/"+anioExpensa);
+        fila.getCell(5).setCellStyle(estilo6);
+        
+        fila.createCell(6).setCellValue("COCHERAS");
+        fila.getCell(6).setCellStyle(estilo6);
+        
+        fila.createCell(7).setCellValue("interes por atr.");
+        fila.getCell(7).setCellStyle(estilo6);
+        
+        fila.createCell(8).setCellValue("saldo mes ant.");
+        fila.getCell(8).setCellStyle(estilo6);
+        
+        fila.createCell(9).setCellValue("TOTAL");
+        fila.getCell(9).setCellStyle(estilo6);
+        
+        fila.createCell(10).setCellValue("PAGO EFECTIVO");
+        fila.getCell(10).setCellStyle(estilo6);
+        
+        fila.createCell(11).setCellValue("PAGO TARJETA");
+        fila.getCell(11).setCellStyle(estilo6);
+        
+        fila.createCell(12).setCellValue("PAGO BANCO");
+        fila.getCell(12).setCellStyle(estilo6);
+        
+        fila.createCell(13).setCellValue("SALDO "+mesActual+"/"+anioActual2);
+        fila.getCell(13).setCellStyle(estilo6);
+        
+        // DESDE FILA 3 SE GENERAN AUTOMATICAMENTE LA TABLA..
+        fi = 4;
+        Departamento unDepto;
+        Cochera unaCochera;
+        Expensa unaExpensa = null;
+        
+        for(Inquilino unInquilino : unaControladora.obtenerInquilinosEdificio(idEdificio)){
+            Alquiler ultimoAlquiler = unaControladora.obtenerUltimoAlquiInquilino(unInquilino.getId());
+            if(ultimoAlquiler != null){
+                fila = hojaAlquiler.createRow(fi++);
+                int mesAlquiler = Integer.valueOf(formatoMes.format(ultimoAlquiler.getFecha())), anioAlquiler = Integer.valueOf(formatoAnio.format(ultimoAlquiler.getFecha()));
+                if(ultimoAlquiler.getDepartamento() > 0){
+                    unDepto = unaControladora.obtenerDepartamento(ultimoAlquiler.getDepartamento());
+                    fila.createCell(1).setCellValue(unDepto.getUbicacion());
+                    fila.getCell(1).setCellStyle(estilo5);
+                    unaExpensa = unaControladora.obtenerExpensa(unDepto.getId(), mesAlquiler, anioAlquiler);
+                }else{
+                    fila.createCell(1).setCellValue("");
+                    fila.getCell(1).setCellStyle(estilo5);
+                }
+                fila.createCell(2).setCellValue(unInquilino.getApellido()+", "+unInquilino.getNombre());
+                fila.getCell(2).setCellStyle(estilo5);
+                fila.createCell(3).setCellValue("$ "+ultimoAlquiler.getMonto());
+                fila.getCell(3).setCellStyle(estilo5);
+                fila.createCell(4).setCellValue("$ "+ultimoAlquiler.getOtraFactura());
+                fila.getCell(4).setCellStyle(estilo5);
+                
+                if(unaExpensa != null){
+                    fila.createCell(5).setCellValue("$ "+formatoDecimal.format(unaExpensa.getMonto()));
+                    fila.getCell(5).setCellStyle(estilo5);
+                }else{
+                    fila.createCell(5).setCellValue("");    // No debería entrar nunca.. Pero por las moscas
+                    fila.getCell(5).setCellStyle(estilo5);
+                }
+                
+                if(ultimoAlquiler.getCochera() > 0){
+                    unaCochera = unaControladora.obtenerCochera(ultimoAlquiler.getCochera());
+                    fila.createCell(6).setCellValue("$ "+unaCochera.getPrecio());
+                    fila.getCell(6).setCellStyle(estilo5);
+                }else{
+                    fila.createCell(6).setCellValue("");
+                    fila.getCell(6).setCellStyle(estilo5);
+                }
+                
+                fila.createCell(7).setCellValue(""); // Interes x atraso.
+                fila.getCell(7).setCellStyle(estilo5);
+                fila.createCell(8).setCellValue(""); // Saldo mes ant.
+                fila.getCell(8).setCellStyle(estilo5);
+                fila.createCell(9).setCellValue("$ "+ultimoAlquiler.getTotal());
+                fila.getCell(9).setCellStyle(estilo5);
+                fila.createCell(10).setCellValue("PAGO EFECTIVO");
+                fila.getCell(10).setCellStyle(estilo5);
+                fila.createCell(11).setCellValue("PAGO TARJETA");
+                fila.getCell(11).setCellStyle(estilo5);
+                fila.createCell(12).setCellValue("PAGO BANCO");
+                fila.getCell(12).setCellStyle(estilo5);
+                fila.createCell(13).setCellValue("SALDO "+mesActual+"/"+anioActual2);
+                fila.getCell(13).setCellStyle(estilo5);
+                
+            }
+        }
+        
         
         for (Departamento unDepartamento : unEdificio.getDepartamentos()) {
             if (unDepartamento.getUnInquilino() != null){  // Si existe Inquilino se crea una hoja dentro del Libro Excel (Departamento-Expensa)
@@ -99,7 +243,7 @@ public class Reporte {
                 hoja.setColumnWidth(2, 7350); // Columna n° 2 (C), tamaño
                 
                 // FILA 0
-                Row fila = hoja.createRow(0);  // Se genera una Fila dentro de la hoja
+                fila = hoja.createRow(0);  // Se genera una Fila dentro de la hoja
                 
                 // FILA 1
                 fila = hoja.createRow(1);
@@ -158,6 +302,7 @@ public class Reporte {
                         fila.createCell(2).setCellValue(montoFinal);
                         fila.getCell(2).setCellStyle(estilo3);
                         fila.getCell(2).getNumericCellValue();
+                        bandera = true;
                     }
                     //JOptionPane.showMessageDialog(null, "tipo de dato: "+fila.get);
                     ultimaFila = f;
@@ -170,8 +315,9 @@ public class Reporte {
                     fila.getCell(2).setCellStyle(estilo4);
                 }
             }
+            
         }
-        try {
+        try{
             JFileChooser Reporte = new JFileChooser();
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
             String nombreEdi = unaControladora.obtenerEdificio(idEdificio).getNombre();
@@ -199,5 +345,7 @@ public class Reporte {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+ex);
         }
         
+        return bandera;
     }
+    
 }
