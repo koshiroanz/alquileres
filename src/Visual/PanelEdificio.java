@@ -13,19 +13,14 @@ import javax.swing.table.DefaultTableModel;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
 
-public final class PanelEdificio extends javax.swing.JPanel {
+public final class PanelEdificio extends javax.swing.JPanel{
     private long idEdificio, id;
     private final ControladoraV unaControladora = new ControladoraV();
-    private boolean busqueda = false, modificar = false, eliminar = false, seleccionEdi = false;    
+    private boolean busqueda = false, modificar = false, eliminar = false;
     
     public PanelEdificio(long idEdificio) {
         initComponents();
         this.idEdificio = idEdificio;
-        /*if(idEdificio > 0){
-            seleccionEdi = true;
-            modificar = true;
-            this.jLabelAceptar.setText("Actualizar");
-        }*/
         cargarTablaEdificio("");
     }
 
@@ -144,7 +139,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
                         .addGroup(jPanelCargaDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
                             .addComponent(jTextFieldNombre)
-                            .addComponent(jScrollPane2))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE))
                         .addGap(71, 71, 71)
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
@@ -590,7 +585,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTextFieldNombreKeyTyped
     
-    public void cargarTablaEdificio(String buscar){
+    private void cargarTablaEdificio(String buscar){
         List<Logica.Edificio> edificios = new LinkedList();
         
         if(unaControladora.obtenerEdificios().size() > 0){
@@ -629,7 +624,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
         
     }
     
-    public boolean validar(){
+    private boolean validar(){
         boolean validar = false;
         
         if((!jTextFieldNombre.getText().isEmpty()) && (!jTextFieldDireccion.getText().isEmpty())){
@@ -653,7 +648,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
         return validar;
     }
     
-    public void limpiarComponentes(){
+    private void limpiarComponentes(){
         busqueda = false;
         eliminar = false;
         modificar = false;
@@ -670,7 +665,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
         cargarTablaEdificio("");
     }
     
-    public void cargarPanelDatos(long id){
+    private void cargarPanelDatos(long id){
         modificar = true;
         this.jLabelAceptar.setText("Actualizar");
         ImageIcon cancelar = new ImageIcon(getClass().getResource("/Visual/img/cancelar_blanco.png"));
@@ -680,7 +675,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
         this.jTextFieldDireccion.setText(unEdificio.getDireccion());
     }
     
-    public JTable armarTabla(JTable jtb, List<Logica.Edificio> edificios){
+    private JTable armarTabla(JTable jtb, List<Logica.Edificio> edificios){
         String colTablaEdificio[] = {"Id", "Nombre", "Dirección", "Departamentos", "Cocheras", "Servicios", "Coeficientes", "Descripción"};
         
         if(edificios != null){
@@ -743,7 +738,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
         return jtb;
     }
     
-    public boolean isCellEditable(int row, int column){
+    private boolean isCellEditable(int row, int column){
         return false;
     }
 

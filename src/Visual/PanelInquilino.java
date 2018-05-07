@@ -16,6 +16,8 @@ import static java.awt.event.KeyEvent.VK_MINUS;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_PERIOD;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public final class PanelInquilino extends javax.swing.JPanel {
     private TableModel modelo;
@@ -23,8 +25,8 @@ public final class PanelInquilino extends javax.swing.JPanel {
     private boolean modificar = false, eliminar = false;
     private long idInquilino, idDepartamento = 0, idCochera = 0;
     private final ControladoraV unaControladora = new ControladoraV();
-    private final DefaultComboBoxModel comboDepartamento = new DefaultComboBoxModel();
     private final DefaultComboBoxModel comboCochera = new DefaultComboBoxModel();
+    private final DefaultComboBoxModel comboDepartamento = new DefaultComboBoxModel();
     
     public PanelInquilino(long idEdificio) {
         initComponents();
@@ -601,7 +603,6 @@ public final class PanelInquilino extends javax.swing.JPanel {
                 
                 if(!modificar){
                     unaControladora.altaInquilino(Integer.valueOf(cantFamilia), apellido, nombre, dni, email, telefono, cuit, 0/* saldoMesAnt*/, jTextAreaDescripcion.getText(), null/*unGarante*/, null/*alquileres*/, idDepartamento, idCochera);
-                    limpiarComponentes();
                     JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente");
                 }else{
                     int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -610,9 +611,9 @@ public final class PanelInquilino extends javax.swing.JPanel {
                         List<Logica.Alquiler> alquileres = unaControladora.obtenerInquilino(idInquilino).getAlquileres();
                         float saldoMesAnt = unaControladora.obtenerInquilino(idInquilino).getSaldoMesAnt();
                         unaControladora.modificarInquilino(idInquilino, Integer.valueOf(cantFamilia), apellido, nombre, dni, email, telefono, cuit, saldoMesAnt, jTextAreaDescripcion.getText(), unGarante, alquileres, idDepartamento, idCochera);
-                        limpiarComponentes();
                     }
                 }
+                limpiarComponentes();
             }catch(Exception ex){
                 Logger.getLogger(Logica.Inquilino.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. Error: "+ex);
@@ -791,23 +792,24 @@ public final class PanelInquilino extends javax.swing.JPanel {
                 inquilinos = unaControladora.obtenerInquilinosEdificio(idEdificio);
             }
 
-            int tamanio = inquilinos.size();
+            int i = 0, tamanio = inquilinos.size();
             Object[][] filas = new Object[tamanio][11];
             Logica.Departamento unDepto;
             Logica.Cochera unaCochera;
+            Collections.sort(inquilinos, (Logica.Inquilino i1, Logica.Inquilino i2) -> i1.getApellido().compareTo(i2.getApellido()));
             
-            for(int i = 0; i < tamanio; i++){
-                unDepto = unaControladora.obtenerDepartamentoInquilino(inquilinos.get(i).getId());
-                unaCochera = unaControladora.obtenerCocheraInquilino(idEdificio, inquilinos.get(i).getId());
+            for(Logica.Inquilino unInquilino : inquilinos){
+                unDepto = unaControladora.obtenerDepartamentoInquilino(unInquilino.getId());
+                unaCochera = unaControladora.obtenerCocheraInquilino(idEdificio, unInquilino.getId());
                 
-                filas[i][0] = inquilinos.get(i).getId();
-                filas[i][1] = inquilinos.get(i).getApellido();
-                filas[i][2] = inquilinos.get(i).getNombre();
-                filas[i][3] = inquilinos.get(i).getDni();
-                filas[i][4] = inquilinos.get(i).getCuit();
-                filas[i][5] = inquilinos.get(i).getTelefono();
-                filas[i][6] = inquilinos.get(i).getEmail();
-                filas[i][7] = inquilinos.get(i).getCantidadPersonas();
+                filas[i][0] = unInquilino.getId();
+                filas[i][1] = unInquilino.getApellido();
+                filas[i][2] = unInquilino.getNombre();
+                filas[i][3] = unInquilino.getDni();
+                filas[i][4] = unInquilino.getCuit();
+                filas[i][5] = unInquilino.getTelefono();
+                filas[i][6] = unInquilino.getEmail();
+                filas[i][7] = unInquilino.getCantidadPersonas();
                 if(unDepto != null){
                     filas[i][8] = unDepto.getUbicacion();
                 }else{
@@ -818,7 +820,8 @@ public final class PanelInquilino extends javax.swing.JPanel {
                 }else{
                     filas[i][9] = "";
                 }
-                filas[i][10] = inquilinos.get(i).getDescripcion();
+                filas[i][10] = unInquilino.getDescripcion();
+                i++;
             }
 
             modelo = new DefaultTableModel(filas,colTablaInquilino);
@@ -918,7 +921,7 @@ public final class PanelInquilino extends javax.swing.JPanel {
             idDepartamento = 0;
             departamento = true;
         }else{
-            Logica.Departamento unDepto = new Logica.Departamento();
+            Logica.Departamento unDepto;
             unDepto = (Logica.Departamento)comboDepartamento.getSelectedItem();
             idDepartamento = unDepto.getId();
             departamento = true;
@@ -930,7 +933,7 @@ public final class PanelInquilino extends javax.swing.JPanel {
             idCochera = 0;
             cochera = true;
         }else{
-            Logica.Cochera unaCocher = new Logica.Cochera();
+            Logica.Cochera unaCocher;
             unaCocher = (Logica.Cochera)comboCochera.getSelectedItem();
             idCochera = unaCocher.getId();
             cochera = true;
@@ -972,6 +975,8 @@ public final class PanelInquilino extends javax.swing.JPanel {
     }
     
     private void limpiarComponentes(){
+        eliminar = false;
+        modificar = false;
         ImageIcon refrescar = new ImageIcon(getClass().getResource("/Visual/img/cargando_blanco.png"));
         this.jLabelRefrescar.setIcon(refrescar);
         this.jLabelAceptar.setText("Aceptar");
@@ -987,8 +992,6 @@ public final class PanelInquilino extends javax.swing.JPanel {
         cargarComboDepartamento(idEdificio);
         cargarComboCochera(idEdificio);
         this.jTextFieldNombre.requestFocus();
-        eliminar = false;
-        modificar = false;
         cargarComboDepartamento(idEdificio);
         cargarComboCochera(idEdificio);
         cargarTablaInquilino("");

@@ -101,6 +101,9 @@ public class ControladoraV {
         return unaControladora.existeCochera(ubicacionCochera, idEdificio);
     }
     
+    public int obtenerCocherasOcupadas(long idEdificio){
+        return unaControladora.obtenerCocherasOcupadas(idEdificio);
+    }
 /*------------------------------------------------------------------------------
                                 COEFICIENTE
 ------------------------------------------------------------------------------*/

@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_PERIOD;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
+import java.util.Collections;
 
 public final class PanelCoeficienteDorm extends javax.swing.JPanel {
     private int fila = 0;
@@ -602,6 +603,8 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
             coeficientes = unaControladora.obtenerEdificio(idEdificio).getCoeficientesDorm();
         }
         
+        Collections.sort(coeficientes, (Logica.CoeficienteDorm c1, Logica.CoeficienteDorm c2) -> c1.getNombre().compareTo(c2.getNombre()));
+
         for(Logica.CoeficienteDorm unCoeficienteDorm : coeficientes){
             datos[0] = unCoeficienteDorm.getId();
             datos[1] = unCoeficienteDorm.getNombre();

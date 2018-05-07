@@ -308,8 +308,8 @@ public final class PanelPrincipal extends javax.swing.JPanel {
     }//GEN-LAST:event_jTableAlquilerMouseClicked
 
     private void jPanelButtonRefrescarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonRefrescarMouseClicked
-        cargarTablaAlquiler(this.idEdificio);
-        cargarTablaExpensa(this.idEdificio);
+        cargarTablaAlquiler(idEdificio);
+        cargarTablaExpensa(idEdificio);
     }//GEN-LAST:event_jPanelButtonRefrescarMouseClicked
 
     private void jPanelButtonRefrescarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonRefrescarMouseExited
@@ -333,16 +333,16 @@ public final class PanelPrincipal extends javax.swing.JPanel {
                     boolean generar = generarReporte.crearLibro(idEdificio);
                     // Agregar un icono de espera.. hasta que devuelva la respuesta GENERAR..
                     if(generar){
-                        JOptionPane.showMessageDialog(null, "Se ha generado con éxito el Excel.");
+                        JOptionPane.showMessageDialog(null, "Se ha generado con éxito el documento.");
                     }
                 }catch(Exception e){
-                    JOptionPane.showMessageDialog(null, "Ocurrio un error: "+e);
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+e);
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "No es posible generar el reporte debido a que no existe ninguna expensa registrada.");
+                JOptionPane.showMessageDialog(null, "No es posible generar el documento debido a que no existe ningún alquiler/expensa registrado.");
             }
         }else{
-            JOptionPane.showMessageDialog(null, "No es posible generar el reporte debido a que no se encuentra seleccionado un Edificio. Por favor Seleccione un Edificio");
+            JOptionPane.showMessageDialog(null, "No es posible generar el documento debido a que no se encuentra seleccionado un Edificio. Por favor Seleccione un Edificio");
         }        
     }//GEN-LAST:event_jPanelButtonReporteMouseClicked
 
@@ -372,7 +372,7 @@ public final class PanelPrincipal extends javax.swing.JPanel {
     }
     
     public void cargarTablaAlquiler(long idEdificio){
-        //String colAlquiler[] = {"DPTO", "INQUILINO", "FECHA", "ALQUILER", "OTRAS FACTURAS", "EXPENSA", "COCHERA", "INT. POR ATRASO", "SALDO MES ANT.", "TOTAL"};
+        limpiarVentana();
         Date fechaActual = new Date();
         Object datos[] = new Object[10];
         List<Logica.Inquilino> inquilinosEdificio = unaControladora.obtenerInquilinosEdificio(idEdificio);
@@ -383,8 +383,6 @@ public final class PanelPrincipal extends javax.swing.JPanel {
         
         for(Logica.Inquilino unInquilino : inquilinosEdificio){
             if(unInquilino.getAlquileres().size() > 0){
-                // Un Inquilino tiene 1 o + Alquileres..
-                //int indexAlquiler = 0;
                 List<Logica.Alquiler> alquileres = unInquilino.getAlquileres();
                 for(Logica.Alquiler unAlquiler : alquileres){
                     
@@ -472,7 +470,17 @@ public final class PanelPrincipal extends javax.swing.JPanel {
                 tablaExpensaDep.addRow(datos);
         }
         
-        this.jLabelExpensa.setText("Expensa: "/*mesExpensa, anioExpensa*/);
+        int mesExpensa = Integer.valueOf(periodoString[1]),
+            anioExpensa = Integer.valueOf(periodoString[2]);
+        
+            if(mesExpensa == 1){
+                mesExpensa = 12;
+                anioExpensa -= 1;
+            }else{
+                mesExpensa -= 1;
+            }
+            
+        this.jLabelExpensa.setText("Expensa "+mesExpensa+"/"+anioExpensa);
         this.jTableExpensa.setModel(tablaExpensaDep);
     }
 

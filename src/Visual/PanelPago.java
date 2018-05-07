@@ -24,7 +24,7 @@ public final class PanelPago extends javax.swing.JPanel {
     private final DefaultComboBoxModel comboBusquedaInquilino = new DefaultComboBoxModel();
     private final DefaultComboBoxModel comboAlquiler = new DefaultComboBoxModel();
     private final DefaultComboBoxModel comboAnio = new DefaultComboBoxModel();
-    private final String colTablaPago[] = {"Id", "Fecha", "Inquilino", "Interés por atraso", "Saldo mes ant.", "Total", "Efectivo", "Tarjeta", "Banco", "Saldo"};
+    private final String colTablaPago[] = {"Id", "Fecha", "Inquilino", "Interés por atraso", "Saldo mes ant.", "Total", "Efectivo", "Tarjeta", "Banco", "Descripción"};
     private final DefaultTableModel tablaPago = new DefaultTableModel(null, colTablaPago);
     
     public PanelPago(long idEdificio) {
@@ -667,13 +667,17 @@ public final class PanelPago extends javax.swing.JPanel {
     private void jTablePagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePagoMouseClicked
         int fila = jTablePago.getSelectedRow();
         
-        idPago = Long.parseLong(tablaPago.getValueAt(fila, 0).toString());
+        if(fila >= 0){
+            idPago = Long.parseLong(tablaPago.getValueAt(fila, 0).toString());
         
-        if(evt.getClickCount() == 1){
-            eliminar = true;
-        }else if(evt.getClickCount() == 2){
-            cargarPanelDatos(idPago);
-            eliminar = false;
+            if(evt.getClickCount() == 1){
+                eliminar = true;
+            }else if(evt.getClickCount() == 2){
+                cargarPanelDatos(idPago);
+                eliminar = false;
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila válida");
         }
     }//GEN-LAST:event_jTablePagoMouseClicked
 
@@ -681,36 +685,33 @@ public final class PanelPago extends javax.swing.JPanel {
         if(validar()){
             try {
                 Logica.Inquilino unInquilino = (Logica.Inquilino) comboInquilino.getElementAt(jComboBoxInquilino.getSelectedIndex());
-                Logica.Departamento unDepartamento = unaControladora.obtenerDepartamentoInquilino(unInquilino.getId());
                 Logica.Alquiler unAlquiler = (Logica.Alquiler) comboAlquiler.getElementAt(jComboBoxAlquiler.getSelectedIndex());
                 
                 long idAlquiler = unAlquiler.getId();
                 Date fechaPago = jDateChooserFecha.getDate();
-                float saldoMesAnterior = Float.valueOf(unaControladora.reemplazarString(jTextFieldSaldoMesAnterior.getText()));
                 float interesPorAtraso = Float.valueOf(unaControladora.reemplazarString(jTextFieldInteres.getText()));
                 float total = Float.valueOf(unaControladora.reemplazarString(jTextFieldTotal.getText()));
                 float efectivo = Float.valueOf(jTextFieldEfectivo.getText());
                 float tarjeta = Float.valueOf(jTextFieldTarjeta.getText());
                 float banco = Float.valueOf(jTextFieldBanco.getText());
-                float saldo = (total-(efectivo+tarjeta+banco));
-                saldoMesAnterior += (total-(efectivo+tarjeta+banco));
-                //unInquilino.setSaldoMesAnt(total-(efectivo+tarjeta+banco));
-                
                 
                 if(!modificar){
-                    unaControladora.altaPago(fechaPago, efectivo, tarjeta, banco, saldo, interesPorAtraso, total, jTextAreaDescripcion.getText(), idAlquiler, idExpensa, unInquilino.getId());
+                    float saldoMesAnt = total-tarjeta-banco-efectivo;
+                    unaControladora.altaPago(fechaPago, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, total, jTextAreaDescripcion.getText(), idAlquiler, idExpensa, unInquilino.getId());
                     cargarTablaPago(0, 0);
                     JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente.");
                 }else{
+                    float saldoMesAnt = Float.valueOf(unaControladora.reemplazarString(jTextFieldSaldoMesAnterior.getText()));
                     int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){
-                        unaControladora.modificarPago(idPago, fechaPago, efectivo, tarjeta, banco, saldo, interesPorAtraso, total, jTextAreaDescripcion.getText(), idAlquiler, idExpensa, unInquilino.getId());
+                        unaControladora.modificarPago(idPago, fechaPago, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, total, jTextAreaDescripcion.getText(), idAlquiler, idExpensa, unInquilino.getId());
                         cargarTablaPago(0, 0);
                     }
                 }
             } catch (Exception ex) {
                 Logger.getLogger(Logica.Pago.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación.");
+                System.out.println(ex);
             }
         }
             
@@ -728,7 +729,8 @@ public final class PanelPago extends javax.swing.JPanel {
                 }
             }catch(Exception ex){
                 Logger.getLogger(Logica.Pago.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido eliminar. Ha ocurrido un error: "+ex);
+                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.");
+                System.out.println(ex);
             }
         }else{
              JOptionPane.showMessageDialog(null, "Debe seleccionar un Pago de la tabla.");
@@ -822,8 +824,7 @@ public final class PanelPago extends javax.swing.JPanel {
             DecimalFormat formatoDecimal = new DecimalFormat("#.00");
             SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy"), monthFormat = new SimpleDateFormat("MM");
             float totalPago, precioCochera = 0;
-            int mes, anio, indiceUltimoPago;
-            Logica.Pago ultimoPago = null;
+            int mes, anio;
    
             Logica.Alquiler unAlquiler = (Logica.Alquiler)jComboBoxAlquiler.getSelectedItem();
             
@@ -835,43 +836,42 @@ public final class PanelPago extends javax.swing.JPanel {
             if(unaControladora.obtenerCocheraInquilino(idEdificio, unInquilino.getId()) != null){
                 precioCochera = unaControladora.obtenerCocheraInquilino(idEdificio, unInquilino.getId()).getPrecio();
             }
-            Logica.Expensa unaExpensa = unaControladora.obtenerExpensa(unDepartamento.getId(), mes, anio);
+            
+            if(unDepartamento != null){
+                Logica.Expensa unaExpensa = unaControladora.obtenerExpensa(unDepartamento.getId(), mes, anio);
+                if(unaExpensa != null){
+                    idExpensa = unaExpensa.getId();
+                    jTextFieldMontoExpensa.setText(unaControladora.reemplazarString(formatoDecimal.format(unaControladora.calcularMonto(unaExpensa.getServiciosExpensa()))));
+                }else{
+                    if(mes == 1){
+                        mes = 12;
+                    }else{
+                        mes-=1;
+                    }
+                    JOptionPane.showMessageDialog(null, "No es posible generar el Pago. Debido a que no existe una Expensa del mes: "+mes+", para el Departamento: "+unDepartamento.getUbicacion());
+                }
+            }else{
+                jTextFieldMontoExpensa.setText("0");
+            }
             
             if(unAlquiler.getCochera() != 0){
                 jTextFieldCochera.setText(String.valueOf(unaControladora.obtenerCochera(unAlquiler.getCochera()).getPrecio()));
             }
             
-            if(unaExpensa.getServiciosExpensa() != null){
-                idExpensa = unaExpensa.getId();
-                jTextFieldTotalAlquiler.setText(unaControladora.reemplazarString(formatoDecimal.format(unAlquiler.getTotal())));
-                
-                // DE DUDOSA PROCEDENCIA...                 
-                indiceUltimoPago = unaControladora.obtenerPagosInquilino(unInquilino.getId()).size();
-                if(indiceUltimoPago > 0){
-                    ultimoPago = unaControladora.obtenerPagosInquilino(unInquilino.getId()).get(indiceUltimoPago-1);
-                    if(ultimoPago != null){
-                        jTextFieldSaldoMesAnterior.setText(String.valueOf(ultimoPago.getSaldo()));
-                    }else{
-                        jTextFieldSaldoMesAnterior.setText("0");
-                    }
-                }else{
-                    jTextFieldSaldoMesAnterior.setText("0");
-                }
-                
-                jTextFieldMontoExpensa.setText(unaControladora.reemplazarString(formatoDecimal.format(unaControladora.calcularMonto(unaExpensa.getServiciosExpensa()))));
-                totalPago = precioCochera+Float.valueOf(jTextFieldTotalAlquiler.getText())+Float.valueOf(jTextFieldSaldoMesAnterior.getText())+Float.valueOf(jTextFieldMontoExpensa.getText());
-                
-                float interes = unaControladora.interesPorAtraso(jDateChooserFecha.getDate(), totalPago, mes);
-                if(interes > 0){
-                    jTextFieldInteres.setText(unaControladora.reemplazarString(formatoDecimal.format(interes)));
-                }else{
-                    jTextFieldInteres.setText(unaControladora.reemplazarString(String.valueOf(interes)));
-                }
-                totalPago += Float.valueOf(unaControladora.reemplazarString(jTextFieldInteres.getText()));
-                jTextFieldTotal.setText(formatoDecimal.format(totalPago));
+            jTextFieldTotalAlquiler.setText(unaControladora.reemplazarString(formatoDecimal.format(unAlquiler.getTotal())));
+
+            jTextFieldSaldoMesAnterior.setText(String.valueOf(unInquilino.getSaldoMesAnt()));
+            totalPago = Float.valueOf(jTextFieldTotalAlquiler.getText())+Float.valueOf(jTextFieldSaldoMesAnterior.getText())+Float.valueOf(jTextFieldMontoExpensa.getText());
+
+            float interes = unaControladora.interesPorAtraso(jDateChooserFecha.getDate(), totalPago, mes);
+            if(interes > 0){
+                jTextFieldInteres.setText(unaControladora.reemplazarString(formatoDecimal.format(interes)));
             }else{
-                JOptionPane.showMessageDialog(null, "No es posible generar el Pago. Debido a que no existe una Expensa para este Departamento en este mes");
+                jTextFieldInteres.setText(unaControladora.reemplazarString(String.valueOf(interes)));
             }
+            totalPago += Float.valueOf(unaControladora.reemplazarString(jTextFieldInteres.getText()));
+            jTextFieldTotal.setText(formatoDecimal.format(totalPago));
+            
         }
         entro = false;
     }//GEN-LAST:event_jComboBoxAlquilerItemStateChanged
@@ -952,6 +952,7 @@ public final class PanelPago extends javax.swing.JPanel {
     
     public void cargarTablaPago(long idInquilino, int anio){
         limpiarComponentes();
+        DecimalFormat formatoDecimal = new DecimalFormat("#.00");
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy"),
                          monthFormat = new SimpleDateFormat("MM"),
                          yearFormat = new SimpleDateFormat("yyyy");
@@ -960,7 +961,7 @@ public final class PanelPago extends javax.swing.JPanel {
             mesActual = Integer.valueOf(monthFormat.format(fechaActual)),
             anioActual = Integer.valueOf(yearFormat.format(fechaActual));
         List<Logica.Pago> pagos = new LinkedList();
-        String datos[] = new String[10];
+        Object datos[] = new Object[10];
         
         if(idInquilino > 0 && anio > 0){ 
             List<Logica.Pago> pagosInquilino = unaControladora.obtenerPagosInquilino(idInquilino);
@@ -973,36 +974,39 @@ public final class PanelPago extends javax.swing.JPanel {
             
             if(pagos.isEmpty()){
                 JOptionPane.showMessageDialog(null, "No se ha encontrado Pagos.");
-                for(Logica.Pago unPago : unaControladora.obtenerPagos()){
+                for(Logica.Pago unPago : unaControladora.obtenerPagosEdificio(idEdificio)){
                     anioPago = Integer.valueOf(yearFormat.format(unPago.getFecha()));
                     mesPago = Integer.valueOf(monthFormat.format(unPago.getFecha()));
-                    if(anioPago == anio && mesPago == mesActual){
+                    if(anioPago == anioActual && mesPago == mesActual){
                         pagos.add(unPago);
                     }
                 }
             }
             
         }else{
-            for(Logica.Pago unPago : unaControladora.obtenerPagos()){
-                anioPago = Integer.valueOf(yearFormat.format(unPago.getFecha()));
+            for(Logica.Pago unPago : unaControladora.obtenerPagosEdificio(idEdificio)){
+                /*anioPago = Integer.valueOf(yearFormat.format(unPago.getFecha()));
                 mesPago = Integer.valueOf(monthFormat.format(unPago.getFecha()));
-                if(anioPago == anioActual && mesPago == mesActual){
+                if(anioPago == anioActual && mesPago == mesActual){*/
                     pagos.add(unPago);
-                }
+                //}
             }
         }
         
         for(Logica.Pago unPago : pagos){
-            datos[0] = String.valueOf(unPago.getId());
+            datos[0] = unPago.getId();
             datos[1] = formatoFecha.format(unPago.getFecha());
-            datos[2] = "inquilinoApellido, inquilinoNombre";
-            datos[3] = String.valueOf(unPago.getInteresPorAtraso());
-            datos[4] = String.valueOf(unPago.getSaldo());
-            datos[5] = String.valueOf(unPago.getMonto());
-            datos[6] = String.valueOf(unPago.getEfectivo());
-            datos[7] = String.valueOf(unPago.getTarjeta());
-            datos[8] = String.valueOf(unPago.getBanco());
-            datos[9] = String.valueOf(unPago.getSaldo());
+            
+            Logica.Inquilino unInquilino = unaControladora.obtenerInquilinoPago(idEdificio, unPago.getId());
+            datos[2] = unInquilino.getApellido()+", "+unInquilino.getNombre();
+            
+            datos[3] = unPago.getInteresPorAtraso();
+            datos[4] = formatoDecimal.format(unPago.getSaldo());
+            datos[5] = unPago.getMonto();
+            datos[6] = unPago.getEfectivo();
+            datos[7] = unPago.getTarjeta();
+            datos[8] = unPago.getBanco();
+            datos[9] = unPago.getDescripcion();
             
             tablaPago.addRow(datos);
         }
@@ -1035,7 +1039,7 @@ public final class PanelPago extends javax.swing.JPanel {
     
     private void cargarPanelDatos(long idPago){
         modificar = true;
-        float montoExpensa = 0;
+        float montoExpensa;
         Logica.Pago unPago = unaControladora.obtenerPago(idPago);
         Logica.Inquilino unInquilino = new Inquilino();
         Logica.Alquiler unAlquiler = new Alquiler();
@@ -1086,10 +1090,6 @@ public final class PanelPago extends javax.swing.JPanel {
         
         icono("afuera");
         jLabelAceptar.setText("Actualizar");
-    }
-    
-    private void limpiarComboAlquiler(){
-        
     }
     
     private void limpiarComponentes(){

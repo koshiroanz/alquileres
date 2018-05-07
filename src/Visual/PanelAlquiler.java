@@ -16,6 +16,7 @@ import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_PERIOD;
 import static java.awt.event.KeyEvent.VK_DECIMAL;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
+import java.util.Collections;
 
 public final class PanelAlquiler extends javax.swing.JPanel {
     private int fila;
@@ -833,6 +834,8 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             alquileres = unaControladora.obtenerAlquileresEdificio(idEdificio);
         }
         
+        Collections.sort(alquileres, (Logica.Alquiler a1, Logica.Alquiler a2) -> a1.getFecha().compareTo(a2.getFecha()));
+        
         for(Logica.Alquiler unAlquiler : alquileres){
             datos[0] = String.valueOf(unAlquiler.getId());
             datos[1] = String.valueOf(dateFormat.format(unAlquiler.getFecha()));
@@ -918,9 +921,11 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         
         if(idInquilino != 0){
             inquilinos.add(unaControladora.obtenerInquilino(idInquilino));
+            Collections.sort(inquilinos, (Logica.Inquilino i1, Logica.Inquilino a2) -> i1.getApellido().compareTo(a2.getApellido()));
         }else{
             //inquilinos = unaControladora.obtenerInquilinosSinAlquiler(idEdificio);
             inquilinos = unaControladora.obtenerInquilinosEdificio(idEdificio);
+            Collections.sort(inquilinos, (Logica.Inquilino i1, Logica.Inquilino a2) -> i1.getApellido().compareTo(a2.getApellido()));
             comboInquilino.addElement("Seleccione una opción");
         }
         

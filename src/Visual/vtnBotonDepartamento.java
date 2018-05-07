@@ -1,6 +1,8 @@
 package Visual;
 
 import java.awt.Color;
+import java.util.Collections;
+import java.util.List;
 import javax.swing.RowSorter;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -19,6 +21,7 @@ public class vtnBotonDepartamento extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);   // Centra el JFrame
         this.idEdificio = idEdificio;
         cargarDepartamentos(idEdificio);
+        info(idEdificio);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE); // Cierra este JFrame
     }
 
@@ -34,6 +37,12 @@ public class vtnBotonDepartamento extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanelButtonCerrar = new javax.swing.JPanel();
         jLabelCerrar = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldCantDeptos = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldDeptosOcupados = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jTextFieldDeptosDesocupados = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -122,6 +131,21 @@ public class vtnBotonDepartamento extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jLabel1.setText("Cantidad de departamentos");
+
+        jTextFieldCantDeptos.setBorder(null);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jLabel2.setText("Departamentos ocupados");
+
+        jTextFieldDeptosOcupados.setBorder(null);
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jLabel3.setText("Departamentos desocupados");
+
+        jTextFieldDeptosDesocupados.setBorder(null);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -131,7 +155,19 @@ public class vtnBotonDepartamento extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldDeptosOcupados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jTextFieldCantDeptos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(56, 56, 56)
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldDeptosDesocupados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -140,9 +176,19 @@ public class vtnBotonDepartamento extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextFieldCantDeptos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextFieldDeptosDesocupados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextFieldDeptosOcupados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -195,21 +241,25 @@ public class vtnBotonDepartamento extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanelButtonCerrarMouseExited
 
     public final void cargarDepartamentos(long idEdificio){
-        Logica.Edificio unEdificio = unaControladora.obtenerEdificio(idEdificio);
+        List<Logica.Departamento> departamentos = unaControladora.obtenerEdificio(idEdificio).getDepartamentos();
+        String nombreEdi = unaControladora.obtenerEdificio(idEdificio).getNombre();
         String colTablaDepartamento[] = {"Id", "Ubicación", "N° Dormitorios", "Inquilino", "Edificio"};
-        int tamanio = unEdificio.getDepartamentos().size();
+        int i = 0, tamanio = departamentos.size();
         Object[][] filas = new Object[tamanio][5];
         
-        for(int i = 0; i < tamanio; i++){
-            filas[i][0] = unEdificio.getDepartamentos().get(i).getId();
-            filas[i][1] = unEdificio.getDepartamentos().get(i).getUbicacion();
-            filas[i][2] = unEdificio.getDepartamentos().get(i).getCantDormitorios();
-            if(unEdificio.getDepartamentos().get(i).getUnInquilino() == null){
+        Collections.sort(departamentos, (Logica.Departamento d1, Logica.Departamento d2) -> d1.getUbicacion().compareTo(d2.getUbicacion()));
+
+        for(Logica.Departamento unDepto : departamentos){
+            filas[i][0] = unDepto.getId();
+            filas[i][1] = unDepto.getUbicacion();
+            filas[i][2] = unDepto.getCantDormitorios();
+            if(unDepto.getUnInquilino() == null){
                 filas[i][3] = "--";
             }else{
-                filas[i][3] = unEdificio.getDepartamentos().get(i).getUnInquilino().getApellido()+", "+unEdificio.getDepartamentos().get(i).getUnInquilino().getNombre();
+                filas[i][3] = unDepto.getUnInquilino().getApellido()+", "+unDepto.getUnInquilino().getNombre();
             } 
-            filas[i][4] = unEdificio.getNombre();
+            filas[i][4] = nombreEdi;
+            i++;
         }
         
         TableModel modelo = new DefaultTableModel(filas,colTablaDepartamento);
@@ -251,8 +301,36 @@ public class vtnBotonDepartamento extends javax.swing.JFrame {
         this.jTableDepartamento.setModel(tablaDepartamento);
         */
     }
+    
+    public void info(long idEdificio){
+        Logica.Edificio unEdi = unaControladora.obtenerEdificio(idEdificio);
+        int cantDeptos = unEdi.getDepartamentos().size(),
+            cantDeptosOcupados = unaControladora.departamentosOcupados(idEdificio),
+            cantDeptosDesocupados = cantDeptos - cantDeptosOcupados;
+        
+        if(cantDeptos == 0){
+            this.jTextFieldCantDeptos.setText("0"); // No debería asignar nunca este valor..
+        }else{
+            this.jTextFieldCantDeptos.setText(String.valueOf(cantDeptos));
+        }
+        
+        if(cantDeptosOcupados == 0){
+            this.jTextFieldDeptosOcupados.setText("0");
+        }else{
+            this.jTextFieldDeptosOcupados.setText(String.valueOf(cantDeptosOcupados));
+        }
+        
+        if(cantDeptosDesocupados == 0){
+            this.jTextFieldDeptosDesocupados.setText("0");
+        }else{
+            this.jTextFieldDeptosDesocupados.setText(String.valueOf(cantDeptosDesocupados));
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelCerrar;
     private javax.swing.JLabel jLabelTituloEdificio;
     private javax.swing.JPanel jPanel1;
@@ -261,5 +339,8 @@ public class vtnBotonDepartamento extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelButtonCerrar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableDepartamento;
+    private javax.swing.JTextField jTextFieldCantDeptos;
+    private javax.swing.JTextField jTextFieldDeptosDesocupados;
+    private javax.swing.JTextField jTextFieldDeptosOcupados;
     // End of variables declaration//GEN-END:variables
 }

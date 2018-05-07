@@ -12,6 +12,7 @@ import static java.awt.event.KeyEvent.VK_MINUS;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_PERIOD;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
+import java.util.Collections;
 import java.util.LinkedList;
 
 public class PanelGarante extends javax.swing.JPanel {
@@ -758,6 +759,7 @@ public class PanelGarante extends javax.swing.JPanel {
             }
             
             Object datos[] = new Object[10];
+            Collections.sort(inquilinosEdificio, (Logica.Inquilino i1, Logica.Inquilino i2) -> i1.getApellido().compareTo(i2.getApellido()));
             for(Logica.Inquilino unInquilino : inquilinosEdificio){
                 if(unInquilino.getUnGarante() != null){
                     datos[0] = unInquilino.getUnGarante().getId();
@@ -792,7 +794,10 @@ public class PanelGarante extends javax.swing.JPanel {
         comboInquilino.addElement("Seleccione una opción");
 
         if(unaControladora.obtenerInquilinosEdificio(idEdificio).size() > 0){
-            for(Logica.Inquilino unInquilino : unaControladora.obtenerInquilinosEdificio(idEdificio)){
+            List<Logica.Inquilino> inquilinos = unaControladora.obtenerInquilinosEdificio(idEdificio);
+            Collections.sort(inquilinos, (Logica.Inquilino i1, Logica.Inquilino i2) -> i1.getApellido().compareTo(i2.getApellido()));
+            
+            for(Logica.Inquilino unInquilino : inquilinos){
                 if(unInquilino.getUnGarante() == null){
                     comboInquilino.addElement(unInquilino);
                 }
@@ -810,7 +815,6 @@ public class PanelGarante extends javax.swing.JPanel {
         this.jLabelAceptar.setText("Actualizar");
         modificar = true;
         Logica.Garante unGarante = unaControladora.obtenerGarante(idGarante);
-        
         jTextFieldNombre.setText(unGarante.getNombre());
         jTextFieldApellido.setText(unGarante.getApellido());
         jTextFieldDni.setText(unGarante.getDni());

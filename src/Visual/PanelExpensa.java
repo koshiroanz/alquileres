@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -676,6 +677,8 @@ public final class PanelExpensa extends javax.swing.JPanel {
             int mes = jComboBoxMes.getSelectedIndex();
             List<Logica.Departamento> departamentosSinExpensas = unaControladora.departamentosSinExpensas(mes, idEdificio);
             
+            Collections.sort(departamentosSinExpensas, (Logica.Departamento d1, Logica.Departamento d2) -> d1.getUbicacion().compareTo(d2.getUbicacion()));
+            
             comboDepartamento.removeAllElements();
             comboDepartamento.addElement("Seleccione una opción");
             for(Logica.Departamento unDepartamento : departamentosSinExpensas){
@@ -734,7 +737,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
                 mes = jComboBoxMes.getSelectedIndex();
             
             List<Logica.ServicioExpensa> serviciosExpensa = unaControladora.calcularExpensa(idEdificio, unaControladora.obtenerDepartamento(idDepartamento), mes, anio, alta);
-            //List<Logica.ServicioExpensa> serviciosExpensa = unaControladora.obtenerExpensa(idDepartamento, mes, anio).getServiciosExpensa();
+            Collections.sort(serviciosExpensa, (Logica.ServicioExpensa sE1, Logica.ServicioExpensa sE2) -> sE1.getNombre().compareTo(sE2.getNombre()));
             for (Logica.ServicioExpensa unServicioExpensa : serviciosExpensa) {
                 datos[0] = String.valueOf(unServicioExpensa.getId());
                 datos[1] = unServicioExpensa.getNombre();
@@ -749,7 +752,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
             
         }else{
             List<Logica.Servicio> servicios = unaControladora.obtenerEdificio(idEdificio).getServicios();
-            
+            Collections.sort(servicios, (Logica.Servicio s1, Logica.Servicio s2) -> s1.getNombre().compareTo(s2.getNombre()));
             for (Logica.Servicio unServicio : servicios) {
                 datos[0] = String.valueOf(unServicio.getId());
                 datos[1] = String.valueOf(unServicio.getNombre());
@@ -786,6 +789,10 @@ public final class PanelExpensa extends javax.swing.JPanel {
         }else{
             expensas = unaControladora.obtenerExpensasFechaActual(idEdificio);
         }
+        
+        List<Logica.Expensa> expensasFinal = new LinkedList();
+                
+        //Collections.sort(expensas, (Logica.Expensa e1, Logica.Expensa e2) -> e1.getId().compareTo(e2.getId()));
 
         for (Logica.Expensa unaExpensa : expensas) {
                 datos[0] = String.valueOf(unaExpensa.getId());
