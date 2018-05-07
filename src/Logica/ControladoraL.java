@@ -358,6 +358,18 @@ public class ControladoraL {
         
         return existeCochera;
     }
+    
+    public int obtenerCocherasOcupadas(long idEdificio){
+        int cant = 0;
+        
+        for(Logica.Cochera unaCochera : unaControladora.obtenerEdificio(idEdificio).getCocheras()){
+            if(unaCochera.getUnInquilino() != null){
+                cant++;
+            }
+        }
+        
+        return cant;
+    }
 /*------------------------------------------------------------------------------
                                 COEFICIENTE
 ------------------------------------------------------------------------------*/
