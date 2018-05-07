@@ -330,8 +330,11 @@ public final class PanelPrincipal extends javax.swing.JPanel {
             if(unaControladora.existenExpensas(idEdificio)){
                 try{
                     Logica.Reporte generarReporte = new Logica.Reporte();
-                    generarReporte.crearLibro(idEdificio);
-                    JOptionPane.showMessageDialog(null, "Se ha generado con éxito el Excel.");
+                    boolean generar = generarReporte.crearLibro(idEdificio);
+                    // Agregar un icono de espera.. hasta que devuelva la respuesta GENERAR..
+                    if(generar){
+                        JOptionPane.showMessageDialog(null, "Se ha generado con éxito el Excel.");
+                    }
                 }catch(Exception e){
                     JOptionPane.showMessageDialog(null, "Ocurrio un error: "+e);
                 }
@@ -369,6 +372,7 @@ public final class PanelPrincipal extends javax.swing.JPanel {
     }
     
     public void cargarTablaAlquiler(long idEdificio){
+        //String colAlquiler[] = {"DPTO", "INQUILINO", "FECHA", "ALQUILER", "OTRAS FACTURAS", "EXPENSA", "COCHERA", "INT. POR ATRASO", "SALDO MES ANT.", "TOTAL"};
         Date fechaActual = new Date();
         Object datos[] = new Object[10];
         List<Logica.Inquilino> inquilinosEdificio = unaControladora.obtenerInquilinosEdificio(idEdificio);
@@ -385,7 +389,7 @@ public final class PanelPrincipal extends javax.swing.JPanel {
                 for(Logica.Alquiler unAlquiler : alquileres){
                     
                     if(unAlquiler.getUnPago() == null){
-                        float total = 0, interesPorAtraso = 0;
+                        float total = 0, interesPorAtraso;
                         int mesExpensa = Integer.valueOf(formatoMes.format(unAlquiler.getFecha())),
                             anioExpensa = Integer.valueOf(formatoAnio.format(unAlquiler.getFecha()));
                         Logica.Departamento unDepartamento = unaControladora.obtenerDepartamento(unAlquiler.getDepartamento());
