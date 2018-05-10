@@ -7,10 +7,8 @@ import javax.swing.ImageIcon;
 import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
-import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 public final class PanelPrincipal extends javax.swing.JPanel {
     private final long idEdificio;
@@ -329,14 +327,13 @@ public final class PanelPrincipal extends javax.swing.JPanel {
         if(idEdificio != 0){
             if(unaControladora.existenExpensas(idEdificio)){
                 try{
-                    Logica.Reporte generarReporte = new Logica.Reporte();
-                    boolean generar = generarReporte.crearLibro(idEdificio);
+                    Logica.Reporte reporte = new Logica.Reporte();
                     // Agregar un icono de espera.. hasta que devuelva la respuesta GENERAR..
-                    if(generar){
+                    if(reporte.generarReporte(idEdificio)){
                         JOptionPane.showMessageDialog(null, "Se ha generado con éxito el documento.");
                     }
                 }catch(Exception e){
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+e);
+                    //JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+e);
                 }
             }else{
                 JOptionPane.showMessageDialog(null, "No es posible generar el documento debido a que no existe ningún alquiler/expensa registrado.");
