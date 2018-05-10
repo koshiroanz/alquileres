@@ -16,17 +16,16 @@ import static java.awt.event.KeyEvent.VK_MINUS;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_PERIOD;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
-import java.util.ArrayList;
 import java.util.Collections;
 
-public final class PanelInquilino extends javax.swing.JPanel {
+public class PanelInquilino extends javax.swing.JPanel {
     private TableModel modelo;
     private final long idEdificio;
     private boolean modificar = false, eliminar = false;
     private long idInquilino, idDepartamento = 0, idCochera = 0;
     private final ControladoraV unaControladora = new ControladoraV();
-    private final DefaultComboBoxModel comboCochera = new DefaultComboBoxModel();
     private final DefaultComboBoxModel comboDepartamento = new DefaultComboBoxModel();
+    private final DefaultComboBoxModel comboCochera = new DefaultComboBoxModel();
     
     public PanelInquilino(long idEdificio) {
         initComponents();
@@ -282,26 +281,21 @@ public final class PanelInquilino extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelNombre)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelTitulo)
-                            .addComponent(jPanelButtonRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabelApellido)
-                            .addComponent(jTextFieldApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabelTitulo)
+                    .addComponent(jPanelButtonRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabelNombre)
+                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelApellido)
+                    .addComponent(jTextFieldApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparatorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparatorApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                         .addComponent(jTextFieldDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -313,7 +307,7 @@ public final class PanelInquilino extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparatorDni, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparatorCuit, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -321,7 +315,7 @@ public final class PanelInquilino extends javax.swing.JPanel {
                             .addComponent(jLabelEmail))
                         .addGap(0, 0, 0)
                         .addComponent(jSeparatorEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jLabelCantFamiliares)
                             .addComponent(jTextFieldCantFamiliares, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -336,16 +330,16 @@ public final class PanelInquilino extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jSeparatorCantFamiliares, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabelCochera)
+                            .addComponent(jLabelDescripcion)
                             .addComponent(jComboBoxCochera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelDescripcion))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabelCochera))
+                        .addGap(0, 43, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -561,7 +555,7 @@ public final class PanelInquilino extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
@@ -603,6 +597,7 @@ public final class PanelInquilino extends javax.swing.JPanel {
                 
                 if(!modificar){
                     unaControladora.altaInquilino(Integer.valueOf(cantFamilia), apellido, nombre, dni, email, telefono, cuit, 0/* saldoMesAnt*/, jTextAreaDescripcion.getText(), null/*unGarante*/, null/*alquileres*/, idDepartamento, idCochera);
+                    limpiarComponentes();
                     JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente");
                 }else{
                     int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -611,9 +606,9 @@ public final class PanelInquilino extends javax.swing.JPanel {
                         List<Logica.Alquiler> alquileres = unaControladora.obtenerInquilino(idInquilino).getAlquileres();
                         float saldoMesAnt = unaControladora.obtenerInquilino(idInquilino).getSaldoMesAnt();
                         unaControladora.modificarInquilino(idInquilino, Integer.valueOf(cantFamilia), apellido, nombre, dni, email, telefono, cuit, saldoMesAnt, jTextAreaDescripcion.getText(), unGarante, alquileres, idDepartamento, idCochera);
+                        limpiarComponentes();
                     }
                 }
-                limpiarComponentes();
             }catch(Exception ex){
                 Logger.getLogger(Logica.Inquilino.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. Error: "+ex);
@@ -622,7 +617,7 @@ public final class PanelInquilino extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
 
     private void jTableInquilinoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableInquilinoMouseClicked
-        int fila = jTableInquilino.convertRowIndexToModel(jTableInquilino.getSelectedRow());
+        int fila = jTableInquilino.convertColumnIndexToModel(jTableInquilino.getSelectedRow());
         
         if(fila >= 0){
             idInquilino = Long.parseLong(modelo.getValueAt(fila, 0).toString());
@@ -975,8 +970,6 @@ public final class PanelInquilino extends javax.swing.JPanel {
     }
     
     private void limpiarComponentes(){
-        eliminar = false;
-        modificar = false;
         ImageIcon refrescar = new ImageIcon(getClass().getResource("/Visual/img/cargando_blanco.png"));
         this.jLabelRefrescar.setIcon(refrescar);
         this.jLabelAceptar.setText("Aceptar");
@@ -992,6 +985,8 @@ public final class PanelInquilino extends javax.swing.JPanel {
         cargarComboDepartamento(idEdificio);
         cargarComboCochera(idEdificio);
         this.jTextFieldNombre.requestFocus();
+        eliminar = false;
+        modificar = false;
         cargarComboDepartamento(idEdificio);
         cargarComboCochera(idEdificio);
         cargarTablaInquilino("");
