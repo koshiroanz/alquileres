@@ -581,7 +581,7 @@ public final class Inicio extends javax.swing.JFrame {
         
         if(unaControladora.obtenerEdificios().isEmpty()){
             listaNotificaciones.addElement("Todo listo para empezar su utilizacion.");
-        }else{
+        }else{            
             for(String msj : unaControladora.notificaciones()){
                 if(!msj.isEmpty()){
                     listaNotificaciones.addElement("- "+msj+".");
@@ -623,6 +623,7 @@ public final class Inicio extends javax.swing.JFrame {
                 new Inicio().setVisible(true);
             } catch (Exception ex) {
                 Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Error: "+ex);
             }
         });
     }

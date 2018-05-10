@@ -10,14 +10,17 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
+import java.util.Collections;
+import javax.swing.RowSorter;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public final class PanelDepartamento extends javax.swing.JPanel {
     private final long idEdificio;
     private long idDepartamento = 0;
     private boolean modificar = false, eliminar = false;
     private final ControladoraV unaControladora = new ControladoraV();
-    private final String colTablaDepartamento[] = {"Id", "Ubicación", "N° Dormitorios", "Descripción"};
-    private final DefaultTableModel tablaDepartamento = new DefaultTableModel(null, colTablaDepartamento);
+    private DefaultTableModel modelo = new DefaultTableModel();
     
     public PanelDepartamento(long idEdificio) {
         initComponents();
@@ -535,10 +538,10 @@ public final class PanelDepartamento extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldUbicacionKeyTyped
 
     private void jTableDepartamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDepartamentoMouseClicked
-        int fila = jTableDepartamento.getSelectedRow();
+        int fila = jTableDepartamento.convertColumnIndexToModel(jTableDepartamento.getSelectedRow());
         
         if(fila >= 0){
-            idDepartamento = Long.parseLong(tablaDepartamento.getValueAt(fila, 0).toString());
+            idDepartamento = Long.parseLong(modelo.getValueAt(fila, 0).toString());
         
             if(evt.getClickCount() == 1){
                 eliminar = true;
@@ -551,8 +554,8 @@ public final class PanelDepartamento extends javax.swing.JPanel {
     
     public void cargarTablaDepartamento(String buscar){
         limpiarComponentes();
+        String colTablaDepartamento[] = {"Id", "Ubicación", "N° Dormitorios", "Descripción"};
         List<Logica.Departamento> departamentos = new LinkedList();
-        Object datos[] = new Object[4];
         
         if(!buscar.isEmpty()){
             for(Logica.Departamento unDepartamento : unaControladora.obtenerEdificio(idEdificio).getDepartamentos()){
@@ -570,16 +573,23 @@ public final class PanelDepartamento extends javax.swing.JPanel {
         }
         
         if(departamentos.size() > 0){
-            for(Logica.Departamento unDepartamento : departamentos){
-                datos[0] = unDepartamento.getId();
-                datos[1] = unDepartamento.getUbicacion();
-                datos[2] = unDepartamento.getCantDormitorios();
-                datos[3] = unDepartamento.getDescripcion();
-
-                tablaDepartamento.addRow(datos);
+            int tam = departamentos.size();
+            Object[][] datos = new Object[tam][4];
+            
+            for(int i = 0; i < tam; i++){
+                datos[i][0] = departamentos.get(i).getId();
+                datos[i][1] = departamentos.get(i).getUbicacion();
+                datos[i][2] = departamentos.get(i).getCantDormitorios();
+                datos[i][3] = departamentos.get(i).getDescripcion();
             }
             
-            this.jTableDepartamento.setModel(tablaDepartamento);
+            modelo = new DefaultTableModel(datos,colTablaDepartamento);
+            
+            RowSorter<TableModel> sorter = new TableRowSorter<>(modelo);
+            jTableDepartamento.setRowSorter(sorter);
+            jTableDepartamento.setModel(modelo);
+            
+            this.jTableDepartamento.setModel(modelo);
         }
     }
     
@@ -635,13 +645,13 @@ public final class PanelDepartamento extends javax.swing.JPanel {
     }
     
     public void limpiarTabla(){
-        int tamanio = tablaDepartamento.getRowCount();
+        int tamanio = modelo.getRowCount();
         
         for(int i = 0; i < tamanio; i++){
-            tablaDepartamento.removeRow(0);
+            modelo.removeRow(0);
         }
         
-        this.jTableDepartamento.setModel(tablaDepartamento);
+        this.jTableDepartamento.setModel(modelo);
         
     }
     

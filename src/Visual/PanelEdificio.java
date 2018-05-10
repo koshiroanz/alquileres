@@ -16,7 +16,7 @@ import static java.awt.event.KeyEvent.VK_BACK_SPACE;
 public final class PanelEdificio extends javax.swing.JPanel {
     private long idEdificio, id;
     private final ControladoraV unaControladora = new ControladoraV();
-     private boolean busqueda = false, modificar = false, eliminar = false;    
+    private boolean busqueda = false, modificar = false, eliminar = false;    
     
     public PanelEdificio(long idEdificio) {
         initComponents();
@@ -155,7 +155,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
                 .addGroup(jPanelCargaDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jPanelButtonRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanelCargaDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -165,11 +165,11 @@ public final class PanelEdificio extends javax.swing.JPanel {
                 .addGroup(jPanelCargaDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanelCargaDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelDescripción)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         jPanelTabla.setBackground(new java.awt.Color(255, 255, 255));
@@ -250,7 +250,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
             jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonEliminarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonEliminarLayout.setVerticalGroup(
@@ -286,7 +286,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
             jPanelButtonAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonAgregarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAgregarLayout.setVerticalGroup(
@@ -395,9 +395,9 @@ public final class PanelEdificio extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanelCargaDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelCargaDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanelTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanelTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -430,7 +430,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
     private void jPanelButtonAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonAgregarMouseClicked
         if(validar()){
             try {
-                if(!modificar){
+                if(!modificar && this.idEdificio == 0){
                     unaControladora.altaEdificio(jTextFieldNombre.getText().toUpperCase(), jTextFieldDireccion.getText().toUpperCase(), jTextAreaDescripcion.getText(), null, null, null, null);
                     idEdificio = 0;
                     limpiarComponentes();
@@ -532,7 +532,6 @@ public final class PanelEdificio extends javax.swing.JPanel {
                     id = 0;
                     this.idEdificio = id;
                     limpiarComponentes();
-                    eliminar = false;
                 }
             }catch(Exception ex){
                 Logger.getLogger(Logica.Edificio.class.getName()).log(Level.SEVERE, null, ex);
@@ -727,14 +726,11 @@ public final class PanelEdificio extends javax.swing.JPanel {
                 
                 tablaEdificio.addRow(obj);
             }
-
-            
             
             jtb.setModel(tablaEdificio);
             jtb.setRowHeight(25);
         }else{
             DefaultTableModel tablaEdificio = new DefaultTableModel(null, colTablaEdificio);
-            //Object[] obj = new Object[8];
             jtb.setModel(tablaEdificio);
             jtb.setRowHeight(25);
         }

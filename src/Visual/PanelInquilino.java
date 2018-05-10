@@ -16,6 +16,7 @@ import static java.awt.event.KeyEvent.VK_MINUS;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_PERIOD;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
+import java.util.Collections;
 
 public class PanelInquilino extends javax.swing.JPanel {
     private TableModel modelo;
@@ -280,26 +281,21 @@ public class PanelInquilino extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelNombre)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelTitulo)
-                            .addComponent(jPanelButtonRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabelApellido)
-                            .addComponent(jTextFieldApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabelTitulo)
+                    .addComponent(jPanelButtonRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabelNombre)
+                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelApellido)
+                    .addComponent(jTextFieldApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparatorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparatorApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                         .addComponent(jTextFieldDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -311,7 +307,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparatorDni, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparatorCuit, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -319,7 +315,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                             .addComponent(jLabelEmail))
                         .addGap(0, 0, 0)
                         .addComponent(jSeparatorEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jLabelCantFamiliares)
                             .addComponent(jTextFieldCantFamiliares, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -334,16 +330,16 @@ public class PanelInquilino extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jSeparatorCantFamiliares, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabelCochera)
+                            .addComponent(jLabelDescripcion)
                             .addComponent(jComboBoxCochera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelDescripcion))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabelCochera))
+                        .addGap(0, 43, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -559,7 +555,7 @@ public class PanelInquilino extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
@@ -621,7 +617,7 @@ public class PanelInquilino extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
 
     private void jTableInquilinoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableInquilinoMouseClicked
-        int fila = jTableInquilino.getSelectedRow();
+        int fila = jTableInquilino.convertColumnIndexToModel(jTableInquilino.getSelectedRow());
         
         if(fila >= 0){
             idInquilino = Long.parseLong(modelo.getValueAt(fila, 0).toString());
@@ -791,23 +787,24 @@ public class PanelInquilino extends javax.swing.JPanel {
                 inquilinos = unaControladora.obtenerInquilinosEdificio(idEdificio);
             }
 
-            int tamanio = inquilinos.size();
+            int i = 0, tamanio = inquilinos.size();
             Object[][] filas = new Object[tamanio][11];
-            Logica.Departamento unDepto = null;
-            Logica.Cochera unaCochera = null;
+            Logica.Departamento unDepto;
+            Logica.Cochera unaCochera;
+            Collections.sort(inquilinos, (Logica.Inquilino i1, Logica.Inquilino i2) -> i1.getApellido().compareTo(i2.getApellido()));
             
-            for(int i = 0; i < tamanio; i++){
-                unDepto = unaControladora.obtenerDepartamentoInquilino(inquilinos.get(i).getId());
-                unaCochera = unaControladora.obtenerCocheraInquilino(idEdificio, inquilinos.get(i).getId());
+            for(Logica.Inquilino unInquilino : inquilinos){
+                unDepto = unaControladora.obtenerDepartamentoInquilino(unInquilino.getId());
+                unaCochera = unaControladora.obtenerCocheraInquilino(idEdificio, unInquilino.getId());
                 
-                filas[i][0] = inquilinos.get(i).getId();
-                filas[i][1] = inquilinos.get(i).getApellido();
-                filas[i][2] = inquilinos.get(i).getNombre();
-                filas[i][3] = inquilinos.get(i).getDni();
-                filas[i][4] = inquilinos.get(i).getCuit();
-                filas[i][5] = inquilinos.get(i).getTelefono();
-                filas[i][6] = inquilinos.get(i).getEmail();
-                filas[i][7] = inquilinos.get(i).getCantidadPersonas();
+                filas[i][0] = unInquilino.getId();
+                filas[i][1] = unInquilino.getApellido();
+                filas[i][2] = unInquilino.getNombre();
+                filas[i][3] = unInquilino.getDni();
+                filas[i][4] = unInquilino.getCuit();
+                filas[i][5] = unInquilino.getTelefono();
+                filas[i][6] = unInquilino.getEmail();
+                filas[i][7] = unInquilino.getCantidadPersonas();
                 if(unDepto != null){
                     filas[i][8] = unDepto.getUbicacion();
                 }else{
@@ -818,24 +815,12 @@ public class PanelInquilino extends javax.swing.JPanel {
                 }else{
                     filas[i][9] = "";
                 }
-                filas[i][10] = inquilinos.get(i).getDescripcion();
+                filas[i][10] = unInquilino.getDescripcion();
+                i++;
             }
 
-            modelo = new DefaultTableModel(filas,colTablaInquilino)/*{
-                @Override
-                public Class getColumnClass(int column) {
-                    Class returnValue;
-                    if ((column >= 0) && (column < getColumnCount())) {
-                        returnValue = getValueAt(0, column).getClass();
-                    } else {
-                        returnValue = Object.class;
-                    }
-
-                    return returnValue;
-                }
-            }*/;
-
-            //JTable table = new JTable(modelo);
+            modelo = new DefaultTableModel(filas,colTablaInquilino);
+            
             RowSorter<TableModel> sorter = new TableRowSorter<>(modelo);
             jTableInquilino.setRowSorter(sorter);
             jTableInquilino.setModel(modelo);
@@ -931,7 +916,7 @@ public class PanelInquilino extends javax.swing.JPanel {
             idDepartamento = 0;
             departamento = true;
         }else{
-            Logica.Departamento unDepto = new Logica.Departamento();
+            Logica.Departamento unDepto;
             unDepto = (Logica.Departamento)comboDepartamento.getSelectedItem();
             idDepartamento = unDepto.getId();
             departamento = true;
@@ -943,7 +928,7 @@ public class PanelInquilino extends javax.swing.JPanel {
             idCochera = 0;
             cochera = true;
         }else{
-            Logica.Cochera unaCocher = new Logica.Cochera();
+            Logica.Cochera unaCocher;
             unaCocher = (Logica.Cochera)comboCochera.getSelectedItem();
             idCochera = unaCocher.getId();
             cochera = true;
