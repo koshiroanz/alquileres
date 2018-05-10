@@ -27,7 +27,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     private final DefaultComboBoxModel comboInquilino = new DefaultComboBoxModel();
     private final DefaultComboBoxModel comboAnio = new DefaultComboBoxModel();
     private final DefaultComboBoxModel comboDepartamento = new DefaultComboBoxModel();
-    private final String colTablaAlquiler[] = {"Id", "Fecha", "Monto", "Otras Facturas", "Total", "Departamento", "Cochera", "Inquilino"};
+    private final String colTablaAlquiler[] = {"Id", "Fecha", "Inquilino", "Departamento", "Cochera", "Total"};
     private final DefaultTableModel tablaAlquiler = new DefaultTableModel(null, colTablaAlquiler);
     
     public PanelAlquiler(long idEdificio){
@@ -572,7 +572,6 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                     unaControladora.altaAlquiler(fecha, idCochera, idDepartamento, monto, otraFactura, total, descripcion, null, unInquilino.getId());
                     limpiarComponentes();
                     cargarTablaAlquiler(0,0);
-                    JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente.");
                 }else{
                     int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){
@@ -584,7 +583,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                 }
             } catch (Exception ex) {
                 Logger.getLogger(Logica.Alquiler.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. Error: "+ex);
+                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. Error: "+ex, "", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
@@ -606,7 +605,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
 
     private void jPanelButtonBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonBuscarMouseClicked
         if(jComboBoxMesBusqueda.getSelectedIndex() == 0 || jComboBoxAnio.getSelectedIndex() == 0){
-            JOptionPane.showMessageDialog(null, "Seleccione un mes y año para buscar.");
+            JOptionPane.showMessageDialog(null, "Seleccione un mes y año para buscar.", "", JOptionPane.WARNING_MESSAGE);
         }else{
             int anio = Integer.parseInt((String)jComboBoxAnio.getSelectedItem());
             cargarTablaAlquiler(jComboBoxMesBusqueda.getSelectedIndex(), anio);
@@ -636,7 +635,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     private void jPanelButtonEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseClicked
         if(eliminar){
             try{
-                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if(confirmacion == 0){
                     Logica.Inquilino unInquilino = unaControladora.obtenerInquilinoPorAlquiler(idEdificio, idAlquiler);
                     unaControladora.bajaAlquiler(idAlquiler, unInquilino.getId());
@@ -645,10 +644,10 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                 }
             }catch(Exception e){
                 Logger.getLogger(Logica.Departamento.class.getName()).log(Level.SEVERE, null, e);
-                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.");
+                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.", "", JOptionPane.ERROR_MESSAGE);
             }
         }else{
-             JOptionPane.showMessageDialog(null, "Debe seleccionar un Alquiler.");
+             JOptionPane.showMessageDialog(null, "Debe seleccionar un Alquiler.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
@@ -670,7 +669,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         if(!modificar){
             float total = 0;
             if(jComboBoxInquilino.getSelectedItem() == "Seleccione una opción" || jComboBoxDepartamento.getSelectedItem() == "Seleccione una opción" || jComboBoxCochera.getSelectedItem() == "Seleccione una opción"){
-                JOptionPane.showMessageDialog(null, "No es posible calcular el Total. Debido a que no se encuentra seleccionado un Inquilino, Departamento o Cochera");
+                JOptionPane.showMessageDialog(null, "No es posible calcular el Total. Debido a que no se encuentra seleccionado un Inquilino, Departamento o Cochera", "", JOptionPane.ERROR_MESSAGE);
             }else{
                 if(!jTextFieldMonto.getText().isEmpty() && !jTextFieldOtraFactura.getText().isEmpty()){
                     if(comboCochera.getSelectedItem() != "Sin Cochera."){
@@ -694,7 +693,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                     jTextFieldTotal.setText(String.valueOf(total));
                     modificar = false;
                 }else{
-                    JOptionPane.showMessageDialog(null, "Debe completar los campos Monto y Otras Facturas");
+                    JOptionPane.showMessageDialog(null, "Debe completar los campos Monto y Otras Facturas", "", JOptionPane.WARNING_MESSAGE);
                 }
             }
         }
@@ -752,15 +751,15 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         if(fecha != null && !jTextFieldMonto.getText().isEmpty() && !jTextFieldOtraFactura.getText().isEmpty() && departamento && cochera && validarTotal){
             validar = true;
         }else if(fecha == null){
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una Fecha.");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una Fecha.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldMonto.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe cargar un valor en Monto.");
+            JOptionPane.showMessageDialog(null, "Debe cargar un valor en Monto.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldOtraFactura.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe cargar un valor en Otras Facturas.");
+            JOptionPane.showMessageDialog(null, "Debe cargar un valor en Otras Facturas.", "", JOptionPane.WARNING_MESSAGE);
         }else if(!departamento && !cochera){
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una opción en Departamento y Cochera.");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una opción en Departamento y Cochera.", "", JOptionPane.WARNING_MESSAGE);
         }else if(!validarTotal){
-            JOptionPane.showMessageDialog(null, "Debe cliquear en Total para obtener su resultado antes de Guardar.");
+            JOptionPane.showMessageDialog(null, "Debe cliquear en Total para obtener su resultado antes de Guardar.", "", JOptionPane.WARNING_MESSAGE);
         }
         
         return validar;
@@ -786,7 +785,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     private void cargarTablaAlquiler(int mesBusqueda, int anioBusqueda){
         limpiarComponentes();
         int mesAlquiler, anioAlquiler;
-        String datos[] = new String[8];
+        String datos[] = new String[6];
         List<Logica.Alquiler> alquileres = new LinkedList();
         SimpleDateFormat monthFormat = new SimpleDateFormat("MM"),
                          yearFormat = new SimpleDateFormat("yyyy"),
@@ -802,7 +801,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             }
             
             if(alquileres.isEmpty()){
-                JOptionPane.showMessageDialog(null, "No se ha encontrado el Alquiler.");
+                JOptionPane.showMessageDialog(null, "No se ha encontrado el Alquiler.", "", JOptionPane.ERROR_MESSAGE);
                 alquileres = unaControladora.obtenerAlquileresEdificio(idEdificio);
             }
         }else{
@@ -812,23 +811,21 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         for(Logica.Alquiler unAlquiler : alquileres){
             datos[0] = String.valueOf(unAlquiler.getId());
             datos[1] = String.valueOf(dateFormat.format(unAlquiler.getFecha()));
-            datos[2] = String.valueOf(unAlquiler.getMonto());
-            datos[3] = String.valueOf(unAlquiler.getOtraFactura());
-            datos[4] = String.valueOf(unAlquiler.getTotal());
+            datos[2] = unaControladora.obtenerInquilinoPorAlquiler(idEdificio, unAlquiler.getId()).toString();
             
             if(unAlquiler.getDepartamento() != 0){
-                datos[5] = unaControladora.obtenerDepartamento(unAlquiler.getDepartamento()).getUbicacion();
+                datos[3] = unaControladora.obtenerDepartamento(unAlquiler.getDepartamento()).getUbicacion();
             }else{
-                datos[5] = "";
+                datos[3] = "";
             }
             
             if(unAlquiler.getCochera() != 0){
-                datos[6] = String.valueOf(unaControladora.obtenerCochera(unAlquiler.getCochera()).toString());
+                datos[4] = String.valueOf(unaControladora.obtenerCochera(unAlquiler.getCochera()).toString());
             }else{
-                datos[6] = "";
+                datos[4] = "";
             }
             
-            datos[7] = unaControladora.obtenerInquilinoPorAlquiler(idEdificio, unAlquiler.getId()).toString();
+            datos[5] = String.valueOf(unAlquiler.getTotal());
             
             tablaAlquiler.addRow(datos);
         }

@@ -184,7 +184,7 @@ public class PanelCochera extends javax.swing.JPanel {
                 .addGroup(jPanelDatosCocheraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelButtonRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelTitutlo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanelDatosCocheraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabelUbicacion)
                     .addComponent(jTextFieldUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -193,7 +193,7 @@ public class PanelCochera extends javax.swing.JPanel {
                 .addGroup(jPanelDatosCocheraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparatorUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparatorPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(jPanelDatosCocheraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -203,7 +203,7 @@ public class PanelCochera extends javax.swing.JPanel {
                             .addComponent(jLabelEdificio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -262,7 +262,7 @@ public class PanelCochera extends javax.swing.JPanel {
             jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonEliminarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonEliminarLayout.setVerticalGroup(
@@ -298,7 +298,7 @@ public class PanelCochera extends javax.swing.JPanel {
             jPanelButtonAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonAgregarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAgregarLayout.setVerticalGroup(
@@ -411,10 +411,10 @@ public class PanelCochera extends javax.swing.JPanel {
                     .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(jSeparatorBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -429,7 +429,7 @@ public class PanelCochera extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -462,7 +462,6 @@ public class PanelCochera extends javax.swing.JPanel {
                 if(!modificar){
                     unaControladora.altaCochera(jTextFieldUbicacion.getText().toUpperCase(), Float.valueOf(jTextFieldPrecio.getText()), jTextAreaDescripcion.getText(), null, idEdificio);
                     cargarTablaCochera("");
-                    JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente.");
                 }else{
                     int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){
@@ -474,7 +473,7 @@ public class PanelCochera extends javax.swing.JPanel {
                 }
             } catch (Exception ex) {
                 Logger.getLogger(Logica.Cochera.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. Error: "+ex);
+                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. Error: "+ex, "", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
@@ -482,7 +481,7 @@ public class PanelCochera extends javax.swing.JPanel {
     private void jPanelButtonEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseClicked
         if(eliminar){
             try{
-                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if(confirmacion == 0){
                     unaControladora.bajaCochera(idCochera, idEdificio);
                     cargarTablaCochera("");
@@ -490,10 +489,10 @@ public class PanelCochera extends javax.swing.JPanel {
                 }
             }catch(Exception ex){
                 Logger.getLogger(Logica.Cochera.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.");
+                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.", "", JOptionPane.ERROR_MESSAGE);
             }
         }else{
-             JOptionPane.showMessageDialog(null, "Debe seleccionar una Cochera de la tabla.");
+             JOptionPane.showMessageDialog(null, "Debe seleccionar una Cochera de la tabla.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
@@ -506,7 +505,7 @@ public class PanelCochera extends javax.swing.JPanel {
 
     private void jPanelButtonBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonBuscarMouseClicked
         if(jTextFieldBuscar.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe ingresar una clave de busqueda.");
+            JOptionPane.showMessageDialog(null, "Debe ingresar una clave de busqueda.", "", JOptionPane.WARNING_MESSAGE);
             jTextFieldBuscar.requestFocus();
         }else{
             cargarTablaCochera(jTextFieldBuscar.getText().toUpperCase());
@@ -580,7 +579,7 @@ public class PanelCochera extends javax.swing.JPanel {
             }
             
             if(cocheras.isEmpty()){
-                JOptionPane.showMessageDialog(null, "No se ha encontrado la Cochera.");
+                JOptionPane.showMessageDialog(null, "No se ha encontrado la Cochera.", "", JOptionPane.ERROR_MESSAGE);
                 cocheras = unaControladora.obtenerEdificio(idEdificio).getCocheras();
             }
         }else{
@@ -675,7 +674,7 @@ public class PanelCochera extends javax.swing.JPanel {
             if(!modificar){
                 boolean existeCochera = unaControladora.existeCochera(jTextFieldUbicacion.getText().toUpperCase(), this.idEdificio);
                 if(existeCochera){
-                    JOptionPane.showMessageDialog(null, "La cochera: "+jTextFieldUbicacion.getText().toUpperCase()+" ya se encuentra registrada.");
+                    JOptionPane.showMessageDialog(null, "La cochera: "+jTextFieldUbicacion.getText().toUpperCase()+" ya se encuentra registrada.", "", JOptionPane.WARNING_MESSAGE);
                 }else{
                     validar = true;
                 }
@@ -683,9 +682,9 @@ public class PanelCochera extends javax.swing.JPanel {
                 validar = true;
             }
         }else if(jTextFieldUbicacion.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: Ubicación.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: Ubicación.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldPrecio.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: Precio.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: Precio.", "", JOptionPane.WARNING_MESSAGE);
         }
         
         return validar;

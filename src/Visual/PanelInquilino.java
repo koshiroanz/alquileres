@@ -598,9 +598,8 @@ public class PanelInquilino extends javax.swing.JPanel {
                 if(!modificar){
                     unaControladora.altaInquilino(Integer.valueOf(cantFamilia), apellido, nombre, dni, email, telefono, cuit, 0/* saldoMesAnt*/, jTextAreaDescripcion.getText(), null/*unGarante*/, null/*alquileres*/, idDepartamento, idCochera);
                     limpiarComponentes();
-                    JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente");
                 }else{
-                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){
                         Logica.Garante unGarante = unaControladora.obtenerInquilino(idInquilino).getUnGarante();
                         List<Logica.Alquiler> alquileres = unaControladora.obtenerInquilino(idInquilino).getAlquileres();
@@ -611,7 +610,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                 }
             }catch(Exception ex){
                 Logger.getLogger(Logica.Inquilino.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. Error: "+ex);
+                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. Error: "+ex, "", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
@@ -628,14 +627,14 @@ public class PanelInquilino extends javax.swing.JPanel {
                 eliminar = false;
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Debe cliquear una fila válida.");
+            JOptionPane.showMessageDialog(null, "Debe cliquear una fila válida.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jTableInquilinoMouseClicked
 
     private void jPanelButtonEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseClicked
         if(eliminar){
             try{
-                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if(confirmacion == 0){
                     long idDepto = 0;
                     long idCoche = 0;
@@ -655,10 +654,10 @@ public class PanelInquilino extends javax.swing.JPanel {
                 }
             }catch(Exception e){
                 Logger.getLogger(Logica.Inquilino.class.getName()).log(Level.SEVERE, null, e);
-                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.");
+                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.", "", JOptionPane.ERROR_MESSAGE);
             }
         }else{
-             JOptionPane.showMessageDialog(null, "Debe seleccionar un Inquilino.");
+             JOptionPane.showMessageDialog(null, "Debe seleccionar un Inquilino.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
@@ -725,10 +724,10 @@ public class PanelInquilino extends javax.swing.JPanel {
             if(!jTextFieldBuscar.getText().isEmpty()){
                 cargarTablaInquilino(jTextFieldBuscar.getText().toUpperCase());
             }else{
-                JOptionPane.showMessageDialog(null, "Ingrese un apellido para buscar");
+                JOptionPane.showMessageDialog(null, "Ingrese un apellido para buscar", "", JOptionPane.WARNING_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Ingrese un apellido para buscar");
+            JOptionPane.showMessageDialog(null, "Ingrese un apellido para buscar", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonBuscarMouseClicked
 
@@ -767,7 +766,7 @@ public class PanelInquilino extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldCuitKeyTyped
 
     public void cargarTablaInquilino(String buscar){
-        String colTablaInquilino[] = {"Id", "Apellido", "Nombre", "DNI", "CUIT", "Tel.", "E-mail", "Cant. Familiares", "Departamento", "Cochera", "Descripción"};
+        String colTablaInquilino[] = {"Id", "Apellido", "Nombre", "DNI", "Tel.", "E-mail", "Departamento", "Cochera", "Descripción"};
         
         if(unaControladora.obtenerInquilinosEdificio(idEdificio).size() > 0){
             List<Logica.Inquilino> inquilinos = new LinkedList();
@@ -780,7 +779,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                 }
 
                 if(inquilinos.size() < 1){
-                    JOptionPane.showMessageDialog(null, "No se ha encontrado el Inquilino: "+buscar);
+                    JOptionPane.showMessageDialog(null, "No se ha encontrado el Inquilino: "+buscar, "", JOptionPane.ERROR_MESSAGE);
                     inquilinos = unaControladora.obtenerInquilinosEdificio(idEdificio);
                 }
             }else{
@@ -788,7 +787,7 @@ public class PanelInquilino extends javax.swing.JPanel {
             }
 
             int i = 0, tamanio = inquilinos.size();
-            Object[][] filas = new Object[tamanio][11];
+            Object[][] filas = new Object[tamanio][9];
             Logica.Departamento unDepto;
             Logica.Cochera unaCochera;
             Collections.sort(inquilinos, (Logica.Inquilino i1, Logica.Inquilino i2) -> i1.getApellido().compareTo(i2.getApellido()));
@@ -801,21 +800,22 @@ public class PanelInquilino extends javax.swing.JPanel {
                 filas[i][1] = unInquilino.getApellido();
                 filas[i][2] = unInquilino.getNombre();
                 filas[i][3] = unInquilino.getDni();
-                filas[i][4] = unInquilino.getCuit();
-                filas[i][5] = unInquilino.getTelefono();
-                filas[i][6] = unInquilino.getEmail();
-                filas[i][7] = unInquilino.getCantidadPersonas();
+                filas[i][4] = unInquilino.getTelefono();
+                filas[i][5] = unInquilino.getEmail();
+                
                 if(unDepto != null){
-                    filas[i][8] = unDepto.getUbicacion();
+                    filas[i][6] = unDepto.getUbicacion();
                 }else{
-                    filas[i][8] = "";
+                    filas[i][6] = "";
                 }
+                
                 if(unaCochera != null){
-                    filas[i][9] = unaCochera.getUbicacion();
+                    filas[i][7] = unaCochera.getUbicacion();
                 }else{
-                    filas[i][9] = "";
+                    filas[i][7] = "";
                 }
-                filas[i][10] = unInquilino.getDescripcion();
+                
+                filas[i][8] = unInquilino.getDescripcion();
                 i++;
             }
 
@@ -937,12 +937,12 @@ public class PanelInquilino extends javax.swing.JPanel {
         if(!jTextFieldNombre.getText().isEmpty() && !jTextFieldApellido.getText().isEmpty() && !jTextFieldDni.getText().isEmpty() && !jTextFieldTelefono.getText().isEmpty() && !jTextFieldCantFamiliares.getText().isEmpty() && departamento && cochera){
             if(idDepartamento == 0 && idCochera == 0){
                 validar = false;    // Imposible dejar a un Inquilino sin Departamento y sin Cochera al mismo tiempo.
-                JOptionPane.showMessageDialog(null, "No es posible guardar un Inquilino sin departamento ni cochera. Intentelo nuevamente");
+                JOptionPane.showMessageDialog(null, "No es posible guardar un Inquilino sin departamento ni cochera. Intentelo nuevamente", "", JOptionPane.ERROR_MESSAGE);
             }else{
                 if(!modificar){
                     boolean existeInquilino = unaControladora.obtenerInquilinoPorDni(jTextFieldDni.getText(), this.idEdificio);
                     if(existeInquilino){
-                        JOptionPane.showMessageDialog(null, "El Inquilino con DNI: "+jTextFieldDni.getText()+" ya se encuentra registrado.");
+                        JOptionPane.showMessageDialog(null, "El Inquilino con DNI: "+jTextFieldDni.getText()+" ya se encuentra registrado.", "", JOptionPane.WARNING_MESSAGE);
                     }else{
                         validar = true;
                     }
@@ -951,19 +951,19 @@ public class PanelInquilino extends javax.swing.JPanel {
                 }
             }
         }else if(jTextFieldNombre.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: Nombre.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: Nombre.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldApellido.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: Apellido.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: Apellido.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldDni.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: DNI.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: DNI.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldTelefono.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: Teléfono.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: Teléfono.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldCantFamiliares.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: Cantidad Familiares.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: Cantidad Familiares.", "", JOptionPane.WARNING_MESSAGE);
         }else if(!departamento){
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un Departamento.");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Departamento.", "", JOptionPane.WARNING_MESSAGE);
         }else if(!cochera){
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una Cochera.");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una Cochera.", "", JOptionPane.WARNING_MESSAGE);
         }
             
         return validar;

@@ -440,9 +440,8 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
                 if(!modificar){
                     unaControladora.altaCoeficienteDorm(nombre.toUpperCase(), Float.valueOf(valor), Integer.parseInt(cantDorm), jTextAreaDescripcion.getText(), idEdificio);
                     cargarTablaCoeficienteDorm("");
-                    JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente.");
                 }else{
-                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){
                         unaControladora.modificarCoeficienteDorm(idCoeficienteDorm, Integer.parseInt(cantDorm), nombre.toUpperCase(), Float.valueOf(valor), jTextAreaDescripcion.getText());
                         modificar = false;
@@ -451,7 +450,7 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
                 }
             }catch(Exception ex){
                 Logger.getLogger(Logica.CoeficienteDorm.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación.");
+                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación.", "", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
@@ -481,7 +480,7 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
     private void jPanelButtonEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseClicked
         if(eliminar){
             try{
-                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if(confirmacion == 0){
                     unaControladora.bajaCoeficienteDorm(idCoeficienteDorm, idEdificio);
                     cargarTablaCoeficienteDorm("");
@@ -489,10 +488,10 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
                 }
             }catch(Exception e){
                 Logger.getLogger(Logica.CoeficienteDorm.class.getName()).log(Level.SEVERE, null, e);
-                JOptionPane.showMessageDialog(null, "No se ha podido realizar esta operación.");
+                JOptionPane.showMessageDialog(null, "No se ha podido realizar esta operación.", "", JOptionPane.ERROR_MESSAGE);
             }
         }else{
-             JOptionPane.showMessageDialog(null, "Debe seleccionar un Coeficiente Dormitorio.");
+             JOptionPane.showMessageDialog(null, "Debe seleccionar un Coeficiente Dormitorio.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
@@ -530,10 +529,10 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
             if(!jTextFieldBuscar.getText().isEmpty()){
                 cargarTablaCoeficienteDorm(jTextFieldBuscar.getText().toUpperCase());
             }else{
-                JOptionPane.showMessageDialog(null, "Ingrese un nombre para buscar");
+                JOptionPane.showMessageDialog(null, "Ingrese un nombre para buscar", "", JOptionPane.WARNING_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Ingrese un nombre para buscar");
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre para buscar", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonBuscarMouseClicked
 
@@ -570,7 +569,7 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
                 eliminar = false;
            }
         }else{
-            JOptionPane.showMessageDialog(null, "No se ha podido realizar esta operación.");
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar esta operación.", "", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jTableCoeficienteDormMouseClicked
 
@@ -591,7 +590,7 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
             }
             
             if(coeficientes.isEmpty()){
-                JOptionPane.showMessageDialog(null, "No se ha encontrado el Coeficiente: "+buscar);
+                JOptionPane.showMessageDialog(null, "No se ha encontrado el Coeficiente: "+buscar, "", JOptionPane.ERROR);
                 coeficientes = unaControladora.obtenerEdificio(idEdificio).getCoeficientesDorm();
             }
         }else{
@@ -680,7 +679,7 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
             if(!modificar){
                 boolean existeCoeficienteDorm = unaControladora.existeCoeficienteDorm(jTextFieldNombre.getText().toUpperCase(), this.idEdificio);
                 if(existeCoeficienteDorm){
-                    JOptionPane.showMessageDialog(null, "El Coeficiente: "+jTextFieldNombre.getText().toUpperCase()+" ya se encuentra registrado.");
+                    JOptionPane.showMessageDialog(null, "El Coeficiente: "+jTextFieldNombre.getText().toUpperCase()+" ya se encuentra registrado.", "", JOptionPane.WARNING_MESSAGE);
                 }else{
                     validar = true;
                 }
@@ -688,11 +687,11 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
                 validar = true;
             }
         }else if(jTextFieldNombre.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: NOMBRE.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: NOMBRE.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldCantDormitorio.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: N° DORMITORIOS.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: N° DORMITORIOS.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldValor.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: VALOR.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: VALOR.", "", JOptionPane.WARNING_MESSAGE);
         }
         
         return validar;

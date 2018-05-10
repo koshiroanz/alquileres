@@ -21,7 +21,7 @@ public class PanelGarante extends javax.swing.JPanel {
     private boolean modificar = false, eliminar = false;
     private final ControladoraV unaControladora = new ControladoraV();
     private final DefaultComboBoxModel comboInquilino = new DefaultComboBoxModel();
-    private final String colTablaGarante[] = {"Id", "Apellido", "Nombre", "DNI", "CUIT", "Dirección", "Teléfono", "E-mail", "Inquilino", "Descripción"};
+    private final String colTablaGarante[] = {"Id", "Apellido", "Nombre", "DNI", "Dirección", "Teléfono", "E-mail", "Inquilino", "Descripción"};
     private final DefaultTableModel tablaGarante = new DefaultTableModel(null, colTablaGarante);
     
     public PanelGarante(long idEdificio) {
@@ -561,9 +561,8 @@ public class PanelGarante extends javax.swing.JPanel {
                 if(!modificar){
                     unaControladora.altaGarante(apellido, nombre, dni, direccion, telefono, cuit, email, jTextAreaDescripcion.getText(), idInquilino);
                     cargarTablaGarante("");
-                    JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente.");
                 }else{
-                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){  // confirmacion: SI = 0, NO = 1;
                         unaControladora.modificarGarante(idGarante, apellido, nombre, dni, direccion, telefono, cuit, email, jTextAreaDescripcion.getText(), idInquilino);
                         modificar = false;
@@ -577,7 +576,7 @@ public class PanelGarante extends javax.swing.JPanel {
                 cargarComboInquilino(idEdificio);
             }catch(Exception ex){
                 Logger.getLogger(Logica.Garante.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación.");
+                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación.", "", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
@@ -585,7 +584,7 @@ public class PanelGarante extends javax.swing.JPanel {
     private void jPanelButtonEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseClicked
         if(eliminar){
             try{
-                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if(confirmacion == 0){
                     long idInqui = 0;
 
@@ -600,10 +599,10 @@ public class PanelGarante extends javax.swing.JPanel {
                 }
             }catch(Exception e){
                 Logger.getLogger(Logica.Garante.class.getName()).log(Level.SEVERE, null, e);
-                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.");
+                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.", "", JOptionPane.ERROR_MESSAGE);
             }
         }else{
-             JOptionPane.showMessageDialog(null, "Debe seleccionar una Garante.");
+             JOptionPane.showMessageDialog(null, "Debe seleccionar una Garante.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
@@ -672,10 +671,10 @@ public class PanelGarante extends javax.swing.JPanel {
             if(!jTextFieldBuscar.getText().isEmpty()){
                 cargarTablaGarante(jTextFieldBuscar.getText().toUpperCase());
             }else{
-                JOptionPane.showMessageDialog(null, "Ingrese un apellido para buscar");
+                JOptionPane.showMessageDialog(null, "Ingrese un apellido para buscar", "", JOptionPane.WARNING_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Ingrese un apellido para buscar");
+            JOptionPane.showMessageDialog(null, "Ingrese un apellido para buscar", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonBuscarMouseClicked
 
@@ -726,10 +725,10 @@ public class PanelGarante extends javax.swing.JPanel {
                     eliminar = false;
                 }
             }catch(Exception e){
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+e);
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+e, "", JOptionPane.ERROR_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Debe cliquear una fila válida.");
+            JOptionPane.showMessageDialog(null, "Debe cliquear una fila válida.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jTableGaranteMouseClicked
 
@@ -751,26 +750,25 @@ public class PanelGarante extends javax.swing.JPanel {
                 }
                 
                 if(inquilinosEdificio.size() < 1){
-                    JOptionPane.showMessageDialog(null, "No se ha encontrado el Garante: "+buscar);
+                    JOptionPane.showMessageDialog(null, "No se ha encontrado el Garante: "+buscar, "", JOptionPane.ERROR_MESSAGE);
                     inquilinosEdificio = unaControladora.obtenerInquilinosEdificio(idEdificio);
                 }
             }else{
                 inquilinosEdificio = unaControladora.obtenerInquilinosEdificio(idEdificio);
             }
             
-            Object datos[] = new Object[10];
+            Object datos[] = new Object[9];
             for(Logica.Inquilino unInquilino : inquilinosEdificio){
                 if(unInquilino.getUnGarante() != null){
                     datos[0] = unInquilino.getUnGarante().getId();
                     datos[1] = unInquilino.getUnGarante().getApellido();
                     datos[2] = unInquilino.getUnGarante().getNombre();
                     datos[3] = unInquilino.getUnGarante().getDni();
-                    datos[4] = unInquilino.getUnGarante().getCuit();
-                    datos[5] = unInquilino.getUnGarante().getDireccion();
-                    datos[6] = unInquilino.getUnGarante().getTelefono();
-                    datos[7] = unInquilino.getUnGarante().getEmail();
-                    datos[8] = unInquilino.getApellido()+", "+unInquilino.getNombre();
-                    datos[9] = unInquilino.getUnGarante().getDescripcion();
+                    datos[4] = unInquilino.getUnGarante().getDireccion();
+                    datos[5] = unInquilino.getUnGarante().getTelefono();
+                    datos[6] = unInquilino.getUnGarante().getEmail();
+                    datos[7] = unInquilino.getApellido()+", "+unInquilino.getNombre();
+                    datos[8] = unInquilino.getUnGarante().getDescripcion();
 
                     tablaGarante.addRow(datos);
                 }
@@ -854,7 +852,7 @@ public class PanelGarante extends javax.swing.JPanel {
             if(!modificar){
                 boolean existeGarante = unaControladora.existeGarante(jTextFieldDni.getText(), this.idEdificio);
                 if(existeGarante){
-                   JOptionPane.showMessageDialog(null, "El Garante con DNI: "+jTextFieldDni.getText()+" ya se encuentra registrado.");
+                   JOptionPane.showMessageDialog(null, "El Garante con DNI: "+jTextFieldDni.getText()+" ya se encuentra registrado.", "", JOptionPane.WARNING_MESSAGE);
                 }else{
                     validar = true;
                 }
@@ -862,15 +860,15 @@ public class PanelGarante extends javax.swing.JPanel {
                 validar = true;
             }
         }else if(jTextFieldNombre.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: NOMBRE.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: NOMBRE.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldApellido.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: APELLIDO.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: APELLIDO.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldDni.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: DNI.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: DNI.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldTelefono.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: TELEFONO.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: TELEFONO.", "", JOptionPane.WARNING_MESSAGE);
         }else if(!inquilino){
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un Inquilino.");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Inquilino.", "", JOptionPane.WARNING_MESSAGE);
         }
         
         return validar;

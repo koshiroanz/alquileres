@@ -434,9 +434,8 @@ public final class PanelEdificio extends javax.swing.JPanel {
                     unaControladora.altaEdificio(jTextFieldNombre.getText().toUpperCase(), jTextFieldDireccion.getText().toUpperCase(), jTextAreaDescripcion.getText(), null, null, null, null);
                     idEdificio = 0;
                     limpiarComponentes();
-                    JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente.");
                 }else{
-                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){
                         Logica.Edificio unEdificio = unaControladora.obtenerEdificio(id);
                         unaControladora.modificarEdificio(id, jTextFieldNombre.getText().toUpperCase(), jTextFieldDireccion.getText().toUpperCase(), jTextAreaDescripcion.getText(), unEdificio.getDepartamentos(), unEdificio.getCocheras(), unEdificio.getServicios(), unEdificio.getCoeficientesDorm());
@@ -446,7 +445,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
                 }
             } catch (Exception ex) {
                 Logger.getLogger(Logica.Edificio.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación.");
+                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación.", "", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
@@ -484,7 +483,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
                             break;
 
                         default:
-                            JOptionPane.showMessageDialog(null, "No posee datos cargados.");
+                            JOptionPane.showMessageDialog(null, "No posee datos cargados.", "", JOptionPane.WARNING_MESSAGE);
                             break;
                     }
                     ((JButton) value).doClick();
@@ -492,7 +491,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
                     //JOptionPane.showMessageDialog(null, "Fila: "+fila+" Columna: "+columna+" Valor es igual a: "+textoBoton);
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "Debe cliquear una fila válida.");
+                JOptionPane.showMessageDialog(null, "Debe cliquear una fila válida.", "", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_jTableEdificioMouseClicked
@@ -526,7 +525,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
     private void jPanelButtonEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseClicked
         if(eliminar){
             try{
-                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if(confirmacion == 0){
                     unaControladora.bajaEdificio(id);
                     id = 0;
@@ -535,10 +534,10 @@ public final class PanelEdificio extends javax.swing.JPanel {
                 }
             }catch(Exception ex){
                 Logger.getLogger(Logica.Edificio.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.");
+                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.", "", JOptionPane.ERROR_MESSAGE);
             }
         }else{
-             JOptionPane.showMessageDialog(null, "Debe seleccionar un Edificio.");
+             JOptionPane.showMessageDialog(null, "Debe seleccionar un Edificio.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
@@ -552,10 +551,10 @@ public final class PanelEdificio extends javax.swing.JPanel {
                 busqueda = true;
                 cargarTablaEdificio(jTextFieldBuscar.getText().toUpperCase());
             }else{
-                JOptionPane.showMessageDialog(null, "Ingrese un nombre para buscar");
+                JOptionPane.showMessageDialog(null, "Ingrese un nombre para buscar", "", JOptionPane.WARNING_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Ingrese un nombre para buscar");
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre para buscar", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonBuscarMouseClicked
 
@@ -608,7 +607,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
                     }
 
                     if(!bandera){
-                        JOptionPane.showMessageDialog(null, "No se ha encontrado el Edificio: "+buscar);
+                        JOptionPane.showMessageDialog(null, "No se ha encontrado el Edificio: "+buscar, "", JOptionPane.ERROR_MESSAGE);
                     }else{
                         busqueda = false;
                         edificios.clear();
@@ -632,7 +631,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
                 // Solo controla cuando se da de Alta un EDIFICIO por nombre.
                 boolean existeEdificio = unaControladora.existeEdificio(jTextFieldNombre.getText().toUpperCase());
                 if(existeEdificio){
-                    JOptionPane.showMessageDialog(null, "El Edificio: "+jTextFieldNombre.getText().toUpperCase()+" ya se encuentra registrado.");
+                    JOptionPane.showMessageDialog(null, "El Edificio: "+jTextFieldNombre.getText().toUpperCase()+" ya se encuentra registrado.", "", JOptionPane.WARNING_MESSAGE);
                 }else{
                     validar = true;
                 }
@@ -640,9 +639,9 @@ public final class PanelEdificio extends javax.swing.JPanel {
                 validar = true;
             }
         }else if(jTextFieldNombre.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: Nombre.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: Nombre.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldDireccion.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: Dirección.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: Dirección.", "", JOptionPane.WARNING_MESSAGE);
         }
         
         return validar;

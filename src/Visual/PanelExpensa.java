@@ -1,9 +1,7 @@
 package Visual;
 
-import Logica.ServicioExpensa;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -255,25 +253,25 @@ public final class PanelExpensa extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelButtonRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addGap(12, 12, 12)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabelAnio)
                     .addComponent(jTextFieldAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelMes))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabelDepartamento)
                         .addComponent(jComboBoxDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabelDescripcion))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelServicio)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel2)
                     .addComponent(jTextFieldMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -315,7 +313,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
             jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonEliminarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonEliminarLayout.setVerticalGroup(
@@ -351,7 +349,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
             jPanelButtonAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelButtonAgregarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAgregarLayout.setVerticalGroup(
@@ -488,7 +486,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
                     .addComponent(jComboBoxAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanelButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
@@ -504,9 +502,9 @@ public final class PanelExpensa extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 366, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -536,7 +534,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
     private void jPanelButtonEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseClicked
         if(eliminar){
             try{
-                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if(confirmacion == 0){
                     Logica.Departamento unDepartamento = unaControladora.obtenerDepartamentoPorExpensa(idEdificio, idExpensa);
                     unaControladora.bajaExpensa(idExpensa, unDepartamento.getId());
@@ -546,11 +544,11 @@ public final class PanelExpensa extends javax.swing.JPanel {
                 }
             }catch(Exception e){
                 Logger.getLogger(Logica.Expensa.class.getName()).log(Level.SEVERE, null, e);
-                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.");
+                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.", "", JOptionPane.ERROR_MESSAGE);
                 //VentanaMensaje vtnMensaje = new VentanaMensaje("No se ha podido eliminar el Edificio.");
             }
         }else{
-             JOptionPane.showMessageDialog(null, "Debe seleccionar una Expensa.");
+             JOptionPane.showMessageDialog(null, "Debe seleccionar una Expensa.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
@@ -578,16 +576,15 @@ public final class PanelExpensa extends javax.swing.JPanel {
                         try{
                             serviciosExpensa.add(unaControladora.cargarListaServicioExpensa(nombre, mesServicio, anioServicio, monto, descripcion));
                         }catch(Exception e){
-                            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar un servicio expensa: "+e);
+                            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar un servicio expensa: "+e, "", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                     try{
                         montoExpensa = Float.valueOf(unaControladora.reemplazarString(jTextFieldMonto.getText()));
                         unaControladora.altaExpensa(montoExpensa, mes, anio, jTextAreaDescripcion.getText(), serviciosExpensa, unDepartamento.getId());
                         
-                        JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente.");
                     }catch(Exception e){
-                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar Expensa: "+e);
+                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar Expensa: "+e, "", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }else{
@@ -598,19 +595,18 @@ public final class PanelExpensa extends javax.swing.JPanel {
                     try {
                         if (!modificar) {
                             unaControladora.altaExpensa(montoExpensa, mes, anio, jTextAreaDescripcion.getText(), serviciosExpensa, unDepartamento.getId());
-                            JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente.");
                         } else {
-                            int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                            int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                             if (confirmacion == 0) {
                                 unaControladora.modificarExpensa(idExpensa, montoExpensa, mes, anio, jTextAreaDescripcion.getText(), serviciosExpensa);
                             }
                         }
                     } catch (Exception ex) {
                         Logger.getLogger(Logica.Expensa.class.getName()).log(Level.SEVERE, null, ex);
-                        JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. "+ex);
+                        JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. "+ex, "", JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al calcular la expensa. " + ex);
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al calcular la expensa. " + ex, "", JOptionPane.ERROR_MESSAGE);
                 }
                 try {
                     cargarTablaBuscarExpensa(0, 0);
@@ -620,7 +616,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
                 }
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Para guardar debe seleccionar un mes y departamento.");
+            JOptionPane.showMessageDialog(null, "Para guardar se debe tener todos los datos.", "", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
 
@@ -648,7 +644,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
 
     private void jPanelButtonBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonBuscarMouseClicked
         if(jComboBoxMesBusqueda.getSelectedIndex() == 0 || jComboBoxAnio.getSelectedIndex() == 0){
-            JOptionPane.showMessageDialog(null, "Debe ingresar una clave de busqueda.");
+            JOptionPane.showMessageDialog(null, "Debe ingresar una clave de busqueda.", "", JOptionPane.WARNING_MESSAGE);
         }else{
             int anio = Integer.parseInt((String)jComboBoxAnio.getSelectedItem());
             try {
@@ -737,20 +733,26 @@ public final class PanelExpensa extends javax.swing.JPanel {
                 mes = jComboBoxMes.getSelectedIndex();
             
             List<Logica.ServicioExpensa> serviciosExpensa = unaControladora.calcularExpensa(idEdificio, unaControladora.obtenerDepartamento(idDepartamento), mes, anio, alta);
-            Collections.sort(serviciosExpensa, (Logica.ServicioExpensa sE1, Logica.ServicioExpensa sE2) -> sE1.getNombre().compareTo(sE2.getNombre()));
-            for (Logica.ServicioExpensa unServicioExpensa : serviciosExpensa) {
-                datos[0] = String.valueOf(unServicioExpensa.getId());
-                datos[1] = unServicioExpensa.getNombre();
-                datos[2] = String.valueOf(unServicioExpensa.getMes());
-                datos[3] = String.valueOf(unServicioExpensa.getAnio());
-                datos[4] = formatoDecimal.format(unServicioExpensa.getMonto());
+            
+            if(serviciosExpensa.size() > 0){
+                Collections.sort(serviciosExpensa, (Logica.ServicioExpensa sE1, Logica.ServicioExpensa sE2) -> sE1.getNombre().compareTo(sE2.getNombre()));
+                
+                for (Logica.ServicioExpensa unServicioExpensa : serviciosExpensa) {
+                    datos[0] = String.valueOf(unServicioExpensa.getId());
+                    datos[1] = unServicioExpensa.getNombre();
+                    datos[2] = String.valueOf(unServicioExpensa.getMes());
+                    datos[3] = String.valueOf(unServicioExpensa.getAnio());
+                    datos[4] = formatoDecimal.format(unServicioExpensa.getMonto());
 
-                this.tablaExpensa.addRow(datos);
+                    this.tablaExpensa.addRow(datos);
+                }
+
+                jTextFieldMonto.setText(formatoDecimal.format(unaControladora.calcularMonto(serviciosExpensa)));
+
+            }else{
+                JOptionPane.showMessageDialog(null, "No existen servicios para la Expensa", "", JOptionPane.WARNING_MESSAGE);
             }
-            
-            jTextFieldMonto.setText(formatoDecimal.format(unaControladora.calcularMonto(serviciosExpensa)));
-            
-        }else{
+        }else{                  
             List<Logica.Servicio> servicios = unaControladora.obtenerEdificio(idEdificio).getServicios();
             Collections.sort(servicios, (Logica.Servicio s1, Logica.Servicio s2) -> s1.getNombre().compareTo(s2.getNombre()));
             for (Logica.Servicio unServicio : servicios) {
@@ -759,7 +761,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
                 datos[2] = String.valueOf(unServicio.getMes());
                 datos[3] = String.valueOf(unServicio.getAnio());
                 datos[4] = formatoDecimal.format(unServicio.getMonto());
-
+                
                 this.tablaExpensa.addRow(datos);
             }
             
@@ -783,7 +785,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
             }
             
             if(expensas.isEmpty()){
-                JOptionPane.showMessageDialog(null, "No se ha encontrado la Expensa.");
+                JOptionPane.showMessageDialog(null, "No se ha encontrado la Expensa.", "", JOptionPane.ERROR_MESSAGE);
                 expensas = unaControladora.obtenerExpensasFechaActual(idEdificio);
             }
         }else{
@@ -949,7 +951,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
                 boolean existeExpensa = unaControladora.existeExpensa(unDepto.getId(), jComboBoxMes.getSelectedIndex(), Integer.valueOf(jTextFieldAnio.getText()));
                 if(existeExpensa){
                     // En teoría esto nunca debería pasar..
-                    JOptionPane.showMessageDialog(null, "La Expensa "+jComboBoxMes.getSelectedIndex()+"/"+Integer.valueOf(jTextFieldAnio.getText())+" del Departamento: "+unDepto.getUbicacion()+" ya se encuentra registrado.");
+                    JOptionPane.showMessageDialog(null, "La Expensa "+jComboBoxMes.getSelectedIndex()+"/"+Integer.valueOf(jTextFieldAnio.getText())+" del Departamento: "+unDepto.getUbicacion()+" ya se encuentra registrado.", "", JOptionPane.WARNING_MESSAGE);
                 }else{
                     validar = true;
                 }

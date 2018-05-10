@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
-import java.util.Collections;
 import javax.swing.RowSorter;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -178,7 +177,7 @@ public final class PanelDepartamento extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelDepartamentos)
                     .addComponent(jPanelButtonRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelNumDormitorios)
@@ -188,7 +187,7 @@ public final class PanelDepartamento extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparatorUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparatorNumDormitorios, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,7 +243,7 @@ public final class PanelDepartamento extends javax.swing.JPanel {
             jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelButtonEliminarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonEliminarLayout.setVerticalGroup(
@@ -280,7 +279,7 @@ public final class PanelDepartamento extends javax.swing.JPanel {
             jPanelButtonAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonAgregarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAgregarLayout.setVerticalGroup(
@@ -403,12 +402,12 @@ public final class PanelDepartamento extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 892, Short.MAX_VALUE)
+            .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 892, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
@@ -444,9 +443,8 @@ public final class PanelDepartamento extends javax.swing.JPanel {
                 if(!modificar){
                     unaControladora.altaDepartamento(jTextFieldUbicacion.getText().toUpperCase(), cantDorm, jTextAreaDescripcion.getText(), null, null, idEdificio);
                     cargarTablaDepartamento("");
-                    JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente.");
                 }else{
-                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){
                         Logica.Departamento unDepartamento = unaControladora.obtenerDepartamento(idDepartamento);
                         unaControladora.modificarDepartamento(idDepartamento, jTextFieldUbicacion.getText().toUpperCase(), cantDorm, jTextAreaDescripcion.getText(), unDepartamento.getExpensas(), unDepartamento.getUnInquilino());
@@ -456,7 +454,7 @@ public final class PanelDepartamento extends javax.swing.JPanel {
                 }
             } catch (Exception ex) {
                 Logger.getLogger(Logica.Departamento.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. Error: "+ex);
+                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. Error: "+ex, "", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
@@ -464,7 +462,7 @@ public final class PanelDepartamento extends javax.swing.JPanel {
     private void jPanelButtonEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseClicked
         if(eliminar){
             try{
-                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if(confirmacion == 0){
                     unaControladora.bajaDepartamento(idDepartamento, idEdificio);
                     eliminar = false;
@@ -472,10 +470,10 @@ public final class PanelDepartamento extends javax.swing.JPanel {
                 }
             }catch(Exception e){
                 Logger.getLogger(Logica.Departamento.class.getName()).log(Level.SEVERE, null, e);
-                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.");
+                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.", "", JOptionPane.ERROR_MESSAGE);
             }
         }else{
-             JOptionPane.showMessageDialog(null, "Debe seleccionar un Departamento.");
+             JOptionPane.showMessageDialog(null, "Debe seleccionar un Departamento.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
@@ -506,10 +504,10 @@ public final class PanelDepartamento extends javax.swing.JPanel {
             if(!jTextFieldBuscar.getText().isEmpty()){
                 cargarTablaDepartamento(jTextFieldBuscar.getText().toUpperCase());
             }else{
-                JOptionPane.showMessageDialog(null, "Ingrese una ubicación para buscar");
+                JOptionPane.showMessageDialog(null, "Ingrese una ubicación para buscar", "", JOptionPane.WARNING_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Ingrese una ubicación para buscar");
+            JOptionPane.showMessageDialog(null, "Ingrese una ubicación para buscar", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonBuscarMouseClicked
 
@@ -565,7 +563,7 @@ public final class PanelDepartamento extends javax.swing.JPanel {
             }
             
             if(departamentos.isEmpty()){
-                JOptionPane.showMessageDialog(null, "No se ha encontrado el Departamento: "+buscar);
+                JOptionPane.showMessageDialog(null, "No se ha encontrado el Departamento: "+buscar, "", JOptionPane.ERROR_MESSAGE);
                 departamentos = unaControladora.obtenerEdificio(idEdificio).getDepartamentos();
             }
         }else{
@@ -662,7 +660,7 @@ public final class PanelDepartamento extends javax.swing.JPanel {
             if(!modificar){
                 boolean existeDepartamento = unaControladora.existeDepartamento(jTextFieldUbicacion.getText().toUpperCase(), idEdificio);
                 if(existeDepartamento){
-                    JOptionPane.showMessageDialog(null, "El Departamento: "+jTextFieldUbicacion.getText().toUpperCase()+" ya se encuentra registrado.");
+                    JOptionPane.showMessageDialog(null, "El Departamento: "+jTextFieldUbicacion.getText().toUpperCase()+" ya se encuentra registrado.", "", JOptionPane.WARNING_MESSAGE);
                 }else{
                     validar = true;
                 }
@@ -670,9 +668,9 @@ public final class PanelDepartamento extends javax.swing.JPanel {
                 validar = true;
             }
         }else if(jTextFieldUbicacion.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: NOMBRE.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: NOMBRE.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldNumDormitorios.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: N° DORMITORIOS.");
+            JOptionPane.showMessageDialog(null, "Debe completar el campo: N° DORMITORIOS.", "", JOptionPane.WARNING_MESSAGE);
         }
         
         return validar;

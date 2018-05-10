@@ -148,7 +148,7 @@ public final class Inicio extends javax.swing.JFrame {
             jPanelButtonAceptarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelButtonAceptarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAceptarLayout.setVerticalGroup(
@@ -167,6 +167,11 @@ public final class Inicio extends javax.swing.JFrame {
             }
         });
 
+        jTextFieldCoeficiente.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldCoeficienteFocusLost(evt);
+            }
+        });
         jTextFieldCoeficiente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextFieldCoeficienteKeyTyped(evt);
@@ -372,13 +377,10 @@ public final class Inicio extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanelButtonCrearEdificio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanelButtonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelInicioLayout.createSequentialGroup()
-                        .addGroup(jPanelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE))
-                        .addContainerGap())))
+                            .addComponent(jPanelButtonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -420,11 +422,11 @@ public final class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanelButtonCrearEdificioMouseMoved
 
     private void jPanelButtonCrearEdificioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonCrearEdificioMouseClicked
-        if(!jTextFieldCoeficiente.getText().isEmpty()){
+        if(unaControladora.obtenerCoeficiente() != null){
             new mainFrame(0,"").setVisible(true);    // Parametro 0 = idEdificio.
             this.dispose();
         }else{
-            JOptionPane.showMessageDialog(null, "Ingrese valor coeficiente.");
+            JOptionPane.showMessageDialog(null, "Ingrese valor coeficiente.", "", JOptionPane.WARNING_MESSAGE);
             jLabelCoeficiente.setForeground(Color.red);
             jTextFieldCoeficiente.requestFocus();
         }
@@ -440,11 +442,11 @@ public final class Inicio extends javax.swing.JFrame {
                 new mainFrame(idEdificio, nombreEdificio).setVisible(true);            
                 this.dispose();
             }else{
-                JOptionPane.showMessageDialog(null, "Debe seleccionar un Edificio.");
+                JOptionPane.showMessageDialog(null, "Debe seleccionar un Edificio.", "", JOptionPane.WARNING_MESSAGE);
             }
             
         }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(null, "Seleccione un Edificio.");
+            JOptionPane.showMessageDialog(null, "Seleccione un Edificio.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonAceptarMouseClicked
 
@@ -491,7 +493,7 @@ public final class Inicio extends javax.swing.JFrame {
             busqueda = true;
             cargarEdificios(jTextFieldBuscarInicio.getText().toUpperCase());
         }else{
-            JOptionPane.showMessageDialog(null, "Ingrese un nombre a buscar.");
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre a buscar.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonBuscarMouseClicked
 
@@ -510,24 +512,6 @@ public final class Inicio extends javax.swing.JFrame {
         this.jLabelBuscar.setIcon(buscar);
     }//GEN-LAST:event_jPanelButtonBuscarMouseMoved
 
-    private void jButtonCoefienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCoefienteActionPerformed
-        if(!jTextFieldCoeficiente.getText().isEmpty()){
-            try {
-                float valor = Float.valueOf(jTextFieldCoeficiente.getText());
-                if(unaControladora.obtenerCoeficiente() != null){
-                    unaControladora.modificarCoeficiente(unaControladora.obtenerCoeficiente().getId(), unaControladora.obtenerCoeficiente().getNombre(), valor);
-                }else{
-                    unaControladora.altaCoeficiente("Coeficiente", valor);
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }else{
-            JOptionPane.showMessageDialog(null, "Ingrese valor coeficiente.");
-            jTextFieldCoeficiente.requestFocus();
-        }
-    }//GEN-LAST:event_jButtonCoefienteActionPerformed
-
     private void jTextFieldCoeficienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCoeficienteKeyTyped
         char ingreso = evt.getKeyChar();
         if(Character.isLetter(ingreso)){
@@ -538,6 +522,40 @@ public final class Inicio extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jTextFieldCoeficienteKeyTyped
+
+    private void jTextFieldCoeficienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCoeficienteFocusLost
+        if(jTextFieldCoeficiente.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Ingrese valor coeficiente.", "", JOptionPane.WARNING_MESSAGE);
+            jLabelCoeficiente.setForeground(Color.red);
+            jTextFieldCoeficiente.requestFocus();
+        }else{
+            try {
+                float valor = Float.valueOf(jTextFieldCoeficiente.getText());
+                if(unaControladora.obtenerCoeficiente() != null){
+                    unaControladora.modificarCoeficiente(unaControladora.obtenerCoeficiente().getId(), unaControladora.obtenerCoeficiente().getNombre(), valor);
+                }else{
+                    unaControladora.altaCoeficiente("Coeficiente", valor);
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jTextFieldCoeficienteFocusLost
+
+    private void jButtonCoefienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCoefienteActionPerformed
+        if(jTextFieldCoeficiente.getText().isEmpty()){
+            try {
+                float valor = Float.valueOf(jTextFieldCoeficiente.getText());
+                if(unaControladora.obtenerCoeficiente() != null){
+                    unaControladora.modificarCoeficiente(unaControladora.obtenerCoeficiente().getId(), unaControladora.obtenerCoeficiente().getNombre(), valor);
+                }else{
+                    unaControladora.altaCoeficiente("Coeficiente", valor);
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonCoefienteActionPerformed
     
     public void cargarEdificios(String buscar){
         String colTablaEdificio[] = {"Id", "Nombre", "Dirección"};
