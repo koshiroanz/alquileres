@@ -82,6 +82,7 @@ public class Departamento extends Observable implements Serializable{
     public void setUnInquilino(Inquilino unInquilino) {
         this.unInquilino = unInquilino;
     }
+
     
     @Override
     public String toString(){
