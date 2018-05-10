@@ -1,6 +1,7 @@
 package Visual;
 
 import java.awt.Color;
+import java.awt.event.ItemEvent;
 import java.util.Date;
 import java.util.List;
 import java.util.LinkedList;
@@ -191,9 +192,9 @@ public final class PanelServicio extends javax.swing.JPanel {
                 jComboBoxNombreItemStateChanged(evt);
             }
         });
-        jComboBoxNombre.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboBoxNombreMouseClicked(evt);
+        jComboBoxNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jComboBoxNombreFocusGained(evt);
             }
         });
 
@@ -256,11 +257,11 @@ public final class PanelServicio extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(jPanelButtonRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel2)
                     .addComponent(jComboBoxMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -272,13 +273,13 @@ public final class PanelServicio extends javax.swing.JPanel {
                         .addComponent(jTextFieldAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(22, 22, 22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jDateChooserFechaVencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelFechaVencimiento)
                     .addComponent(jDateChooserFechaEmision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelFechaEmision))
-                .addGap(22, 22, 22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextFieldEdificio, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelEdificio)
@@ -287,11 +288,11 @@ public final class PanelServicio extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelDescripcion)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -482,7 +483,7 @@ public final class PanelServicio extends javax.swing.JPanel {
                     .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
@@ -498,9 +499,9 @@ public final class PanelServicio extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -620,30 +621,39 @@ public final class PanelServicio extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonRefreshMouseExited
 
     private void jComboBoxNombreItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxNombreItemStateChanged
-        if(jComboBoxNombre.getSelectedIndex() > 0 && entro){
-            jButtonNombre.setText("-");
-            Logica.Servicio unServicio = unaControladora.obtenerServicio(idEdificio, String.valueOf(jComboBoxNombre.getSelectedItem()));
-            if(unServicio != null){
-                cargarPanelDatos(unServicio.getId());
-            }else{
-                jComboBoxMes.setSelectedIndex(0);
-                jButtonNombre.setText("+");
-                jDateChooserFechaEmision.setDate(null);
-                jDateChooserFechaVencimiento.setDate(null);
-                jTextFieldMonto.setText(null);
-                jTextFieldEdificio.setText(unaControladora.obtenerEdificio(idEdificio).getNombre());
-                jTextFieldAnio.setText(String.valueOf(formatoAnio.format(anio)));
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            if(jComboBoxNombre.getSelectedIndex() > 0){
+                Logica.Servicio unServicio = unaControladora.obtenerServicio(idEdificio, String.valueOf(jComboBoxNombre.getSelectedItem()));
+                if(unServicio != null){
+                    cargarPanelDatos(unServicio.getId());
+                }else{
+                    if(jComboBoxNombre.getComponentCount() > 2){
+                        jButtonNombre.setText("-");
+                    }else{
+                        jButtonNombre.setText("+");
+                    }
+
+                    jDateChooserFechaEmision.setDate(null);
+                    jDateChooserFechaVencimiento.setDate(null);
+                    jTextFieldMonto.setText(null);
+                    jTextFieldEdificio.setText(unaControladora.obtenerEdificio(idEdificio).getNombre());
+                    jTextFieldAnio.setText(String.valueOf(formatoAnio.format(anio)));
+                }
             }
-            
-            entro = false;
         }
+        //entro = false;
     }//GEN-LAST:event_jComboBoxNombreItemStateChanged
 
     private void jButtonNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNombreActionPerformed
         if(jComboBoxNombre.getSelectedIndex() > 0){
             if(jButtonNombre.getText().equals("-")){
                 if(jComboBoxNombre.getSelectedIndex() > 1){
-                    jComboBoxNombre.remove(jComboBoxNombre.getSelectedIndex());
+                    Logica.Servicio unServicio = unaControladora.obtenerServicio(idEdificio, String.valueOf(jComboBoxNombre.getSelectedItem()));
+                    if(unServicio == null){
+                        jComboBoxNombre.remove(jComboBoxNombre.getSelectedIndex());
+                    }else{
+                        JOptionPane.showMessageDialog(null, "El nombre esta siendo ocupado por algun Servicio.");
+                    }
                 }
             }else{
                 String nombre = JOptionPane.showInputDialog(null, "Nombre").toUpperCase();
@@ -658,10 +668,6 @@ public final class PanelServicio extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jButtonNombreActionPerformed
-
-    private void jComboBoxNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxNombreMouseClicked
-        entro = true;
-    }//GEN-LAST:event_jComboBoxNombreMouseClicked
 
     private void jTextFieldBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldBuscarMouseClicked
         jTextFieldBuscar.setText(null);
@@ -681,6 +687,10 @@ public final class PanelServicio extends javax.swing.JPanel {
            }
         }
     }//GEN-LAST:event_jTableServicioMouseClicked
+
+    private void jComboBoxNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBoxNombreFocusGained
+        entro = true;
+    }//GEN-LAST:event_jComboBoxNombreFocusGained
 
     private void cargarPanelDatos(long idServicio){
         int i = 0;
@@ -812,6 +822,11 @@ public final class PanelServicio extends javax.swing.JPanel {
         for(Logica.Servicio unServicio : servicios){
             jComboBoxNombre.addItem(unServicio.getNombre());
         }
+        
+        if(jComboBoxNombre.getComponentCount() < 2){
+            jComboBoxNombre.addItem("AGUA Y CLOACA");
+        }
+        
     }
     
     private boolean validar(){
