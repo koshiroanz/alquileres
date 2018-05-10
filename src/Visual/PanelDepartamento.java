@@ -21,7 +21,6 @@ public final class PanelDepartamento extends javax.swing.JPanel {
     private boolean modificar = false, eliminar = false;
     private final ControladoraV unaControladora = new ControladoraV();
     private DefaultTableModel modelo = new DefaultTableModel();
-    //private final DefaultTableModel tablaDepartamento = new DefaultTableModel(null, colTablaDepartamento);
     
     public PanelDepartamento(long idEdificio) {
         initComponents();
@@ -539,7 +538,7 @@ public final class PanelDepartamento extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldUbicacionKeyTyped
 
     private void jTableDepartamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDepartamentoMouseClicked
-        int fila = jTableDepartamento.convertRowIndexToModel(jTableDepartamento.getSelectedRow());
+        int fila = jTableDepartamento.convertColumnIndexToModel(jTableDepartamento.getSelectedRow());
         
         if(fila >= 0){
             idDepartamento = Long.parseLong(modelo.getValueAt(fila, 0).toString());
@@ -557,7 +556,6 @@ public final class PanelDepartamento extends javax.swing.JPanel {
         limpiarComponentes();
         String colTablaDepartamento[] = {"Id", "Ubicación", "N° Dormitorios", "Descripción"};
         List<Logica.Departamento> departamentos = new LinkedList();
-        
         
         if(!buscar.isEmpty()){
             for(Logica.Departamento unDepartamento : unaControladora.obtenerEdificio(idEdificio).getDepartamentos()){
@@ -578,14 +576,11 @@ public final class PanelDepartamento extends javax.swing.JPanel {
             int tam = departamentos.size();
             Object[][] datos = new Object[tam][4];
             
-            Collections.sort(departamentos, (Logica.Departamento d1, Logica.Departamento d2) -> d1.getUbicacion().compareTo(d2.getUbicacion()));
-            
             for(int i = 0; i < tam; i++){
                 datos[i][0] = departamentos.get(i).getId();
                 datos[i][1] = departamentos.get(i).getUbicacion();
                 datos[i][2] = departamentos.get(i).getCantDormitorios();
                 datos[i][3] = departamentos.get(i).getDescripcion();
-                //tablaDepartamento.addRow(datos);
             }
             
             modelo = new DefaultTableModel(datos,colTablaDepartamento);
