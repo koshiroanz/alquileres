@@ -69,7 +69,7 @@
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jPanelMenuCoeficiente" pref="105" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jPanelMenuAlquiler" min="-2" pref="115" max="-2" attributes="0"/>
+                  <Component id="jPanelMenuAlquiler" pref="115" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jPanelMenuExpensa" pref="109" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -83,7 +83,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanelMenuAlquiler" min="-2" pref="53" max="-2" attributes="0"/>
+                      <Component id="jPanelMenuAlquiler" pref="53" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jPanelMenuEdificio" alignment="0" pref="53" max="32767" attributes="0"/>
                           <Component id="jPanelMenuDepartamento" alignment="0" pref="53" max="32767" attributes="0"/>
