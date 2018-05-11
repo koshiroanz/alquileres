@@ -15,8 +15,8 @@ public class ControladoraL {
 /*------------------------------------------------------------------------------
                            NOTIFICACIONES
 ------------------------------------------------------------------------------*/
-    public String[] notificaciones(){
-        String[] notificaciones  = new String[obtenerServicios().size()+1];
+    public List<String> notificaciones(){
+        List<String> notificaciones = new LinkedList();
         Date fechaActual = new Date();
         SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
@@ -28,15 +28,14 @@ public class ControladoraL {
         
         for(Servicio unServicio : servicios){
             if(unServicio.getMes() < mes && unServicio.getAnio() == anio){
-                notificaciones[i] = "El Servicio "+unServicio.getNombre()+" debe ser actualizado - Edificio "+obtenerEdificioServicio(unServicio.getId()).getNombre();
-                i++;
+                notificaciones.add("El Servicio "+unServicio.getNombre()+" debe ser actualizado - Edificio "+obtenerEdificioServicio(unServicio.getId()).getNombre());
             }
         }
         
         if(cantAlquileresGenerados  > 0){
-            notificaciones[i] = "Se generaron "+cantAlquileresGenerados+" Alquileres.";
+            notificaciones.add("Se generaron "+cantAlquileresGenerados+" Alquileres.");
         }else{
-            notificaciones[i] = "No se han generado nuevos alquileres.";
+            notificaciones.add("No se han generado nuevos alquileres.");
         }
         
         return notificaciones;

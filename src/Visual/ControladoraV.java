@@ -10,7 +10,7 @@ public class ControladoraV {
 /*------------------------------------------------------------------------------
                            NOTIFICACIONES
 ------------------------------------------------------------------------------*/
-    public String[] notificaciones(){
+    public List<String> notificaciones(){
         return unaControladora.notificaciones();
     }
     

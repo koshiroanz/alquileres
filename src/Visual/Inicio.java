@@ -601,9 +601,7 @@ public final class Inicio extends javax.swing.JFrame {
             listaNotificaciones.addElement("Todo listo para empezar su utilizacion.");
         }else{            
             for(String msj : unaControladora.notificaciones()){
-                if(!msj.isEmpty()){
-                    listaNotificaciones.addElement("- "+msj+".");
-                }
+                listaNotificaciones.addElement("- "+msj+".");
             }
         }
         
