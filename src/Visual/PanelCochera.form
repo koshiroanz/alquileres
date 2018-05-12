@@ -30,8 +30,8 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-              <Component id="jPanel2" pref="446" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+              <Component id="jPanel2" pref="398" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -126,7 +126,7 @@
                           <Component id="jPanelButtonRefresh" min="-2" pref="37" max="-2" attributes="0"/>
                           <Component id="jLabelTitutlo" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="24" max="32767" attributes="0"/>
+                      <EmptySpace pref="25" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="jLabelUbicacion" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextFieldUbicacion" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -137,7 +137,7 @@
                           <Component id="jSeparatorUbicacion" min="-2" pref="10" max="-2" attributes="0"/>
                           <Component id="jSeparatorPrecio" min="-2" pref="10" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="42" max="32767" attributes="0"/>
+                      <EmptySpace pref="43" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" min="-2" pref="65" max="-2" attributes="0"/>
@@ -150,7 +150,7 @@
                               <Component id="jSeparator1" min="-2" pref="8" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="115" max="32767" attributes="0"/>
+                      <EmptySpace pref="113" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -357,10 +357,10 @@
                   </Group>
                   <Component id="jSeparatorBuscar" min="-2" pref="10" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPane3" pref="304" max="32767" attributes="0"/>
+                  <Component id="jScrollPane3" pref="269" max="32767" attributes="0"/>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -438,7 +438,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabelEliminar" pref="80" max="32767" attributes="0"/>
+                          <Component id="jLabelEliminar" pref="76" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -487,7 +487,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabelAceptar" pref="80" max="32767" attributes="0"/>
+                          <Component id="jLabelAceptar" pref="76" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>

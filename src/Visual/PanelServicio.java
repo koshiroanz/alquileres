@@ -540,9 +540,8 @@ public final class PanelServicio extends javax.swing.JPanel {
                 if(!modificar){
                     unaControladora.altaServicio(nombre, mes, Integer.parseInt(jTextFieldAnio.getText()), fechaE, fechaV, Float.valueOf(monto), jTextAreaDescripcion.getText(), this.idEdificio);
                     cargarTablaServicio("");
-                    JOptionPane.showMessageDialog(null, "Se ha cargado exitosamente.");
                 }else{
-                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){
                         unaControladora.modificarServicio(idServicio, nombre, mes, Integer.parseInt(jTextFieldAnio.getText()), fechaE, fechaV, Float.valueOf(monto), jTextAreaDescripcion.getText());
                         modificar = false;
@@ -551,17 +550,17 @@ public final class PanelServicio extends javax.swing.JPanel {
                 }
             }catch(Exception ex){
                 Logger.getLogger(Logica.Servicio.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación.");
+                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación.", "", JOptionPane.ERROR_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Verifique que los campos NOMBRE, MES y MONTO hayan sido seleccionados o cargados.");
+            JOptionPane.showMessageDialog(null, "Verifique que los campos NOMBRE, MES y MONTO hayan sido seleccionados o cargados.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
 
     private void jPanelButtonEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseClicked
         if(eliminar){
             try{
-                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if(confirmacion == 0){
                     unaControladora.bajaServicio(idServicio, idEdificio);
                     cargarTablaServicio("");
@@ -569,10 +568,10 @@ public final class PanelServicio extends javax.swing.JPanel {
                 }
             }catch(Exception e){
                 Logger.getLogger(Logica.Servicio.class.getName()).log(Level.SEVERE, null, e);
-                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.");
+                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.", "", JOptionPane.ERROR_MESSAGE);
             }
         }else{
-             JOptionPane.showMessageDialog(null, "Debe seleccionar un Servicio.");
+             JOptionPane.showMessageDialog(null, "Debe seleccionar un Servicio.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
@@ -585,7 +584,7 @@ public final class PanelServicio extends javax.swing.JPanel {
 
     private void jPanelButtonBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonBuscarMouseClicked
         if(jTextFieldBuscar.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe ingresar una clave de busqueda.");
+            JOptionPane.showMessageDialog(null, "Debe ingresar una clave de busqueda.", "", JOptionPane.WARNING_MESSAGE);
             jTextFieldBuscar.requestFocus();
         }else{
             cargarTablaServicio(jTextFieldBuscar.getText().toUpperCase());
@@ -652,7 +651,7 @@ public final class PanelServicio extends javax.swing.JPanel {
                     if(unServicio == null){
                         jComboBoxNombre.remove(jComboBoxNombre.getSelectedIndex());
                     }else{
-                        JOptionPane.showMessageDialog(null, "El nombre esta siendo ocupado por algun Servicio.");
+                        JOptionPane.showMessageDialog(null, "El nombre esta siendo ocupado por algun Servicio.", "", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }else{
@@ -662,7 +661,7 @@ public final class PanelServicio extends javax.swing.JPanel {
                 }
             }
         }else{
-            String nombre = JOptionPane.showInputDialog(null, "Nombre");
+            String nombre = JOptionPane.showInputDialog(null, "Nombre").toUpperCase();
             if(nombre != null){
                 jComboBoxNombre.addItem(nombre.toUpperCase());
             }
@@ -731,7 +730,7 @@ public final class PanelServicio extends javax.swing.JPanel {
             }
             
             if(servicios.isEmpty()){
-                JOptionPane.showMessageDialog(null, "No se ha encontrado el Servicio.");
+                JOptionPane.showMessageDialog(null, "No se ha encontrado el Servicio.", "", JOptionPane.ERROR_MESSAGE);
                 servicios = unaControladora.obtenerEdificio(idEdificio).getServicios();
             }
         }else{
@@ -835,7 +834,7 @@ public final class PanelServicio extends javax.swing.JPanel {
         if(jComboBoxNombre.getSelectedIndex() > 0){
             String nombre = String.valueOf(jComboBoxNombre.getSelectedItem()).toUpperCase();
             if(nombre.isEmpty()){
-               JOptionPane.showMessageDialog(null, "Error: No se ha podido cargar el Nombre.");
+               JOptionPane.showMessageDialog(null, "Error: No se ha podido cargar el Nombre.", "", JOptionPane.ERROR_MESSAGE);
             }else{
                 comboNombre = true;
             }
@@ -847,7 +846,7 @@ public final class PanelServicio extends javax.swing.JPanel {
                 comboMes = true;
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un Mes válido.");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Mes válido.", "", JOptionPane.WARNING_MESSAGE);
         }
         
         if(comboNombre && comboMes && !jTextFieldMonto.getText().isEmpty()){

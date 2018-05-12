@@ -1387,11 +1387,6 @@ public class ControladoraL {
     }
     
     public void bajaPago(long idPago, long idEdificio) throws Exception{
-        /*Alquiler unAlquiler = obtenerAlquilerPago(idPago);
-        unAlquiler.setUnPago(null);
-        unaControladora.modificarAlquiler(unAlquiler);        
-        unaControladora.bajaPago(idPago);*/
-        
         /* ESTAMOS EN MES 5
         
         SI ES EL ULTIMO -> BOORO MES 5
@@ -1420,12 +1415,6 @@ public class ControladoraL {
             if(unAlquiler.getUnPago() != null){
                 if(unAlquiler.getUnPago().getId() == idPago){
                     unAlquiler.setUnPago(null);
-                    unaControladora.modificarAlquiler(unAlquiler);        
-                    unaControladora.bajaPago(idPago);
-                    /* Creo que habría que obtener de nuevo los alquileres del Inquilino..
-                       Porque se acaba de eliminar un Alquiler. O remover el Alquiler
-                       en el índice [i] --> alquileres.remove(i); */
-                    // Se necesita el último Alquiler pagado para obtener el saldo..
                     if(alquileres.size() > 1){
                         unAlquiler = alquileres.get(i-1);
 
@@ -1438,7 +1427,9 @@ public class ControladoraL {
                     }else{
                         unInquilino.setSaldoMesAnt(0);
                     }
-
+                    
+                    unaControladora.modificarAlquiler(unAlquiler);        
+                    unaControladora.bajaPago(idPago);
                     unaControladora.modificarInquilino(unInquilino);
                 }
             }
