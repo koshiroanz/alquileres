@@ -16,12 +16,11 @@ public class ControladoraL {
                            NOTIFICACIONES
 ------------------------------------------------------------------------------*/
     public List<String> notificaciones(){
-        List<String> notificaciones = new LinkedList();
+        List<String> notificaciones  = new LinkedList();
         Date fechaActual = new Date();
         SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-        int i = 0,
-            mes = Integer.valueOf(monthFormat.format(fechaActual)),
+        int mes = Integer.valueOf(monthFormat.format(fechaActual)),
             anio = Integer.valueOf(yearFormat.format(fechaActual));
         
         List<Servicio> servicios = obtenerServicios();
@@ -624,7 +623,6 @@ public class ControladoraL {
     }
     
     public Departamento obtenerDepartamentoPorExpensa(long idEdificio, long idExpensa){
-        int i = 0, j = 0;
         Departamento DepartamentoExpensa = null;
         
         for(Departamento unDepartamento : obtenerEdificio(idEdificio).getDepartamentos()){
@@ -655,14 +653,6 @@ public class ControladoraL {
             }
             i++;
         }
-        
-        /*for(Departamento unDepto : obtenerEdificio(idEdificio).getDepartamentos()){
-            for(Alquiler unAlquiler : unDepto.getUnInquilino().getAlquileres()){
-                if(unAlquiler.getId() == idAlquiler){
-                    unDepartamento = unDepto;
-                }
-            }
-        }*/
         
         return unDepartamentoAlquiler;
     }
@@ -936,10 +926,12 @@ public class ControladoraL {
                 mesAlquiler = 12;
                 anioAlquiler -= 1;
         }
-        
-        for(Expensa unaExp : obtenerDepartamento(idDepartamento).getExpensas()){
-            if(unaExp.getMes() == mesAlquiler && unaExp.getAnio() == anioAlquiler){
-                unaExpensa = unaExp;
+        List<Expensa> expensas = obtenerDepartamento(idDepartamento).getExpensas();
+        if(expensas.size() > 0){
+            for(Expensa unaExp : expensas){
+                if(unaExp.getMes() == mesAlquiler && unaExp.getAnio() == anioAlquiler){
+                    unaExpensa = unaExp;
+                }
             }
         }
         

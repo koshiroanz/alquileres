@@ -7,8 +7,8 @@ import javax.swing.ImageIcon;
 import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public final class PanelPrincipal extends javax.swing.JPanel {
     private final long idEdificio;
@@ -16,9 +16,8 @@ public final class PanelPrincipal extends javax.swing.JPanel {
     private final ControladoraV unaControladora = new ControladoraV();
     private final String colTablaExpensa[] = {"SERVICIOS", "MES","VENCIMIENTO", "TOTAL"};
     private final String colTablaAlquiler[] = {"DPTO", "INQUILINO", "FECHA", "ALQUILER", "OTRAS FACTURAS", "EXPENSA", "COCHERA", "INT. POR ATRASO", "SALDO MES ANT.", "TOTAL"};
-    private TableModel modeloAlquiler;
     private final DefaultTableModel tablaExpensa = new DefaultTableModel(null, colTablaExpensa);
-    private final DefaultTableModel tablaAlquiler = new DefaultTableModel(null, colTablaAlquiler);
+    private final DefaultTableModel tablaAlquiler = new DefaultTableModel(null, colTablaAlquiler); // No borrar esto, se rompe todo..
     
     public PanelPrincipal(long idEdificio, String nombreEdificio) {
         initComponents();
@@ -373,56 +372,73 @@ public final class PanelPrincipal extends javax.swing.JPanel {
     public void cargarTablaAlquiler(long idEdificio){
         limpiarVentana();
         Date fechaActual = new Date();
-        Object datos[] = new Object[10];
+        String datos[] = new String[10];
         List<Logica.Inquilino> inquilinosEdificio = unaControladora.obtenerInquilinosEdificio(idEdificio);
+        
         DecimalFormat formatoDecimal = new DecimalFormat("#.00");
         SimpleDateFormat formatoMes = new SimpleDateFormat("MM"),
                          formatoAnio = new SimpleDateFormat("yyyy"),
                          formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        
+
         for(Logica.Inquilino unInquilino : inquilinosEdificio){
-            if(unInquilino.getAlquileres().size() > 0){
-                List<Logica.Alquiler> alquileres = unInquilino.getAlquileres();
-                for(Logica.Alquiler unAlquiler : alquileres){
-                    
-                    if(unAlquiler.getUnPago() == null){
-                        float total = 0, interesPorAtraso;
-                        int mesExpensa = Integer.valueOf(formatoMes.format(unAlquiler.getFecha())),
+            if(unaControladora.obtenerAlquileresInpagos(unInquilino.getId()).size() > 0){
+                for(Logica.Alquiler unAlquiler : unaControladora.obtenerAlquileresInpagos(unInquilino.getId())){
+                    Logica.Expensa unaExpensa = null;
+                    float total = 0, interesPorAtraso;
+                    int mesExpensa = Integer.valueOf(formatoMes.format(unAlquiler.getFecha())),
                             anioExpensa = Integer.valueOf(formatoAnio.format(unAlquiler.getFecha()));
-                        Logica.Departamento unDepartamento = unaControladora.obtenerDepartamento(unAlquiler.getDepartamento());
-                                               
+                    Logica.Departamento unDepartamento = unaControladora.obtenerDepartamento(unAlquiler.getDepartamento());
+                    if (unDepartamento != null) {
+                        unaExpensa = unaControladora.obtenerExpensa(unDepartamento.getId(), mesExpensa, anioExpensa);
                         datos[0] = unDepartamento.getUbicacion();
-                        datos[1] = unInquilino.getApellido()+", "+unInquilino.getNombre();
-                        datos[2] = formatoFecha.format(unAlquiler.getFecha());
-                        datos[3] = unAlquiler.getMonto();
-                        datos[4] = unAlquiler.getOtraFactura();
-                        
-                        Logica.Expensa unaExpensa = unaControladora.obtenerExpensa(unDepartamento.getId(), mesExpensa, anioExpensa);
-                        if(unaExpensa != null){
-                            datos[5] = formatoDecimal.format(unaExpensa.getMonto());
-                            total += unaExpensa.getMonto();
-                        }else{
-                            datos[5] = "Sin expensa.";  // Creo que no debería entrar, salvo que no se haya generado la Expensa para este MES/AÑO.
-                        }
-                        
-                        if(unAlquiler.getCochera() != 0){
-                            datos[6] = unaControladora.obtenerCochera(unAlquiler.getCochera()).getUbicacion();
-                        }else{
-                            datos[6] = "";
-                        }
-                        interesPorAtraso = unaControladora.interesPorAtraso(fechaActual, unAlquiler.getTotal(), Integer.valueOf(formatoMes.format(unAlquiler.getFecha())));
-                        datos[7] = interesPorAtraso;
-                        
-                        datos[8] = 0;
-                        total += (unAlquiler.getTotal() + interesPorAtraso);
-                        datos[9] = formatoDecimal.format(total);
-                                
-                        tablaAlquiler.addRow(datos);
+                    } else {
+                        datos[0] = "";
                     }
+                    datos[1] = unInquilino.getApellido() + ", " + unInquilino.getNombre();
+                    datos[2] = formatoFecha.format(unAlquiler.getFecha());
+                    datos[3] = String.valueOf(unAlquiler.getMonto());
+                    datos[4] = String.valueOf(unAlquiler.getOtraFactura());
+                    
+                    if (unaExpensa != null) {
+                        datos[5] = formatoDecimal.format(unaExpensa.getMonto());
+                        total += unaExpensa.getMonto();
+                    } else {
+                        datos[5] = "Sin expensa.";  // Creo que no debería entrar, salvo que no se haya generado la Expensa para este MES/AÑO.
+                    }
+                    
+                    if (unAlquiler.getCochera() != 0) {
+                        datos[6] = unaControladora.obtenerCochera(unAlquiler.getCochera()).getUbicacion();
+                    } else {
+                        datos[6] = "";
+                        
+                    }
+                    interesPorAtraso = unaControladora.interesPorAtraso(fechaActual, unAlquiler.getTotal(), Integer.valueOf(formatoMes.format(unAlquiler.getFecha())));
+                    datos[7] = String.valueOf(interesPorAtraso);
+                    
+                    datos[8] = "";
+                    total += (unAlquiler.getTotal() + interesPorAtraso);
+                    datos[9] = formatoDecimal.format(total);
+                    tablaAlquiler.addRow(datos);
                 }
             }
         }
-        this.jTableAlquiler.setModel(tablaAlquiler);
+        
+        if(tablaAlquiler.getRowCount() > 0){
+            int tam = tablaAlquiler.getRowCount();
+            String [][] tabla = new String[tam][10];
+
+            for(int i = 0; i < tam; i++){
+                for(int j = 0; j < 10; j++){
+                    tabla[i][j] = (String) tablaAlquiler.getValueAt(i, j);
+                }
+            }
+            
+            Arrays.sort(tabla, (String[] t, String[] t1) -> t[0].compareTo(t1[0]));
+            
+            DefaultTableModel tab = new DefaultTableModel();
+            tab.setDataVector(tabla,colTablaAlquiler);
+            this.jTableAlquiler.setModel(tab);
+        }
     }
     
     public void cargarTablaExpensa(long idEdificio){

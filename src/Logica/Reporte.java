@@ -258,117 +258,112 @@ public class Reporte {
         encabezado.createCell(14).setCellValue("FECHA PAGO");                   // COLUMNA 14, FILA 3
         encabezado.getCell(14).setCellStyle(estilo7);
         
-        fi = 4;                                                                 // DESDE FILA 3 SE GENERAN AUTOMATICAMENTE LAS FILAS
-        Cochera unaCochera;
-        Departamento unDepto;
-        Expensa unaExpensa = null;
-        
-        
-        /* Se debe obtener todos los Totales de los Alquileres + los Totales de las Expensas que no se pagaron.
-        También obtener sus Intereses por Atrasos (de Total Alquiler n + Total Expensa n)generados a la FECHA ACTUAL */
-        List<Expensa> expensasInpagas = new LinkedList();
-        List<Alquiler> alquileresInpagos = obtenerAlquileresInpagos(unInquilino.getId());
-        float totales = 0, totalesPorIntereses = 0;
-        for(Alquiler unAlquilerInpago : alquileresInpagos){
-            totalesPorIntereses += unAlquilerInpago.getTotal(); // Sumas el total Alquiler
-            int mesAlquiler = Integer.valueOf(formatoMes.format(unAlquilerInpago.getFecha()));
-            int anioExpensa2 = Integer.valueOf(formatoAnio.format(unAlquilerInpago.getFecha()));
-            if(mesAlquiler == 1){
-                mesExpensa = 12;
-                anioExpensa = Integer.valueOf(formatoAnio.format(unAlquilerInpago.getFecha()))-1;
-            }else{
-                mesExpensa = Integer.valueOf(formatoMes(unAlquiler.getFecha()))-1;
-            }
-            Expensa unaExpensaInpaga = obtenerExpensaInpaga(unDepartamento.getId(), mesExpensa, anioExpensa2);
-            if(unaExpensaInpaga != null){
-                totales += unaExpensaInpaga.getMonto(); // Suma el total Expensa
-                totalesPorIntereses += unaControladora.interesPorAtraso(fechaActual, totales, mesAlquiler);
-                expensasInpagas.add(unaExpensaInpaga);
-            }
-        }
-        // Se obtuvo alquileresInpagos (Para obtener el total de cada uno) y expensasInpagas.
-        
-        
+        fi = 4;
         for(Inquilino unInquilino : unaControladora.obtenerInquilinosEdificio(unEdificio.getId())){
+            /* Se debe obtener todos los Totales de los Alquileres + los Totales de las Expensas que no se pagaron.
+            También obtener sus Intereses por Atrasos (de Total Alquiler n + Total Expensa n)generados a la FECHA ACTUAL */
+            String ubicacionDepto = "";
+            List<Alquiler> alquileresInpagos = unaControladora.obtenerAlquileresInpagos(unInquilino.getId());
+            Departamento unDepto = unaControladora.obtenerDepartamentoInquilino(unInquilino.getId());
+            Alquiler ultimoAlquiler;
+            Expensa ultimaExpensa;
             
+            float montoAlquiler = 0, otrasFacturas = 0, montoExpensa = 0, precioCochera = 0,
+                  totalesPorIntereses = 0, saldoMesAnterior = 0, totales = 0, efectivo = 0,
+                  tarjeta = 0, banco = 0, saldo = 0;
             
-            Alquiler ultimoAlquiler = obtenerUltiAlquilerInquilino(unInquilino);
-            List<Pago> pagosInquilino = unaControladora.obtenerPagosInquilino(unInquilino.getId());
-            float saldoMesAnterior = 0;
-            if(pagosInquilino.size() > 0){
-                Collections.sort(pagosInquilino, (Pago p1, Pago p2) -> p1.getFecha().compareTo(p2.getFecha()));
-                Pago ultimoPago = pagosInquilino.get(pagosInquilino.size()-1);
-                saldoMesAnterior = (ultimoPago.getBanco()+ultimoPago.getEfectivo()+ultimoPago.getTarjeta())-ultimoPago.getMonto();
+            if(alquileresInpagos.size() > 0){
+                for(Alquiler unAlquilerInpago : alquileresInpagos){
+                    totales += unAlquilerInpago.getTotal(); // Sumas el total Alquiler
+                    int mesAlquiler = Integer.valueOf(formatoMes.format(unAlquilerInpago.getFecha())); // Mes Expensa
+                    int anioExpensa2 = Integer.valueOf(formatoAnio.format(unAlquilerInpago.getFecha())); // Año Expensa
+                    if(unDepto != null){
+                        ubicacionDepto = unDepto.getUbicacion();
+                        Expensa unaExpensaInpaga = unaControladora.obtenerExpensa(unDepto.getId(), mesAlquiler, anioExpensa2);
+                        if(unaExpensaInpaga != null){
+                            totales += unaExpensaInpaga.getMonto(); // Suma el total Expensa
+                            totalesPorIntereses += unaControladora.interesPorAtraso(fechaActual, totales, mesAlquiler);
+                            saldoMesAnterior = totales+totalesPorIntereses;
+                            totales += totalesPorIntereses;
+                        }
+                    }
+                }
+            }else{
+                List<Pago> pagosInquilino = unaControladora.obtenerPagosInquilino(unInquilino.getId());
+
+                if(pagosInquilino.size() > 0){
+                    Collections.sort(pagosInquilino, (Pago p1, Pago p2) -> p1.getFecha().compareTo(p2.getFecha()));
+                    Pago ultimoPago = pagosInquilino.get(pagosInquilino.size()-1);
+                    totales = ultimoPago.getMonto();
+                    saldoMesAnterior = obtenerSaldoMesAnterior(unInquilino.getId());
+                }
             }
             
-            if(ultimoAlquiler != null){
-                Date fechaPago = null;
-                float efectivo = 0, tarjeta = 0, banco = 0, intPorAtraso = 0, saldo = 0, total = 0, montoExpensa = 0, montoCochera = 0;
-                int mesAlquiler = Integer.valueOf(formatoMes.format(ultimoAlquiler.getFecha())), anioAlquiler = Integer.valueOf(formatoAnio.format(ultimoAlquiler.getFecha()));
-                unDepto = unaControladora.obtenerDepartamento(ultimoAlquiler.getDepartamento());
-                unaExpensa = unaControladora.obtenerExpensa(unDepto.getId(), mesAlquiler, anioAlquiler);
-                
-                if(unaExpensa != null){
-                    montoExpensa = unaExpensa.getMonto();
-                    total += montoExpensa;
+            Date fechaPago = null;
+            if(unInquilino.getAlquileres().size() > 0){
+                ultimoAlquiler = obtenerUltiAlquilerInquilino(unInquilino);
+                if(unDepto != null){
+                    ubicacionDepto = unDepto.getUbicacion();
+                    ultimaExpensa = unaControladora.obtenerExpensa(unDepto.getId(), Integer.valueOf(formatoMes.format(ultimoAlquiler.getFecha())), Integer.valueOf(formatoAnio.format(ultimoAlquiler.getFecha())));
+                    montoExpensa = ultimaExpensa.getMonto();
                 }
+                montoAlquiler = ultimoAlquiler.getMonto();
+                otrasFacturas = ultimoAlquiler.getOtraFactura();
+                Cochera unaCochera = unaControladora.obtenerCochera(ultimoAlquiler.getCochera());
+                
+                if(unaCochera != null){
+                    precioCochera = unaCochera.getPrecio();
+                }
+
                 if(ultimoAlquiler.getUnPago() != null){
-                    
-                    if(ultimoAlquiler.getCochera() > 0){
-                        unaCochera = unaControladora.obtenerCochera(ultimoAlquiler.getCochera());
-                        montoCochera = unaCochera.getPrecio();
+                    if(totales == 0){
+                        totales = ultimoAlquiler.getUnPago().getMonto();
                     }
-                    
                     efectivo = ultimoAlquiler.getUnPago().getEfectivo();
                     tarjeta = ultimoAlquiler.getUnPago().getTarjeta();
                     banco = ultimoAlquiler.getUnPago().getBanco();
-                    intPorAtraso = ultimoAlquiler.getUnPago().getInteresPorAtraso();
-                    saldo = ultimoAlquiler.getUnPago().getSaldo();
+                    saldo = unInquilino.getSaldoMesAnt();
                     fechaPago = ultimoAlquiler.getUnPago().getFecha();
-                    total += ultimoAlquiler.getUnPago().getMonto(); // Precios: Alquiler, Otras Facturas y Cochera (Si tiene..)
                 }else{
-                    saldo = ultimoAlquiler.getTotal();
-                    total = ultimoAlquiler.getTotal();
+                    saldo = totales;
+                    fechaPago = null;
                 }
-                fila = hojaAlquiler.createRow(fi++);
-                fila.setHeight(tamFilaDefault);
-                if(ultimoAlquiler.getDepartamento() > 0){
-                    fila.createCell(1).setCellValue(unDepto.getUbicacion());
-                }else{
-                    fila.createCell(1).setCellValue("");
-                }
-                fila.getCell(1).setCellStyle(estilo5);
-                fila.createCell(2).setCellValue(unInquilino.getApellido()+", "+unInquilino.getNombre());
-                fila.getCell(2).setCellStyle(estilo5);
-                fila.createCell(3).setCellValue("$ "+ultimoAlquiler.getMonto());
-                fila.getCell(3).setCellStyle(estilo10);
-                fila.createCell(4).setCellValue("$ "+ultimoAlquiler.getOtraFactura());
-                fila.getCell(4).setCellStyle(estilo10);
-                fila.createCell(5).setCellValue("$ "+formatoDecimal.format(montoExpensa));
-                fila.getCell(5).setCellStyle(estilo10);
-                fila.createCell(6).setCellValue("$ "+montoCochera);
-                fila.getCell(6).setCellStyle(estilo10);
-                fila.createCell(7).setCellValue("$ "+formatoDecimal.format(intPorAtraso)); // Interes x atraso.
-                fila.getCell(7).setCellStyle(estilo10);
-                fila.createCell(8).setCellValue("$ "+formatoDecimal.format(unInquilino.getSaldoMesAnt())); // Saldo mes ant.
-                fila.getCell(8).setCellStyle(estilo10);
-                fila.createCell(9).setCellValue("$ "+formatoDecimal.format(total)); // TOTAL
-                fila.getCell(9).setCellStyle(estilo10);
-                fila.createCell(10).setCellValue("$ "+efectivo);
-                fila.getCell(10).setCellStyle(estilo10);
-                fila.createCell(11).setCellValue("$ "+tarjeta);
-                fila.getCell(11).setCellStyle(estilo10);
-                fila.createCell(12).setCellValue("$ "+banco);
-                fila.getCell(12).setCellStyle(estilo10);
-                fila.createCell(13).setCellValue("$ "+formatoDecimal.format(saldo));
-                fila.getCell(13).setCellStyle(estilo10);
-                if(fechaPago != null){
-                    fila.createCell(14).setCellValue(formatoFecha.format(fechaPago));
-                }else{
-                    fila.createCell(14).setCellValue(fechaPago);
-                }
-                fila.getCell(14).setCellStyle(estilo10);
+            }            
+
+            fila = hojaAlquiler.createRow(fi++);
+            fila.setHeight(tamFilaDefault);
+            fila.createCell(1).setCellValue(ubicacionDepto);
+            fila.getCell(1).setCellStyle(estilo5);
+            fila.createCell(2).setCellValue(unInquilino.getApellido()+", "+unInquilino.getNombre());
+            fila.getCell(2).setCellStyle(estilo5);
+            fila.createCell(3).setCellValue("$ "+montoAlquiler);
+            fila.getCell(3).setCellStyle(estilo10);
+            fila.createCell(4).setCellValue("$ "+otrasFacturas);
+            fila.getCell(4).setCellStyle(estilo10);
+            fila.createCell(5).setCellValue("$ "+unaControladora.reemplazarString(formatoDecimal.format(montoExpensa)));
+            fila.getCell(5).setCellStyle(estilo10);
+            fila.createCell(6).setCellValue("$ "+precioCochera);
+            fila.getCell(6).setCellStyle(estilo10);
+            fila.createCell(7).setCellValue("$ "+formatoDecimal.format(totalesPorIntereses));
+            fila.getCell(7).setCellStyle(estilo10);
+            fila.createCell(8).setCellValue("$ "+formatoDecimal.format(saldoMesAnterior));
+            fila.getCell(8).setCellStyle(estilo10);
+            fila.createCell(9).setCellValue("$ "+formatoDecimal.format(totales));
+            fila.getCell(9).setCellStyle(estilo10);
+            fila.createCell(10).setCellValue("$ "+efectivo);
+            fila.getCell(10).setCellStyle(estilo10);
+            fila.createCell(11).setCellValue("$ "+tarjeta);
+            fila.getCell(11).setCellStyle(estilo10);
+            fila.createCell(12).setCellValue("$ "+banco);
+            fila.getCell(12).setCellStyle(estilo10);
+            fila.createCell(13).setCellValue("$ "+formatoDecimal.format(saldo));          
+            fila.getCell(13).setCellStyle(estilo10);
+            if(fechaPago != null){
+                fila.createCell(14).setCellValue(formatoFecha.format(fechaPago));
+            }else{
+                fila.createCell(14).setCellValue("");
             }
+            fila.getCell(14).setCellStyle(estilo10);
         }
         
         return libro;
@@ -475,14 +470,22 @@ public class Reporte {
         return ultimoAlquiler;
     }
     
-    public List<Alquiler> obtenerAlquileresInpagos(long idInquilino){
-        List<Alquiler> alquileresInpagos = unaControladora.obtenerAlquileresInpagos(idInquilino);
-        List<Alquiler> listaFinal = new LinkedList();
+    public float obtenerSaldoMesAnterior(long idInquilino){
+        List<Pago> pagosInquilino = unaControladora.obtenerPagosInquilino(idInquilino);
+        List<Pago> pagosOrdenados = new LinkedList();
+        float saldoMesAnterior = 0;
         
-        for(Alquiler unAlquiler : alquileresInpagos){
+        if(pagosInquilino.size() > 0){
+            for(Pago unPago : pagosInquilino){
+                pagosOrdenados.add(unPago);
+            }
             
+            Collections.sort(pagosOrdenados, (Pago p1, Pago p2) -> p1.getFecha().compareTo(p2.getFecha()));
+            if(pagosInquilino.size() > 1){
+                saldoMesAnterior = pagosOrdenados.get(pagosOrdenados.size()-2).getSaldo();
+            }
         }
         
-        return listaFinal;
+        return saldoMesAnterior;
     }
 }
