@@ -1,6 +1,7 @@
 package Visual;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.LinkedList;
 import javax.swing.ImageIcon;
@@ -101,6 +102,7 @@ public class PanelCochera extends javax.swing.JPanel {
         jTextFieldEdificio.setBackground(new java.awt.Color(204, 204, 255));
         jTextFieldEdificio.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldEdificio.setBorder(null);
+        jTextFieldEdificio.setFocusable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel1.setText("Descripción");
@@ -497,7 +499,9 @@ public class PanelCochera extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
     private void jTextFieldPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPrecioKeyTyped
-        if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_PERIOD) && (evt.getKeyChar() != VK_BACK_SPACE)){
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }else if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_PERIOD) && (evt.getKeyChar() != VK_BACK_SPACE)){
             getToolkit().beep();
             evt.consume();
         }
@@ -545,7 +549,9 @@ public class PanelCochera extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldBuscarMouseClicked
 
     private void jTextFieldUbicacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldUbicacionKeyTyped
-        if(!Character.isLetterOrDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }else if(!Character.isLetterOrDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
             getToolkit().beep();
             evt.consume();
         }

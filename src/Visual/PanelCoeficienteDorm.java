@@ -1,6 +1,7 @@
 package Visual;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.LinkedList;
 import javax.swing.ImageIcon;
@@ -109,6 +110,7 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
         jTextFieldEdificio.setBackground(new java.awt.Color(204, 204, 255));
         jTextFieldEdificio.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldEdificio.setBorder(null);
+        jTextFieldEdificio.setFocusable(false);
 
         jTextAreaDescripcion.setColumns(20);
         jTextAreaDescripcion.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
@@ -167,25 +169,22 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
                             .addComponent(jLabelNombre)
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldCantDormitorio, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldNombre))
+                        .addGap(100, 100, 100)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldCantDormitorio))
-                                .addGap(12, 12, 12))
-                            .addComponent(jTextFieldNombre)
-                            .addComponent(jSeparator5))
-                        .addGap(50, 50, 50)
+                            .addComponent(jLabelEdificio)
+                            .addComponent(jLabelValor))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelValor)
-                            .addComponent(jLabelEdificio))
-                        .addGap(29, 29, 29)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldValor)
                             .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextFieldEdificio, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextFieldValor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTextFieldEdificio)
+                            .addComponent(jSeparator2))))
                 .addGap(22, 22, 22))
         );
         jPanel1Layout.setVerticalGroup(
@@ -496,14 +495,18 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
     private void jTextFieldValorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldValorKeyTyped
-        if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_PERIOD) && (evt.getKeyChar() != VK_BACK_SPACE)){
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }else if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_PERIOD) && (evt.getKeyChar() != VK_BACK_SPACE)){
             getToolkit().beep();
             evt.consume();
         }
     }//GEN-LAST:event_jTextFieldValorKeyTyped
 
     private void jTextFieldCantDormitorioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCantDormitorioKeyTyped
-        if(!Character.isDigit(evt.getKeyChar()) /*&& (evt.getKeyChar() != VK_SPACE)*/ && (evt.getKeyChar() != VK_BACK_SPACE)){
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }else if(!Character.isDigit(evt.getKeyChar()) /*&& (evt.getKeyChar() != VK_SPACE)*/ && (evt.getKeyChar() != VK_BACK_SPACE)){
             getToolkit().beep();
             evt.consume();
         }
@@ -550,7 +553,9 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonBuscarMouseExited
 
     private void jTextFieldNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNombreKeyTyped
-        if(!Character.isLetterOrDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }else if(!Character.isLetterOrDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
             getToolkit().beep();
             evt.consume();
         }

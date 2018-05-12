@@ -6,6 +6,7 @@ import java.util.List;
 import Logica.Alquiler;
 import Logica.Inquilino;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import java.text.DecimalFormat;
@@ -792,6 +793,10 @@ public final class PanelPago extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldInteresKeyTyped
 
     private void jTextFieldEfectivoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldEfectivoKeyTyped
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jPanelButtonAceptarMouseClicked(null);
+        }
+        
         if(Character.isLetter(evt.getKeyChar())){
             getToolkit().beep();
             evt.consume();
@@ -799,6 +804,10 @@ public final class PanelPago extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldEfectivoKeyTyped
 
     private void jTextFieldTarjetaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldTarjetaKeyTyped
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jPanelButtonAceptarMouseClicked(null);
+        }
+        
         if(Character.isLetter(evt.getKeyChar())){
             getToolkit().beep();
             evt.consume();
@@ -806,6 +815,10 @@ public final class PanelPago extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldTarjetaKeyTyped
 
     private void jTextFieldBancoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBancoKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAceptarMouseClicked(null);
+        }
+        
         if(Character.isLetter(evt.getKeyChar())){
             getToolkit().beep();
             evt.consume();
