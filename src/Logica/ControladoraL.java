@@ -640,7 +640,7 @@ public class ControladoraL {
         Departamento unDepartamentoAlquiler = null;
         Departamento unDepartamento;
         int i = 0, j = 0;
-        Alquiler unAlquiler;
+        Alquiler unAlquiler;        
         
         while(unDepartamentoAlquiler == null){
             unDepartamento = obtenerEdificio(idEdificio).getDepartamentos().get(i);
@@ -655,6 +655,29 @@ public class ControladoraL {
         }
         
         return unDepartamentoAlquiler;
+    }
+    
+    public Departamento obtenerDepartamentoPorAlquiler(long idAlquiler, long idEdificio, long idInquilino){
+        Departamento unDepto = null;
+        int i = 0, j = 0;
+        
+        while(i < obtenerEdificio(idEdificio).getDepartamentos().size()){
+            if(obtenerEdificio(idEdificio).getDepartamentos().get(i).getUnInquilino().getId() == idInquilino){
+                List<Alquiler> alquileresInquilino = obtenerEdificio(idEdificio).getDepartamentos().get(i).getUnInquilino().getAlquileres();
+                while(j < alquileresInquilino.size()){
+                    if(alquileresInquilino.get(j).getId() == idAlquiler){
+                        unDepto = obtenerEdificio(idEdificio).getDepartamentos().get(i);
+                        i = obtenerEdificio(idEdificio).getDepartamentos().size();
+                        j = alquileresInquilino.size();
+                    }
+                    j++;
+                }
+            }
+            
+            i++;
+        }
+        
+        return unDepto;
     }
     
     public boolean existeDepartamento(String ubicacion, long idEdificio){
