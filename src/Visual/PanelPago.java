@@ -1063,7 +1063,7 @@ public final class PanelPago extends javax.swing.JPanel {
             datos[2] = unInquilino.getApellido()+", "+unInquilino.getNombre();
             
             datos[3] = unaControladora.obtenerAlquiler(unPago.getIdAlquiler());
-            datos[4] = unaControladora.obtenerDepartamentoPorAlquiler(unPago.getIdAlquiler(), idEdificio);
+            datos[4] = unaControladora.obtenerDepartamentoPorAlquiler(unPago.getIdAlquiler(), idEdificio, unInquilino.getId());
             datos[5] = unPago.getMonto();
             datos[6] = unPago.getDescripcion();
             
