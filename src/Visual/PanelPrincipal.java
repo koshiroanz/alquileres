@@ -370,7 +370,7 @@ public final class PanelPrincipal extends javax.swing.JPanel {
     public void cargarTablaAlquiler(long idEdificio){
         limpiarVentana();
         Date fechaActual = new Date();
-        Object datos[] = new Object[10];
+        String datos[] = new String[10];
         List<Logica.Inquilino> inquilinosEdificio = unaControladora.obtenerInquilinosEdificio(idEdificio);
         
         DecimalFormat formatoDecimal = new DecimalFormat("#.00");
@@ -394,8 +394,8 @@ public final class PanelPrincipal extends javax.swing.JPanel {
                     }
                     datos[1] = unInquilino.getApellido() + ", " + unInquilino.getNombre();
                     datos[2] = formatoFecha.format(unAlquiler.getFecha());
-                    datos[3] = unAlquiler.getMonto();
-                    datos[4] = unAlquiler.getOtraFactura();
+                    datos[3] = String.valueOf(unAlquiler.getMonto());
+                    datos[4] = String.valueOf(unAlquiler.getOtraFactura());
                     
                     if (unaExpensa != null) {
                         datos[5] = formatoDecimal.format(unaExpensa.getMonto());
@@ -411,7 +411,7 @@ public final class PanelPrincipal extends javax.swing.JPanel {
                         
                     }
                     interesPorAtraso = unaControladora.interesPorAtraso(fechaActual, unAlquiler.getTotal(), Integer.valueOf(formatoMes.format(unAlquiler.getFecha())));
-                    datos[7] = interesPorAtraso;
+                    datos[7] = String.valueOf(interesPorAtraso);
                     
                     datos[8] = "";
                     total += (unAlquiler.getTotal() + interesPorAtraso);
@@ -437,12 +437,6 @@ public final class PanelPrincipal extends javax.swing.JPanel {
             tab.setDataVector(tabla,colTablaAlquiler);
             this.jTableAlquiler.setModel(tab);
         }
-    }
-    
-    public String[][] ordenarTabla(String[][] tabla, int tam){
-        
-        
-        return tabla;
     }
     
     public void cargarTablaExpensa(long idEdificio){
