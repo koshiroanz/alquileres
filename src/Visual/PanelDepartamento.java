@@ -2,6 +2,7 @@ package Visual;
 
 import java.util.List;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import java.util.logging.Level;
@@ -133,6 +134,7 @@ public final class PanelDepartamento extends javax.swing.JPanel {
         jTextFieldEdificio.setBackground(new java.awt.Color(204, 204, 255));
         jTextFieldEdificio.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldEdificio.setBorder(null);
+        jTextFieldEdificio.setFocusable(false);
 
         jLabelUbicacion.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelUbicacion.setText("Ubicación");
@@ -448,7 +450,6 @@ public final class PanelDepartamento extends javax.swing.JPanel {
                     if(confirmacion == 0){
                         Logica.Departamento unDepartamento = unaControladora.obtenerDepartamento(idDepartamento);
                         unaControladora.modificarDepartamento(idDepartamento, jTextFieldUbicacion.getText().toUpperCase(), cantDorm, jTextAreaDescripcion.getText(), unDepartamento.getExpensas(), unDepartamento.getUnInquilino());
-                        modificar = false;
                         cargarTablaDepartamento("");
                     }
                 }
@@ -478,7 +479,9 @@ public final class PanelDepartamento extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
     private void jTextFieldNumDormitoriosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNumDormitoriosKeyTyped
-        if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }else if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
             getToolkit().beep();
             evt.consume();
         }
@@ -529,7 +532,9 @@ public final class PanelDepartamento extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldBuscarMouseClicked
 
     private void jTextFieldUbicacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldUbicacionKeyTyped
-        if(!Character.isLetterOrDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }else if(!Character.isLetterOrDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
             getToolkit().beep();
             evt.consume();
         }

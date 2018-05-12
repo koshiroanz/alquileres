@@ -2,6 +2,10 @@ package Visual;
 
 import java.awt.Color;
 import java.awt.event.ItemEvent;
+import static java.awt.event.KeyEvent.VK_BACK_SPACE;
+import static java.awt.event.KeyEvent.VK_MINUS;
+import static java.awt.event.KeyEvent.VK_PERIOD;
+import static java.awt.event.KeyEvent.VK_SPACE;
 import java.util.Date;
 import java.util.List;
 import java.util.LinkedList;
@@ -99,17 +103,32 @@ public final class PanelServicio extends javax.swing.JPanel {
 
         jDateChooserFechaEmision.setBackground(new java.awt.Color(255, 255, 255));
         jDateChooserFechaEmision.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jDateChooserFechaEmision.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jDateChooserFechaEmisionKeyTyped(evt);
+            }
+        });
 
         jComboBoxMes.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jComboBoxMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
         jComboBoxMes.setBorder(null);
         jComboBoxMes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jComboBoxMes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jComboBoxMesKeyTyped(evt);
+            }
+        });
 
         jLabelFechaVencimiento.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelFechaVencimiento.setText("F. Vencimiento");
 
         jDateChooserFechaVencimiento.setBackground(new java.awt.Color(255, 255, 255));
         jDateChooserFechaVencimiento.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jDateChooserFechaVencimiento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jDateChooserFechaVencimientoKeyTyped(evt);
+            }
+        });
 
         jLabelMonto.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelMonto.setText("Monto");
@@ -128,6 +147,7 @@ public final class PanelServicio extends javax.swing.JPanel {
         jTextFieldEdificio.setBackground(new java.awt.Color(204, 204, 255));
         jTextFieldEdificio.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
         jTextFieldEdificio.setBorder(null);
+        jTextFieldEdificio.setFocusable(false);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel2.setText("Año");
@@ -136,6 +156,7 @@ public final class PanelServicio extends javax.swing.JPanel {
         jTextFieldAnio.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldAnio.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldAnio.setBorder(null);
+        jTextFieldAnio.setFocusable(false);
 
         jLabelDescripcion.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelDescripcion.setText("Descripción");
@@ -180,6 +201,11 @@ public final class PanelServicio extends javax.swing.JPanel {
         jButtonNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonNombreActionPerformed(evt);
+            }
+        });
+        jButtonNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jButtonNombreKeyTyped(evt);
             }
         });
 
@@ -257,11 +283,11 @@ public final class PanelServicio extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(jPanelButtonRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel2)
                     .addComponent(jComboBoxMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -273,13 +299,13 @@ public final class PanelServicio extends javax.swing.JPanel {
                         .addComponent(jTextFieldAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jDateChooserFechaVencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelFechaVencimiento)
                     .addComponent(jDateChooserFechaEmision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelFechaEmision))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextFieldEdificio, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelEdificio)
@@ -288,11 +314,11 @@ public final class PanelServicio extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelDescripcion)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -338,7 +364,7 @@ public final class PanelServicio extends javax.swing.JPanel {
             jPanelButtonAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonAgregarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAgregarLayout.setVerticalGroup(
@@ -374,7 +400,7 @@ public final class PanelServicio extends javax.swing.JPanel {
             jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonEliminarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonEliminarLayout.setVerticalGroup(
@@ -483,7 +509,7 @@ public final class PanelServicio extends javax.swing.JPanel {
                     .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
@@ -499,10 +525,10 @@ public final class PanelServicio extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -543,6 +569,7 @@ public final class PanelServicio extends javax.swing.JPanel {
                 }else{
                     int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){
+                        idServicio = unaControladora.obtenerServicio(idEdificio, String.valueOf(jComboBoxNombre.getSelectedItem())).getId();
                         unaControladora.modificarServicio(idServicio, nombre, mes, Integer.parseInt(jTextFieldAnio.getText()), fechaE, fechaV, Float.valueOf(monto), jTextAreaDescripcion.getText());
                         modificar = false;
                         cargarTablaServicio("");
@@ -576,7 +603,9 @@ public final class PanelServicio extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
     private void jTextFieldMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMontoKeyTyped
-        if(Character.isLetter(evt.getKeyChar())){
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }else if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_PERIOD) && (evt.getKeyChar() != VK_BACK_SPACE) && (evt.getKeyChar() != VK_MINUS)){
             getToolkit().beep();
             evt.consume();
         }
@@ -626,12 +655,14 @@ public final class PanelServicio extends javax.swing.JPanel {
                 if(unServicio != null){
                     cargarPanelDatos(unServicio.getId());
                 }else{
+                    modificar = false;
                     if(jComboBoxNombre.getComponentCount() > 2){
                         jButtonNombre.setText("-");
                     }else{
                         jButtonNombre.setText("+");
                     }
-
+                    
+                    jComboBoxMes.setSelectedIndex(0);
                     jDateChooserFechaEmision.setDate(null);
                     jDateChooserFechaVencimiento.setDate(null);
                     jTextFieldMonto.setText(null);
@@ -655,15 +686,22 @@ public final class PanelServicio extends javax.swing.JPanel {
                     }
                 }
             }else{
-                String nombre = JOptionPane.showInputDialog(null, "Nombre").toUpperCase();
-                if(!nombre.isEmpty()){
-                    jComboBoxNombre.addItem(nombre);
+                try{
+                    String nombre = JOptionPane.showInputDialog(null, "Nombre").toUpperCase();
+                    jComboBoxNombre.addItem(nombre.toUpperCase());
+                    jComboBoxNombre.setSelectedIndex(jComboBoxNombre.getComponentCount());
+                    jComboBoxNombre.requestFocus();
+                }catch(Exception e){
+                    System.out.print("Aprieta para agregar servicio, le da ok y no escribio nada. No ocurre ningun problema ;)"+e);
                 }
             }
         }else{
-            String nombre = JOptionPane.showInputDialog(null, "Nombre").toUpperCase();
-            if(nombre != null){
+            try{
+                String nombre = JOptionPane.showInputDialog(null, "Nombre").toUpperCase();
                 jComboBoxNombre.addItem(nombre.toUpperCase());
+                jComboBoxNombre.setSelectedIndex(jComboBoxNombre.getComponentCount());
+            }catch(Exception e){
+                System.out.print("Aprieta para agregar servicio, le da ok y no escribio nada. No ocurre ningun problema ;)"+e);
             }
         }
     }//GEN-LAST:event_jButtonNombreActionPerformed
@@ -690,6 +728,30 @@ public final class PanelServicio extends javax.swing.JPanel {
     private void jComboBoxNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBoxNombreFocusGained
         entro = true;
     }//GEN-LAST:event_jComboBoxNombreFocusGained
+
+    private void jComboBoxMesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBoxMesKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jComboBoxMesKeyTyped
+
+    private void jButtonNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonNombreKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jButtonNombreActionPerformed(null);
+        }
+    }//GEN-LAST:event_jButtonNombreKeyTyped
+
+    private void jDateChooserFechaEmisionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDateChooserFechaEmisionKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jDateChooserFechaEmisionKeyTyped
+
+    private void jDateChooserFechaVencimientoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDateChooserFechaVencimientoKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jDateChooserFechaVencimientoKeyTyped
 
     private void cargarPanelDatos(long idServicio){
         int i = 0;
@@ -825,7 +887,6 @@ public final class PanelServicio extends javax.swing.JPanel {
         if(jComboBoxNombre.getComponentCount() < 2){
             jComboBoxNombre.addItem("AGUA Y CLOACA");
         }
-        
     }
     
     private boolean validar(){

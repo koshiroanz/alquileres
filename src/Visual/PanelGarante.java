@@ -1,6 +1,7 @@
 package Visual;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.ImageIcon;
 import java.util.logging.Level;
@@ -354,6 +355,11 @@ public class PanelGarante extends javax.swing.JPanel {
         jComboBoxInquilino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción" }));
         jComboBoxInquilino.setBorder(null);
         jComboBoxInquilino.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jComboBoxInquilino.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jComboBoxInquilinoKeyTyped(evt);
+            }
+        });
 
         jLabelDescripcion.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelDescripcion.setText("Descripción");
@@ -731,6 +737,12 @@ public class PanelGarante extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Debe cliquear una fila válida.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jTableGaranteMouseClicked
+
+    private void jComboBoxInquilinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBoxInquilinoKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jComboBoxInquilinoKeyTyped
 
     private void cargarTablaGarante(String buscar){
         if(tablaGarante.getRowCount() > 0){

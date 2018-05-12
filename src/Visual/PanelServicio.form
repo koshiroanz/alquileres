@@ -35,10 +35,10 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanel1" pref="397" max="32767" attributes="0"/>
+              <Component id="jPanel1" pref="404" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-              <Component id="jPanel2" pref="424" max="32767" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="jPanel2" pref="430" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -129,12 +129,12 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace pref="22" max="32767" attributes="0"/>
+                  <EmptySpace pref="23" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <Component id="jPanelButtonRefresh" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="22" max="32767" attributes="0"/>
+                  <EmptySpace pref="24" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jLabel2" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jComboBoxMes" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -148,14 +148,14 @@
                           <Component id="jSeparator5" min="-2" pref="10" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="42" max="32767" attributes="0"/>
+                  <EmptySpace pref="43" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jDateChooserFechaVencimiento" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelFechaVencimiento" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jDateChooserFechaEmision" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelFechaEmision" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="42" max="32767" attributes="0"/>
+                  <EmptySpace pref="43" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jTextFieldEdificio" alignment="2" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="jLabelEdificio" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -166,12 +166,12 @@
                       <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
                       <Component id="jSeparator4" min="-2" pref="10" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="42" max="32767" attributes="0"/>
+                  <EmptySpace pref="43" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabelDescripcion" min="-2" max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="60" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="47" max="32767" attributes="0"/>
+                  <EmptySpace pref="48" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -218,6 +218,9 @@
               <Font name="Segoe UI Semibold" size="12" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jDateChooserFechaEmisionKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBoxMes">
           <Properties>
@@ -248,6 +251,9 @@
               <Color id="Cursor de Mano"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jComboBoxMesKeyTyped"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -269,6 +275,9 @@
               <Font name="Segoe UI Semibold" size="12" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jDateChooserFechaVencimientoKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelMonto">
           <Properties>
@@ -312,6 +321,7 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
+            <Property name="focusable" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator4">
@@ -336,6 +346,7 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
+            <Property name="focusable" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator5">
@@ -414,6 +425,7 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNombreActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jButtonNombreKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBoxNombre">
@@ -493,7 +505,7 @@
                   </Group>
                   <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPane3" pref="304" max="32767" attributes="0"/>
+                  <Component id="jScrollPane3" pref="306" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel3" min="-2" pref="49" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>

@@ -2,6 +2,7 @@ package Visual;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -78,6 +79,8 @@ public final class PanelExpensa extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableBuscarExpensa = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(896, 315));
 
@@ -102,9 +105,9 @@ public final class PanelExpensa extends javax.swing.JPanel {
                 jComboBoxMesItemStateChanged(evt);
             }
         });
-        jComboBoxMes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboBoxMesMouseClicked(evt);
+        jComboBoxMes.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jComboBoxMesFocusGained(evt);
             }
         });
 
@@ -115,6 +118,11 @@ public final class PanelExpensa extends javax.swing.JPanel {
         jComboBoxDepartamento.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBoxDepartamentoItemStateChanged(evt);
+            }
+        });
+        jComboBoxDepartamento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jComboBoxDepartamentoKeyTyped(evt);
             }
         });
 
@@ -143,6 +151,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
 
         jTextFieldAnio.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldAnio.setBorder(null);
+        jTextFieldAnio.setFocusable(false);
 
         jLabelDescripcion.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelDescripcion.setText("Descripción");
@@ -691,17 +700,17 @@ public final class PanelExpensa extends javax.swing.JPanel {
         if(jComboBoxDepartamento.getSelectedIndex() > 0){
             Logica.Departamento unDepartamento = (Logica.Departamento) comboDepartamento.getElementAt(jComboBoxDepartamento.getSelectedIndex());
             
-            try {
-                cargarTablaExpensa(idEdificio, unDepartamento.getId());
-            } catch (Exception ex) {
-                Logger.getLogger(PanelExpensa.class.getName()).log(Level.SEVERE, null, ex);
+            if(unaControladora.obtenerCoeficienteDorm(idEdificio, unDepartamento) == null){
+                JOptionPane.showMessageDialog(null, "No existen un Coeficiente adecuado  para el Departamento", "", JOptionPane.WARNING_MESSAGE);
+            }else{
+                try {
+                    cargarTablaExpensa(idEdificio, unDepartamento.getId());
+                } catch (Exception ex) {
+                    Logger.getLogger(PanelExpensa.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_jComboBoxDepartamentoItemStateChanged
-
-    private void jComboBoxMesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxMesMouseClicked
-        entro = true;
-    }//GEN-LAST:event_jComboBoxMesMouseClicked
 
     private void jTableBuscarExpensaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableBuscarExpensaMouseClicked
         int fila = jTableBuscarExpensa.getSelectedRow();
@@ -721,6 +730,16 @@ public final class PanelExpensa extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jTableBuscarExpensaMouseClicked
+
+    private void jComboBoxDepartamentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBoxDepartamentoKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jComboBoxDepartamentoKeyTyped
+
+    private void jComboBoxMesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBoxMesFocusGained
+        entro = true;
+    }//GEN-LAST:event_jComboBoxMesFocusGained
     
     public void cargarTablaExpensa(long idEdificio, long idDepartamento) throws Exception{
         limpiarTablaExpensa();

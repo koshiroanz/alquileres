@@ -1,6 +1,7 @@
 package Visual;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.LinkedList;
 import javax.swing.ImageIcon;
@@ -138,12 +139,22 @@ public class PanelInquilino extends javax.swing.JPanel {
 
         jTextFieldTelefono.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldTelefono.setBorder(null);
+        jTextFieldTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldTelefonoKeyTyped(evt);
+            }
+        });
 
         jLabelEmail.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelEmail.setText("E-mail");
 
         jTextFieldEmail.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldEmail.setBorder(null);
+        jTextFieldEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldEmailKeyTyped(evt);
+            }
+        });
 
         jLabelCantFamiliares.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelCantFamiliares.setText("Cant. Familiares");
@@ -163,11 +174,6 @@ public class PanelInquilino extends javax.swing.JPanel {
         jComboBoxDepartamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "Sin departamento" }));
         jComboBoxDepartamento.setBorder(null);
         jComboBoxDepartamento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jComboBoxDepartamento.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBoxDepartamentoItemStateChanged(evt);
-            }
-        });
         jComboBoxDepartamento.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jComboBoxDepartamentoMouseClicked(evt);
@@ -181,6 +187,11 @@ public class PanelInquilino extends javax.swing.JPanel {
         jComboBoxCochera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "Sin cochera" }));
         jComboBoxCochera.setBorder(null);
         jComboBoxCochera.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jComboBoxCochera.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jComboBoxCocheraKeyTyped(evt);
+            }
+        });
 
         jLabelDescripcion.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelDescripcion.setText("Descripción");
@@ -410,7 +421,7 @@ public class PanelInquilino extends javax.swing.JPanel {
             jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonEliminarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonEliminarLayout.setVerticalGroup(
@@ -446,7 +457,7 @@ public class PanelInquilino extends javax.swing.JPanel {
             jPanelButtonAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonAgregarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAgregarLayout.setVerticalGroup(
@@ -662,14 +673,18 @@ public class PanelInquilino extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
     private void jTextFieldDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDniKeyTyped
-        if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_PERIOD) && (evt.getKeyChar() != VK_BACK_SPACE)){
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }else if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_PERIOD) && (evt.getKeyChar() != VK_BACK_SPACE)){
             getToolkit().beep();
             evt.consume();
         }
     }//GEN-LAST:event_jTextFieldDniKeyTyped
 
     private void jTextFieldCantFamiliaresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCantFamiliaresKeyTyped
-        if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }else if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
             getToolkit().beep();
             evt.consume();
         }
@@ -678,9 +693,6 @@ public class PanelInquilino extends javax.swing.JPanel {
     private void jComboBoxDepartamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxDepartamentoMouseClicked
         
     }//GEN-LAST:event_jComboBoxDepartamentoMouseClicked
-
-    private void jComboBoxDepartamentoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxDepartamentoItemStateChanged
-    }//GEN-LAST:event_jComboBoxDepartamentoItemStateChanged
 
     private void jPanelButtonRefrescarMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonRefrescarMouseMoved
         if(modificar){
@@ -745,25 +757,52 @@ public class PanelInquilino extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonBuscarMouseExited
 
     private void jTextFieldNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNombreKeyTyped
-        if(!Character.isLetter(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }else if(!Character.isLetter(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
             getToolkit().beep();
             evt.consume();
         }
     }//GEN-LAST:event_jTextFieldNombreKeyTyped
 
     private void jTextFieldApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldApellidoKeyTyped
-        if(!Character.isLetter(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }else if(!Character.isLetter(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
             getToolkit().beep();
             evt.consume();
         }
     }//GEN-LAST:event_jTextFieldApellidoKeyTyped
 
     private void jTextFieldCuitKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCuitKeyTyped
-        if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_PERIOD) && (evt.getKeyChar() != VK_BACK_SPACE) && (evt.getKeyChar() != VK_MINUS)){
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }else if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_PERIOD) && (evt.getKeyChar() != VK_BACK_SPACE) && (evt.getKeyChar() != VK_MINUS)){
             getToolkit().beep();
             evt.consume();
         }
     }//GEN-LAST:event_jTextFieldCuitKeyTyped
+
+    private void jComboBoxCocheraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBoxCocheraKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jComboBoxCocheraKeyTyped
+
+    private void jTextFieldTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldTelefonoKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }else if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_PERIOD) && (evt.getKeyChar() != VK_BACK_SPACE) && (evt.getKeyChar() != VK_MINUS)){
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldTelefonoKeyTyped
+
+    private void jTextFieldEmailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldEmailKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jTextFieldEmailKeyTyped
 
     public void cargarTablaInquilino(String buscar){
         String colTablaInquilino[] = {"Id", "Apellido", "Nombre", "DNI", "Tel.", "E-mail", "Departamento", "Cochera", "Descripción"};

@@ -442,7 +442,11 @@ public final class Inicio extends javax.swing.JFrame {
                 new mainFrame(idEdificio, nombreEdificio).setVisible(true);            
                 this.dispose();
             }else{
-                JOptionPane.showMessageDialog(null, "Debe seleccionar un Edificio.", "", JOptionPane.WARNING_MESSAGE);
+                if(jTextFieldCoeficiente.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar un Edificio y cargar el Coeficiente.", "", JOptionPane.WARNING_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar un Edificio.", "", JOptionPane.WARNING_MESSAGE);
+                }
             }
             
         }catch(NumberFormatException e){
@@ -524,11 +528,7 @@ public final class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldCoeficienteKeyTyped
 
     private void jTextFieldCoeficienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCoeficienteFocusLost
-        if(jTextFieldCoeficiente.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Ingrese valor coeficiente.", "", JOptionPane.WARNING_MESSAGE);
-            jLabelCoeficiente.setForeground(Color.red);
-            jTextFieldCoeficiente.requestFocus();
-        }else{
+        if(!jTextFieldCoeficiente.getText().isEmpty()){
             try {
                 float valor = Float.valueOf(jTextFieldCoeficiente.getText());
                 if(unaControladora.obtenerCoeficiente() != null){

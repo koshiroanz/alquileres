@@ -50,6 +50,8 @@ public final class PanelPrincipal extends javax.swing.JPanel {
         jPanelButtonReporte = new javax.swing.JPanel();
         jLabelReporte = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
         jPanelAlquileres.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanelPrincipalTabla1.setBackground(new java.awt.Color(255, 255, 255));
@@ -153,7 +155,7 @@ public final class PanelPrincipal extends javax.swing.JPanel {
                 .addGap(17, 17, 17)
                 .addComponent(jLabelAlquiler)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

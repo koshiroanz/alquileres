@@ -1,6 +1,7 @@
 package Visual;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JButton;
@@ -74,6 +75,11 @@ public final class PanelEdificio extends javax.swing.JPanel {
 
         jTextFieldDireccion.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jTextFieldDireccion.setBorder(null);
+        jTextFieldDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldDireccionKeyTyped(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         jLabel1.setText("Edificio");
@@ -578,11 +584,21 @@ public final class PanelEdificio extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldBuscarMouseClicked
 
     private void jTextFieldNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNombreKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }
+        
         if(!Character.isLetterOrDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_BACK_SPACE)){
             getToolkit().beep();
             evt.consume();
         }
     }//GEN-LAST:event_jTextFieldNombreKeyTyped
+
+    private void jTextFieldDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDireccionKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jTextFieldDireccionKeyTyped
     
     public void cargarTablaEdificio(String buscar){
         List<Logica.Edificio> edificios = new LinkedList();
