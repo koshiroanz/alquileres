@@ -10,7 +10,7 @@ public class ControladoraV {
 /*------------------------------------------------------------------------------
                            NOTIFICACIONES
 ------------------------------------------------------------------------------*/
-    public String[] notificaciones(){
+    public List<String> notificaciones(){
         return unaControladora.notificaciones();
     }
     
@@ -214,7 +214,6 @@ public class ControladoraV {
     public boolean existeDepartamento(String ubicacionDepto, long idEdificio){
         return unaControladora.existeDepartamento(ubicacionDepto, idEdificio);
     }
-    
 /*------------------------------------------------------------------------------
                                 EDIFICIO
 ------------------------------------------------------------------------------*/
