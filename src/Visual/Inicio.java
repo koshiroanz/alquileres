@@ -581,12 +581,12 @@ public final class Inicio extends javax.swing.JFrame {
         
         if(unaControladora.obtenerEdificios().isEmpty()){
             listaNotificaciones.addElement("Todo listo para empezar su utilizacion.");
-        }else{            
+        }else{
             for(String msj : unaControladora.notificaciones()){
                 if(!msj.isEmpty()){
-                    listaNotificaciones.addElement("- "+msj+".");
-                }
+                listaNotificaciones.addElement("- "+msj+".");
             }
+        }
         }
         
         jListNotificaciones.setModel(listaNotificaciones);
