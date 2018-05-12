@@ -148,6 +148,10 @@ public class ControladoraL {
             }
         }
         
+        if(alquileresInpagos.size() > 1){
+            Collections.sort(alquileresInpagos, (Alquiler a1, Alquiler a2) -> a1.getFecha().compareTo(a2.getFecha()));
+        }
+        
         return alquileresInpagos;
     }
     
@@ -625,7 +629,6 @@ public class ControladoraL {
     }
     
     public Departamento obtenerDepartamentoPorExpensa(long idEdificio, long idExpensa){
-        int i = 0, j = 0;
         Departamento DepartamentoExpensa = null;
         
         for(Departamento unDepartamento : obtenerEdificio(idEdificio).getDepartamentos()){
@@ -656,14 +659,6 @@ public class ControladoraL {
             }
             i++;
         }
-        
-        /*for(Departamento unDepto : obtenerEdificio(idEdificio).getDepartamentos()){
-            for(Alquiler unAlquiler : unDepto.getUnInquilino().getAlquileres()){
-                if(unAlquiler.getId() == idAlquiler){
-                    unDepartamento = unDepto;
-                }
-            }
-        }*/
         
         return unDepartamentoAlquiler;
     }
@@ -937,10 +932,12 @@ public class ControladoraL {
                 mesAlquiler = 12;
                 anioAlquiler -= 1;
         }
-        
-        for(Expensa unaExp : obtenerDepartamento(idDepartamento).getExpensas()){
-            if(unaExp.getMes() == mesAlquiler && unaExp.getAnio() == anioAlquiler){
-                unaExpensa = unaExp;
+        List<Expensa> expensas = obtenerDepartamento(idDepartamento).getExpensas();
+        if(expensas.size() > 0){
+            for(Expensa unaExp : expensas){
+                if(unaExp.getMes() == mesAlquiler && unaExp.getAnio() == anioAlquiler){
+                    unaExpensa = unaExp;
+                }
             }
         }
         
