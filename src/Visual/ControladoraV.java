@@ -214,6 +214,7 @@ public class ControladoraV {
     public boolean existeDepartamento(String ubicacionDepto, long idEdificio){
         return unaControladora.existeDepartamento(ubicacionDepto, idEdificio);
     }
+    
 /*------------------------------------------------------------------------------
                                 EDIFICIO
 ------------------------------------------------------------------------------*/
