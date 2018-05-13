@@ -215,6 +215,10 @@ public class ControladoraV {
         return unaControladora.obtenerDepartamentoPorAlquiler(idAlquiler, idEdificio);
     }
     
+    public Logica.Departamento obtenerDepartamentoPorAlquiler(long idAlquiler, long idEdificio, long idInquilino){
+        return unaControladora.obtenerDepartamentoPorAlquiler(idAlquiler, idEdificio, idInquilino);
+    }
+    
     public boolean existeDepartamento(String ubicacionDepto, long idEdificio){
         return unaControladora.existeDepartamento(ubicacionDepto, idEdificio);
     }
