@@ -47,6 +47,10 @@ public class ControladoraV {
         return unaControladora.obtenerAlquiler(id);
     }
     
+    public Logica.Alquiler obtenerAlquilerPago(long idPago){
+        return unaControladora.obtenerAlquiler(idPago);
+    }
+    
     public List <Logica.Alquiler> obtenerAlquileres(){
         return unaControladora.obtenerAlquileres();
     }

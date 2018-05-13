@@ -1,8 +1,6 @@
 package Visual;
 
 import java.awt.Color;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.Date;
 import java.util.List;
 import java.util.LinkedList;
@@ -38,7 +36,6 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         cargarComboInquilino(idEdificio,0);
         cargarComboAnio();
         cargarTablaAlquiler(0,0);
-        this.jTextFieldTotal.setText("Haga click aquí para calcular el TOTAL");
     }
 
     @SuppressWarnings("unchecked")
@@ -93,6 +90,11 @@ public final class PanelAlquiler extends javax.swing.JPanel {
 
         jDateChooserFecha.setBackground(new java.awt.Color(255, 255, 255));
         jDateChooserFecha.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jDateChooserFecha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jDateChooserFechaKeyTyped(evt);
+            }
+        });
 
         jLabelMonto.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelMonto.setText("Monto");
@@ -582,33 +584,35 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     }//GEN-LAST:event_jTableAlquilerMouseClicked
 
     private void jPanelButtonAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonAgregarMouseClicked
-        if(validar()){
-            try {
-                Date fecha = jDateChooserFecha.getDate();
-                String descripcion = jTextAreaDescripcion.getText();
-                float monto = Float.valueOf(jTextFieldMonto.getText()), otraFactura = Float.valueOf(jTextFieldOtraFactura.getText());
-                
-                Logica.Inquilino unInquilino = (Logica.Inquilino) comboInquilino.getElementAt(jComboBoxInquilino.getSelectedIndex());
-                
-                float total = Float.valueOf(jTextFieldTotal.getText());
-                
-                if(!modificar){
-                    unaControladora.altaAlquiler(fecha, idCochera, idDepartamento, monto, otraFactura, total, descripcion, null, unInquilino.getId());
-                    limpiarComponentes();
+        if(jTextFieldTotal.getText().equals("Haga click aquí para calcular el TOTAL")){
+            jTextFieldTotalFocusGained(null);
+        }
+        
+        try {
+            Date fecha = jDateChooserFecha.getDate();
+            String descripcion = jTextAreaDescripcion.getText();
+            float monto = Float.valueOf(jTextFieldMonto.getText()), 
+                  otraFactura = Float.valueOf(jTextFieldOtraFactura.getText());
+
+            Logica.Inquilino unInquilino = (Logica.Inquilino) comboInquilino.getElementAt(jComboBoxInquilino.getSelectedIndex());
+
+            float total = Float.valueOf(jTextFieldTotal.getText());
+
+            if(!modificar){
+                unaControladora.altaAlquiler(fecha, idCochera, idDepartamento, monto, otraFactura, total, descripcion, null, unInquilino.getId());
+                cargarTablaAlquiler(0,0);
+            }else{
+                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(confirmacion == 0){
+                    Logica.Pago unPago = unaControladora.obtenerAlquiler(idAlquiler).getUnPago();
+                    unaControladora.modificarAlquiler(idAlquiler, fecha, idCochera, idDepartamento, monto, otraFactura, total, descripcion, unPago);
+                    modificar = false;
                     cargarTablaAlquiler(0,0);
-                }else{
-                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "Actualizar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if(confirmacion == 0){
-                        Logica.Pago unPago = unaControladora.obtenerAlquiler(idAlquiler).getUnPago();
-                        unaControladora.modificarAlquiler(idAlquiler, fecha, idCochera, idDepartamento, monto, otraFactura, total, descripcion, unPago);
-                        modificar = false;
-                        cargarTablaAlquiler(0,0);
-                    }
                 }
-            } catch (Exception ex) {
-                Logger.getLogger(Logica.Alquiler.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. Error: "+ex, "", JOptionPane.ERROR_MESSAGE);
             }
+        } catch (Exception ex) {
+            Logger.getLogger(Logica.Alquiler.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación. Error: "+ex, "", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
 
@@ -695,35 +699,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
 
     private void jTextFieldTotalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldTotalMouseClicked
         if(!modificar){
-            float total = 0;
-            if(jComboBoxInquilino.getSelectedItem() == "Seleccione una opción" || jComboBoxDepartamento.getSelectedItem() == "Seleccione una opción" || jComboBoxCochera.getSelectedItem() == "Seleccione una opción"){
-                JOptionPane.showMessageDialog(null, "No es posible calcular el Total. Debido a que no se encuentra seleccionado un Inquilino, Departamento o Cochera", "", JOptionPane.ERROR_MESSAGE);
-            }else{
-                if(!jTextFieldMonto.getText().isEmpty() && !jTextFieldOtraFactura.getText().isEmpty()){
-                    if(comboCochera.getSelectedItem() != "Sin Cochera."){
-                        Logica.Cochera unaCochera = (Logica.Cochera)comboCochera.getSelectedItem();
-                        montoCochera = unaCochera.getPrecio();
-                    }else{
-                        montoCochera = 0;
-                    }
-
-                    if(!jTextFieldMonto.getText().isEmpty()){
-                        montoAlquiler = Float.valueOf(jTextFieldMonto.getText());   // Es 0
-                    }
-
-                    if(!jTextFieldMonto.getText().isEmpty()){
-                        otrasFacturas = Float.valueOf(jTextFieldOtraFactura.getText());
-                    }
-
-                    total = montoCochera+montoAlquiler+otrasFacturas;
-                    jTextFieldTotal.setText(null);
-
-                    jTextFieldTotal.setText(String.valueOf(total));
-                    modificar = false;
-                }else{
-                    JOptionPane.showMessageDialog(null, "Debe completar los campos Monto y Otras Facturas", "", JOptionPane.WARNING_MESSAGE);
-                }
-            }
+            jTextFieldTotalFocusGained(null);
         }
     }//GEN-LAST:event_jTextFieldTotalMouseClicked
 
@@ -763,83 +739,70 @@ public final class PanelAlquiler extends javax.swing.JPanel {
 
     private void jTextFieldTotalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldTotalFocusGained
         if(!modificar){
-            float total = 0;
-            if(jComboBoxInquilino.getSelectedItem() == "Seleccione una opción" || jComboBoxDepartamento.getSelectedItem() == "Seleccione una opción" || jComboBoxCochera.getSelectedItem() == "Seleccione una opción"){
-                JOptionPane.showMessageDialog(null, "No es posible calcular el Total. Debido a que no se encuentra seleccionado un Inquilino, Departamento o Cochera", "", JOptionPane.ERROR_MESSAGE);
-            }else{
-                if(!jTextFieldMonto.getText().isEmpty() && !jTextFieldOtraFactura.getText().isEmpty()){
-                    if(comboCochera.getSelectedItem() != "Sin Cochera."){
-                        Logica.Cochera unaCochera = (Logica.Cochera)comboCochera.getSelectedItem();
-                        montoCochera = unaCochera.getPrecio();
-                    }else{
-                        montoCochera = 0;
-                    }
-
-                    if(!jTextFieldMonto.getText().isEmpty()){
-                        montoAlquiler = Float.valueOf(jTextFieldMonto.getText());   // Es 0
-                    }
-
-                    if(!jTextFieldMonto.getText().isEmpty()){
-                        otrasFacturas = Float.valueOf(jTextFieldOtraFactura.getText());
-                    }
-
-                    total = montoCochera+montoAlquiler+otrasFacturas;
-                    jTextFieldTotal.setText(null);
-
-                    jTextFieldTotal.setText(String.valueOf(total));
-                    modificar = false;
+            if(validar()){
+                
+                if(comboCochera.getSelectedItem() != "Sin Cochera."){
+                    Logica.Cochera unaCochera = (Logica.Cochera)comboCochera.getSelectedItem();
+                    montoCochera = unaCochera.getPrecio();
                 }else{
-                    JOptionPane.showMessageDialog(null, "Debe completar los campos Monto y Otras Facturas", "", JOptionPane.WARNING_MESSAGE);
+                    montoCochera = 0;
                 }
+
+                float total = montoCochera+Float.valueOf(jTextFieldMonto.getText())+Float.valueOf(jTextFieldOtraFactura.getText());
+                jTextFieldTotal.setText(String.valueOf(total));
             }
         }
     }//GEN-LAST:event_jTextFieldTotalFocusGained
 
-    private boolean validar(){
-        boolean validar = false, departamento = false, cochera = false, validarTotal = false;
-        Date fecha = jDateChooserFecha.getDate();
+    private void jDateChooserFechaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDateChooserFechaKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jDateChooserFechaKeyTyped
+
+    public boolean validar(){
+        boolean validar = false;
         
-        if(jComboBoxDepartamento.getSelectedItem() != "Seleccione una opción"){
-            departamento = true;
+        if(jDateChooserFecha.getDate() == null){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una Fecha.", "", JOptionPane.WARNING_MESSAGE);
+            jDateChooserFecha.requestFocus();
+        }else if(jComboBoxInquilino.getSelectedItem() == "Seleccione una opción"){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Inquilino.", "", JOptionPane.WARNING_MESSAGE);
+            jComboBoxInquilino.requestFocus();
+        }else if(jComboBoxDepartamento.getSelectedItem() == "Seleccione una opción"){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Departamento.", "", JOptionPane.WARNING_MESSAGE);
+            jComboBoxDepartamento.requestFocus();
+        }else if(jComboBoxCochera.getSelectedItem() == "Seleccione una opción"){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una Cochera.", "", JOptionPane.WARNING_MESSAGE);
+            jComboBoxCochera.requestFocus();
+        }else if(jTextFieldMonto.getText().isEmpty()){
+            if(JOptionPane.showConfirmDialog(null, "Desea continuar con Monto en 0?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
+                jTextFieldMonto.requestFocus();
+            }else{
+                jTextFieldMonto.setText("0");
+            }
+        }else if(jTextFieldOtraFactura.getText().isEmpty()){
+            if(JOptionPane.showConfirmDialog(null, "Desea continuar con Otras Facturas en 0?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
+                jTextFieldOtraFactura.requestFocus();
+            }else{
+                jTextFieldOtraFactura.setText("0");
+            }
+        }else{
             if(jComboBoxDepartamento.getSelectedItem() != "Sin Departamento."){
                 Logica.Departamento unDepartamento = (Logica.Departamento)comboDepartamento.getSelectedItem();
                 idDepartamento = unDepartamento.getId();
             }else{
                 idDepartamento = 0;
             }
-        }
-        
-        if(jComboBoxCochera.getSelectedItem() != "Seleccione una opción"){
-            cochera = true;
+            
             if(jComboBoxCochera.getSelectedItem() != "Sin Cochera."){
                 Logica.Cochera unaCochera = (Logica.Cochera)comboCochera.getSelectedItem();
                 idCochera = unaCochera.getId();
             }else{
                 idCochera = 0;
             }
-        }
-        
-        if(!jTextFieldTotal.getText().isEmpty()){
-            try{
-                float total = Float.valueOf(jTextFieldTotal.getText());
-                validarTotal = true;
-            }catch(Exception e){
-                System.out.println("Error: "+e);
-            }
-        }
-        
-        if(fecha != null && !jTextFieldMonto.getText().isEmpty() && !jTextFieldOtraFactura.getText().isEmpty() && departamento && cochera && validarTotal){
+            
             validar = true;
-        }else if(fecha == null){
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una Fecha.", "", JOptionPane.WARNING_MESSAGE);
-        }else if(jTextFieldMonto.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe cargar un valor en Monto.", "", JOptionPane.WARNING_MESSAGE);
-        }else if(jTextFieldOtraFactura.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe cargar un valor en Otras Facturas.", "", JOptionPane.WARNING_MESSAGE);
-        }else if(!departamento && !cochera){
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una opción en Departamento y Cochera.", "", JOptionPane.WARNING_MESSAGE);
-        }else if(!validarTotal){
-            JOptionPane.showMessageDialog(null, "Debe cliquear en Total para obtener su resultado antes de Guardar.", "", JOptionPane.WARNING_MESSAGE);
         }
         
         return validar;
