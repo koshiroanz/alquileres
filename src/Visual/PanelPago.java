@@ -3,8 +3,6 @@ package Visual;
 import java.awt.Color;
 import java.util.Date;
 import java.util.List;
-import Logica.Alquiler;
-import Logica.Inquilino;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.util.LinkedList;
@@ -850,7 +848,7 @@ public final class PanelPago extends javax.swing.JPanel {
                     Collections.sort(alquileresInpagos, (Logica.Alquiler a1, Logica.Alquiler a2) -> a1.getFecha().compareTo(a2.getFecha()));
                 }
 
-                for(Alquiler unAlquiler : alquileresInpagos){
+                for(Logica.Alquiler unAlquiler : alquileresInpagos){
                     comboAlquiler.addElement(unAlquiler);
                 }
 
@@ -870,7 +868,13 @@ public final class PanelPago extends javax.swing.JPanel {
                 int mes, anio;
 
                 Logica.Alquiler unAlquiler = (Logica.Alquiler)jComboBoxAlquiler.getSelectedItem();
-
+                /*
+                long dia = 86400000;
+                Date fechaActual = new Date(), fechaAlqui = unAlquiler.getFecha();
+                
+                long diferenciaFechas = ((fechaActual.getTime()-fechaAlqui.getTime())/dia);
+                float intereses = (float) (diferenciaFechas * (0.02/30) * 7500);
+                */
                 mes = Integer.parseInt(monthFormat.format(unAlquiler.getFecha()));
                 anio = Integer.valueOf(yearFormat.format(unAlquiler.getFecha()));
 
@@ -1009,7 +1013,7 @@ public final class PanelPago extends javax.swing.JPanel {
     private void jComboBoxInquilinoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxInquilinoMouseClicked
         Date fecha = jDateChooserFecha.getDate();
         if(fecha == null){
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una fecha previamente para continuar.", "", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe seleccionar previamente una fecha para continuar.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jComboBoxInquilinoMouseClicked
 
@@ -1018,7 +1022,7 @@ public final class PanelPago extends javax.swing.JPanel {
         
         jComboBoxInquilino.removeAllItems();
         jComboBoxBusquedaInquilino.removeAllItems();
-        Collections.sort(inquilinos, (Inquilino i1, Inquilino i2) -> i1.getApellido().compareTo(i2.getApellido()));
+        Collections.sort(inquilinos, (Logica.Inquilino i1, Logica.Inquilino i2) -> i1.getApellido().compareTo(i2.getApellido()));
         comboInquilino.addElement("Seleccione una opción.");
         for(Logica.Inquilino unInquilino : inquilinos){
             comboInquilino.addElement(unInquilino);
@@ -1031,7 +1035,6 @@ public final class PanelPago extends javax.swing.JPanel {
     
     public void cargarTablaPago(long idInquilino, int anio){
         limpiarComponentes();
-        DecimalFormat formatoDecimal = new DecimalFormat("#.00");
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy"),
                          monthFormat = new SimpleDateFormat("MM"),
                          yearFormat = new SimpleDateFormat("yyyy");
@@ -1069,12 +1072,10 @@ public final class PanelPago extends javax.swing.JPanel {
         }
         
         for(Logica.Pago unPago : pagos){
+            Logica.Inquilino unInquilino = unaControladora.obtenerInquilinoPago(idEdificio, unPago.getId());
             datos[0] = unPago.getId();
             datos[1] = formatoFecha.format(unPago.getFecha());
-            
-            Logica.Inquilino unInquilino = unaControladora.obtenerInquilinoPago(idEdificio, unPago.getId());
             datos[2] = unInquilino.getApellido()+", "+unInquilino.getNombre();
-            
             datos[3] = unaControladora.obtenerAlquiler(unPago.getIdAlquiler());
             datos[4] = unaControladora.obtenerDepartamentoPorAlquiler(unPago.getIdAlquiler(), idEdificio, unInquilino.getId());
             datos[5] = unPago.getMonto();
@@ -1112,10 +1113,10 @@ public final class PanelPago extends javax.swing.JPanel {
     
     private void cargarPanelDatos(long idPago){
         modificar = true;
-        float montoExpensa = 0;
+        float montoExpensa;
         Logica.Pago unPago = unaControladora.obtenerPago(idPago);
-        Logica.Inquilino unInquilino = new Inquilino();
-        Logica.Alquiler unAlquiler = new Alquiler();
+        Logica.Inquilino unInquilino = new Logica.Inquilino();
+        Logica.Alquiler unAlquiler = new Logica.Alquiler();
         
         for(Logica.Inquilino unInqui : unaControladora.obtenerInquilinosEdificio(idEdificio)){
             for(Logica.Alquiler unAlqui : unInqui.getAlquileres()){
