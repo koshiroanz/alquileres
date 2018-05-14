@@ -20,6 +20,10 @@ public class ControladoraV {
     public float interesPorAtraso(Date fechaPago, float montoTotalAlquiler, int mesAlquiler){
         return unaControladora.interesPorAtraso(fechaPago, montoTotalAlquiler, mesAlquiler);
     }
+    
+    public float interesesPorAtraso(Date fechaPago, Date fechaAlquiler, float monto){
+        return unaControladora.interesesPorAtraso(fechaPago, fechaAlquiler, monto);
+    }
 
 /*------------------------------------------------------------------------------
                            CONVERSOR STRING A FLOAT
