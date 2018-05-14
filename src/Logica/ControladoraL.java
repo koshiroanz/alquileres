@@ -4,7 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.LinkedList;
 import Persistencia.ControladoraP;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Calendar;
 import java.util.Collections;
 
 public class ControladoraL {
@@ -71,6 +74,53 @@ public class ControladoraL {
         }
         
         return interesTotal;
+    }
+    
+    public float interesesPorAtraso(Date fechaPago, Date fechaAlquiler, float monto){
+        float interesMes = 0;
+        SimpleDateFormat formatoDia = new SimpleDateFormat("dd"),
+                         formatoMes = new SimpleDateFormat("MM"),
+                         formatoAnio = new SimpleDateFormat("yyyy"),
+                         formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+        int diaAlquiler = Integer.valueOf(formatoDia.format(fechaAlquiler)),
+            mesAlquiler = Integer.valueOf(formatoMes.format(fechaAlquiler)),   // Se obtiene el día de la fecha Alquiler
+            anioAlquiler = Integer.valueOf(formatoAnio.format(fechaAlquiler)),
+            diaPago = Integer.valueOf(formatoDia.format(fechaPago)),
+            mesPago = Integer.valueOf(formatoMes.format(fechaPago)),
+            diferenciaMeses = mesPago - mesAlquiler;
+        
+        if(diferenciaMeses > 0){    // Si es > 0. Es un pago atrasado
+            try{
+                String fecha = "11-"+mesAlquiler+"-"+anioAlquiler;
+                Date nuevaFechaAlquiler = formatoFecha.parse(fecha);
+                long difDias = ((fechaPago.getTime()-nuevaFechaAlquiler.getTime())/86400000);
+                System.out.println("Cantidad de dias: "+difDias);
+                float coeficienteInteres = obtenerCoeficiente().getValor();
+                interesMes = (difDias * (coeficienteInteres/30) * monto);
+                System.out.println("Intereses generados: "+interesMes);
+            }catch(Exception e){
+                System.out.println("Error 1: "+e);
+            }
+        }else{  // Si es == 0. Entonces esta dentro del mismo mes. Se debe comprobar si esta fuera del rango alquiler de pago (1 al 10). Se calculará el interes.
+            if(diaPago > 10){
+                try{
+                    String fecha = "11-"+mesAlquiler+"-"+anioAlquiler;
+                    Date nuevaFechaAlquiler = formatoFecha.parse(fecha);
+                    long difDias = ((fechaPago.getTime()-nuevaFechaAlquiler.getTime())/86400000);
+                    System.out.println("Cantidad de dias: "+difDias);
+                    float coeficienteInteres = obtenerCoeficiente().getValor();
+                    interesMes = (difDias * (coeficienteInteres/30) * monto);
+                    if(interesMes < 10){
+                        interesMes = 0;
+                    }
+                    System.out.println("Intereses generados: "+interesMes);
+                }catch(Exception e){
+                    System.out.println("Error 2: "+e);
+                }
+            }
+        }
+        
+        return interesMes;
     }
 /*------------------------------------------------------------------------------
                            CONVERSOR STRING A FLOAT
