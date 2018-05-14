@@ -5,9 +5,12 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.ImageIcon;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public final class PanelPrincipal extends javax.swing.JPanel {
@@ -19,7 +22,7 @@ public final class PanelPrincipal extends javax.swing.JPanel {
     private final DefaultTableModel tablaExpensa = new DefaultTableModel(null, colTablaExpensa);
     private final DefaultTableModel tablaAlquiler = new DefaultTableModel(null, colTablaAlquiler); // No borrar esto, se rompe todo..
     
-    public PanelPrincipal(long idEdificio, String nombreEdificio) {
+    public PanelPrincipal(long idEdificio, String nombreEdificio) throws ParseException {
         initComponents();
         this.idEdificio = idEdificio;
         this.nombreEdificio = nombreEdificio;
@@ -307,7 +310,11 @@ public final class PanelPrincipal extends javax.swing.JPanel {
     }//GEN-LAST:event_jTableAlquilerMouseClicked
 
     private void jPanelButtonRefrescarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonRefrescarMouseClicked
-        cargarTablaAlquiler(idEdificio);
+        try {
+            cargarTablaAlquiler(idEdificio);
+        } catch (ParseException ex) {
+            Logger.getLogger(PanelPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         cargarTablaExpensa(idEdificio);
     }//GEN-LAST:event_jPanelButtonRefrescarMouseClicked
 
@@ -369,7 +376,7 @@ public final class PanelPrincipal extends javax.swing.JPanel {
         }
     }
     
-    public void cargarTablaAlquiler(long idEdificio){
+    public void cargarTablaAlquiler(long idEdificio) throws ParseException{
         limpiarVentana();
         Date fechaActual = new Date();
         String datos[] = new String[10];
@@ -412,11 +419,15 @@ public final class PanelPrincipal extends javax.swing.JPanel {
                         datos[6] = "";
                         
                     }
+                    total += unAlquiler.getTotal();
+                    // Testeando nuevo calculo de interes.. A partir del día 11 de cada mes se generará intereses..
+                    //float interes2 = unaControladora.interesesPorAtraso(fechaActual, unAlquiler.getFecha(), total);
                     interesPorAtraso = unaControladora.interesPorAtraso(fechaActual, unAlquiler.getTotal(), Integer.valueOf(formatoMes.format(unAlquiler.getFecha())));
                     datos[7] = String.valueOf(interesPorAtraso);
                     
                     datos[8] = "";
                     total += (unAlquiler.getTotal() + interesPorAtraso);
+                    System.out.println("Total con interes2: $"+total);
                     datos[9] = formatoDecimal.format(total);
                     tablaAlquiler.addRow(datos);
                 }
