@@ -123,11 +123,13 @@ public final class PanelPago extends javax.swing.JPanel {
         jTextFieldTarjeta.setText("0");
         jTextFieldTarjeta.setBorder(null);
         jTextFieldTarjeta.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextFieldTarjetaFocusGained(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextFieldTarjetaFocusLost(evt);
+            }
+        });
+        jTextFieldTarjeta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldTarjetaMouseClicked(evt);
             }
         });
         jTextFieldTarjeta.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -143,11 +145,13 @@ public final class PanelPago extends javax.swing.JPanel {
         jTextFieldEfectivo.setText("0");
         jTextFieldEfectivo.setBorder(null);
         jTextFieldEfectivo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextFieldEfectivoFocusGained(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextFieldEfectivoFocusLost(evt);
+            }
+        });
+        jTextFieldEfectivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldEfectivoMouseClicked(evt);
             }
         });
         jTextFieldEfectivo.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -163,11 +167,13 @@ public final class PanelPago extends javax.swing.JPanel {
         jTextFieldBanco.setText("0");
         jTextFieldBanco.setBorder(null);
         jTextFieldBanco.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextFieldBancoFocusGained(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextFieldBancoFocusLost(evt);
+            }
+        });
+        jTextFieldBanco.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldBancoMouseClicked(evt);
             }
         });
         jTextFieldBanco.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -189,14 +195,9 @@ public final class PanelPago extends javax.swing.JPanel {
                 jComboBoxInquilinoFocusGained(evt);
             }
         });
-        jComboBoxInquilino.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboBoxInquilinoMouseClicked(evt);
-            }
-        });
-        jComboBoxInquilino.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxInquilinoActionPerformed(evt);
+        jComboBoxInquilino.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jComboBoxInquilinoKeyTyped(evt);
             }
         });
 
@@ -212,11 +213,6 @@ public final class PanelPago extends javax.swing.JPanel {
         jComboBoxAlquiler.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBoxAlquilerItemStateChanged(evt);
-            }
-        });
-        jComboBoxAlquiler.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jComboBoxAlquilerFocusGained(evt);
             }
         });
         jComboBoxAlquiler.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -252,11 +248,6 @@ public final class PanelPago extends javax.swing.JPanel {
         jTextFieldMontoExpensa.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldMontoExpensa.setBorder(null);
         jTextFieldMontoExpensa.setFocusable(false);
-        jTextFieldMontoExpensa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldMontoExpensaActionPerformed(evt);
-            }
-        });
 
         jLabel14.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel14.setText("Interés");
@@ -729,12 +720,11 @@ public final class PanelPago extends javax.swing.JPanel {
                 float efectivo = Float.valueOf(jTextFieldEfectivo.getText());
                 float tarjeta = Float.valueOf(jTextFieldTarjeta.getText());
                 float banco = Float.valueOf(jTextFieldBanco.getText());
+                float saldoMesAnt = Integer.valueOf(unaControladora.reemplazarString(jTextFieldSaldoMesAnterior.getText()));
                 
                 if(!modificar){
-                    float saldoMesAnt = total-tarjeta-banco-efectivo;
                     unaControladora.altaPago(fechaPago, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, total, jTextAreaDescripcion.getText(), idAlquiler, idExpensa, unInquilino.getId());
                 }else{
-                    float saldoMesAnt = Float.valueOf(unaControladora.reemplazarString(jTextFieldSaldoMesAnterior.getText()));
                     int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){
                         unaControladora.modificarPago(idPago, fechaPago, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, total, jTextAreaDescripcion.getText(), idAlquiler, idExpensa, unInquilino.getId());
@@ -763,8 +753,10 @@ public final class PanelPago extends javax.swing.JPanel {
                 Logger.getLogger(Logica.Pago.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "No se ha podido eliminar. Ha ocurrido un error: "+ex, "", JOptionPane.ERROR_MESSAGE);
             }
+            
+            cargarTablaPago(0, 0);
         }else{
-             JOptionPane.showMessageDialog(null, "Debe seleccionar un Pago de la tabla.", "", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Pago de la tabla.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
@@ -789,10 +781,6 @@ public final class PanelPago extends javax.swing.JPanel {
         this.jPanelButtonEliminar.setBackground(new Color(51,51,51));
         this.jLabelEliminar.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_jPanelButtonEliminarMouseExited
-
-    private void jTextFieldMontoExpensaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMontoExpensaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldMontoExpensaActionPerformed
 
     private void jTextFieldInteresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldInteresKeyTyped
         if (evt.getKeyChar() == evt.VK_ENTER) {
@@ -882,10 +870,6 @@ public final class PanelPago extends javax.swing.JPanel {
                 Logica.Inquilino unInquilino = (Logica.Inquilino)jComboBoxInquilino.getSelectedItem();
                 Logica.Departamento unDepartamento = unaControladora.obtenerDepartamento(idEdificio, jTextFieldDepartamento.getText());
 
-                /*if(unaControladora.obtenerCocheraInquilino(idEdificio, unInquilino.getId()) != null){
-                    precioCochera = unaControladora.obtenerCocheraInquilino(idEdificio, unInquilino.getId()).getPrecio();
-                }*/
-                
                 if(unAlquiler.getCochera() != 0){
                     jTextFieldCochera.setText(String.valueOf(unaControladora.obtenerCochera(unAlquiler.getCochera()).getPrecio()));
                 }
@@ -908,11 +892,8 @@ public final class PanelPago extends javax.swing.JPanel {
                 }
 
                 jTextFieldTotalAlquiler.setText(unaControladora.reemplazarString(formatoDecimal.format(unAlquiler.getTotal())));
-
                 jTextFieldSaldoMesAnterior.setText(String.valueOf(unInquilino.getSaldoMesAnt()));
-
                 totalPago = Float.valueOf(jTextFieldTotalAlquiler.getText())+Float.valueOf(jTextFieldSaldoMesAnterior.getText())+Float.valueOf(jTextFieldMontoExpensa.getText());
-
                 float interes = unaControladora.interesPorAtraso(jDateChooserFecha.getDate(), totalPago, mes);
 
                 if(interes > 0){
@@ -920,13 +901,11 @@ public final class PanelPago extends javax.swing.JPanel {
                 }else{
                     jTextFieldInteres.setText(unaControladora.reemplazarString(String.valueOf(interes)));
                 }
+                
                 totalPago += Float.valueOf(unaControladora.reemplazarString(jTextFieldInteres.getText()));
                 jTextFieldTotal.setText(formatoDecimal.format(totalPago));
-
             }
         }
-        
-
         entro = false;
     }//GEN-LAST:event_jComboBoxAlquilerItemStateChanged
 
@@ -968,14 +947,17 @@ public final class PanelPago extends javax.swing.JPanel {
         this.jLabelBuscar.setIcon(buscar);
     }//GEN-LAST:event_jPanelButtonBuscarMouseExited
 
-    private void jComboBoxAlquilerFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBoxAlquilerFocusGained
-        //entro = true;
-    }//GEN-LAST:event_jComboBoxAlquilerFocusGained
+    private void jTextFieldEfectivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldEfectivoMouseClicked
+        jTextFieldEfectivo.setText(null);
+    }//GEN-LAST:event_jTextFieldEfectivoMouseClicked
 
-    private void jComboBoxInquilinoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBoxInquilinoFocusGained
-        //entro = true;
-        
-    }//GEN-LAST:event_jComboBoxInquilinoFocusGained
+    private void jTextFieldTarjetaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldTarjetaMouseClicked
+        jTextFieldTarjeta.setText(null);
+    }//GEN-LAST:event_jTextFieldTarjetaMouseClicked
+
+    private void jTextFieldBancoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldBancoMouseClicked
+        jTextFieldBanco.setText(null);
+    }//GEN-LAST:event_jTextFieldBancoMouseClicked
 
     private void jTextFieldEfectivoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldEfectivoFocusLost
         if(jTextFieldEfectivo.getText().isEmpty()){
@@ -995,22 +977,17 @@ public final class PanelPago extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTextFieldBancoFocusLost
 
-    private void jComboBoxInquilinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxInquilinoActionPerformed
-        
-    }//GEN-LAST:event_jComboBoxInquilinoActionPerformed
-
-    private void jComboBoxInquilinoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxInquilinoMouseClicked
-        Date fecha = jDateChooserFecha.getDate();
-        if(fecha == null){
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una fecha previamente para continuar.", "", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_jComboBoxInquilinoMouseClicked
-
     private void jDateChooserFechaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDateChooserFechaKeyTyped
         if (evt.getKeyChar() == evt.VK_ENTER) {
             jPanelButtonAceptarMouseClicked(null);
         }
     }//GEN-LAST:event_jDateChooserFechaKeyTyped
+
+    private void jComboBoxInquilinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBoxInquilinoKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAceptarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jComboBoxInquilinoKeyTyped
 
     private void jComboBoxAlquilerKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBoxAlquilerKeyTyped
         if (evt.getKeyChar() == evt.VK_ENTER) {
@@ -1018,17 +995,12 @@ public final class PanelPago extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jComboBoxAlquilerKeyTyped
 
-    private void jTextFieldEfectivoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldEfectivoFocusGained
-        jTextFieldEfectivo.setText(null);
-    }//GEN-LAST:event_jTextFieldEfectivoFocusGained
-
-    private void jTextFieldTarjetaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldTarjetaFocusGained
-        jTextFieldTarjeta.setText(null);
-    }//GEN-LAST:event_jTextFieldTarjetaFocusGained
-
-    private void jTextFieldBancoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldBancoFocusGained
-        jTextFieldBanco.setText(null);
-    }//GEN-LAST:event_jTextFieldBancoFocusGained
+    private void jComboBoxInquilinoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBoxInquilinoFocusGained
+        if(jDateChooserFecha == null){
+            jDateChooserFecha.requestFocus();
+            JOptionPane.showMessageDialog(null, "Debe ingresar una Fecha para continuar.", "", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jComboBoxInquilinoFocusGained
 
     public void cargarComboInquilino(){
         List<Logica.Inquilino> inquilinos = unaControladora.obtenerInquilinosEdificio(idEdificio);
@@ -1103,25 +1075,23 @@ public final class PanelPago extends javax.swing.JPanel {
         this.jTablePago.setModel(tablaPago);
     }
     
-    private boolean validar(){
+    public boolean validar(){
         boolean validar = false;
-        Date fecha = jDateChooserFecha.getDate(); 
+        Date fecha = jDateChooserFecha.getDate();
         
-        if(fecha != null && jComboBoxInquilino.getSelectedIndex() > 0 && !jTextFieldDepartamento.getText().isEmpty()
-           && !jTextFieldCochera.getText().isEmpty() && jComboBoxAlquiler.getSelectedIndex() > 0 && !jTextFieldTotalAlquiler.getText().isEmpty()
-           && !jTextFieldSaldoMesAnterior.getText().isEmpty() && !jTextFieldMontoExpensa.getText().isEmpty()
-           && !jTextFieldInteres.getText().isEmpty() && !jTextFieldTotal.getText().isEmpty()){
-            if(Integer.valueOf(jTextFieldEfectivo.getText()) != 0 || Integer.valueOf(jTextFieldBanco.getText()) != 0 || Integer.valueOf(jTextFieldTarjeta.getText()) != 0){
-                validar = true;
-            }else if(Integer.valueOf(jTextFieldEfectivo.getText()) == 0 && Integer.valueOf(jTextFieldTarjeta.getText()) == 0 && Integer.valueOf(jTextFieldBanco.getText()) == 0){
-                JOptionPane.showMessageDialog(null, "Debe cargar por lo menos un valor distinto de 0 en Efectivo, Tarjeta o Banco. Para obtener el saldo", "", JOptionPane.WARNING_MESSAGE);
-            }
-        }else if(fecha == null){
+        if(fecha == null){
             JOptionPane.showMessageDialog(null, "Debe ingresar una Fecha.", "", JOptionPane.WARNING_MESSAGE);
-        }else if(jComboBoxInquilino.getSelectedIndex() == 0){
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un Inquilino válido.", "", JOptionPane.WARNING_MESSAGE);
-        }else if(jComboBoxAlquiler.getSelectedIndex() == 0){
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un Alquiler válido.", "", JOptionPane.WARNING_MESSAGE);
+            jDateChooserFecha.requestFocus();
+        }else if(jComboBoxInquilino.getSelectedItem().equals("Seleccione una opción.")){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Inquilino.", "", JOptionPane.WARNING_MESSAGE);
+            jComboBoxInquilino.requestFocus();
+        }else if(jComboBoxAlquiler.getSelectedItem().equals("Seleccione una opción.")){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Alquiler.", "", JOptionPane.WARNING_MESSAGE);
+            jComboBoxAlquiler.requestFocus();
+        }else if(Integer.valueOf(jTextFieldEfectivo.getText()) == 0 && Integer.valueOf(jTextFieldTarjeta.getText()) == 0 && Integer.valueOf(jTextFieldBanco.getText()) == 0){
+            JOptionPane.showMessageDialog(null, "El pago no puede ser efectuado sin un monto  mayor a 0.", "", JOptionPane.WARNING_MESSAGE);
+        }else{
+            validar = true;
         }
         
         return validar;
@@ -1133,21 +1103,18 @@ public final class PanelPago extends javax.swing.JPanel {
         Logica.Pago unPago = unaControladora.obtenerPago(idPago);
         Logica.Inquilino unInquilino = unaControladora.obtenerInquilinoPago(idEdificio, idPago);
         Logica.Alquiler unAlquiler = unaControladora.obtenerAlquilerPago(idPago);
-        
-        
+                
         jDateChooserFecha.setDate(unPago.getFecha());
         
         comboInquilino.removeAllElements();
         comboInquilino.addElement(unInquilino);
         jComboBoxInquilino.setModel(comboInquilino);
         
-        
         if(unaControladora.obtenerDepartamento(unAlquiler.getDepartamento()) != null){
             jTextFieldDepartamento.setText(unaControladora.obtenerDepartamento(unAlquiler.getDepartamento()).getUbicacion());
         }else{
             jTextFieldDepartamento.setText("Sin Departamento.");
         }
-        
         if(unaControladora.obtenerCochera(unAlquiler.getCochera()) != null){
             jTextFieldCochera.setText(String.valueOf(unaControladora.obtenerCochera(unAlquiler.getCochera()).getUbicacion()));
         }else{
@@ -1192,7 +1159,7 @@ public final class PanelPago extends javax.swing.JPanel {
         jTextFieldTotal.setText(null);
         jTextFieldDepartamento.setText(null);
         
-        jComboBoxInquilino.setSelectedIndex(0);
+        cargarComboInquilino();
         jComboBoxAlquiler.removeAllItems();
         comboAlquiler.addElement("Seleccione una opción.");
         
