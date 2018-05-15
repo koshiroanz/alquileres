@@ -880,12 +880,13 @@ public final class PanelServicio extends javax.swing.JPanel {
         List<Logica.Servicio> servicios = unaControladora.obtenerEdificio(idEdificio).getServicios();
         
         jComboBoxNombre.addItem("Seleccione una opción");
-        for(Logica.Servicio unServicio : servicios){
-            jComboBoxNombre.addItem(unServicio.getNombre());
-        }
         
-        if(jComboBoxNombre.getComponentCount() < 2){
+        if(servicios.isEmpty()){
             jComboBoxNombre.addItem("AGUA Y CLOACA");
+        }else{
+            for(Logica.Servicio unServicio : servicios){
+                jComboBoxNombre.addItem(unServicio.getNombre());
+            }
         }
     }
     

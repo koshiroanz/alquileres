@@ -691,6 +691,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
                     comboDepartamento.addElement(unDepartamento);
                 }
             }
+            
             jComboBoxDepartamento.setModel(comboDepartamento);
             entro = false;
         }

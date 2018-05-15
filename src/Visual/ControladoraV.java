@@ -20,10 +20,6 @@ public class ControladoraV {
     public float interesPorAtraso(Date fechaPago, float montoTotalAlquiler, int mesAlquiler){
         return unaControladora.interesPorAtraso(fechaPago, montoTotalAlquiler, mesAlquiler);
     }
-    
-    public float interesesPorAtraso(Date fechaPago, Date fechaAlquiler, float monto){
-        return unaControladora.interesesPorAtraso(fechaPago, fechaAlquiler, monto);
-    }
 
 /*------------------------------------------------------------------------------
                            CONVERSOR STRING A FLOAT
@@ -49,6 +45,10 @@ public class ControladoraV {
     
     public Logica.Alquiler obtenerAlquiler(long id){
         return unaControladora.obtenerAlquiler(id);
+    }
+    
+    public Logica.Alquiler obtenerAlquilerPago(long idPago){
+        return unaControladora.obtenerAlquilerPago(idPago);
     }
     
     public List <Logica.Alquiler> obtenerAlquileres(){
@@ -191,8 +191,8 @@ public class ControladoraV {
         return unaControladora.obtenerDepartamento(idDepartamento, ubicacion);
     }
     
-    public Logica.Departamento obtenerDepartamentoInquilino(long idInquilino){
-        return unaControladora.obtenerDepartamentoInquilino(idInquilino);
+    public Logica.Departamento obtenerDepartamentoInquilino(long idEdificio, long idInquilino){
+        return unaControladora.obtenerDepartamentoInquilino(idEdificio, idInquilino);
     }
     
     public int departamentosOcupados(long idEdificio){
@@ -209,10 +209,6 @@ public class ControladoraV {
     
     public Logica.Departamento obtenerDepartamentoPorExpensa(long idEdificio, long idExpensa){
         return unaControladora.obtenerDepartamentoPorExpensa(idEdificio, idExpensa);
-    }
-    
-    public Logica.Departamento obtenerDepartamentoPorAlquiler(long idAlquiler, long idEdificio){
-        return unaControladora.obtenerDepartamentoPorAlquiler(idAlquiler, idEdificio);
     }
     
     public Logica.Departamento obtenerDepartamentoPorAlquiler(long idAlquiler, long idEdificio, long idInquilino){
@@ -349,8 +345,8 @@ public class ControladoraV {
         unaControladora.altaInquilino(cantidadPersonas, apellido, nombre, dni, email, telefono, cuit, saldoMesAnt, descripcion, unGarante, alquileres, idDepartamento, idCochera);
     }
     
-    public void modificarInquilino(long idInquilino, int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, String descripcion, Logica.Garante unGarante, List<Logica.Alquiler> alquileres, long idDepartamento, long idCochera) throws Exception{
-        unaControladora.modificarInquilino(idInquilino, cantidadPersonas, apellido, nombre, dni, email, telefono, cuit, saldoMesAnt, descripcion, unGarante, alquileres, idDepartamento, idCochera);
+    public void modificarInquilino(long idInquilino, int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, String descripcion, Logica.Garante unGarante, List<Logica.Alquiler> alquileres, long idDepartamento, long idCochera, long idEdificio) throws Exception{
+        unaControladora.modificarInquilino(idInquilino, cantidadPersonas, apellido, nombre, dni, email, telefono, cuit, saldoMesAnt, descripcion, unGarante, alquileres, idDepartamento, idCochera, idEdificio);
     }
     
     public void modificarSaldo(long idInquilino, float saldoMesAnt) throws Exception{

@@ -72,53 +72,6 @@ public class ControladoraL {
         
         return interesTotal;
     }
-    
-    public float interesesPorAtraso(Date fechaPago, Date fechaAlquiler, float monto){
-        float interesMes = 0;
-        SimpleDateFormat formatoDia = new SimpleDateFormat("dd"),
-                         formatoMes = new SimpleDateFormat("MM"),
-                         formatoAnio = new SimpleDateFormat("yyyy"),
-                         formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
-        int diaAlquiler = Integer.valueOf(formatoDia.format(fechaAlquiler)),
-            mesAlquiler = Integer.valueOf(formatoMes.format(fechaAlquiler)),   // Se obtiene el día de la fecha Alquiler
-            anioAlquiler = Integer.valueOf(formatoAnio.format(fechaAlquiler)),
-            diaPago = Integer.valueOf(formatoDia.format(fechaPago)),
-            mesPago = Integer.valueOf(formatoMes.format(fechaPago)),
-            diferenciaMeses = mesPago - mesAlquiler;
-        
-        if(diferenciaMeses > 0){    // Si es > 0. Es un pago atrasado
-            try{
-                String fecha = "11-"+mesAlquiler+"-"+anioAlquiler;
-                Date nuevaFechaAlquiler = formatoFecha.parse(fecha);
-                long difDias = ((fechaPago.getTime()-nuevaFechaAlquiler.getTime())/86400000);
-                System.out.println("Cantidad de dias: "+difDias);
-                float coeficienteInteres = obtenerCoeficiente().getValor();
-                interesMes = (difDias * (coeficienteInteres/30) * monto);
-                System.out.println("Intereses generados: "+interesMes);
-            }catch(Exception e){
-                System.out.println("Error 1: "+e);
-            }
-        }else{  // Si es == 0. Entonces esta dentro del mismo mes. Se debe comprobar si esta fuera del rango alquiler de pago (1 al 10). Se calculará el interes.
-            if(diaPago > 10){
-                try{
-                    String fecha = "11-"+mesAlquiler+"-"+anioAlquiler;
-                    Date nuevaFechaAlquiler = formatoFecha.parse(fecha);
-                    long difDias = ((fechaPago.getTime()-nuevaFechaAlquiler.getTime())/86400000);
-                    System.out.println("Cantidad de dias: "+difDias);
-                    float coeficienteInteres = obtenerCoeficiente().getValor();
-                    interesMes = (difDias * (coeficienteInteres/30) * monto);
-                    if(interesMes < 10){
-                        interesMes = 0;
-                    }
-                    System.out.println("Intereses generados: "+interesMes);
-                }catch(Exception e){
-                    System.out.println("Error 2: "+e);
-                }
-            }
-        }
-        
-        return interesMes;
-    }
 /*------------------------------------------------------------------------------
                            CONVERSOR STRING A FLOAT
 ------------------------------------------------------------------------------*/
@@ -589,9 +542,9 @@ public class ControladoraL {
     }
     
     // Debería devolver solo 1 DEPARTAMENTO por INQUILINO
-    public Departamento obtenerDepartamentoInquilino(long idInquilino){
+    public Departamento obtenerDepartamentoInquilino(long idEdificio, long idInquilino){
         Departamento unDepartamento = null;
-        List<Departamento> departamentos = obtenerDepartamentos();
+        List<Departamento> departamentos = obtenerEdificio(idEdificio).getDepartamentos();
         int i = 0, tam = departamentos.size();
         
         while(i < tam){
@@ -680,27 +633,6 @@ public class ControladoraL {
         }
         
         return DepartamentoExpensa;
-    }
-    
-    public Departamento obtenerDepartamentoPorAlquiler(long idAlquiler, long idEdificio){
-        Departamento unDepartamentoAlquiler = null;
-        Departamento unDepartamento;
-        int i = 0, j = 0;
-        Alquiler unAlquiler;        
-        
-        while(unDepartamentoAlquiler == null){
-            unDepartamento = obtenerEdificio(idEdificio).getDepartamentos().get(i);
-            while(unDepartamentoAlquiler == null){
-                unAlquiler = unDepartamento.getUnInquilino().getAlquileres().get(j);
-                if(unAlquiler.getId() == idAlquiler){
-                    unDepartamentoAlquiler = unDepartamento;
-                }
-                j++;
-            }
-            i++;
-        }
-        
-        return unDepartamentoAlquiler;
     }
     
     public Departamento obtenerDepartamentoPorAlquiler(long idAlquiler, long idEdificio, long idInquilino){
@@ -1199,7 +1131,7 @@ public class ControladoraL {
         }
     }
     
-    public void modificarInquilino(long idInquilino, int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, String descripcion, Garante unGarante, List<Alquiler> alquileres, long idDepartamento, long idCochera) throws Exception{
+    public void modificarInquilino(long idInquilino, int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, String descripcion, Garante unGarante, List<Alquiler> alquileres, long idDepartamento, long idCochera, long idEdificio) throws Exception{
         Inquilino unInquilino = obtenerInquilino(idInquilino);
         
         unInquilino.setCantidadPersonas(cantidadPersonas);
@@ -1224,7 +1156,7 @@ public class ControladoraL {
             unaControladora.modificarDepartamento(unDepartamento);
         }else{
             try{
-                Departamento unDepartamento = obtenerDepartamentoInquilino(idInquilino);
+                Departamento unDepartamento = obtenerDepartamentoInquilino(idEdificio, idInquilino);
                 if(unDepartamento != null){
                     unDepartamento.setUnInquilino(null);
                     unaControladora.modificarDepartamento(unDepartamento);
@@ -1290,31 +1222,37 @@ public class ControladoraL {
         List<Cochera> cocheras = obtenerEdificio(idEdificio).getCocheras();
         List<Inquilino> inquilinos = new LinkedList();
         List<Inquilino> inquilinosFinal = new LinkedList();
-        int cont = 0;
         
-        for(Departamento unDepartamento : departamentos){
-            if(unDepartamento.getUnInquilino() != null){
-                inquilinos.add(unDepartamento.getUnInquilino());
-            }
-        }
-        
-        for(Inquilino unInquilino : inquilinos){
-            inquilinosFinal.add(unInquilino);
-        }
-        
-        for(Cochera unaCochera : cocheras){
-            for(Inquilino unInquilino : inquilinos){
-                if(unaCochera.getUnInquilino() != null){
-                    if(unaCochera.getUnInquilino().getId() != unInquilino.getId()){
-                        cont++;
-                    }
-                    if(cont == inquilinos.size()){
-                        inquilinosFinal.add(unaCochera.getUnInquilino());
-                        cont = 0;
-                    }
+        if(!departamentos.isEmpty()){
+            for(Departamento unDepartamento : departamentos){
+                if(unDepartamento.getUnInquilino() != null){
+                    inquilinos.add(unDepartamento.getUnInquilino());
                 }
             }
-            cont = 0;
+            
+            inquilinosFinal = inquilinos;
+        }
+        
+        
+        
+        for(Cochera unaCochera : cocheras){
+            if(inquilinos.isEmpty()){
+                inquilinosFinal.add(unaCochera.getUnInquilino());
+            }else{
+                int cont = 0;
+                for(Inquilino unInquilino : inquilinos){
+                    if(unaCochera.getUnInquilino() != null){
+                        if(unaCochera.getUnInquilino().getId() != unInquilino.getId()){
+                            cont++;
+                        }
+                        if(cont == inquilinos.size()){
+                            inquilinosFinal.add(unaCochera.getUnInquilino());
+                            cont = 0;
+                        }
+                    }
+                }
+                cont = 0;
+            }
         }
         
         return inquilinosFinal;
@@ -1549,15 +1487,13 @@ public class ControladoraL {
     }
     
     public List<Pago> obtenerPagosEdificio(long idEdificio){
-        List<Departamento> departamentos = obtenerEdificio(idEdificio).getDepartamentos();
+        List<Inquilino> inquilinos = obtenerInquilinosEdificio(idEdificio);
         List<Pago> pagos = new LinkedList();
         
-        for(Departamento unDepartamento : departamentos){
-            if(unDepartamento.getUnInquilino() != null){
-                for(Alquiler unAlquiler : unDepartamento.getUnInquilino().getAlquileres()){
-                    if(unAlquiler.getUnPago() != null){
-                        pagos.add(unAlquiler.getUnPago());
-                    }
+        for(Inquilino unInquilino : inquilinos){
+            for(Alquiler unAlquiler : unInquilino.getAlquileres()){
+                if(unAlquiler.getUnPago() != null){
+                    pagos.add(unAlquiler.getUnPago());
                 }
             }
         }

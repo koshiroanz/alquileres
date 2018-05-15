@@ -13,9 +13,6 @@ import java.util.logging.Logger;
 import java.io.FileOutputStream;
 import javax.swing.JFileChooser;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import javax.swing.DefaultListModel;
-import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -35,8 +32,6 @@ public class Reporte {
             formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
     private final DecimalFormat formatoDecimal = new DecimalFormat("#.00");
     private final ControladoraL unaControladora = new ControladoraL();
-    private final String colu[] = {"0","1","2","3","4","5","6","7","8","9","10","11","12","13"};
-    private final DefaultTableModel tabla = new DefaultTableModel(null, colu);
     private XSSFFont fuente1, fuente2, fuente3;
     private CellStyle estilo, estilo2, estilo3, estilo4, estilo5, estilo6, estilo7, estilo8, estilo9, estilo10;
     
@@ -262,15 +257,13 @@ public class Reporte {
         encabezado.createCell(14).setCellValue("FECHA PAGO");                   // COLUMNA 14, FILA 3
         encabezado.getCell(14).setCellStyle(estilo7);
         
-        
-        String col[] = new String[14];
         fi = 4;
         for(Inquilino unInquilino : unaControladora.obtenerInquilinosEdificio(unEdificio.getId())){
             /* Se debe obtener todos los Totales de los Alquileres + los Totales de las Expensas que no se pagaron.
             También obtener sus Intereses por Atrasos (de Total Alquiler n + Total Expensa n)generados a la FECHA ACTUAL */
             String ubicacionDepto = "";
             List<Alquiler> alquileresInpagos = unaControladora.obtenerAlquileresInpagos(unInquilino.getId());
-            Departamento unDepto = unaControladora.obtenerDepartamentoInquilino(unInquilino.getId());
+            Departamento unDepto = unaControladora.obtenerDepartamentoInquilino(unEdificio.getId(), unInquilino.getId());
             Alquiler ultimoAlquiler;
             Expensa ultimaExpensa;
             
@@ -288,8 +281,7 @@ public class Reporte {
                         Expensa unaExpensaInpaga = unaControladora.obtenerExpensa(unDepto.getId(), mesAlquiler, anioExpensa2);
                         if(unaExpensaInpaga != null){
                             totales += unaExpensaInpaga.getMonto(); // Suma el total Expensa
-                            float intereses = unaControladora.interesPorAtraso(fechaActual, totales, mesAlquiler);
-                            totalesPorIntereses += intereses;
+                            totalesPorIntereses += unaControladora.interesPorAtraso(fechaActual, totales, mesAlquiler);
                             saldoMesAnterior = totales+totalesPorIntereses;
                             totales += totalesPorIntereses;
                         }
@@ -335,85 +327,43 @@ public class Reporte {
                     saldo = totales;
                     fechaPago = null;
                 }
+            }            
+
+            fila = hojaAlquiler.createRow(fi++);
+            fila.setHeight(tamFilaDefault);
+            fila.createCell(1).setCellValue(ubicacionDepto);
+            fila.getCell(1).setCellStyle(estilo5);
+            fila.createCell(2).setCellValue(unInquilino.getApellido()+", "+unInquilino.getNombre());
+            fila.getCell(2).setCellStyle(estilo5);
+            fila.createCell(3).setCellValue("$ "+montoAlquiler);
+            fila.getCell(3).setCellStyle(estilo10);
+            fila.createCell(4).setCellValue("$ "+otrasFacturas);
+            fila.getCell(4).setCellStyle(estilo10);
+            fila.createCell(5).setCellValue("$ "+unaControladora.reemplazarString(formatoDecimal.format(montoExpensa)));
+            fila.getCell(5).setCellStyle(estilo10);
+            fila.createCell(6).setCellValue("$ "+precioCochera);
+            fila.getCell(6).setCellStyle(estilo10);
+            fila.createCell(7).setCellValue("$ "+formatoDecimal.format(totalesPorIntereses));
+            fila.getCell(7).setCellStyle(estilo10);
+            fila.createCell(8).setCellValue("$ "+formatoDecimal.format(saldoMesAnterior));
+            fila.getCell(8).setCellStyle(estilo10);
+            fila.createCell(9).setCellValue("$ "+formatoDecimal.format(totales));
+            fila.getCell(9).setCellStyle(estilo10);
+            fila.createCell(10).setCellValue("$ "+efectivo);
+            fila.getCell(10).setCellStyle(estilo10);
+            fila.createCell(11).setCellValue("$ "+tarjeta);
+            fila.getCell(11).setCellStyle(estilo10);
+            fila.createCell(12).setCellValue("$ "+banco);
+            fila.getCell(12).setCellStyle(estilo10);
+            fila.createCell(13).setCellValue("$ "+formatoDecimal.format(saldo));          
+            fila.getCell(13).setCellStyle(estilo10);
+            if(fechaPago != null){
+                fila.createCell(14).setCellValue(formatoFecha.format(fechaPago));
+            }else{
+                fila.createCell(14).setCellValue("");
             }
-            
-            try{
-                col[0] = ubicacionDepto;
-                col[1] = unInquilino.getApellido()+", "+unInquilino.getNombre();
-                col[2] = "$ "+String.valueOf(montoAlquiler);
-                col[3] = "$ "+String.valueOf(otrasFacturas);
-                col[4] = "$ "+unaControladora.reemplazarString(formatoDecimal.format(montoExpensa));
-                col[5] = "$ "+String.valueOf(precioCochera);
-                col[6] = "$ "+formatoDecimal.format(totalesPorIntereses);
-                col[7] = "$ "+formatoDecimal.format(saldoMesAnterior);
-                col[8] = "$ "+formatoDecimal.format(totales);
-                col[9] = "$ "+String.valueOf(efectivo);
-                col[10] = "$ "+String.valueOf(tarjeta);
-                col[11] = "$ "+String.valueOf(banco);
-                col[12] = "$ "+formatoDecimal.format(saldo);
-                if(fechaPago != null){
-                    col[13] = formatoFecha.format(fechaPago);
-                }else{
-                    col[13] = "";
-                }
-                
-                tabla.addRow(col);
-            }catch(Exception e){
-                System.out.println("Error 1: "+e);
-            }
-            
+            fila.getCell(14).setCellStyle(estilo10);
         }
-        
-        try{
-            if(tabla.getRowCount() > 0){
-                int tam = tabla.getRowCount();
-                String [][] tab = new String[tam][14];
-
-                for(int i = 0; i < tam; i++){
-                    for(int j = 0; j < 14; j++){
-                        tab[i][j] = (String) tabla.getValueAt(i, j);
-                    }
-                }
-
-                Arrays.sort(tab, (String[] t, String[] t1) -> t[0].compareTo(t1[0]));
-
-                for(int i = 0; i < tam; i++){                        
-                    fila = hojaAlquiler.createRow(fi++);
-                    fila.setHeight(tamFilaDefault);
-                    fila.createCell(1).setCellValue(tab[i][0]);
-                    fila.getCell(1).setCellStyle(estilo5);
-                    fila.createCell(2).setCellValue(tab[i][1]);
-                    fila.getCell(2).setCellStyle(estilo5);
-                    fila.createCell(3).setCellValue(tab[i][2]);
-                    fila.getCell(3).setCellStyle(estilo10);
-                    fila.createCell(4).setCellValue(tab[i][3]);
-                    fila.getCell(4).setCellStyle(estilo10);
-                    fila.createCell(5).setCellValue(tab[i][4]);
-                    fila.getCell(5).setCellStyle(estilo10);
-                    fila.createCell(6).setCellValue(tab[i][5]);
-                    fila.getCell(6).setCellStyle(estilo10);
-                    fila.createCell(7).setCellValue(tab[i][6]);
-                    fila.getCell(7).setCellStyle(estilo10);
-                    fila.createCell(8).setCellValue(tab[i][7]);
-                    fila.getCell(8).setCellStyle(estilo10);
-                    fila.createCell(9).setCellValue(tab[i][8]);
-                    fila.getCell(9).setCellStyle(estilo10);
-                    fila.createCell(10).setCellValue(tab[i][9]);
-                    fila.getCell(10).setCellStyle(estilo10);
-                    fila.createCell(11).setCellValue(tab[i][10]);
-                    fila.getCell(11).setCellStyle(estilo10);
-                    fila.createCell(12).setCellValue(tab[i][11]);
-                    fila.getCell(12).setCellStyle(estilo10);
-                    fila.createCell(13).setCellValue(tab[i][12]);          
-                    fila.getCell(13).setCellStyle(estilo10);
-                    fila.createCell(14).setCellValue(tab[i][13]);
-                    fila.getCell(14).setCellStyle(estilo10);
-                }
-            }
-        }catch(Exception e){
-            System.out.println("Error 2: "+e);
-        }
-        
         
         return libro;
     }
