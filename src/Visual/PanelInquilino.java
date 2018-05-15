@@ -1,7 +1,6 @@
 package Visual;
 
 import java.awt.Color;
-import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.LinkedList;
 import javax.swing.ImageIcon;

@@ -1243,31 +1243,37 @@ public class ControladoraL {
         List<Cochera> cocheras = obtenerEdificio(idEdificio).getCocheras();
         List<Inquilino> inquilinos = new LinkedList();
         List<Inquilino> inquilinosFinal = new LinkedList();
-        int cont = 0;
         
-        for(Departamento unDepartamento : departamentos){
-            if(unDepartamento.getUnInquilino() != null){
-                inquilinos.add(unDepartamento.getUnInquilino());
-            }
-        }
-        
-        for(Inquilino unInquilino : inquilinos){
-            inquilinosFinal.add(unInquilino);
-        }
-        
-        for(Cochera unaCochera : cocheras){
-            for(Inquilino unInquilino : inquilinos){
-                if(unaCochera.getUnInquilino() != null){
-                    if(unaCochera.getUnInquilino().getId() != unInquilino.getId()){
-                        cont++;
-                    }
-                    if(cont == inquilinos.size()){
-                        inquilinosFinal.add(unaCochera.getUnInquilino());
-                        cont = 0;
-                    }
+        if(!departamentos.isEmpty()){
+            for(Departamento unDepartamento : departamentos){
+                if(unDepartamento.getUnInquilino() != null){
+                    inquilinos.add(unDepartamento.getUnInquilino());
                 }
             }
-            cont = 0;
+            
+            inquilinosFinal = inquilinos;
+        }
+        
+        
+        
+        for(Cochera unaCochera : cocheras){
+            if(inquilinos.isEmpty()){
+                inquilinosFinal.add(unaCochera.getUnInquilino());
+            }else{
+                int cont = 0;
+                for(Inquilino unInquilino : inquilinos){
+                    if(unaCochera.getUnInquilino() != null){
+                        if(unaCochera.getUnInquilino().getId() != unInquilino.getId()){
+                            cont++;
+                        }
+                        if(cont == inquilinos.size()){
+                            inquilinosFinal.add(unaCochera.getUnInquilino());
+                            cont = 0;
+                        }
+                    }
+                }
+                cont = 0;
+            }
         }
         
         return inquilinosFinal;
