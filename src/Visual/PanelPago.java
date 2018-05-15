@@ -26,7 +26,7 @@ public final class PanelPago extends javax.swing.JPanel {
     private final DefaultComboBoxModel comboBusquedaInquilino = new DefaultComboBoxModel();
     private final DefaultComboBoxModel comboAlquiler = new DefaultComboBoxModel();
     private final DefaultComboBoxModel comboAnio = new DefaultComboBoxModel();
-    private final String colTablaPago[] = {"Id", "Fecha", "Inquilino", "Alquiler", "Departamento", "Total", "Descripción"};
+    private final String colTablaPago[] = {"Id", "Fecha", "Inquilino", "Alquiler", "Departamento", "Cochera", "Total", "Descripción"};
     private final DefaultTableModel tablaPago = new DefaultTableModel(null, colTablaPago);
     
     public PanelPago(long idEdificio) {
@@ -720,7 +720,7 @@ public final class PanelPago extends javax.swing.JPanel {
                 float efectivo = Float.valueOf(jTextFieldEfectivo.getText());
                 float tarjeta = Float.valueOf(jTextFieldTarjeta.getText());
                 float banco = Float.valueOf(jTextFieldBanco.getText());
-                float saldoMesAnt = Integer.valueOf(unaControladora.reemplazarString(jTextFieldSaldoMesAnterior.getText()));
+                float saldoMesAnt = Float.valueOf(unaControladora.reemplazarString(jTextFieldSaldoMesAnterior.getText()));
                 
                 if(!modificar){
                     unaControladora.altaPago(fechaPago, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, total, jTextAreaDescripcion.getText(), idAlquiler, idExpensa, unInquilino.getId());
@@ -824,8 +824,8 @@ public final class PanelPago extends javax.swing.JPanel {
                 Logica.Inquilino unInquilino = (Logica.Inquilino)jComboBoxInquilino.getSelectedItem();
                 jTextFieldDepartamento.setText(null);
                 jTextFieldCochera.setText(null);
-                if(unaControladora.obtenerDepartamentoInquilino(unInquilino.getId()) != null){
-                    jTextFieldDepartamento.setText(unaControladora.obtenerDepartamentoInquilino(unInquilino.getId()).getUbicacion());
+                if(unaControladora.obtenerDepartamentoInquilino(idEdificio, unInquilino.getId()) != null){
+                    jTextFieldDepartamento.setText(unaControladora.obtenerDepartamentoInquilino(idEdificio, unInquilino.getId()).getUbicacion());
                 }else{
                     jTextFieldDepartamento.setText("Sin Departamento.");
                 }
@@ -1029,7 +1029,7 @@ public final class PanelPago extends javax.swing.JPanel {
             mesActual = Integer.valueOf(monthFormat.format(fechaActual)),
             anioActual = Integer.valueOf(yearFormat.format(fechaActual));
         List<Logica.Pago> pagos = new LinkedList();
-        Object datos[] = new Object[7];
+        Object datos[] = new Object[8];
         
         if(idInquilino > 0 && anio > 0){ 
             List<Logica.Pago> pagosInquilino = unaControladora.obtenerPagosInquilino(idInquilino);
@@ -1065,9 +1065,21 @@ public final class PanelPago extends javax.swing.JPanel {
             datos[2] = unInquilino.getApellido()+", "+unInquilino.getNombre();
             
             datos[3] = unaControladora.obtenerAlquiler(unPago.getIdAlquiler());
-            datos[4] = unaControladora.obtenerDepartamentoPorAlquiler(unPago.getIdAlquiler(), idEdificio, unInquilino.getId());
-            datos[5] = unPago.getMonto();
-            datos[6] = unPago.getDescripcion();
+            
+            if(unaControladora.obtenerDepartamentoInquilino(idEdificio, unInquilino.getId()) != null){
+                datos[4] = unaControladora.obtenerDepartamentoInquilino(idEdificio, unInquilino.getId());
+            }else{
+                datos[4] = "";
+            }
+            
+            if(unaControladora.obtenerCocheraInquilino(idEdificio, unInquilino.getId()) != null){
+                datos[5] = unaControladora.obtenerCocheraInquilino(idEdificio, unInquilino.getId());
+            }else{
+                datos[5] = ""; 
+            }
+            
+            datos[6] = unPago.getMonto();
+            datos[7] = unPago.getDescripcion();
             
             tablaPago.addRow(datos);
         }

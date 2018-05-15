@@ -614,7 +614,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                         Logica.Garante unGarante = unaControladora.obtenerInquilino(idInquilino).getUnGarante();
                         List<Logica.Alquiler> alquileres = unaControladora.obtenerInquilino(idInquilino).getAlquileres();
                         float saldoMesAnt = unaControladora.obtenerInquilino(idInquilino).getSaldoMesAnt();
-                        unaControladora.modificarInquilino(idInquilino, Integer.valueOf(cantFamilia), apellido, nombre, dni, email, telefono, cuit, saldoMesAnt, jTextAreaDescripcion.getText(), unGarante, alquileres, idDepartamento, idCochera);
+                        unaControladora.modificarInquilino(idInquilino, Integer.valueOf(cantFamilia), apellido, nombre, dni, email, telefono, cuit, saldoMesAnt, jTextAreaDescripcion.getText(), unGarante, alquileres, idDepartamento, idCochera, idEdificio);
                         limpiarComponentes();
                     }
                 }
@@ -649,8 +649,8 @@ public class PanelInquilino extends javax.swing.JPanel {
                     long idDepto = 0;
                     long idCoche = 0;
 
-                    if(unaControladora.obtenerDepartamentoInquilino(idInquilino) != null){
-                        Logica.Departamento unDepartamento = unaControladora.obtenerDepartamentoInquilino(idInquilino);
+                    if(unaControladora.obtenerDepartamentoInquilino(idEdificio, idInquilino) != null){
+                        Logica.Departamento unDepartamento = unaControladora.obtenerDepartamentoInquilino(idEdificio, idInquilino);
                             idDepto = unDepartamento.getId();
                     }
 
@@ -831,7 +831,7 @@ public class PanelInquilino extends javax.swing.JPanel {
             Collections.sort(inquilinos, (Logica.Inquilino i1, Logica.Inquilino i2) -> i1.getApellido().compareTo(i2.getApellido()));
             
             for(Logica.Inquilino unInquilino : inquilinos){
-                unDepto = unaControladora.obtenerDepartamentoInquilino(unInquilino.getId());
+                unDepto = unaControladora.obtenerDepartamentoInquilino(idEdificio, unInquilino.getId());
                 unaCochera = unaControladora.obtenerCocheraInquilino(idEdificio, unInquilino.getId());
                 
                 filas[i][0] = unInquilino.getId();
@@ -909,9 +909,9 @@ public class PanelInquilino extends javax.swing.JPanel {
         jTextFieldCantFamiliares.setText(String.valueOf(unInquilino.getCantidadPersonas()));
         
         comboDepartamento.removeAllElements();
-        if(unaControladora.obtenerDepartamentoInquilino(idInquilino) != null){
+        if(unaControladora.obtenerDepartamentoInquilino(idEdificio, idInquilino) != null){
             // El Inquilino posee Departamento/s
-            Logica.Departamento unDepto = unaControladora.obtenerDepartamentoInquilino(idInquilino);
+            Logica.Departamento unDepto = unaControladora.obtenerDepartamentoInquilino(idEdificio, idInquilino);
             comboDepartamento.addElement(unDepto);
         }else{  // El Inquilino no posee DEPARTAMENTO/s
                // Este Inquilino no tiene depto.

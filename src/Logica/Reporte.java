@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 import java.io.FileOutputStream;
 import javax.swing.JFileChooser;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -264,7 +263,7 @@ public class Reporte {
             También obtener sus Intereses por Atrasos (de Total Alquiler n + Total Expensa n)generados a la FECHA ACTUAL */
             String ubicacionDepto = "";
             List<Alquiler> alquileresInpagos = unaControladora.obtenerAlquileresInpagos(unInquilino.getId());
-            Departamento unDepto = unaControladora.obtenerDepartamentoInquilino(unInquilino.getId());
+            Departamento unDepto = unaControladora.obtenerDepartamentoInquilino(unEdificio.getId(), unInquilino.getId());
             Alquiler ultimoAlquiler;
             Expensa ultimaExpensa;
             

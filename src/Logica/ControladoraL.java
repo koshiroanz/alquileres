@@ -542,9 +542,9 @@ public class ControladoraL {
     }
     
     // Debería devolver solo 1 DEPARTAMENTO por INQUILINO
-    public Departamento obtenerDepartamentoInquilino(long idInquilino){
+    public Departamento obtenerDepartamentoInquilino(long idEdificio, long idInquilino){
         Departamento unDepartamento = null;
-        List<Departamento> departamentos = obtenerDepartamentos();
+        List<Departamento> departamentos = obtenerEdificio(idEdificio).getDepartamentos();
         int i = 0, tam = departamentos.size();
         
         while(i < tam){
@@ -633,27 +633,6 @@ public class ControladoraL {
         }
         
         return DepartamentoExpensa;
-    }
-    
-    public Departamento obtenerDepartamentoPorAlquiler(long idAlquiler, long idEdificio){
-        Departamento unDepartamentoAlquiler = null;
-        Departamento unDepartamento;
-        int i = 0, j = 0;
-        Alquiler unAlquiler;        
-        
-        while(unDepartamentoAlquiler == null){
-            unDepartamento = obtenerEdificio(idEdificio).getDepartamentos().get(i);
-            while(unDepartamentoAlquiler == null){
-                unAlquiler = unDepartamento.getUnInquilino().getAlquileres().get(j);
-                if(unAlquiler.getId() == idAlquiler){
-                    unDepartamentoAlquiler = unDepartamento;
-                }
-                j++;
-            }
-            i++;
-        }
-        
-        return unDepartamentoAlquiler;
     }
     
     public Departamento obtenerDepartamentoPorAlquiler(long idAlquiler, long idEdificio, long idInquilino){
@@ -1152,7 +1131,7 @@ public class ControladoraL {
         }
     }
     
-    public void modificarInquilino(long idInquilino, int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, String descripcion, Garante unGarante, List<Alquiler> alquileres, long idDepartamento, long idCochera) throws Exception{
+    public void modificarInquilino(long idInquilino, int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, String descripcion, Garante unGarante, List<Alquiler> alquileres, long idDepartamento, long idCochera, long idEdificio) throws Exception{
         Inquilino unInquilino = obtenerInquilino(idInquilino);
         
         unInquilino.setCantidadPersonas(cantidadPersonas);
@@ -1177,7 +1156,7 @@ public class ControladoraL {
             unaControladora.modificarDepartamento(unDepartamento);
         }else{
             try{
-                Departamento unDepartamento = obtenerDepartamentoInquilino(idInquilino);
+                Departamento unDepartamento = obtenerDepartamentoInquilino(idEdificio, idInquilino);
                 if(unDepartamento != null){
                     unDepartamento.setUnInquilino(null);
                     unaControladora.modificarDepartamento(unDepartamento);
@@ -1508,15 +1487,13 @@ public class ControladoraL {
     }
     
     public List<Pago> obtenerPagosEdificio(long idEdificio){
-        List<Departamento> departamentos = obtenerEdificio(idEdificio).getDepartamentos();
+        List<Inquilino> inquilinos = obtenerInquilinosEdificio(idEdificio);
         List<Pago> pagos = new LinkedList();
         
-        for(Departamento unDepartamento : departamentos){
-            if(unDepartamento.getUnInquilino() != null){
-                for(Alquiler unAlquiler : unDepartamento.getUnInquilino().getAlquileres()){
-                    if(unAlquiler.getUnPago() != null){
-                        pagos.add(unAlquiler.getUnPago());
-                    }
+        for(Inquilino unInquilino : inquilinos){
+            for(Alquiler unAlquiler : unInquilino.getAlquileres()){
+                if(unAlquiler.getUnPago() != null){
+                    pagos.add(unAlquiler.getUnPago());
                 }
             }
         }

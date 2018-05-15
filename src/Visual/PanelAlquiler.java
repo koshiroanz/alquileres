@@ -954,7 +954,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         jComboBoxCochera.removeAllItems();
         
         if(idInquilino != 0){
-            Logica.Departamento unDepartamento = unaControladora.obtenerDepartamentoInquilino(idInquilino);
+            Logica.Departamento unDepartamento = unaControladora.obtenerDepartamentoInquilino(idEdificio, idInquilino);
             if(unDepartamento != null){
                 comboDepartamento.addElement(unDepartamento);
             }else{
