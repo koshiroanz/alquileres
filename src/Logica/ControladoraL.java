@@ -4,8 +4,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.LinkedList;
 import Persistencia.ControladoraP;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ControladoraL {
     
@@ -71,6 +74,52 @@ public class ControladoraL {
         }
         
         return interesTotal;
+    }
+    // Probando nuevo método para calcular el interés
+    public float interesesPorAtraso(Date fechaActual, Date fechaAlquiler, float total){
+        float interesAlquiler = 0;
+        SimpleDateFormat formatoDia = new SimpleDateFormat("dd"),
+                         formatoMes = new SimpleDateFormat("MM"),
+                         formatoAnio = new SimpleDateFormat("yyyy"),
+                         formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+        int mesAlquiler = Integer.valueOf(formatoMes.format(fechaAlquiler)),   // Se obtiene el día de la fecha Alquiler
+            anioAlquiler = Integer.valueOf(formatoAnio.format(fechaAlquiler)),
+            diaActual = Integer.valueOf(formatoDia.format(fechaActual)),
+            mesActual = Integer.valueOf(formatoMes.format(fechaActual)),
+            diferenciaMeses = mesActual - mesAlquiler;
+        
+        if(diferenciaMeses > 0){    // Si es > 0. Es un pago atrasado
+            try {
+                String fecha = "10-"+mesAlquiler+"-"+anioAlquiler;  // Dejo en 10 para que empiece a calcular el día 11
+                Date nuevaFechaAlquiler;
+                nuevaFechaAlquiler = formatoFecha.parse(fecha);
+                long difDias = ((fechaActual.getTime()-nuevaFechaAlquiler.getTime())/86400000);
+                //System.out.println("Cantidad de dias: "+difDias);
+                float coeficienteInteres = obtenerCoeficiente().getValor();
+                interesAlquiler = (difDias * (coeficienteInteres/30) * total);
+            } catch (ParseException ex) {
+                System.out.println("Error de parseo 1 en Fecha: "+ex);
+            }
+        }else{  // Nunca es < a 0. Entonces esta dentro del mismo mes. Se debe comprobar si esta fuera del vencimiento (si día pago > 10 se calculará el interes)
+            if(diaActual > 10){
+                try {
+                    String fecha = "10-"+mesAlquiler+"-"+anioAlquiler;  // Dejo en 10 para que empiece a calcular el día 11
+                    Date nuevaFechaAlquiler;
+                    nuevaFechaAlquiler = formatoFecha.parse(fecha);
+                    long difDias = ((fechaActual.getTime()-nuevaFechaAlquiler.getTime())/86400000);
+                    //System.out.println("Cantidad de dias: "+difDias);
+                    float coeficienteInteres = obtenerCoeficiente().getValor();
+                    interesAlquiler = (difDias * (coeficienteInteres/30) * total);
+                    if(interesAlquiler < 10){
+                        interesAlquiler = 0;
+                    }
+                } catch (ParseException ex) {
+                    System.out.println("Error de parseo 2 en Fecha: "+ex);
+                }
+            }
+        }
+        
+        return interesAlquiler;
     }
 /*------------------------------------------------------------------------------
                            CONVERSOR STRING A FLOAT
