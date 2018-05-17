@@ -300,6 +300,10 @@ public class ControladoraV {
          return unaControladora.obtenerExpensa(idDepartamento, mesAlquiler, anioAlquiler);
     }
     
+    public Logica.Expensa obtenerUltimaExpensa(long idDepartamento){
+        return unaControladora.obtenerUltimaExpensa(idDepartamento);
+    }
+    
     public boolean existeExpensa(long idDepto, int mesExpensa, int anioExpensa){
         return unaControladora.existeExpensa(idDepto, mesExpensa, anioExpensa);
     }
@@ -307,6 +311,7 @@ public class ControladoraV {
     public boolean existenExpensas(long idEdificio){
         return unaControladora.existenExpensas(idEdificio);
     }
+    
 /*------------------------------------------------------------------------------
                                 GARANTE
 ------------------------------------------------------------------------------*/
@@ -378,6 +383,10 @@ public class ControladoraV {
         return unaControladora.obtenerInquilinoPorDni(dni, idEdificio);
     }
     
+    public List<Logica.Inquilino> obtenerInquilinosSinPago(long idEdificio){
+        return unaControladora.obtenerInquilinosSinPago(idEdificio);
+    }
+    
     public Logica.Inquilino obtenerInquilinoPorAlquiler(long idEdificio, long idAlquiler){
         return unaControladora.obtenerInquilinoPorAlquiler(idEdificio, idAlquiler);
     }
@@ -426,6 +435,10 @@ public class ControladoraV {
     
     public float obtenerTotalPago(){
         return unaControladora.obtenerTotalPago();
+    }
+    
+    public float obtenerSaldoUltimoPago(long idInquilino){
+        return unaControladora.obtenerSaldoUltimoPago(idInquilino);
     }
     
 /*------------------------------------------------------------------------------

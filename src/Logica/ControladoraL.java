@@ -7,6 +7,7 @@ import Persistencia.ControladoraP;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class ControladoraL {
     
@@ -988,6 +989,23 @@ public class ControladoraL {
         }
         
         return unaExpensa;
+    }
+    
+    public Expensa obtenerUltimaExpensa(long idDepartamento){
+        List<Expensa> expensasDepartamento = unaControladora.obtenerDepartamento(idDepartamento).getExpensas();
+        List<Expensa> expensasDepartamentoOrdenada = new LinkedList();
+        Expensa ultimaExpensa = null;
+        
+        if(expensasDepartamento.size() > 0){
+            for(Expensa unaExpensa : expensasDepartamento){
+                expensasDepartamentoOrdenada.add(unaExpensa);
+            }
+            expensasDepartamentoOrdenada.sort(Comparator.comparing(Expensa::getMes).thenComparingInt(Expensa::getAnio));
+            int tam = expensasDepartamentoOrdenada.size();
+            ultimaExpensa = expensasDepartamentoOrdenada.get(tam-1);
+        }
+        
+        return ultimaExpensa;
     }
     
     // SE OCUPA PARA COMPROBAR LA EXISTENCIA EN PANEL EXPENSA
