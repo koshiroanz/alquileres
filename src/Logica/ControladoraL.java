@@ -7,8 +7,6 @@ import Persistencia.ControladoraP;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControladoraL {
     
@@ -192,6 +190,10 @@ public class ControladoraL {
             if(unAlquiler.getUnPago() == null){
                 alquileresInpagos.add(unAlquiler);
             }
+        }
+        
+        if(alquileresInpagos.size() > 0){
+            Collections.sort(alquileresInpagos, (Alquiler a1, Alquiler a2) -> a1.getFecha().compareTo(a2.getFecha()));
         }
         
         return alquileresInpagos;
@@ -970,7 +972,7 @@ public class ControladoraL {
     
     public Expensa obtenerExpensa(long idDepartamento, int mesAlquiler, int anioAlquiler){
         Expensa unaExpensa = null;
-        mesAlquiler = mesAlquiler - 1;
+        mesAlquiler -= 1;
         
         if(mesAlquiler == 0){
                 mesAlquiler = 12;
@@ -1367,6 +1369,28 @@ public class ControladoraL {
         
         return inquilinosFinal;
     }
+    // Para cargar los inquilinos(Alquiler sin pago) en combo pago.
+    public List<Inquilino> obtenerInquilinosSinPago(long idEdificio){
+        List<Inquilino> inquilinos = obtenerInquilinosEdificio(idEdificio);
+        List<Inquilino> inquilinosSinPago = new LinkedList();
+        
+        if(inquilinos.size() > 0){
+            Collections.sort(inquilinos, (Inquilino i1, Inquilino i2) -> i1.getApellido().compareTo(i2.getApellido()));
+            for(Inquilino unInquilino : inquilinos){
+                int i = 0, tam = unInquilino.getAlquileres().size();
+                while(i < tam){
+                    if(unInquilino.getAlquileres().get(i).getUnPago() == null){
+                        inquilinosSinPago.add(unInquilino);
+                        i = tam;
+                    }else{
+                        i++;
+                    }
+                }
+            }
+        }
+        
+        return inquilinosSinPago;
+    }
     
     public boolean obtenerInquilinoPorDni(String dni, long idEdificio){
         boolean respuesta = false;
@@ -1556,6 +1580,39 @@ public class ControladoraL {
         return total;
     }
     
+    public float obtenerSaldoUltimoPago(long idInquilino){
+        float saldoUltimoPago = 0;
+        List<Pago> pagosInquilino = obtenerPagosInquilino(idInquilino);
+        if(pagosInquilino.size() > 0){
+            Collections.sort(pagosInquilino, (Pago p1, Pago p2) -> p1.getFecha().compareTo(p2.getFecha()));
+            int tam = pagosInquilino.size();
+            Pago ultimoPago = pagosInquilino.get(tam-1);
+            saldoUltimoPago = ultimoPago.getMonto()-(ultimoPago.getEfectivo()+ultimoPago.getTarjeta()+ultimoPago.getBanco());
+        }
+        
+        return saldoUltimoPago;
+    }
+    /*
+    public float obtenerSaldoAnteriorAlUltimoPago(long idInquilino){
+        float saldoAnteriorUltimoPago = 0;
+        List<Pago> pagosInquilino = obtenerPagosInquilino(idInquilino);
+        if(pagosInquilino.size() > 1){
+            Collections.sort(pagosInquilino, (Pago p1, Pago p2) -> p1.getFecha().compareTo(p2.getFecha()));
+            int tam = pagosInquilino.size(), i = ;
+            Pago ultimoPago = pagosInquilino.get();
+            saldoAnteriorUltimoPago = ultimoPago.getMonto()-(ultimoPago.getEfectivo()+ultimoPago.getTarjeta()+ultimoPago.getBanco());
+        }else{
+            if(pagosInquilino.size() == 1){
+                Collections.sort(pagosInquilino, (Pago p1, Pago p2) -> p1.getFecha().compareTo(p2.getFecha()));
+                int tam = pagosInquilino.size();
+                Pago ultimoPago = pagosInquilino.get(tam-1);
+                
+            }
+        }
+        
+        return saldoAnteriorUltimoPago;
+    }
+    */
 /*------------------------------------------------------------------------------
                                 SERVICIO
 ------------------------------------------------------------------------------*/
