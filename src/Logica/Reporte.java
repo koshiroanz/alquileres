@@ -175,12 +175,12 @@ public class Reporte {
         
                                                                                 // Se setea el tamaño de las columnas
         hojaAlquiler.setColumnWidth(1, 1500);                                   // Columna n° 1 (B), tamaño [DPTO]
-        hojaAlquiler.setColumnWidth(2, 7500);                                   // Columna n° 2 (B), tamaño [INQUILINO]
+        hojaAlquiler.setColumnWidth(2, 7800);                                   // Columna n° 2 (B), tamaño [INQUILINO]
         hojaAlquiler.setColumnWidth(3, 2700);                                   // Columna n° 3 (C), tamaño [ALQUILER]
         hojaAlquiler.setColumnWidth(4, 2700);                                   // Columna n° 4 (C), tamaño [OTRAS F.]
         hojaAlquiler.setColumnWidth(5, 3900);                                   // Columna n° 5 (C), tamaño [EXPENSAS]
         hojaAlquiler.setColumnWidth(6, 2700);                                   // Columna n° 6 (C), tamaño [COCHERAS]
-        hojaAlquiler.setColumnWidth(7, 3500);                                   // Columna n° 7 (C), tamaño [INTERESESxATRASOS]
+        hojaAlquiler.setColumnWidth(7, 4000);                                   // Columna n° 7 (C), tamaño [INTERESESxATRASOS]
         hojaAlquiler.setColumnWidth(8, 3500);                                   // Columna n° 8 (C), tamaño [SALDOmesANTERIOR]
         hojaAlquiler.setColumnWidth(9, 2600);                                   // Columna n° 9 (C), tamaño [TOTAL]
         hojaAlquiler.setColumnWidth(10, 3900);                                  // Columna n° 10 (C), tamaño [PAGOEFECTIVO]
@@ -233,7 +233,7 @@ public class Reporte {
         encabezado.createCell(6).setCellValue("COCHERAS");                      // COLUMNA 6, FILA 3
         encabezado.getCell(6).setCellStyle(estilo7);
         
-        encabezado.createCell(7).setCellValue("interes por atr.");              // COLUMNA 7, FILA 3
+        encabezado.createCell(7).setCellValue("intereses por atr.");              // COLUMNA 7, FILA 3
         encabezado.getCell(7).setCellStyle(estilo7);
         
         encabezado.createCell(8).setCellValue("saldo mes ant.");                // COLUMNA 8, FILA 3
@@ -356,19 +356,19 @@ public class Reporte {
             fila.getCell(5).setCellStyle(estilo10);
             fila.createCell(6).setCellValue("$ "+precioCochera);
             fila.getCell(6).setCellStyle(estilo10);
-            fila.createCell(7).setCellValue("$ "+formatoDecimal.format(totalesPorIntereses));
+            fila.createCell(7).setCellValue("$ "+unaControladora.reemplazarString(formatoDecimal.format(totalesPorIntereses)));
             fila.getCell(7).setCellStyle(estilo10);
-            fila.createCell(8).setCellValue("$ "+formatoDecimal.format(saldoMesAnterior));
+            fila.createCell(8).setCellValue("$ "+unaControladora.reemplazarString(formatoDecimal.format(saldoMesAnterior)));
             fila.getCell(8).setCellStyle(estilo10);
-            fila.createCell(9).setCellValue("$ "+formatoDecimal.format(totales));
+            fila.createCell(9).setCellValue("$ "+unaControladora.reemplazarString(formatoDecimal.format(totales)));
             fila.getCell(9).setCellStyle(estilo10);
-            fila.createCell(10).setCellValue("$ "+efectivo);
+            fila.createCell(10).setCellValue("$ "+unaControladora.reemplazarString(efectivo));
             fila.getCell(10).setCellStyle(estilo10);
-            fila.createCell(11).setCellValue("$ "+tarjeta);
+            fila.createCell(11).setCellValue("$ "+unaControladora.reemplazarString(tarjeta));
             fila.getCell(11).setCellStyle(estilo10);
-            fila.createCell(12).setCellValue("$ "+banco);
+            fila.createCell(12).setCellValue("$ "+unaControladora.reemplazarString(banco));
             fila.getCell(12).setCellStyle(estilo10);
-            fila.createCell(13).setCellValue("$ "+formatoDecimal.format(saldo));          
+            fila.createCell(13).setCellValue("$ "+unaControladora.reemplazarString(formatoDecimal.format(saldo)));          
             fila.getCell(13).setCellStyle(estilo10);
             fila.createCell(14).setCellValue(fechaPago);
             fila.getCell(14).setCellStyle(estilo10);
@@ -382,33 +382,28 @@ public class Reporte {
         
         hoja.setColumnWidth(1, 13700);                                          // Columna n° 1 (B), tamaño
         hoja.setColumnWidth(2, 7350);                                           // Columna n° 2 (C), tamaño
-    
         // FILA 1
         Row fila = hoja.createRow(1);
         fila.createCell(0).setCellValue("");
         fila.createCell(1).setCellValue("EDIFICIO "+unEdificio.getNombre());
         fila.getCell(1).setCellStyle(estilo);
         fila.createCell(2).setCellValue(unEdificio.getDireccion());
-
         // FILA 2
         fila = hoja.createRow(2);
         fila.createCell(0).setCellValue("");
         fila.createCell(1).setCellValue("RECIBO DE EXPENSA");
-
         // FILA 3
         fila = hoja.createRow(3);
         fila.createCell(0).setCellValue("");
         fila.createCell(1).setCellValue("NOMBRE LOCATARIO");
         fila.createCell(2).setCellValue(unDepartamento.getUnInquilino().toString());
         fila.getCell(2).setCellStyle(estilo2);
-
         // FILA 4
         fila = hoja.createRow(4);
         fila.createCell(0).setCellValue("");
         fila.createCell(1).setCellValue("DEPARTAMENTO");
         fila.createCell(2).setCellValue(unDepartamento.getUbicacion());
         fila.getCell(2).setCellStyle(estilo2);
-
         // FILA 5
         fila = hoja.createRow(5);
         fila.createCell(0).setCellValue("");
@@ -435,8 +430,8 @@ public class Reporte {
                 fila.createCell(0).setCellValue("");
                 fila.createCell(1).setCellValue(ultimaExpensa.getServiciosExpensa().get(indice).getNombre());
                 fila.getCell(1).setCellStyle(estilo3);
-                String montoSinComa = formatoDecimal.format(ultimaExpensa.getServiciosExpensa().get(indice).getMonto()).replace(",", ".");
-                float montoFinal = Float.parseFloat(montoSinComa);
+                String montoSinComa = unaControladora.reemplazarString(formatoDecimal.format(ultimaExpensa.getServiciosExpensa().get(indice).getMonto()));
+                Double montoFinal = Double.valueOf(montoSinComa);
                 fila.createCell(2).setCellValue(montoFinal);
                 fila.getCell(2).setCellStyle(estilo3);
                 fila.getCell(2).getNumericCellValue();// Hacer algo al respecto con esto.. y con el Simbolo $ en montoFinal. Linea 331
