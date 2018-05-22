@@ -154,7 +154,7 @@ public final class PanelPrincipal extends javax.swing.JPanel {
                 .addGap(17, 17, 17)
                 .addComponent(jLabelAlquiler)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -222,7 +222,7 @@ public final class PanelPrincipal extends javax.swing.JPanel {
         jLabelReporte.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabelReporte.setForeground(new java.awt.Color(255, 255, 255));
         jLabelReporte.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelReporte.setText("Generar Reporte");
+        jLabelReporte.setText("Reporte");
 
         javax.swing.GroupLayout jPanelButtonReporteLayout = new javax.swing.GroupLayout(jPanelButtonReporte);
         jPanelButtonReporte.setLayout(jPanelButtonReporteLayout);
@@ -327,15 +327,8 @@ public final class PanelPrincipal extends javax.swing.JPanel {
     private void jPanelButtonReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonReporteMouseClicked
         if(idEdificio != 0){
             if(unaControladora.existenExpensas(idEdificio)){
-                try{
-                    Logica.Reporte reporte = new Logica.Reporte();
-                    // Agregar un icono de espera.. hasta que devuelva la respuesta GENERAR..
-                    if(reporte.generarReporte(idEdificio)){
-                        JOptionPane.showMessageDialog(null, "Se ha generado con éxito el documento.");
-                    }
-                }catch(Exception e){
-                    //JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+e);
-                }
+                vtnReporte ventanaReporte = new vtnReporte(idEdificio);
+                ventanaReporte.setVisible(true);
             }else{
                 JOptionPane.showMessageDialog(null, "No es posible generar el documento debido a que no existe ningún alquiler/expensa registrado.");
             }
@@ -381,10 +374,12 @@ public final class PanelPrincipal extends javax.swing.JPanel {
                          formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 
         for(Logica.Inquilino unInquilino : inquilinosEdificio){
-            if(unaControladora.obtenerAlquileresInpagos(unInquilino.getId()).size() > 0){
-                for(Logica.Alquiler unAlquiler : unaControladora.obtenerAlquileresInpagos(unInquilino.getId())){
+            List<Logica.Alquiler> alquileresInpagos = unaControladora.obtenerAlquileresInpagos(unInquilino.getId());
+            if(!alquileresInpagos.isEmpty()){
+                for(Logica.Alquiler unAlquiler : alquileresInpagos){
+                    
                     Logica.Expensa unaExpensa = null;
-                    float total = 0, interesPorAtraso;
+                    float total = 0, interesPorAtraso, montoExpensa = 0;
                     int mesExpensa = Integer.valueOf(formatoMes.format(unAlquiler.getFecha())),
                             anioExpensa = Integer.valueOf(formatoAnio.format(unAlquiler.getFecha()));
                     Logica.Departamento unDepartamento = unaControladora.obtenerDepartamento(unAlquiler.getDepartamento());
@@ -398,10 +393,11 @@ public final class PanelPrincipal extends javax.swing.JPanel {
                     datos[2] = formatoFecha.format(unAlquiler.getFecha());
                     datos[3] = String.valueOf(unAlquiler.getMonto());
                     datos[4] = String.valueOf(unAlquiler.getOtraFactura());
-                    
-                    if (unaExpensa != null) {
-                        datos[5] = formatoDecimal.format(unaExpensa.getMonto());
+
+                    if (unaExpensa != null) {   // En teoría debería tener siempre su expensa..
                         total += unaExpensa.getMonto();
+                        datos[5] = formatoDecimal.format(unaExpensa.getMonto());
+                        montoExpensa = unaExpensa.getMonto();
                     } else {
                         datos[5] = "Sin expensa.";  // Creo que no debería entrar, salvo que no se haya generado la Expensa para este MES/AÑO.
                     }
@@ -410,17 +406,32 @@ public final class PanelPrincipal extends javax.swing.JPanel {
                         datos[6] = unaControladora.obtenerCochera(unAlquiler.getCochera()).getUbicacion();
                     } else {
                         datos[6] = "";
-                        
+
                     }
-                    interesPorAtraso = unaControladora.interesPorAtraso(fechaActual, unAlquiler.getTotal(), Integer.valueOf(formatoMes.format(unAlquiler.getFecha())));
-                    datos[7] = String.valueOf(interesPorAtraso);
+
+                    total += unAlquiler.getTotal();
+                    interesPorAtraso = unaControladora.interesesPorAtraso(fechaActual, unAlquiler.getFecha(), total);
+                    if(interesPorAtraso > 0){
+                        datos[7] = formatoDecimal.format(interesPorAtraso);
+                    }else{
+                        datos[7] = "0.0";
+                    }
                     
-                    datos[8] = "";
-                    total += (unAlquiler.getTotal() + interesPorAtraso);
+                    float saldoAnterior = unInquilino.getSaldoMesAnt() + unaControladora.calcularSaldo(idEdificio, unInquilino.getId(), Integer.valueOf(formatoMes.format(unAlquiler.getFecha())), Integer.valueOf(formatoAnio.format(unAlquiler.getFecha())));
+                    
+                    if(saldoAnterior != 0){
+                        total += saldoAnterior;
+                        datos[8] = formatoDecimal.format(saldoAnterior);
+                    }else{
+                        datos[8] = "0.0";
+                    }
+                    
+                    total += interesPorAtraso;
                     datos[9] = formatoDecimal.format(total);
                     tablaAlquiler.addRow(datos);
                 }
             }
+            
         }
         
         if(tablaAlquiler.getRowCount() > 0){

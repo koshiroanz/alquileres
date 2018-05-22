@@ -104,7 +104,7 @@
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       <Component id="jLabelAlquiler" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="276" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="281" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -390,7 +390,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Generar Reporte"/>
+                <Property name="text" type="java.lang.String" value="Reporte"/>
               </Properties>
             </Component>
           </SubComponents>

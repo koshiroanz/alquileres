@@ -689,7 +689,7 @@ public final class PanelServicio extends javax.swing.JPanel {
                 try{
                     String nombre = JOptionPane.showInputDialog(null, "Nombre").toUpperCase();
                     jComboBoxNombre.addItem(nombre.toUpperCase());
-                    jComboBoxNombre.setSelectedIndex(jComboBoxNombre.getComponentCount());
+                    jComboBoxNombre.setSelectedIndex(jComboBoxNombre.getItemCount()-1);
                     jComboBoxNombre.requestFocus();
                 }catch(Exception e){
                     System.out.print("Aprieta para agregar servicio, le da ok y no escribio nada. No ocurre ningun problema ;)"+e);
@@ -699,7 +699,8 @@ public final class PanelServicio extends javax.swing.JPanel {
             try{
                 String nombre = JOptionPane.showInputDialog(null, "Nombre").toUpperCase();
                 jComboBoxNombre.addItem(nombre.toUpperCase());
-                jComboBoxNombre.setSelectedIndex(jComboBoxNombre.getComponentCount());
+                jComboBoxNombre.setSelectedIndex(jComboBoxNombre.getItemCount()-1);
+                jComboBoxNombre.requestFocus();
             }catch(Exception e){
                 System.out.print("Aprieta para agregar servicio, le da ok y no escribio nada. No ocurre ningun problema ;)"+e);
             }

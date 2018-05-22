@@ -6,6 +6,9 @@ import java.util.List;
 import Logica.Alquiler;
 import Logica.Inquilino;
 import java.awt.event.ItemEvent;
+import static java.awt.event.KeyEvent.VK_BACK_SPACE;
+import static java.awt.event.KeyEvent.VK_PERIOD;
+import static java.awt.event.KeyEvent.VK_SPACE;
 import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import java.text.DecimalFormat;
@@ -19,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 public final class PanelPago extends javax.swing.JPanel {
     private final long idEdificio;
-    private long idPago, idExpensa;
+    private long idPago, idExpensa, idInquilino;
     private final ControladoraV unaControladora = new ControladoraV();
     private boolean modificar = false, eliminar = false, entro = false;
     private final DefaultComboBoxModel comboInquilino = new DefaultComboBoxModel();
@@ -339,7 +342,7 @@ public final class PanelPago extends javax.swing.JPanel {
             jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonEliminarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonEliminarLayout.setVerticalGroup(
@@ -374,7 +377,7 @@ public final class PanelPago extends javax.swing.JPanel {
             jPanelButtonAceptarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonAceptarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAceptarLayout.setVerticalGroup(
@@ -695,7 +698,7 @@ public final class PanelPago extends javax.swing.JPanel {
         
         if(fila >= 0){
             idPago = Long.parseLong(tablaPago.getValueAt(fila, 0).toString());
-            
+            idInquilino = unaControladora.obtenerInquilinoPago(idEdificio, idPago).getId();
             if(evt.getClickCount() == 1){
                 eliminar = true;
             }else if(evt.getClickCount() == 2){
@@ -706,7 +709,7 @@ public final class PanelPago extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila valida.", "", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jTablePagoMouseClicked
-
+    
     private void jPanelButtonAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonAceptarMouseClicked
         if(validar()){
             try {
@@ -743,11 +746,15 @@ public final class PanelPago extends javax.swing.JPanel {
     private void jPanelButtonEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseClicked
         if(eliminar){
             try{
-                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if(confirmacion == 0){
-                    unaControladora.bajaPago(idPago, idEdificio);
-                    eliminar = false;
-                    cargarTablaPago(0, 0);
+                if(unaControladora.obtenerPagosInquilino(idInquilino).get(unaControladora.obtenerPagosInquilino(idInquilino).size()-1).getId() == idPago){
+                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if(confirmacion == 0){
+                        unaControladora.bajaPago(idPago, idEdificio);
+                        eliminar = false;
+                        cargarTablaPago(0, 0);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se puede willy");
                 }
             }catch(Exception ex){
                 Logger.getLogger(Logica.Pago.class.getName()).log(Level.SEVERE, null, ex);
@@ -857,8 +864,10 @@ public final class PanelPago extends javax.swing.JPanel {
     private void jComboBoxAlquilerItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxAlquilerItemStateChanged
         if(evt.getStateChange() == ItemEvent.SELECTED){
             if(jComboBoxAlquiler.getSelectedIndex() > 0){
+                
                 DecimalFormat formatoDecimal = new DecimalFormat("#.00");
-                SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy"), monthFormat = new SimpleDateFormat("MM");
+                SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy"), 
+                                 monthFormat = new SimpleDateFormat("MM");
                 float totalPago, precioCochera;
                 int mes, anio;
 
@@ -888,13 +897,20 @@ public final class PanelPago extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(null, "No es posible generar el Pago. Debido a que no existe una Expensa del mes: "+mes+", para el Departamento: "+unDepartamento.getUbicacion(),"",JOptionPane.WARNING_MESSAGE);
                     }
                 }else{
-                    jTextFieldMontoExpensa.setText("0");
+                    jTextFieldMontoExpensa.setText("0.0");
                 }
 
                 jTextFieldTotalAlquiler.setText(unaControladora.reemplazarString(formatoDecimal.format(unAlquiler.getTotal())));
+                /*float saldoAnterior = unaControladora.obtenerSaldoUltimoPago(unInquilino.getId());
+                if(saldoAnterior != 0){
+                    jTextFieldSaldoMesAnterior.setText(unaControladora.reemplazarString(formatoDecimal.format(saldoAnterior)));
+                }else{
+                    jTextFieldSaldoMesAnterior.setText("0.0");
+                }*/
                 jTextFieldSaldoMesAnterior.setText(String.valueOf(unInquilino.getSaldoMesAnt()));
+                
                 totalPago = Float.valueOf(jTextFieldTotalAlquiler.getText())+Float.valueOf(jTextFieldSaldoMesAnterior.getText())+Float.valueOf(jTextFieldMontoExpensa.getText());
-                float interes = unaControladora.interesPorAtraso(jDateChooserFecha.getDate(), totalPago, mes);
+                float interes = unaControladora.interesesPorAtraso(jDateChooserFecha.getDate(), unAlquiler.getFecha(), totalPago);
 
                 if(interes > 0){
                     jTextFieldInteres.setText(unaControladora.reemplazarString(formatoDecimal.format(interes)));
@@ -980,6 +996,9 @@ public final class PanelPago extends javax.swing.JPanel {
     private void jDateChooserFechaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDateChooserFechaKeyTyped
         if (evt.getKeyChar() == evt.VK_ENTER) {
             jPanelButtonAceptarMouseClicked(null);
+        }else if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_PERIOD) && (evt.getKeyChar() != VK_BACK_SPACE)){
+            getToolkit().beep();
+            evt.consume();
         }
     }//GEN-LAST:event_jDateChooserFechaKeyTyped
 
@@ -1003,14 +1022,15 @@ public final class PanelPago extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBoxInquilinoFocusGained
 
     public void cargarComboInquilino(){
-        List<Logica.Inquilino> inquilinos = unaControladora.obtenerInquilinosEdificio(idEdificio);
-        
+        List<Logica.Inquilino> inquilinosSinPago = unaControladora.obtenerInquilinosSinPago(idEdificio);
         jComboBoxInquilino.removeAllItems();
         jComboBoxBusquedaInquilino.removeAllItems();
-        Collections.sort(inquilinos, (Inquilino i1, Inquilino i2) -> i1.getApellido().compareTo(i2.getApellido()));
         comboInquilino.addElement("Seleccione una opción.");
-        for(Logica.Inquilino unInquilino : inquilinos){
+        for(Logica.Inquilino unInquilino : inquilinosSinPago){
             comboInquilino.addElement(unInquilino);
+        }
+        
+        for(Logica.Inquilino unInquilino : unaControladora.obtenerInquilinosEdificio(idEdificio)){
             comboBusquedaInquilino.addElement(unInquilino);
         }
         
@@ -1100,7 +1120,7 @@ public final class PanelPago extends javax.swing.JPanel {
         }else if(jComboBoxAlquiler.getSelectedItem().equals("Seleccione una opción.")){
             JOptionPane.showMessageDialog(null, "Debe seleccionar un Alquiler.", "", JOptionPane.WARNING_MESSAGE);
             jComboBoxAlquiler.requestFocus();
-        }else if(Integer.valueOf(jTextFieldEfectivo.getText()) == 0 && Integer.valueOf(jTextFieldTarjeta.getText()) == 0 && Integer.valueOf(jTextFieldBanco.getText()) == 0){
+        }else if(Float.valueOf(jTextFieldEfectivo.getText()) == 0 && Float.valueOf(jTextFieldTarjeta.getText()) == 0 && Float.valueOf(jTextFieldBanco.getText()) == 0){
             JOptionPane.showMessageDialog(null, "El pago no puede ser efectuado sin un monto  mayor a 0.", "", JOptionPane.WARNING_MESSAGE);
         }else{
             validar = true;
@@ -1115,7 +1135,7 @@ public final class PanelPago extends javax.swing.JPanel {
         Logica.Pago unPago = unaControladora.obtenerPago(idPago);
         Logica.Inquilino unInquilino = unaControladora.obtenerInquilinoPago(idEdificio, idPago);
         Logica.Alquiler unAlquiler = unaControladora.obtenerAlquilerPago(idPago);
-                
+        DecimalFormat formatoDecimal = new DecimalFormat("#.00");
         jDateChooserFecha.setDate(unPago.getFecha());
         
         comboInquilino.removeAllElements();
@@ -1141,7 +1161,7 @@ public final class PanelPago extends javax.swing.JPanel {
         jTextFieldSaldoMesAnterior.setText(String.valueOf(unPago.getSaldo()));
         if(unaControladora.obtenerExpensa(unPago.getIdExpensa()) != null){
             montoExpensa = unaControladora.obtenerExpensa(unPago.getIdExpensa()).getMonto();
-            jTextFieldMontoExpensa.setText(String.valueOf(montoExpensa));
+            jTextFieldMontoExpensa.setText(unaControladora.reemplazarString(formatoDecimal.format(montoExpensa)));
         }else{
             jTextFieldMontoExpensa.setText("0");
         }

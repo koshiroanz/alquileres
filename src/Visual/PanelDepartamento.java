@@ -2,7 +2,6 @@ package Visual;
 
 import java.util.List;
 import java.awt.Color;
-import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import java.util.logging.Level;
@@ -541,7 +540,7 @@ public final class PanelDepartamento extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldUbicacionKeyTyped
 
     private void jTableDepartamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDepartamentoMouseClicked
-        int fila = jTableDepartamento.convertColumnIndexToModel(jTableDepartamento.getSelectedRow());
+        int fila = jTableDepartamento.getSelectedRow();
         
         if(fila >= 0){
             idDepartamento = Long.parseLong(modelo.getValueAt(fila, 0).toString());
@@ -635,6 +634,7 @@ public final class PanelDepartamento extends javax.swing.JPanel {
     }
     
     public void limpiarComponentes(){
+        modificar = false;
         this.jTextFieldUbicacion.setText(null);
         this.jTextFieldNumDormitorios.setText(null);
         this.jTextAreaDescripcion.setText(null);

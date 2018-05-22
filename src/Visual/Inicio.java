@@ -517,6 +517,9 @@ public final class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanelButtonBuscarMouseMoved
 
     private void jTextFieldCoeficienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCoeficienteKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jButtonCoefienteActionPerformed(null);
+        }
         char ingreso = evt.getKeyChar();
         if(Character.isLetter(ingreso)){
             evt.consume();
@@ -528,28 +531,21 @@ public final class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldCoeficienteKeyTyped
 
     private void jTextFieldCoeficienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCoeficienteFocusLost
+        jButtonCoefienteActionPerformed(null);
+    }//GEN-LAST:event_jTextFieldCoeficienteFocusLost
+
+    private void jButtonCoefienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCoefienteActionPerformed
         if(!jTextFieldCoeficiente.getText().isEmpty()){
             try {
                 float valor = Float.valueOf(jTextFieldCoeficiente.getText());
                 if(unaControladora.obtenerCoeficiente() != null){
-                    unaControladora.modificarCoeficiente(unaControladora.obtenerCoeficiente().getId(), unaControladora.obtenerCoeficiente().getNombre(), valor);
+                    if(unaControladora.obtenerCoeficiente().getValor() != valor){
+                        unaControladora.modificarCoeficiente(unaControladora.obtenerCoeficiente().getId(), unaControladora.obtenerCoeficiente().getNombre(), valor);
+                        JOptionPane.showMessageDialog(null, "El Coeficiente se ah modificado con exito.", "", JOptionPane.WARNING_MESSAGE);
+                    }
                 }else{
                     unaControladora.altaCoeficiente("Coeficiente", valor);
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_jTextFieldCoeficienteFocusLost
-
-    private void jButtonCoefienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCoefienteActionPerformed
-        if(jTextFieldCoeficiente.getText().isEmpty()){
-            try {
-                float valor = Float.valueOf(jTextFieldCoeficiente.getText());
-                if(unaControladora.obtenerCoeficiente() != null){
-                    unaControladora.modificarCoeficiente(unaControladora.obtenerCoeficiente().getId(), unaControladora.obtenerCoeficiente().getNombre(), valor);
-                }else{
-                    unaControladora.altaCoeficiente("Coeficiente", valor);
+                    JOptionPane.showMessageDialog(null, "El Coeficiente se ah guardado con exito.", "", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (Exception ex) {
                 Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
