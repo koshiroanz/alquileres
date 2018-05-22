@@ -41,11 +41,11 @@ public class Alquiler implements Serializable {
     public Alquiler() {
     }
 
-    public Alquiler(Date fecha, long idCochera, long idDepartamento, float monto, float otraFactura, float total, String descripcion,  Pago unPago) {
+    public Alquiler(Date fecha, long idCochera, long idDepartamento, int GeneracionAuto, float monto, float otraFactura, float total, String descripcion,  Pago unPago) {
         this.fecha = fecha;
         this.idCochera = idCochera;
         this.idDepartamento = idDepartamento;
-        this.GeneracionAuto = 0;
+        this.GeneracionAuto = GeneracionAuto;
         this.monto = monto;
         this.otraFactura = otraFactura;
         this.total = total;

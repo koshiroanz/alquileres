@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 
 @Entity
@@ -22,6 +23,8 @@ public class Edificio implements Serializable {
     private String direccion;
     @Basic
     private String descripcion;
+    @OneToOne
+    private Notificaciones Notificaciones;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Departamento> departamentos;
     @OneToMany(cascade = CascadeType.ALL)
@@ -39,6 +42,7 @@ public class Edificio implements Serializable {
         this.cocheras = cocheras;
         this.servicios = servicios;
         this.coeficientesDorm = coeficientesDorm;
+        this.Notificaciones = null;
     }
 
     public Edificio() {
@@ -70,6 +74,14 @@ public class Edificio implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Notificaciones getNotificaciones() {
+        return Notificaciones;
+    }
+
+    public void setNotificaciones(Notificaciones Notificaciones) {
+        this.Notificaciones = Notificaciones;
     }
 
     public List<Departamento> getDepartamentos() {
