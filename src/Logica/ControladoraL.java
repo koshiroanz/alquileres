@@ -131,9 +131,9 @@ public class ControladoraL {
 /*------------------------------------------------------------------------------
                                 ALQUILER
 ------------------------------------------------------------------------------*/
-    public void altaAlquiler(Date fecha, long idCochera, long idDepartamento, float montoAlquiler, float otrasFactura, float total, String descripcion, Pago unPago, long idInquilino) throws Exception{
+    public void altaAlquiler(Date fecha, long idCochera, long idDepartamento, int GeneracionAuto, float montoAlquiler, float otrasFactura, float total, String descripcion, Pago unPago, long idInquilino) throws Exception{
                 
-        Alquiler unAlquiler = new Alquiler(fecha, idCochera, idDepartamento, montoAlquiler, otrasFactura, total, descripcion, unPago);
+        Alquiler unAlquiler = new Alquiler(fecha, idCochera, idDepartamento, GeneracionAuto, montoAlquiler, otrasFactura, total, descripcion, unPago);
         
         unaControladora.altaAlquiler(unAlquiler);
         
@@ -143,12 +143,13 @@ public class ControladoraL {
         unaControladora.modificarInquilino(unInquilino);
     }
     
-    public void modificarAlquiler(long id, Date fecha, long idCochera, long idDepartamento, float montoAlquiler, float otraFactura, float total, String descripcion, Pago unPago) throws Exception{
+    public void modificarAlquiler(long id, Date fecha, long idCochera, long idDepartamento, int GeneracionAuto, float montoAlquiler, float otraFactura, float total, String descripcion, Pago unPago) throws Exception{
         Alquiler unAlquiler = obtenerAlquiler(id);
         
         unAlquiler.setFecha(fecha);
         unAlquiler.setIdCochera(idCochera);
         unAlquiler.setIdDepartamento(idDepartamento);
+        unAlquiler.setGeneracionAuto(GeneracionAuto);
         unAlquiler.setMonto(montoAlquiler);
         unAlquiler.setOtraFactura(otraFactura);
         unAlquiler.setTotal(total);
@@ -273,7 +274,7 @@ public class ControladoraL {
                 
                 unAlquiler = alquileres.get(alquileres.size()-1);
                 //unAlquiler = unInquilino.getAlquileres().get(unInquilino.getAlquileres().size()-1); // Se obtiene el último Alquiler del Inquilino
-                if(unAlquiler.getGeneracionAuto() < 6){ // Si generacionAuto del último Alquiler < 6
+                if(unAlquiler.getGeneracionAuto() < 7){ // Si generacionAuto del último Alquiler < 6
                     mesAlquiler = Integer.valueOf(monthFormat.format(unAlquiler.fecha));
                     anioAlquiler = Integer.valueOf(yearFormat.format(unAlquiler.fecha));
                     
@@ -1298,8 +1299,10 @@ public class ControladoraL {
                     inquilinos.add(unDepartamento.getUnInquilino());
                 }
             }
-            
-            inquilinosFinal = inquilinos;
+            for(Inquilino unInqui : inquilinos){
+                inquilinosFinal.add(unInqui);
+            }
+            //inquilinosFinal = inquilinos;
         }
         
         

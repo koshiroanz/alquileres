@@ -35,12 +35,12 @@ public class ControladoraV {
 /*------------------------------------------------------------------------------
                                 ALQUILER
 ------------------------------------------------------------------------------*/
-    public void altaAlquiler(Date fecha, long cochera, long departamento, float monto, float otraFactura, float total, String descripcion, Logica.Pago unPago, long idInquilino) throws Exception{
-        unaControladora.altaAlquiler(fecha, cochera, departamento, monto, otraFactura, total, descripcion, unPago, idInquilino);
+    public void altaAlquiler(Date fecha, long cochera, long departamento, int GeneracionAuto, float monto, float otraFactura, float total, String descripcion, Logica.Pago unPago, long idInquilino) throws Exception{
+        unaControladora.altaAlquiler(fecha, cochera, departamento, GeneracionAuto, monto, otraFactura, total, descripcion, unPago, idInquilino);
     }
     
-    public void modificarAlquiler(long id, Date fecha, long cochera, long departamento, float monto, float otraFactura, float total, String descripcion, Logica.Pago unPago) throws Exception{
-        unaControladora.modificarAlquiler(id, fecha, cochera, departamento, monto, otraFactura, total, descripcion, unPago);
+    public void modificarAlquiler(long id, Date fecha, long cochera, long departamento, int GeneracionAuto, float monto, float otraFactura, float total, String descripcion, Logica.Pago unPago) throws Exception{
+        unaControladora.modificarAlquiler(id, fecha, cochera, departamento, GeneracionAuto, monto, otraFactura, total, descripcion, unPago);
     }
     
     public void bajaAlquiler(long idAlquiler, long idInquilino) throws Exception{
