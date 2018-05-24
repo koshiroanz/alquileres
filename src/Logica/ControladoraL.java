@@ -664,11 +664,11 @@ public class ControladoraL {
         List<Departamento> departamentos = obtenerEdificio(idEdificio).getDepartamentos();
         
         for(Departamento unDepartamento : departamentos){
-            //if(unDepartamento.getCantDormitorios() > 0){
+            if(unDepartamento.getCantDormitorios() > 0){
                 if(unDepartamento.getUnInquilino() != null){
                     cantDeptosOcupados++;
                 }
-            //}
+            }
         }
         
         return cantDeptosOcupados;
@@ -1558,7 +1558,6 @@ public class ControladoraL {
         
         Inquilino unInquilino = obtenerInquilinoPago(idEdificio, idPago);
         List<Alquiler> alquileres = new LinkedList();
-        System.out.println(unInquilino.getSaldoMesAnt());
         Alquiler unAlquiler = obtenerAlquilerPago(idPago);
         
         for(Alquiler unAlqui : unInquilino.getAlquileres()){
