@@ -906,6 +906,8 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             alquileres = unaControladora.obtenerAlquileresEdificio(idEdificio);
         }
         
+        //Collections.sort(alquileres, (Logica.Alquiler a1, Logica.Alquiler a2) -> a1.getFecha().compareTo(a2.getFecha()));
+        
         for(Logica.Alquiler unAlquiler : alquileres){
             datos[0] = String.valueOf(unAlquiler.getId());
             datos[1] = String.valueOf(dateFormat.format(unAlquiler.getFecha()));
@@ -927,9 +929,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             
             tablaAlquiler.addRow(datos);
         }
-        
-        //System.out.print("Total de Monto: $"+totalMonto+" - Total de Otras Facturas: $"+totalOtrasFacturas);
-        
+                
         this.jTableAlquiler.setModel(tablaAlquiler);
     }
     

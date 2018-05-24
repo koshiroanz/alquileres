@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author koshiro
  */
-public class vtnBotonDepartamento extends javax.swing.JFrame {
+public final class vtnBotonDepartamento extends javax.swing.JFrame {
     private final long idEdificio;
     private final ControladoraV unaControladora = new ControladoraV();
     

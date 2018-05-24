@@ -586,11 +586,6 @@ public final class PanelDepartamento extends javax.swing.JPanel {
             }
             
             modelo = new DefaultTableModel(datos,colTablaDepartamento);
-            
-            RowSorter<TableModel> sorter = new TableRowSorter<>(modelo);
-            jTableDepartamento.setRowSorter(sorter);
-            jTableDepartamento.setModel(modelo);
-            
             this.jTableDepartamento.setModel(modelo);
         }
     }

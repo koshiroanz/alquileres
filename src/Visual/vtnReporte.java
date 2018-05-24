@@ -1,10 +1,9 @@
 package Visual;
 
 import java.awt.Color;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-public class vtnReporte extends javax.swing.JFrame {
+public final class vtnReporte extends javax.swing.JFrame {
     private final ControladoraV unaControladora = new ControladoraV();
     private final long idEdificio;
     

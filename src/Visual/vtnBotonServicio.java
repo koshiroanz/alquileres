@@ -8,10 +8,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-/**
- *
- * @author koshiro
- */
 public final class vtnBotonServicio extends javax.swing.JFrame {
     private final long idEdificio = 0;
     private final ControladoraV unaControladora = new ControladoraV();

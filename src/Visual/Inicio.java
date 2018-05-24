@@ -101,10 +101,10 @@ public final class Inicio extends javax.swing.JFrame {
             }
         });
 
-        jLabelCrearEdificio.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
+        jLabelCrearEdificio.setFont(new java.awt.Font("Segoe UI Semibold", 1, 16)); // NOI18N
         jLabelCrearEdificio.setForeground(new java.awt.Color(255, 255, 255));
         jLabelCrearEdificio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelCrearEdificio.setText("Crear Edificio");
+        jLabelCrearEdificio.setText("Crear edificio");
 
         javax.swing.GroupLayout jPanelButtonCrearEdificioLayout = new javax.swing.GroupLayout(jPanelButtonCrearEdificio);
         jPanelButtonCrearEdificio.setLayout(jPanelButtonCrearEdificioLayout);
@@ -117,7 +117,7 @@ public final class Inicio extends javax.swing.JFrame {
         );
         jPanelButtonCrearEdificioLayout.setVerticalGroup(
             jPanelButtonCrearEdificioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelCrearEdificio, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabelCrearEdificio, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
         );
 
         jPanelButtonAceptar.setBackground(new java.awt.Color(65, 65, 65));
@@ -137,7 +137,7 @@ public final class Inicio extends javax.swing.JFrame {
             }
         });
 
-        jLabelAceptar.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
+        jLabelAceptar.setFont(new java.awt.Font("Segoe UI Semibold", 1, 16)); // NOI18N
         jLabelAceptar.setForeground(new java.awt.Color(255, 255, 255));
         jLabelAceptar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelAceptar.setText("Aceptar");
@@ -148,12 +148,12 @@ public final class Inicio extends javax.swing.JFrame {
             jPanelButtonAceptarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelButtonAceptarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAceptarLayout.setVerticalGroup(
             jPanelButtonAceptarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+            .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -374,10 +374,11 @@ public final class Inicio extends javax.swing.JFrame {
                 .addGroup(jPanelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelInicioLayout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanelButtonCrearEdificio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanelButtonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jPanelButtonAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
+                        .addGap(0, 0, 0))
                     .addComponent(jScrollPane1)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE))
                 .addContainerGap())
@@ -422,6 +423,9 @@ public final class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanelButtonCrearEdificioMouseMoved
 
     private void jPanelButtonCrearEdificioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonCrearEdificioMouseClicked
+        vtnEdificio ventanaEdificio = new vtnEdificio(this);
+        ventanaEdificio.setVisible(true);
+        /*
         if(unaControladora.obtenerCoeficiente() != null){
             new mainFrame(0,"").setVisible(true);    // Parametro 0 = idEdificio.
             this.dispose();
@@ -429,7 +433,7 @@ public final class Inicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ingrese valor coeficiente.", "", JOptionPane.WARNING_MESSAGE);
             jLabelCoeficiente.setForeground(Color.red);
             jTextFieldCoeficiente.requestFocus();
-        }
+        }*/
     }//GEN-LAST:event_jPanelButtonCrearEdificioMouseClicked
 
     private void jPanelButtonAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonAceptarMouseClicked
