@@ -664,11 +664,11 @@ public class ControladoraL {
         List<Departamento> departamentos = obtenerEdificio(idEdificio).getDepartamentos();
         
         for(Departamento unDepartamento : departamentos){
-            if(unDepartamento.getCantDormitorios() > 0){
+            //if(unDepartamento.getCantDormitorios() > 0){
                 if(unDepartamento.getUnInquilino() != null){
                     cantDeptosOcupados++;
                 }
-            }
+            //}
         }
         
         return cantDeptosOcupados;
