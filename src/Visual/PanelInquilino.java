@@ -156,7 +156,7 @@ public class PanelInquilino extends javax.swing.JPanel {
         });
 
         jLabelCantFamiliares.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabelCantFamiliares.setText("Cant. Familiares");
+        jLabelCantFamiliares.setText("Cant. Personas");
 
         jTextFieldCantFamiliares.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldCantFamiliares.setBorder(null);
@@ -260,7 +260,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                             .addComponent(jSeparatorDni)
                             .addComponent(jSeparatorNombre)
                             .addComponent(jTextFieldNombre)
-                            .addComponent(jTextFieldDni, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                            .addComponent(jTextFieldDni, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                             .addComponent(jTextFieldTelefono)
                             .addComponent(jTextFieldCantFamiliares))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,7 +281,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                             .addComponent(jTextFieldCuit)
                             .addComponent(jTextFieldApellido)
                             .addComponent(jTextFieldEmail)
-                            .addComponent(jComboBoxDepartamento, 0, 292, Short.MAX_VALUE)
+                            .addComponent(jComboBoxDepartamento, 0, 296, Short.MAX_VALUE)
                             .addComponent(jSeparatorApellido)
                             .addComponent(jSeparatorCuit)
                             .addComponent(jSeparatorEmail)
@@ -420,7 +420,7 @@ public class PanelInquilino extends javax.swing.JPanel {
             jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonEliminarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonEliminarLayout.setVerticalGroup(
@@ -456,7 +456,7 @@ public class PanelInquilino extends javax.swing.JPanel {
             jPanelButtonAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonAgregarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAgregarLayout.setVerticalGroup(
@@ -626,7 +626,7 @@ public class PanelInquilino extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
 
     private void jTableInquilinoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableInquilinoMouseClicked
-        int fila = jTableInquilino.convertColumnIndexToModel(jTableInquilino.getSelectedRow());
+        int fila = jTableInquilino.getSelectedRow();
         
         if(fila >= 0){
             idInquilino = Long.parseLong(modelo.getValueAt(fila, 0).toString());
@@ -859,8 +859,6 @@ public class PanelInquilino extends javax.swing.JPanel {
 
             modelo = new DefaultTableModel(filas,colTablaInquilino);
             
-            RowSorter<TableModel> sorter = new TableRowSorter<>(modelo);
-            jTableInquilino.setRowSorter(sorter);
             jTableInquilino.setModel(modelo);
         }
         

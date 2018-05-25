@@ -6,7 +6,17 @@ import Logica.ControladoraL;
 
 public class ControladoraV {
     private final ControladoraL unaControladora = new ControladoraL();
+
+/*------------------------------------------------------------------------------
+                           REPORTE
+------------------------------------------------------------------------------*/
+    public void altaNotificaciones(long idEdificio, String obsAlquiler, String obsExpensa) throws Exception{
+        unaControladora.altaNotificaciones(idEdificio, obsAlquiler, obsExpensa);
+    }
     
+    public void modificarNotificaciones(long idEdificio, String obsAlquiler, String obsExpensa) throws Exception{
+        unaControladora.modificarNotificaciones(idEdificio, obsAlquiler, obsExpensa);
+    }   
 /*------------------------------------------------------------------------------
                            NOTIFICACIONES
 ------------------------------------------------------------------------------*/
@@ -17,10 +27,6 @@ public class ControladoraV {
 /*------------------------------------------------------------------------------
                            INTERES POR ATRASO
 ------------------------------------------------------------------------------*/
-    public float interesPorAtraso(Date fechaPago, float montoTotalAlquiler, int mesAlquiler){
-        return unaControladora.interesPorAtraso(fechaPago, montoTotalAlquiler, mesAlquiler);
-    }
-    // Probando nuevo método para calcular el interés
     public float interesesPorAtraso(Date fechaActual, Date fechaAlquiler, float total){
         return unaControladora.interesesPorAtraso(fechaActual, fechaAlquiler, total);
     }
@@ -30,6 +36,13 @@ public class ControladoraV {
 ------------------------------------------------------------------------------*/
     public String reemplazarString(String valor){
         return unaControladora.reemplazarString(valor);
+    }
+    
+/*------------------------------------------------------------------------------
+                           SALDO MES ANTERIOR
+------------------------------------------------------------------------------*/
+    public float calcularSaldo(long idEdificio, long idInquilino, int mes, int anio){
+        return unaControladora.calcularSaldo(idEdificio, idInquilino, mes, anio);
     }
     
 /*------------------------------------------------------------------------------
@@ -69,6 +82,10 @@ public class ControladoraV {
     
     public void generarAlquiler() throws Exception{
         unaControladora.generarAlquiler();
+    }
+    
+    public Logica.Alquiler obtenerUltiAlquilerInquilino(Logica.Inquilino unInquilino){
+        return unaControladora.obtenerUltiAlquilerInquilino(unInquilino);
     }
     
 /*------------------------------------------------------------------------------

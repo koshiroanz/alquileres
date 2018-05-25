@@ -41,40 +41,34 @@ public class ControladoraL {
         
         return notificaciones;
     }
+
+/*------------------------------------------------------------------------------
+                           REPORTE
+------------------------------------------------------------------------------*/
+    public void altaNotificaciones(long idEdificio, String obsAlquiler, String obsExpensa) throws Exception{
+        Notificaciones Notificaciones = new Notificaciones();
+        
+        Notificaciones.setObsAlquiler(obsAlquiler);
+        Notificaciones.setObsExpensa(obsExpensa);
+        
+        unaControladora.altaNotificaciones(Notificaciones);
+        Edificio unEdificio = obtenerEdificio(idEdificio);
+        unEdificio.setNotificaciones(Notificaciones);
+        unaControladora.modificarEdificio(unEdificio);
+        
+    }
+    
+    public void modificarNotificaciones(long idEdificio, String obsAlquiler, String obsExpensa) throws Exception{
+        Notificaciones unaNotificacion = obtenerEdificio(idEdificio).getNotificaciones();
+        
+        unaNotificacion.setObsAlquiler(obsAlquiler);
+        unaNotificacion.setObsExpensa(obsExpensa);
+        
+        unaControladora.modificarNotificaciones(unaNotificacion);
+    }
 /*------------------------------------------------------------------------------
                            INTERES POR ATRASO
 ------------------------------------------------------------------------------*/
-    public float interesPorAtraso(Date fechaPago, float montoTotalPago, int mesAlquiler){
-        SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
-        SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
-        
-        float coeficienteInteres = obtenerCoeficiente().getValor(),
-              interesTotal = 0,
-              interesMes = (30 * (coeficienteInteres/30) * montoTotalPago);
-              
-        int dia = Integer.parseInt(dayFormat.format(fechaPago)),
-            difDias = dia - 10,
-            mes = Integer.parseInt(monthFormat.format(fechaPago)),
-            difMes = mes - mesAlquiler;
-        
-        if(difMes >= 0){
-            if(difMes == 0){
-                if(difDias > 0){
-                    interesTotal = (difDias * (coeficienteInteres/30) * montoTotalPago);
-                    if(interesTotal < 10){
-                        interesTotal = 0;
-                    }
-                }
-            }else if(difMes > 0){
-                for(int i = 0; i < difMes; i++){
-                    interesTotal += interesMes;
-                }
-            }
-        }
-        
-        return interesTotal;
-    }
-    // Probando nuevo método para calcular el interés
     public float interesesPorAtraso(Date fechaActual, Date fechaAlquiler, float total){
         float interesAlquiler = 0;
         SimpleDateFormat formatoDia = new SimpleDateFormat("dd"),
@@ -128,18 +122,61 @@ public class ControladoraL {
         
         return resultado;
     }
+    
+/*------------------------------------------------------------------------------
+                           SALDO MES ANTERIOR
+------------------------------------------------------------------------------*/
+    public float calcularSaldo(long idEdificio, long idInquilino, int mes, int anio){
+        float saldo = 0;
+        Expensa unaExpensa = null;
+        SimpleDateFormat formatoMes = new SimpleDateFormat("MM"),
+                         formatoAnio = new SimpleDateFormat("yyyy");
+                         
+        List<Alquiler> alquileres = obtenerInquilino(idInquilino).getAlquileres();
+        
+        for(Alquiler unAlquiler : alquileres){
+            if(unAlquiler.getUnPago() == null){
+                if(Integer.valueOf(formatoMes.format(unAlquiler.getFecha())) < mes){
+                    if(Integer.valueOf(formatoAnio.format(unAlquiler.getFecha())) <= anio){
+                        if(unAlquiler.getDepartamento() > 0){
+                            unaExpensa = obtenerExpensa(obtenerDepartamentoInquilino(idEdificio, idInquilino).getId(), mes, anio);
+                        }
+                        
+                        if(unaExpensa != null){
+                            saldo += unAlquiler.getTotal() + unaExpensa.getMonto();
+                            saldo += interesesPorAtraso(new Date(), unAlquiler.getFecha(), saldo);
+                        }else{
+                            saldo += unAlquiler.getTotal();
+                            saldo += interesesPorAtraso(new Date(), unAlquiler.getFecha(), saldo);
+                        }
+                    }
+                }else{
+                    if(Integer.valueOf(formatoAnio.format(unAlquiler.getFecha())) < anio){
+                        unaExpensa = obtenerExpensa(obtenerDepartamentoInquilino(idEdificio, idInquilino).getId(), mes, anio);
+                        if(unaExpensa != null){
+                            saldo += unAlquiler.getTotal() + unaExpensa.getMonto();
+                            saldo += interesesPorAtraso(new Date(), unAlquiler.getFecha(), saldo);
+                        }else{
+                            saldo += unAlquiler.getTotal();
+                            saldo += interesesPorAtraso(new Date(), unAlquiler.getFecha(), saldo);
+                        }
+                    }
+                }
+            }
+        }
+        
+        return saldo;
+    }
 /*------------------------------------------------------------------------------
                                 ALQUILER
 ------------------------------------------------------------------------------*/
     public void altaAlquiler(Date fecha, long idCochera, long idDepartamento, int GeneracionAuto, float montoAlquiler, float otrasFactura, float total, String descripcion, Pago unPago, long idInquilino) throws Exception{
-                
         Alquiler unAlquiler = new Alquiler(fecha, idCochera, idDepartamento, GeneracionAuto, montoAlquiler, otrasFactura, total, descripcion, unPago);
         
         unaControladora.altaAlquiler(unAlquiler);
         
         Inquilino unInquilino = obtenerInquilino(idInquilino);
         unInquilino.getAlquileres().add(unAlquiler);
-        
         unaControladora.modificarInquilino(unInquilino);
     }
     
@@ -274,29 +311,12 @@ public class ControladoraL {
                 
                 unAlquiler = alquileres.get(alquileres.size()-1);
                 //unAlquiler = unInquilino.getAlquileres().get(unInquilino.getAlquileres().size()-1); // Se obtiene el último Alquiler del Inquilino
-                if(unAlquiler.getGeneracionAuto() < 7){ // Si generacionAuto del último Alquiler < 6
+                if(unAlquiler.getGeneracionAuto() < 6){ // Si generacionAuto del último Alquiler < 6
                     mesAlquiler = Integer.valueOf(monthFormat.format(unAlquiler.fecha));
                     anioAlquiler = Integer.valueOf(yearFormat.format(unAlquiler.fecha));
                     
                     if(mesAlquiler == mesActual && anioAlquiler == anioActual){
-                        Alquiler nuevoAlquiler = new Alquiler();
-                        
-                        nuevoAlquiler.setFecha(fecha);
-                        nuevoAlquiler.setIdCochera(unAlquiler.getCochera());
-                        nuevoAlquiler.setIdDepartamento(unAlquiler.getDepartamento());
-                        nuevoAlquiler.setGeneracionAuto(unAlquiler.getGeneracionAuto()+1);
-                        nuevoAlquiler.setMonto(unAlquiler.getMonto());
-                        nuevoAlquiler.setOtraFactura(unAlquiler.getOtraFactura());
-                        nuevoAlquiler.setTotal(unAlquiler.getTotal());
-                        nuevoAlquiler.setDescripcion(unAlquiler.getDescripcion());
-                        nuevoAlquiler.setUnPago(null);
-                        
-                        unaControladora.altaAlquiler(nuevoAlquiler);
-                        //
-                        List<Alquiler> alquileresInquilino = unInquilino.getAlquileres();
-                        alquileresInquilino.add(nuevoAlquiler);
-                        unInquilino.setAlquileres(alquileresInquilino);
-                        unaControladora.modificarInquilino(unInquilino);
+                        altaAlquiler(fecha, unAlquiler.getCochera(), unAlquiler.getDepartamento(), unAlquiler.getGeneracionAuto()+1, unAlquiler.getMonto(), unAlquiler.getOtraFactura(), unAlquiler.getTotal(), unAlquiler.getDescripcion(), null, unInquilino.getId());
                         cantAlquileresGenerados++;
                     }
                 }
@@ -306,7 +326,30 @@ public class ControladoraL {
         
     }
     
-    
+    public Alquiler obtenerUltiAlquilerInquilino(Inquilino unInquilino){
+        Date fechaActual = new Date();
+        SimpleDateFormat formatoMes = new SimpleDateFormat("MM"), 
+                         formatoAnio = new SimpleDateFormat("yyyy");
+        int mesAlquiler, anioAlquiler, mesActual = Integer.parseInt(formatoMes.format(fechaActual)), anioActual = Integer.parseInt(formatoAnio.format(fechaActual));
+        Alquiler ultimoAlquiler = null;
+        List<Alquiler> alquileres = new LinkedList();
+        
+        for(Alquiler unAlqui : unInquilino.getAlquileres()){
+            alquileres.add(unAlqui);
+        }
+        
+        if(alquileres.size() > 0){
+            Collections.sort(alquileres, (Alquiler a1, Alquiler a2) -> a1.getFecha().compareTo(a2.getFecha()));
+            int ultimoIndex = alquileres.size()-1;
+            mesAlquiler = Integer.parseInt(formatoMes.format(alquileres.get(ultimoIndex).getFecha()));
+            anioAlquiler = Integer.parseInt(formatoAnio.format(alquileres.get(ultimoIndex).getFecha()));
+            if((mesAlquiler == mesActual) && (anioAlquiler == anioActual)){
+                 ultimoAlquiler = alquileres.get(ultimoIndex);
+            }
+        }
+        
+        return ultimoAlquiler;
+    }
     
 /*------------------------------------------------------------------------------
                                 COCHERA
@@ -621,8 +664,10 @@ public class ControladoraL {
         List<Departamento> departamentos = obtenerEdificio(idEdificio).getDepartamentos();
         
         for(Departamento unDepartamento : departamentos){
-            if(unDepartamento.getUnInquilino() != null){
-                cantDeptosOcupados++;
+            if(unDepartamento.getCantDormitorios() > 0){
+                if(unDepartamento.getUnInquilino() != null){
+                    cantDeptosOcupados++;
+                }
             }
         }
         
@@ -898,8 +943,14 @@ public class ControladoraL {
                coeficiente = obtenerCoeficienteDorm(idEdificio,unDepartamento).getValor(),
                montoExpensa;
         float porcentajeDeptosOcupados;
-        int cantDeptos = obtenerEdificio(idEdificio).getDepartamentos().size(), 
+        int cantDeptos = 0, 
             cantDeptosOcupados = departamentosOcupados(idEdificio);
+        
+        for(Departamento unDepa : obtenerEdificio(idEdificio).getDepartamentos()){
+            if(unDepa.getCantDormitorios() > 0){
+                cantDeptos++;
+            }
+        }
         
         porcentajeDeptosOcupados = (float)cantDeptosOcupados/cantDeptos;
         
@@ -913,12 +964,14 @@ public class ControladoraL {
                     montoExpensa = (importeServicio/cantDeptos*coeficiente)*porcentajeDeptosOcupados;
                 }
                 
-                ServicioExpensa unServicioExpensa = new ServicioExpensa(serviciosEdif.get(i).getNombre(), serviciosEdif.get(i).getMes(), serviciosEdif.get(i).getAnio(), montoExpensa, serviciosEdif.get(i).getDescripcion());
-                if(alta){
-                    unaControladora.altaServicioExpensa(unServicioExpensa);
+                if(montoExpensa > 0){
+                    ServicioExpensa unServicioExpensa = new ServicioExpensa(serviciosEdif.get(i).getNombre(), serviciosEdif.get(i).getMes(), serviciosEdif.get(i).getAnio(), montoExpensa, serviciosEdif.get(i).getDescripcion());
+                    if(alta){
+                        unaControladora.altaServicioExpensa(unServicioExpensa);
+                    }
+
+                    expensas.add(unServicioExpensa);
                 }
-                
-                expensas.add(unServicioExpensa);
             }
         }
         
@@ -1299,17 +1352,19 @@ public class ControladoraL {
                     inquilinos.add(unDepartamento.getUnInquilino());
                 }
             }
-            for(Inquilino unInqui : inquilinos){
-                inquilinosFinal.add(unInqui);
+            
+            if(inquilinos.size() > 0){
+                for(Inquilino unInqui : inquilinos){
+                    inquilinosFinal.add(unInqui);
+                }
             }
-            //inquilinosFinal = inquilinos;
         }
-        
-        
         
         for(Cochera unaCochera : cocheras){
             if(inquilinos.isEmpty()){
-                inquilinosFinal.add(unaCochera.getUnInquilino());
+                if(unaCochera.getUnInquilino() != null){
+                    inquilinosFinal.add(unaCochera.getUnInquilino());
+                }
             }else{
                 int cont = 0;
                 for(Inquilino unInquilino : inquilinos){
@@ -1456,10 +1511,6 @@ public class ControladoraL {
         Pago unPago = new Pago(fecha, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, monto, descripcion, idAlquiler, idExpensa);
         float nuevoSaldo = monto - (efectivo+banco+tarjeta);
         
-        if(nuevoSaldo < 10){
-            nuevoSaldo = 0;
-        }
-        
         unaControladora.altaPago(unPago);
         
         Inquilino unInquilino = obtenerInquilino(idInquilino);
@@ -1576,6 +1627,8 @@ public class ControladoraL {
                 pagos.add(unAlquiler.getUnPago());
             }
         }
+        
+        Collections.sort(pagos,(Pago p1, Pago p2) -> p1.getFecha().compareTo(p2.getFecha()));
         
         return pagos;
     }

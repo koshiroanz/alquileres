@@ -688,9 +688,24 @@ public final class PanelServicio extends javax.swing.JPanel {
             }else{
                 try{
                     String nombre = JOptionPane.showInputDialog(null, "Nombre").toUpperCase();
-                    jComboBoxNombre.addItem(nombre.toUpperCase());
-                    jComboBoxNombre.setSelectedIndex(jComboBoxNombre.getComponentCount());
-                    jComboBoxNombre.requestFocus();
+                    int i = 1;
+                    
+                    while((i < jComboBoxNombre.getItemCount()) && i != 0){
+                        if(jComboBoxNombre.getItemAt(i).equals(nombre)){
+                            i = 0;
+                        }else{
+                            i++;
+                        }
+                    }
+                    
+                    if(i > 0){
+                        jComboBoxNombre.addItem(nombre);
+                        jComboBoxNombre.setSelectedIndex(jComboBoxNombre.getItemCount()-1);
+                        jComboBoxNombre.requestFocus();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "El nombre esta siendo ocupado por algun Servicio.", "", JOptionPane.ERROR_MESSAGE);
+                    }
+                    
                 }catch(Exception e){
                     System.out.print("Aprieta para agregar servicio, le da ok y no escribio nada. No ocurre ningun problema ;)"+e);
                 }
@@ -698,8 +713,25 @@ public final class PanelServicio extends javax.swing.JPanel {
         }else{
             try{
                 String nombre = JOptionPane.showInputDialog(null, "Nombre").toUpperCase();
-                jComboBoxNombre.addItem(nombre.toUpperCase());
-                jComboBoxNombre.setSelectedIndex(jComboBoxNombre.getComponentCount());
+                int i = 1;
+                    
+                    while(i < jComboBoxNombre.getItemCount() && i != 0){
+                        if(jComboBoxNombre.getItemAt(i).equals(nombre)){
+                            i = 0;
+                        }else{
+                            i++;
+                        }
+                    }
+                    
+                    if(i > 0){
+                        jComboBoxNombre.addItem(nombre);
+                        jComboBoxNombre.setSelectedIndex(jComboBoxNombre.getItemCount()-1);
+                        jComboBoxNombre.requestFocus();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "El nombre esta siendo ocupado por algun Servicio.", "", JOptionPane.ERROR_MESSAGE);
+                        jButtonNombreActionPerformed(null);
+                    }
+                    
             }catch(Exception e){
                 System.out.print("Aprieta para agregar servicio, le da ok y no escribio nada. No ocurre ningun problema ;)"+e);
             }
@@ -849,7 +881,7 @@ public final class PanelServicio extends javax.swing.JPanel {
     
     public void limpiarComponentes(){
         jComboBoxMes.setSelectedIndex(0);
-        jComboBoxNombre.setSelectedIndex(0);
+        cargarComboNombre(idEdificio);
         jButtonNombre.setText("+");
         jDateChooserFechaEmision.setDate(null);
         jDateChooserFechaVencimiento.setDate(null);
@@ -913,6 +945,28 @@ public final class PanelServicio extends javax.swing.JPanel {
         
         if(comboNombre && comboMes && !jTextFieldMonto.getText().isEmpty()){
             validar = true;
+        }
+        
+        if(jDateChooserFechaEmision.getDate() != null){
+            SimpleDateFormat formatoAnio = new SimpleDateFormat("yyyy");
+            if(formatoAnio.format(jDateChooserFechaEmision.getDate()).substring(0, 2).equals("00")){
+                JOptionPane.showMessageDialog(null, "Verifique la facha: "+formatoAnio.format(jDateChooserFechaEmision.getDate()), "", JOptionPane.WARNING_MESSAGE);
+                jDateChooserFechaEmision.requestFocus();
+                validar = false;
+            }else{
+                validar = true;
+            }
+        }
+        
+        if(jDateChooserFechaVencimiento.getDate() != null){
+            SimpleDateFormat formatoAnio = new SimpleDateFormat("yyyy");
+            if(formatoAnio.format(jDateChooserFechaVencimiento.getDate()).substring(0, 2).equals("00")){
+                JOptionPane.showMessageDialog(null, "Verifique la facha: "+formatoAnio.format(jDateChooserFechaVencimiento.getDate()), "", JOptionPane.WARNING_MESSAGE);
+                jDateChooserFechaVencimiento.requestFocus();
+                validar = false;
+            }else{
+                validar = true;
+            }
         }
         
         return validar;

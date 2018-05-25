@@ -2,6 +2,7 @@ package Visual;
 
 import java.awt.Color;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.RowSorter;
 import javax.swing.table.TableModel;
@@ -247,22 +248,32 @@ public class vtnBotonDepartamento extends javax.swing.JFrame {
         int i = 0, tamanio = departamentos.size();
         Object[][] filas = new Object[tamanio][5];
         
-        Collections.sort(departamentos, (Logica.Departamento d1, Logica.Departamento d2) -> d1.getUbicacion().compareTo(d2.getUbicacion()));
-
-        for(Logica.Departamento unDepto : departamentos){
-            filas[i][0] = unDepto.getId();
-            filas[i][1] = unDepto.getUbicacion();
-            filas[i][2] = unDepto.getCantDormitorios();
-            if(unDepto.getUnInquilino() == null){
-                filas[i][3] = "--";
-            }else{
-                filas[i][3] = unDepto.getUnInquilino().getApellido()+", "+unDepto.getUnInquilino().getNombre();
-            } 
-            filas[i][4] = nombreEdi;
-            i++;
+        if(departamentos.size() > 0){
+            List<Logica.Departamento> departamentosOrdenados = new LinkedList();
+            for(Logica.Departamento unDepartamento : departamentos){
+                departamentosOrdenados.add(unDepartamento);
+            }
+            
+            Collections.sort(departamentosOrdenados, (Logica.Departamento d1, Logica.Departamento d2) -> d1.getUbicacion().compareTo(d2.getUbicacion()));
+            
+            for(Logica.Departamento unDepto : departamentos){
+                filas[i][0] = unDepto.getId();
+                filas[i][1] = unDepto.getUbicacion();
+                filas[i][2] = unDepto.getCantDormitorios();
+                if(unDepto.getUnInquilino() == null){
+                    filas[i][3] = "--";
+                }else{
+                    filas[i][3] = unDepto.getUnInquilino().getApellido()+", "+unDepto.getUnInquilino().getNombre();
+                } 
+                filas[i][4] = nombreEdi;
+                i++;
+            }
+            TableModel modelo = new DefaultTableModel(filas,colTablaDepartamento);
+            
+            RowSorter<TableModel> sorter = new TableRowSorter<>(modelo);
+            jTableDepartamento.setRowSorter(sorter);
+            jTableDepartamento.setModel(modelo);
         }
-        
-        TableModel modelo = new DefaultTableModel(filas,colTablaDepartamento);
         
         // DEJAR ESTO COMO EJEMPLO, POR LAS MOSCAS
         /*TableModel modelo = new DefaultTableModel(filas,colTablaDepartamento){
@@ -278,10 +289,6 @@ public class vtnBotonDepartamento extends javax.swing.JFrame {
                 return returnValue;
             }
         };*/
-        
-        RowSorter<TableModel> sorter = new TableRowSorter<>(modelo);
-        jTableDepartamento.setRowSorter(sorter);
-        jTableDepartamento.setModel(modelo);
         
         // DEJAR POR LAS MOSCAS
         /*for(Logica.Departamento unDepartamento : unEdificio.getDepartamentos()){

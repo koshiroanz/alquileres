@@ -2,7 +2,7 @@ package Visual;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+import java.awt.event.ItemEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -108,6 +108,9 @@ public final class PanelExpensa extends javax.swing.JPanel {
         jComboBoxMes.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jComboBoxMesFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jComboBoxMesFocusLost(evt);
             }
         });
 
@@ -322,7 +325,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
             jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonEliminarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonEliminarLayout.setVerticalGroup(
@@ -358,7 +361,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
             jPanelButtonAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelButtonAgregarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAgregarLayout.setVerticalGroup(
@@ -591,7 +594,6 @@ public final class PanelExpensa extends javax.swing.JPanel {
                     try{
                         montoExpensa = Float.valueOf(unaControladora.reemplazarString(jTextFieldMonto.getText()));
                         unaControladora.altaExpensa(montoExpensa, mes, anio, jTextAreaDescripcion.getText(), serviciosExpensa, unDepartamento.getId());
-                        
                     }catch(Exception e){
                         JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar Expensa: "+e, "", JOptionPane.ERROR_MESSAGE);
                     }
@@ -617,12 +619,12 @@ public final class PanelExpensa extends javax.swing.JPanel {
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Ha ocurrido un error al calcular la expensa. " + ex, "", JOptionPane.ERROR_MESSAGE);
                 }
-                try {
-                    cargarTablaBuscarExpensa(0, 0);
-                    limpiarComponentes();
-                } catch (Exception ex) {
-                    Logger.getLogger(PanelExpensa.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            }
+            
+            try {
+                limpiarComponentes();
+            } catch (Exception ex) {
+                Logger.getLogger(PanelExpensa.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
             JOptionPane.showMessageDialog(null, "Para guardar se debe tener todos los datos.", "", JOptionPane.INFORMATION_MESSAGE);
@@ -692,17 +694,27 @@ public final class PanelExpensa extends javax.swing.JPanel {
                 }
             }
             
+            if(!departamentosSinExpensas.isEmpty()){
+                if(departamentosSinExpensas.size() != comboDepartamento.getSize()-1){
+                    JOptionPane.showMessageDialog(null, "Existen Departamentos sin Inquilino", "", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+            
             jComboBoxDepartamento.setModel(comboDepartamento);
-            entro = false;
         }
     }//GEN-LAST:event_jComboBoxMesItemStateChanged
 
     private void jComboBoxDepartamentoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxDepartamentoItemStateChanged
-        if(jComboBoxDepartamento.getSelectedIndex() > 0){
+        if(evt.getStateChange() == ItemEvent.SELECTED && jComboBoxDepartamento.getSelectedIndex() > 0){
             Logica.Departamento unDepartamento = (Logica.Departamento) comboDepartamento.getElementAt(jComboBoxDepartamento.getSelectedIndex());
             
             if(unaControladora.obtenerCoeficienteDorm(idEdificio, unDepartamento) == null){
                 JOptionPane.showMessageDialog(null, "No existen un Coeficiente adecuado  para el Departamento", "", JOptionPane.WARNING_MESSAGE);
+                try {
+                    limpiarComponentes();
+                } catch (Exception ex) {
+                    Logger.getLogger(PanelExpensa.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }else{
                 try {
                     cargarTablaExpensa(idEdificio, unDepartamento.getId());
@@ -741,6 +753,10 @@ public final class PanelExpensa extends javax.swing.JPanel {
     private void jComboBoxMesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBoxMesFocusGained
         entro = true;
     }//GEN-LAST:event_jComboBoxMesFocusGained
+
+    private void jComboBoxMesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBoxMesFocusLost
+        entro = false;
+    }//GEN-LAST:event_jComboBoxMesFocusLost
     
     public void cargarTablaExpensa(long idEdificio, long idDepartamento) throws Exception{
         limpiarTablaExpensa();
@@ -902,6 +918,8 @@ public final class PanelExpensa extends javax.swing.JPanel {
         cargarTablaExpensa(idEdificio, 0);
         jTextFieldMonto.setText(null);
         icono("afuera");
+        
+        jComboBoxMes.requestFocus();
     }
     
     public void icono(String lugar){
