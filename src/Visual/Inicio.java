@@ -1,6 +1,7 @@
 package Visual;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.LinkedList;
 import javax.swing.ImageIcon;
@@ -8,11 +9,15 @@ import javax.swing.JOptionPane;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.table.DefaultTableModel;
 
 public final class Inicio extends javax.swing.JFrame {
     private boolean busqueda = false;
     private final ControladoraV unaControladora = new ControladoraV();
+    private final String colTablaEdificio[] = {"Id", "Nombre", "Dirección"};
+    private final DefaultTableModel tablaEdificio = new DefaultTableModel(null, colTablaEdificio);
     
     public Inicio() throws Exception {
         initComponents();
@@ -21,6 +26,7 @@ public final class Inicio extends javax.swing.JFrame {
         cargarEdificios("");
         generarAlquileres();
         cargarNotificaciones();
+        eliminarEdificioSeleccionado();
     }
 
     @SuppressWarnings("unchecked")
@@ -558,8 +564,6 @@ public final class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCoefienteActionPerformed
     
     public void cargarEdificios(String buscar){
-        String colTablaEdificio[] = {"Id", "Nombre", "Dirección"};
-        DefaultTableModel tablaEdificio = new DefaultTableModel(null, colTablaEdificio);
         String datos[] = new String[3];
         Logica.Edificio unEdi = null;
         List<Logica.Edificio> edificios = unaControladora.obtenerEdificios();
@@ -606,6 +610,31 @@ public final class Inicio extends javax.swing.JFrame {
         }
         
         jListNotificaciones.setModel(listaNotificaciones);
+    }
+    
+    private void eliminarEdificioSeleccionado(){
+        JPopupMenu popupMenu = new JPopupMenu();
+        
+        JMenuItem menuItem = new JMenuItem("Eliminar");
+        menuItem.addActionListener((ActionEvent e) -> {
+            int fila = jTableEdificio.getSelectedRow();
+            
+            if(fila >= 0){
+                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(confirmacion == 0){
+                    try{
+                        long idEdificio = Long.parseLong(jTableEdificio.getValueAt(fila, 0).toString());
+                        unaControladora.bajaEdificio(idEdificio);
+                        tablaEdificio.removeRow(fila);
+                    }catch(Exception ex){
+                        JOptionPane.showMessageDialog(null, "No se ha podido eliminar el Edificio. "+ex);
+                    }
+                }
+            }
+        });
+        
+        popupMenu.add(menuItem);
+        jTableEdificio.setComponentPopupMenu(popupMenu);
     }
     
     private void cargarCoeficiente() {
