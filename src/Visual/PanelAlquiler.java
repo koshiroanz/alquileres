@@ -320,19 +320,19 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelTitulo)
                     .addComponent(jPanelButtonRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jComboBoxInquilino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelInquilino)
                     .addComponent(jDateChooserFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelFecha))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jComboBoxCochera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelCochera)
                     .addComponent(jComboBoxDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelDepartamento))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextFieldOtraFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -341,7 +341,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparatorMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGap(22, 22, 22)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabelDescripcion)
@@ -430,7 +430,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             jPanelButtonAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonAgregarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAgregarLayout.setVerticalGroup(
@@ -466,7 +466,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonEliminarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonEliminarLayout.setVerticalGroup(
@@ -583,7 +583,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
@@ -631,7 +631,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         if(jTextFieldTotal.getText().equals("Haga click aquí para calcular el TOTAL")){
             jTextFieldTotalFocusGained(null);
         }
-                
+        
         try {
             Date fecha = jDateChooserFecha.getDate();
             String descripcion = jTextAreaDescripcion.getText();
@@ -643,25 +643,8 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             float total = Float.valueOf(jTextFieldTotal.getText());
 
             if(!modificar){
-                int i = 0;
-                
-                while(i < unaControladora.obtenerAlquileresInpagos(unInquilino.getId()).size() && i != -1){
-                    if(unaControladora.obtenerAlquileresInpagos(unInquilino.getId()).get(i).getFecha().equals(fecha)){
-                        i = -1;
-                    }else{
-                        i++;
-                    }
-                }
-                
-                if(i > 0){
-                    unaControladora.altaAlquiler(fecha, idCochera, idDepartamento, generacionAuto, monto, otraFactura, total, descripcion, null, unInquilino.getId());
-                    cargarTablaAlquiler(0,0);
-                }else{
-                    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-                    JOptionPane.showMessageDialog(null, "El Alquiler "+formatoFecha.format(fecha)+" del Inquilino: "+unInquilino.toString()+" ya fue generado.","", JOptionPane.ERROR_MESSAGE);
-                    limpiarComponentes();
-                }
-                
+                unaControladora.altaAlquiler(fecha, idCochera, idDepartamento, generacionAuto, monto, otraFactura, total, descripcion, null, unInquilino.getId());
+                cargarTablaAlquiler(0,0);
             }else{
                 int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if(confirmacion == 0){
@@ -849,10 +832,9 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             jComboBoxCochera.requestFocus();
         }else if(jTextFieldMonto.getText().isEmpty()){
             if(JOptionPane.showConfirmDialog(null, "Desea continuar con Monto en 0?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
-                jTextFieldMonto.setText("0");
-                
-            }else{
                 jTextFieldMonto.requestFocus();
+            }else{
+                jTextFieldMonto.setText("0");
             }
         }else if(jTextFieldOtraFactura.getText().isEmpty()){
             if(JOptionPane.showConfirmDialog(null, "Desea continuar con Otras Facturas en 0?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
@@ -875,13 +857,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                 idCochera = 0;
             }
             
-            SimpleDateFormat formatoAnio = new SimpleDateFormat("yyyy");
-            if(formatoAnio.format(jDateChooserFecha.getDate()).substring(0, 2).equals("00")){
-                JOptionPane.showMessageDialog(null, "Verifique la facha: "+formatoAnio.format(jDateChooserFecha.getDate()), "", JOptionPane.WARNING_MESSAGE);
-                jDateChooserFecha.requestFocus();
-            }else{
-                validar = true;
-            }
+            validar = true;
         }
         
         return validar;
@@ -930,6 +906,8 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             alquileres = unaControladora.obtenerAlquileresEdificio(idEdificio);
         }
         
+        //Collections.sort(alquileres, (Logica.Alquiler a1, Logica.Alquiler a2) -> a1.getFecha().compareTo(a2.getFecha()));
+        
         for(Logica.Alquiler unAlquiler : alquileres){
             datos[0] = String.valueOf(unAlquiler.getId());
             datos[1] = String.valueOf(dateFormat.format(unAlquiler.getFecha()));
@@ -951,9 +929,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             
             tablaAlquiler.addRow(datos);
         }
-        
-        //System.out.print("Total de Monto: $"+totalMonto+" - Total de Otras Facturas: $"+totalOtrasFacturas);
-        
+                
         this.jTableAlquiler.setModel(tablaAlquiler);
     }
     

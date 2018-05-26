@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_PERIOD;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
+import java.util.Collections;
 
 public class PanelCochera extends javax.swing.JPanel {
     private long idCochera;
@@ -593,7 +594,9 @@ public class PanelCochera extends javax.swing.JPanel {
         }
         
         if(cocheras.size() > 0){
-            for(Logica.Cochera unaCochera : cocheras){
+            List<Logica.Cochera> nuevaLista = ordenarCocheras(cocheras);
+            
+            for(Logica.Cochera unaCochera : nuevaLista){
                 datos[0] = String.valueOf(unaCochera.getId());
                 datos[1] = unaCochera.getUbicacion();
                 datos[2] = String.valueOf(unaCochera.getPrecio());
@@ -611,6 +614,18 @@ public class PanelCochera extends javax.swing.JPanel {
             this.jTableCochera.setModel(tablaCochera);
         }
         
+    }
+    
+    public List<Logica.Cochera> ordenarCocheras(List<Logica.Cochera> cocheras){
+        List<Logica.Cochera> nuevaLista = new LinkedList();
+        
+        for(Logica.Cochera unaCochera : cocheras){
+            nuevaLista.add(unaCochera);
+        }
+        
+        Collections.sort(nuevaLista, (Logica.Cochera c1, Logica.Cochera c2) -> c1.getUbicacion().compareTo(c2.getUbicacion()));
+
+        return nuevaLista;
     }
     
     private void cargarPanelDatos(long idCochera){

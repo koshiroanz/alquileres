@@ -67,7 +67,7 @@
                               <Component id="jSeparatorDni" max="32767" attributes="0"/>
                               <Component id="jSeparatorNombre" max="32767" attributes="0"/>
                               <Component id="jTextFieldNombre" max="32767" attributes="0"/>
-                              <Component id="jTextFieldDni" pref="210" max="32767" attributes="0"/>
+                              <Component id="jTextFieldDni" pref="203" max="32767" attributes="0"/>
                               <Component id="jTextFieldTelefono" max="32767" attributes="0"/>
                               <Component id="jTextFieldCantFamiliares" max="32767" attributes="0"/>
                           </Group>
@@ -94,7 +94,7 @@
                               <Component id="jTextFieldCuit" max="32767" attributes="0"/>
                               <Component id="jTextFieldApellido" max="32767" attributes="0"/>
                               <Component id="jTextFieldEmail" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jComboBoxDepartamento" alignment="0" pref="296" max="32767" attributes="0"/>
+                              <Component id="jComboBoxDepartamento" alignment="0" pref="288" max="32767" attributes="0"/>
                               <Component id="jSeparatorApellido" alignment="0" max="32767" attributes="0"/>
                               <Component id="jSeparatorCuit" alignment="0" max="32767" attributes="0"/>
                               <Component id="jSeparatorEmail" alignment="0" max="32767" attributes="0"/>
@@ -279,7 +279,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI Semibold" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="CUIT"/>
+            <Property name="text" type="java.lang.String" value="CUIT/CUIL"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelTelefono">
@@ -663,7 +663,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabelEliminar" pref="80" max="32767" attributes="0"/>
+                          <Component id="jLabelEliminar" pref="76" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -712,7 +712,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabelAceptar" pref="80" max="32767" attributes="0"/>
+                          <Component id="jLabelAceptar" pref="76" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>

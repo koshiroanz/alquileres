@@ -131,7 +131,7 @@ public class PanelInquilino extends javax.swing.JPanel {
         });
 
         jLabelCuit.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabelCuit.setText("CUIT");
+        jLabelCuit.setText("CUIT/CUIL");
 
         jLabelTelefono.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelTelefono.setText("Teléfono");
@@ -260,7 +260,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                             .addComponent(jSeparatorDni)
                             .addComponent(jSeparatorNombre)
                             .addComponent(jTextFieldNombre)
-                            .addComponent(jTextFieldDni, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                            .addComponent(jTextFieldDni, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                             .addComponent(jTextFieldTelefono)
                             .addComponent(jTextFieldCantFamiliares))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,7 +281,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                             .addComponent(jTextFieldCuit)
                             .addComponent(jTextFieldApellido)
                             .addComponent(jTextFieldEmail)
-                            .addComponent(jComboBoxDepartamento, 0, 296, Short.MAX_VALUE)
+                            .addComponent(jComboBoxDepartamento, 0, 288, Short.MAX_VALUE)
                             .addComponent(jSeparatorApellido)
                             .addComponent(jSeparatorCuit)
                             .addComponent(jSeparatorEmail)
@@ -420,7 +420,7 @@ public class PanelInquilino extends javax.swing.JPanel {
             jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonEliminarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonEliminarLayout.setVerticalGroup(
@@ -456,7 +456,7 @@ public class PanelInquilino extends javax.swing.JPanel {
             jPanelButtonAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonAgregarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAgregarLayout.setVerticalGroup(

@@ -1109,8 +1109,9 @@ public final class PanelPago extends javax.swing.JPanel {
     
     public boolean validar(){
         boolean validar = false;
+        Date fecha = jDateChooserFecha.getDate();
         
-        if(jDateChooserFecha.getDate() == null){
+        if(fecha == null){
             JOptionPane.showMessageDialog(null, "Debe ingresar una Fecha.", "", JOptionPane.WARNING_MESSAGE);
             jDateChooserFecha.requestFocus();
         }else if(jComboBoxInquilino.getSelectedItem().equals("Seleccione una opción.")){
@@ -1122,13 +1123,7 @@ public final class PanelPago extends javax.swing.JPanel {
         }else if(Float.valueOf(jTextFieldEfectivo.getText()) == 0 && Float.valueOf(jTextFieldTarjeta.getText()) == 0 && Float.valueOf(jTextFieldBanco.getText()) == 0){
             JOptionPane.showMessageDialog(null, "El pago no puede ser efectuado sin un monto  mayor a 0.", "", JOptionPane.WARNING_MESSAGE);
         }else{
-            SimpleDateFormat formatoAnio = new SimpleDateFormat("yyyy");
-            if(formatoAnio.format(jDateChooserFecha.getDate()).substring(0, 2).equals("00")){
-                JOptionPane.showMessageDialog(null, "Verifique la facha: "+formatoAnio.format(jDateChooserFecha.getDate()), "", JOptionPane.WARNING_MESSAGE);
-                jDateChooserFecha.requestFocus();
-            }else{
-                validar = true;
-            }
+            validar = true;
         }
         
         return validar;
