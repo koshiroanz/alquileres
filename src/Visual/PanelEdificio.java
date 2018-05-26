@@ -17,7 +17,7 @@ import static java.awt.event.KeyEvent.VK_BACK_SPACE;
 public final class PanelEdificio extends javax.swing.JPanel {
     private long idEdificio, id;
     private final ControladoraV unaControladora = new ControladoraV();
-    private boolean busqueda = false, modificar = false, eliminar = false;    
+    private boolean busqueda = false, modificar = false;    
     
     public PanelEdificio(long idEdificio) {
         initComponents();
@@ -48,8 +48,6 @@ public final class PanelEdificio extends javax.swing.JPanel {
         jTextFieldBuscar = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
-        jPanelButtonEliminar = new javax.swing.JPanel();
-        jLabelEliminar = new javax.swing.JLabel();
         jPanelButtonAgregar = new javax.swing.JPanel();
         jLabelAceptar = new javax.swing.JLabel();
         jPanelButtonBuscar = new javax.swing.JPanel();
@@ -228,42 +226,6 @@ public final class PanelEdificio extends javax.swing.JPanel {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(355, 60));
 
-        jPanelButtonEliminar.setBackground(new java.awt.Color(51, 51, 51));
-        jPanelButtonEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanelButtonEliminar.setPreferredSize(new java.awt.Dimension(100, 49));
-        jPanelButtonEliminar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jPanelButtonEliminarMouseMoved(evt);
-            }
-        });
-        jPanelButtonEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelButtonEliminarMouseClicked(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jPanelButtonEliminarMouseExited(evt);
-            }
-        });
-
-        jLabelEliminar.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabelEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelEliminar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelEliminar.setText("Eliminar");
-
-        javax.swing.GroupLayout jPanelButtonEliminarLayout = new javax.swing.GroupLayout(jPanelButtonEliminar);
-        jPanelButtonEliminar.setLayout(jPanelButtonEliminarLayout);
-        jPanelButtonEliminarLayout.setHorizontalGroup(
-            jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonEliminarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanelButtonEliminarLayout.setVerticalGroup(
-            jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-        );
-
         jPanelButtonAgregar.setBackground(new java.awt.Color(51, 51, 51));
         jPanelButtonAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanelButtonAgregar.setPreferredSize(new java.awt.Dimension(100, 49));
@@ -284,7 +246,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
         jLabelAceptar.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelAceptar.setForeground(new java.awt.Color(255, 255, 255));
         jLabelAceptar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelAceptar.setText("Aceptar");
+        jLabelAceptar.setText("Actualizar");
 
         javax.swing.GroupLayout jPanelButtonAgregarLayout = new javax.swing.GroupLayout(jPanelButtonAgregar);
         jPanelButtonAgregar.setLayout(jPanelButtonAgregarLayout);
@@ -305,18 +267,14 @@ public final class PanelEdificio extends javax.swing.JPanel {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(jPanelButtonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanelButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanelButtonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanelButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanelButtonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
@@ -361,19 +319,18 @@ public final class PanelEdificio extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTablaLayout.createSequentialGroup()
                 .addGroup(jPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelTablaLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jSeparator3)
-                            .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanelButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelTablaLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE))
+                    .addGroup(jPanelTablaLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
                             .addGroup(jPanelTablaLayout.createSequentialGroup()
-                                .addGap(0, 618, Short.MAX_VALUE)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(jPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jSeparator3)
+                                    .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanelButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(22, 22, 22))
         );
         jPanelTablaLayout.setVerticalGroup(
@@ -411,17 +368,6 @@ public final class PanelEdificio extends javax.swing.JPanel {
         limpiarComponentes();
     }//GEN-LAST:event_jPanelButtonRefrescarMouseClicked
 
-    private void jPanelButtonEliminarMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseMoved
-        this.jPanelButtonEliminar.setBackground(new Color(255,255,255));
-        this.jPanelButtonEliminar.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(51,51,51)));
-        this.jLabelEliminar.setForeground(new Color(51,51,51));
-    }//GEN-LAST:event_jPanelButtonEliminarMouseMoved
-
-    private void jPanelButtonEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseExited
-        this.jPanelButtonEliminar.setBackground(new Color(51,51,51));
-        this.jLabelEliminar.setForeground(new Color(255,255,255));
-    }//GEN-LAST:event_jPanelButtonEliminarMouseExited
-
     private void jPanelButtonAgregarMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonAgregarMouseMoved
         this.jPanelButtonAgregar.setBackground(new Color(255,255,255));
         this.jPanelButtonAgregar.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(51,51,51)));
@@ -436,18 +382,12 @@ public final class PanelEdificio extends javax.swing.JPanel {
     private void jPanelButtonAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonAgregarMouseClicked
         if(validar()){
             try {
-                if(!modificar && this.idEdificio == 0){
-                    unaControladora.altaEdificio(jTextFieldNombre.getText().toUpperCase(), jTextFieldDireccion.getText().toUpperCase(), jTextAreaDescripcion.getText(), null, null, null, null);
-                    idEdificio = 0;
+                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(confirmacion == 0){
+                    Logica.Edificio unEdificio = unaControladora.obtenerEdificio(id);
+                    unaControladora.modificarEdificio(id, jTextFieldNombre.getText().toUpperCase(), jTextFieldDireccion.getText().toUpperCase(), jTextAreaDescripcion.getText(), unEdificio.getDepartamentos(), unEdificio.getCocheras(), unEdificio.getServicios(), unEdificio.getCoeficientesDorm());
+                    modificar = false;
                     limpiarComponentes();
-                }else{
-                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if(confirmacion == 0){
-                        Logica.Edificio unEdificio = unaControladora.obtenerEdificio(id);
-                        unaControladora.modificarEdificio(id, jTextFieldNombre.getText().toUpperCase(), jTextFieldDireccion.getText().toUpperCase(), jTextAreaDescripcion.getText(), unEdificio.getDepartamentos(), unEdificio.getCocheras(), unEdificio.getServicios(), unEdificio.getCoeficientesDorm());
-                        modificar = false;
-                        limpiarComponentes();
-                    }
                 }
             } catch (Exception ex) {
                 Logger.getLogger(Logica.Edificio.class.getName()).log(Level.SEVERE, null, ex);
@@ -463,12 +403,9 @@ public final class PanelEdificio extends javax.swing.JPanel {
             if(fila >= 0){
                 id = Long.parseLong(jTableEdificio.getValueAt(fila, 0).toString());
         
-                if(evt.getClickCount() == 1){
-                    eliminar = true;
-                }else if(evt.getClickCount() == 2){
+                if(evt.getClickCount() == 2){
+                    modificar = true;
                     cargarPanelDatos(id);
-                    eliminar = false;
-
                 }
                 // Si clickea en alguna columna donde haya un botón.
                 Object value = jTableEdificio.getValueAt(fila, columna);
@@ -527,25 +464,6 @@ public final class PanelEdificio extends javax.swing.JPanel {
             this.jLabelRefrescar.setIcon(refresh);
         }
     }//GEN-LAST:event_jPanelButtonRefrescarMouseExited
-
-    private void jPanelButtonEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonEliminarMouseClicked
-        if(eliminar){
-            try{
-                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if(confirmacion == 0){
-                    unaControladora.bajaEdificio(id);
-                    id = 0;
-                    this.idEdificio = id;
-                    limpiarComponentes();
-                }
-            }catch(Exception ex){
-                Logger.getLogger(Logica.Edificio.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido eliminar.", "", JOptionPane.ERROR_MESSAGE);
-            }
-        }else{
-             JOptionPane.showMessageDialog(null, "Debe seleccionar un Edificio.", "", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
     private void jPanelTablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelTablaMouseClicked
         this.jTableEdificio.clearSelection();
@@ -644,6 +562,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
         
         if((!jTextFieldNombre.getText().isEmpty()) && (!jTextFieldDireccion.getText().isEmpty())){
             if(!modificar){
+                
                 // Solo controla cuando se da de Alta un EDIFICIO por nombre.
                 boolean existeEdificio = unaControladora.existeEdificio(jTextFieldNombre.getText().toUpperCase());
                 if(existeEdificio){
@@ -666,7 +585,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
     public void limpiarComponentes(){
         ImageIcon refrescar = new ImageIcon(getClass().getResource("/Visual/img/cargando_blanco.png"));
         this.jLabelRefrescar.setIcon(refrescar);
-        this.jLabelAceptar.setText("Aceptar");
+        this.jLabelAceptar.setText("Actualizar");
         this.jTextFieldNombre.setText(null);
         this.jTextFieldDireccion.setText(null);
         this.jTextAreaDescripcion.setText(null);
@@ -675,7 +594,6 @@ public final class PanelEdificio extends javax.swing.JPanel {
         this.jTableEdificio.clearSelection();
         busqueda = false;
         modificar = false;
-        eliminar = false;
         cargarTablaEdificio("");
     }
     
@@ -683,7 +601,6 @@ public final class PanelEdificio extends javax.swing.JPanel {
         this.jLabelAceptar.setText("Actualizar");
         ImageIcon cancelar = new ImageIcon(getClass().getResource("/Visual/img/cancelar_blanco.png"));
         this.jLabelRefrescar.setIcon(cancelar);
-        modificar = true;
         Logica.Edificio unEdificio = unaControladora.obtenerEdificio(id);
         
         this.jTextFieldNombre.setText(unEdificio.getNombre());
@@ -764,12 +681,10 @@ public final class PanelEdificio extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelAceptar;
     private javax.swing.JLabel jLabelBuscar;
     private javax.swing.JLabel jLabelDescripción;
-    private javax.swing.JLabel jLabelEliminar;
     private javax.swing.JLabel jLabelRefrescar;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelButtonAgregar;
     private javax.swing.JPanel jPanelButtonBuscar;
-    private javax.swing.JPanel jPanelButtonEliminar;
     private javax.swing.JPanel jPanelButtonRefrescar;
     private javax.swing.JPanel jPanelCargaDatos;
     private javax.swing.JPanel jPanelTabla;

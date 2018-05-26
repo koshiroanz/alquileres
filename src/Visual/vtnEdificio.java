@@ -55,19 +55,9 @@ public class vtnEdificio extends javax.swing.JFrame {
 
         jTextFieldNombre.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldNombre.setBorder(null);
-        jTextFieldNombre.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldNombreKeyTyped(evt);
-            }
-        });
 
         jTextFieldDireccion.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldDireccion.setBorder(null);
-        jTextFieldDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldDireccionKeyTyped(evt);
-            }
-        });
 
         jPanelAgregar.setBackground(new java.awt.Color(51, 51, 51));
         jPanelAgregar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -274,18 +264,6 @@ public class vtnEdificio extends javax.swing.JFrame {
         this.jPanelAgregar.setBackground(new Color(51,51,51));
         this.jLabelAgregar.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_jPanelAgregarMouseExited
-
-    private void jTextFieldDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDireccionKeyTyped
-        if (evt.getKeyChar() == evt.VK_ENTER) {
-            jPanelAgregarMouseClicked(null);
-        }
-    }//GEN-LAST:event_jTextFieldDireccionKeyTyped
-
-    private void jTextFieldNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNombreKeyTyped
-        if (evt.getKeyChar() == evt.VK_ENTER) {
-            jPanelAgregarMouseClicked(null);
-        }
-    }//GEN-LAST:event_jTextFieldNombreKeyTyped
 
     public boolean validar(){
         boolean respuesta = false;

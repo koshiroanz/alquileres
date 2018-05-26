@@ -87,7 +87,6 @@ public class ControladoraL {
                 Date nuevaFechaAlquiler;
                 nuevaFechaAlquiler = formatoFecha.parse(fecha);
                 long difDias = ((fechaActual.getTime()-nuevaFechaAlquiler.getTime())/86400000);
-                //System.out.println("Cantidad de dias: "+difDias);
                 float coeficienteInteres = obtenerCoeficiente().getValor();
                 interesAlquiler = (difDias * (coeficienteInteres/30) * total);
             } catch (ParseException ex) {
@@ -100,7 +99,6 @@ public class ControladoraL {
                     Date nuevaFechaAlquiler;
                     nuevaFechaAlquiler = formatoFecha.parse(fecha);
                     long difDias = ((fechaActual.getTime()-nuevaFechaAlquiler.getTime())/86400000);
-                    //System.out.println("Cantidad de dias: "+difDias);
                     float coeficienteInteres = obtenerCoeficiente().getValor();
                     interesAlquiler = (difDias * (coeficienteInteres/30) * total);
                     if(interesAlquiler < 10){
@@ -194,7 +192,6 @@ public class ControladoraL {
         unAlquiler.setUnPago(unPago);
         
         unaControladora.modificarAlquiler(unAlquiler);
-        
     }
     
     public void bajaAlquiler(long idAlquiler, long idInquilino) throws Exception{
@@ -1558,7 +1555,6 @@ public class ControladoraL {
         
         Inquilino unInquilino = obtenerInquilinoPago(idEdificio, idPago);
         List<Alquiler> alquileres = new LinkedList();
-        System.out.println(unInquilino.getSaldoMesAnt());
         Alquiler unAlquiler = obtenerAlquilerPago(idPago);
         
         for(Alquiler unAlqui : unInquilino.getAlquileres()){
@@ -1604,9 +1600,6 @@ public class ControladoraL {
         unaControladora.modificarAlquiler(unAlquiler);        
         unaControladora.bajaPago(idPago);
         unaControladora.modificarInquilino(unInquilino);
-        
-        System.out.println(unInquilino.getSaldoMesAnt());
-        
     }
     
     public Pago obtenerPago(long idPago){
@@ -1666,27 +1659,6 @@ public class ControladoraL {
         
         return saldoUltimoPago;
     }
-    /*
-    public float obtenerSaldoAnteriorAlUltimoPago(long idInquilino){
-        float saldoAnteriorUltimoPago = 0;
-        List<Pago> pagosInquilino = obtenerPagosInquilino(idInquilino);
-        if(pagosInquilino.size() > 1){
-            Collections.sort(pagosInquilino, (Pago p1, Pago p2) -> p1.getFecha().compareTo(p2.getFecha()));
-            int tam = pagosInquilino.size(), i = ;
-            Pago ultimoPago = pagosInquilino.get();
-            saldoAnteriorUltimoPago = ultimoPago.getMonto()-(ultimoPago.getEfectivo()+ultimoPago.getTarjeta()+ultimoPago.getBanco());
-        }else{
-            if(pagosInquilino.size() == 1){
-                Collections.sort(pagosInquilino, (Pago p1, Pago p2) -> p1.getFecha().compareTo(p2.getFecha()));
-                int tam = pagosInquilino.size();
-                Pago ultimoPago = pagosInquilino.get(tam-1);
-                
-            }
-        }
-        
-        return saldoAnteriorUltimoPago;
-    }
-    */
 /*------------------------------------------------------------------------------
                                 SERVICIO
 ------------------------------------------------------------------------------*/
