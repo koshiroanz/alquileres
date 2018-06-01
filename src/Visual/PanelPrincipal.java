@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
+//import pruebaReporte.vtReporte;
 
 public final class PanelPrincipal extends javax.swing.JPanel {
     private final long idEdificio;
@@ -326,6 +327,8 @@ public final class PanelPrincipal extends javax.swing.JPanel {
 
     private void jPanelButtonReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonReporteMouseClicked
         if(idEdificio != 0){
+            /*vtReporte ventanaReporte = new vtReporte(idEdificio);
+            ventanaReporte.setVisible(true);*/
             if(unaControladora.existenExpensas(idEdificio)){
                 vtnReporte ventanaReporte = new vtnReporte(idEdificio);
                 ventanaReporte.setVisible(true);
