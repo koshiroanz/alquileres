@@ -1,12 +1,12 @@
 package Visual;
 
 import java.awt.Color;
-import java.util.Collections;
 import java.util.List;
-import javax.swing.RowSorter;
-import javax.swing.table.DefaultTableModel;
+import java.util.LinkedList;
+import java.util.Collections;
+import java.text.SimpleDateFormat;
 import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
+import javax.swing.table.DefaultTableModel;
 
 public final class vtnBotonServicio extends javax.swing.JFrame {
     private final long idEdificio = 0;
@@ -206,21 +206,28 @@ public final class vtnBotonServicio extends javax.swing.JFrame {
 
     public void cargarTablaServicio(long idEdificio){
         float montoTotal = 0;
-        List<Logica.Servicio> servicios = unaControladora.obtenerEdificio(idEdificio).getServicios();
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        List<Logica.Servicio> servicios = ordenarServicios(unaControladora.obtenerEdificio(idEdificio).getServicios());
         String colTablaServicio[] = {"Id", "Nombre", "Mes", "Año", "Fecha Emisión.", "Fecha Vencimiento", "Monto", "Edificio"};
         String nombreEdi = unaControladora.obtenerEdificio(idEdificio).getNombre();
         int i = 0, tamanio = servicios.size();
         Object[][] filas = new Object[tamanio][8];
-        
-        Collections.sort(servicios, (Logica.Servicio s1, Logica.Servicio s2) -> s1.getNombre().compareTo(s2.getNombre()));
 
         for(Logica.Servicio unServicio : servicios){
             filas[i][0] = unServicio.getId();
             filas[i][1] = unServicio.getNombre();
             filas[i][2] = unServicio.getMes();
             filas[i][3] = unServicio.getAnio();
-            filas[i][4] = unServicio.getFechaEmision();
-            filas[i][5] = unServicio.getFechaVencimiento();
+            if(unServicio.getFechaEmision() != null){
+                filas[i][4] = formatoFecha.format(unServicio.getFechaEmision());
+            }else{
+                filas[i][4] = unServicio.getFechaEmision();
+            }
+            if(unServicio.getFechaVencimiento() != null){
+                filas[i][5] = formatoFecha.format(unServicio.getFechaVencimiento());
+            }else{
+                filas[i][5] = unServicio.getFechaVencimiento();
+            }
             filas[i][6] = unServicio.getMonto();
             filas[i][7] = nombreEdi;
             montoTotal += unServicio.getMonto();
@@ -231,9 +238,19 @@ public final class vtnBotonServicio extends javax.swing.JFrame {
         
         this.jTextFieldMontoTotal.setText(String.valueOf(montoTotal));
         
-        RowSorter<TableModel> sorter = new TableRowSorter<>(modelo);
-        jTableServicio.setRowSorter(sorter);
         jTableServicio.setModel(modelo);
+    }
+    
+    public List<Logica.Servicio> ordenarServicios(List<Logica.Servicio> servicios){
+        List<Logica.Servicio> serviciosOrdenados = new LinkedList();
+        
+        for(Logica.Servicio unServicio : servicios){
+            serviciosOrdenados.add(unServicio);
+        }
+        
+        Collections.sort(serviciosOrdenados, (Logica.Servicio s1, Logica.Servicio s2) -> s1.getNombre().compareTo(s2.getNombre()));
+        
+        return serviciosOrdenados;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

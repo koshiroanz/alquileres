@@ -15,14 +15,15 @@ import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
 
 public final class PanelEdificio extends javax.swing.JPanel {
-    private long idEdificio, id;
+    private long id;
+    private final long idEdificio;
+    private boolean modificar = false;  
     private final ControladoraV unaControladora = new ControladoraV();
-    private boolean busqueda = false, modificar = false;    
     
     public PanelEdificio(long idEdificio) {
         initComponents();
         this.idEdificio = idEdificio;
-        cargarTablaEdificio("");
+        cargarTablaEdificio();
     }
 
     @SuppressWarnings("unchecked")
@@ -45,13 +46,9 @@ public final class PanelEdificio extends javax.swing.JPanel {
         jPanelTabla = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableEdificio = new javax.swing.JTable();
-        jTextFieldBuscar = new javax.swing.JTextField();
-        jSeparator3 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
         jPanelButtonAgregar = new javax.swing.JPanel();
         jLabelAceptar = new javax.swing.JLabel();
-        jPanelButtonBuscar = new javax.swing.JPanel();
-        jLabelBuscar = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -214,15 +211,6 @@ public final class PanelEdificio extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTableEdificio);
 
-        jTextFieldBuscar.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jTextFieldBuscar.setText("Ingrese un nombre para buscar");
-        jTextFieldBuscar.setBorder(null);
-        jTextFieldBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextFieldBuscarMouseClicked(evt);
-            }
-        });
-
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(355, 60));
 
@@ -278,40 +266,6 @@ public final class PanelEdificio extends javax.swing.JPanel {
                 .addGap(0, 0, 0))
         );
 
-        jPanelButtonBuscar.setBackground(new java.awt.Color(51, 51, 51));
-        jPanelButtonBuscar.setPreferredSize(new java.awt.Dimension(44, 37));
-        jPanelButtonBuscar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jPanelButtonBuscarMouseMoved(evt);
-            }
-        });
-        jPanelButtonBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelButtonBuscarMouseClicked(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jPanelButtonBuscarMouseExited(evt);
-            }
-        });
-
-        jLabelBuscar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Visual/img/lupa_blanca.png"))); // NOI18N
-        jLabelBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        javax.swing.GroupLayout jPanelButtonBuscarLayout = new javax.swing.GroupLayout(jPanelButtonBuscar);
-        jPanelButtonBuscar.setLayout(jPanelButtonBuscarLayout);
-        jPanelButtonBuscarLayout.setHorizontalGroup(
-            jPanelButtonBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonBuscarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanelButtonBuscarLayout.setVerticalGroup(
-            jPanelButtonBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout jPanelTablaLayout = new javax.swing.GroupLayout(jPanelTabla);
         jPanelTabla.setLayout(jPanelTablaLayout);
         jPanelTablaLayout.setHorizontalGroup(
@@ -322,27 +276,15 @@ public final class PanelEdificio extends javax.swing.JPanel {
                         .addGap(22, 22, 22)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE))
                     .addGroup(jPanelTablaLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanelTablaLayout.createSequentialGroup()
-                                .addGroup(jPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSeparator3)
-                                    .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPanelButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(748, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(22, 22, 22))
         );
         jPanelTablaLayout.setVerticalGroup(
             jPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTablaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanelButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
@@ -380,19 +322,23 @@ public final class PanelEdificio extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanelButtonAgregarMouseExited
 
     private void jPanelButtonAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonAgregarMouseClicked
-        if(validar()){
-            try {
-                int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if(confirmacion == 0){
-                    Logica.Edificio unEdificio = unaControladora.obtenerEdificio(id);
-                    unaControladora.modificarEdificio(id, jTextFieldNombre.getText().toUpperCase(), jTextFieldDireccion.getText().toUpperCase(), jTextAreaDescripcion.getText(), unEdificio.getDepartamentos(), unEdificio.getCocheras(), unEdificio.getServicios(), unEdificio.getCoeficientesDorm());
-                    modificar = false;
-                    limpiarComponentes();
+        if(jTableEdificio.isRowSelected(jTableEdificio.getSelectedRow())){
+            if(validar()){
+                try {
+                    int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if(confirmacion == 0){
+                        Logica.Edificio unEdificio = unaControladora.obtenerEdificio(id);
+                        unaControladora.modificarEdificio(id, jTextFieldNombre.getText().toUpperCase(), jTextFieldDireccion.getText().toUpperCase(), jTextAreaDescripcion.getText(), unEdificio.getDepartamentos(), unEdificio.getCocheras(), unEdificio.getServicios(), unEdificio.getCoeficientesDorm());
+                        modificar = false;
+                        limpiarComponentes();
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Logica.Edificio.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación.", "", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (Exception ex) {
-                Logger.getLogger(Logica.Edificio.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación.", "", JOptionPane.ERROR_MESSAGE);
             }
+        }else{
+            JOptionPane.showMessageDialog(null, "Para realizar actualizaciones debe seleccionar un Edificio.");
         }
     }//GEN-LAST:event_jPanelButtonAgregarMouseClicked
 
@@ -469,38 +415,6 @@ public final class PanelEdificio extends javax.swing.JPanel {
         this.jTableEdificio.clearSelection();
     }//GEN-LAST:event_jPanelTablaMouseClicked
 
-    private void jPanelButtonBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonBuscarMouseClicked
-        if(!jTextFieldBuscar.getText().equals("Ingrese un nombre para buscar")){
-            if(!jTextFieldBuscar.getText().isEmpty()){
-                busqueda = true;
-                cargarTablaEdificio(jTextFieldBuscar.getText().toUpperCase());
-            }else{
-                JOptionPane.showMessageDialog(null, "Ingrese un nombre para buscar", "", JOptionPane.WARNING_MESSAGE);
-            }
-        }else{
-            JOptionPane.showMessageDialog(null, "Ingrese un nombre para buscar", "", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_jPanelButtonBuscarMouseClicked
-
-    private void jPanelButtonBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonBuscarMouseExited
-        ImageIcon buscar = new ImageIcon(getClass().getResource("/Visual/img/lupa_blanca.png"));
-        
-        this.jPanelButtonBuscar.setBackground(new Color(51,51,51));
-        this.jLabelBuscar.setIcon(buscar);
-    }//GEN-LAST:event_jPanelButtonBuscarMouseExited
-
-    private void jPanelButtonBuscarMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonBuscarMouseMoved
-        ImageIcon buscar = new ImageIcon(getClass().getResource("/Visual/img/lupa_negra.png"));
-        
-        this.jPanelButtonBuscar.setBackground(new Color(255,255,255));
-        this.jPanelButtonBuscar.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(51,51,51)));
-        this.jLabelBuscar.setIcon(buscar);
-    }//GEN-LAST:event_jPanelButtonBuscarMouseMoved
-
-    private void jTextFieldBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldBuscarMouseClicked
-        this.jTextFieldBuscar.setText(null);
-    }//GEN-LAST:event_jTextFieldBuscarMouseClicked
-
     private void jTextFieldNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNombreKeyTyped
         if (evt.getKeyChar() == evt.VK_ENTER) {
             jPanelButtonAgregarMouseClicked(null);
@@ -518,37 +432,16 @@ public final class PanelEdificio extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTextFieldDireccionKeyTyped
     
-    public void cargarTablaEdificio(String buscar){
+    public void cargarTablaEdificio(){
         List<Logica.Edificio> edificios = new LinkedList();
         
         if(unaControladora.obtenerEdificios().size() > 0){
             if(this.idEdificio != 0){
                 Logica.Edificio unEd = unaControladora.obtenerEdificio(idEdificio);
                 edificios.add(unEd);
-            }else{
-                edificios = unaControladora.obtenerEdificios();
             }
-
-            List<Logica.Edificio> edificioBusqueda = new LinkedList();
-            boolean bandera = false;
+            
             if(!edificios.isEmpty()){
-                if(busqueda){ // Si busqueda es TRUE, buscar tiene valor.
-                    for(Logica.Edificio unEdi : edificios){
-                        if(unEdi.getNombre().equals(buscar)){
-                            bandera = true;
-                            edificioBusqueda.add(unEdi);
-                        }
-                    }
-
-                    if(!bandera){
-                        JOptionPane.showMessageDialog(null, "No se ha encontrado el Edificio: "+buscar, "", JOptionPane.ERROR_MESSAGE);
-                    }else{
-                        busqueda = false;
-                        edificios.clear();
-                        edificios = edificioBusqueda;
-                    }
-                }
-
                 armarTabla(jTableEdificio, edificios);
             }
         }else{
@@ -561,18 +454,7 @@ public final class PanelEdificio extends javax.swing.JPanel {
         boolean validar = false;
         
         if((!jTextFieldNombre.getText().isEmpty()) && (!jTextFieldDireccion.getText().isEmpty())){
-            if(!modificar){
-                
-                // Solo controla cuando se da de Alta un EDIFICIO por nombre.
-                boolean existeEdificio = unaControladora.existeEdificio(jTextFieldNombre.getText().toUpperCase());
-                if(existeEdificio){
-                    JOptionPane.showMessageDialog(null, "El Edificio: "+jTextFieldNombre.getText().toUpperCase()+" ya se encuentra registrado.", "", JOptionPane.WARNING_MESSAGE);
-                }else{
-                    validar = true;
-                }
-            }else{
-                validar = true;
-            }
+           validar = true;
         }else if(jTextFieldNombre.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Debe completar el campo: Nombre.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldDireccion.getText().isEmpty()){
@@ -588,13 +470,11 @@ public final class PanelEdificio extends javax.swing.JPanel {
         this.jLabelAceptar.setText("Actualizar");
         this.jTextFieldNombre.setText(null);
         this.jTextFieldDireccion.setText(null);
-        this.jTextAreaDescripcion.setText(null);
-        this.jTextFieldBuscar.setText("Ingrese un nombre para buscar");        
+        this.jTextAreaDescripcion.setText(null);        
         this.jTextFieldNombre.requestFocus();   // Una vez seteado los input se gana el Foco en InputNombre.
         this.jTableEdificio.clearSelection();
-        busqueda = false;
         modificar = false;
-        cargarTablaEdificio("");
+        cargarTablaEdificio();
     }
     
     public void cargarPanelDatos(long id){
@@ -679,12 +559,10 @@ public final class PanelEdificio extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelAceptar;
-    private javax.swing.JLabel jLabelBuscar;
     private javax.swing.JLabel jLabelDescripción;
     private javax.swing.JLabel jLabelRefrescar;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelButtonAgregar;
-    private javax.swing.JPanel jPanelButtonBuscar;
     private javax.swing.JPanel jPanelButtonRefrescar;
     private javax.swing.JPanel jPanelCargaDatos;
     private javax.swing.JPanel jPanelTabla;
@@ -692,10 +570,8 @@ public final class PanelEdificio extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTable jTableEdificio;
     private javax.swing.JTextArea jTextAreaDescripcion;
-    private javax.swing.JTextField jTextFieldBuscar;
     private javax.swing.JTextField jTextFieldDireccion;
     private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
