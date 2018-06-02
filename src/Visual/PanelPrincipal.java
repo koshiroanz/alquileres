@@ -453,6 +453,7 @@ public final class PanelPrincipal extends javax.swing.JPanel {
     }
     
     public void cargarTablaExpensa(long idEdificio){
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         this.jLabelExpensa.setText("Servicios");
         List<Logica.Servicio> servicios = unaControladora.obtenerEdificio(idEdificio).getServicios();
         Object datos[] = new Object[4];
@@ -461,7 +462,7 @@ public final class PanelPrincipal extends javax.swing.JPanel {
             datos[0] = unServicio.getNombre();
             datos[1] = unServicio.getMes();
             if(unServicio.getFechaEmision() != null && unServicio.getFechaVencimiento() != null){
-                datos[2] = unServicio.getFechaEmision()+", "+unServicio.getFechaVencimiento();
+                datos[2] = formatoFecha.format(unServicio.getFechaVencimiento());
             }else{
                 datos[2] = "";
             }
