@@ -168,7 +168,7 @@ public class ControladoraL {
 /*------------------------------------------------------------------------------
                                 ALQUILER
 ------------------------------------------------------------------------------*/
-    public void altaAlquiler(Date fecha, long idCochera, long idDepartamento, int GeneracionAuto, float montoAlquiler, float otrasFactura, float total, String descripcion, Pago unPago, long idInquilino) throws Exception{
+    public void altaAlquiler(Date fecha, long idCochera, long idDepartamento, int[] GeneracionAuto, float montoAlquiler, float otrasFactura, float total, String descripcion, Pago unPago, long idInquilino) throws Exception{
         Alquiler unAlquiler = new Alquiler(fecha, idCochera, idDepartamento, GeneracionAuto, montoAlquiler, otrasFactura, total, descripcion, unPago);
         
         unaControladora.altaAlquiler(unAlquiler);
@@ -178,7 +178,7 @@ public class ControladoraL {
         unaControladora.modificarInquilino(unInquilino);
     }
     
-    public void modificarAlquiler(long id, Date fecha, long idCochera, long idDepartamento, int GeneracionAuto, float montoAlquiler, float otraFactura, float total, String descripcion, Pago unPago) throws Exception{
+    public void modificarAlquiler(long id, Date fecha, long idCochera, long idDepartamento, int[] GeneracionAuto, float montoAlquiler, float otraFactura, float total, String descripcion, Pago unPago) throws Exception{
         Alquiler unAlquiler = obtenerAlquiler(id);
         
         unAlquiler.setFecha(fecha);
@@ -308,12 +308,23 @@ public class ControladoraL {
                 
                 unAlquiler = alquileres.get(alquileres.size()-1);
                 //unAlquiler = unInquilino.getAlquileres().get(unInquilino.getAlquileres().size()-1); // Se obtiene el último Alquiler del Inquilino
-                if(unAlquiler.getGeneracionAuto() < 6){ // Si generacionAuto del último Alquiler < 6
+                if(unAlquiler.getGeneracionAuto()[0] < 6){ // Si generacionAuto del último Alquiler < 6
                     mesAlquiler = Integer.valueOf(monthFormat.format(unAlquiler.fecha));
                     anioAlquiler = Integer.valueOf(yearFormat.format(unAlquiler.fecha));
                     
                     if(mesAlquiler == mesActual && anioAlquiler == anioActual){
-                        altaAlquiler(fecha, unAlquiler.getCochera(), unAlquiler.getDepartamento(), unAlquiler.getGeneracionAuto()+1, unAlquiler.getMonto(), unAlquiler.getOtraFactura(), unAlquiler.getTotal(), unAlquiler.getDescripcion(), null, unInquilino.getId());
+                        int[] GeneracionAuto = new int[2];
+                        GeneracionAuto[0] = unAlquiler.getGeneracionAuto()[0]+1;
+                        GeneracionAuto[1] = unAlquiler.getGeneracionAuto()[1];
+                        altaAlquiler(fecha, unAlquiler.getCochera(), unAlquiler.getDepartamento(), GeneracionAuto, unAlquiler.getMonto(), unAlquiler.getOtraFactura(), unAlquiler.getTotal(), unAlquiler.getDescripcion(), null, unInquilino.getId());
+                        cantAlquileresGenerados++;
+                    }
+                }else{
+                    if(unAlquiler.getGeneracionAuto()[1] < 4){
+                        int[] GeneracionAuto = new int[2];
+                        GeneracionAuto[0] = 1;
+                        GeneracionAuto[1] = unAlquiler.getGeneracionAuto()[1]+1;
+                        altaAlquiler(fecha, unAlquiler.getCochera(), unAlquiler.getDepartamento(), GeneracionAuto, unInquilino.getImpSemestres()[GeneracionAuto[2]], 0, unAlquiler.getTotal(), unAlquiler.getDescripcion(), null, unInquilino.getId());
                         cantAlquileresGenerados++;
                     }
                 }
@@ -1221,8 +1232,8 @@ public class ControladoraL {
 /*------------------------------------------------------------------------------
                                 INQUILINO
 ------------------------------------------------------------------------------*/
-    public void altaInquilino(int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, String descripcion, Garante unGarante, List<Alquiler> alquileres, long idDepartamento, long idCochera) throws Exception{
-        Inquilino unInquilino = new Inquilino(cantidadPersonas, apellido, nombre, dni, email, telefono, cuit, 0, descripcion, unGarante, alquileres);
+    public void altaInquilino(int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, float[] impSemestres, String descripcion, Garante unGarante, List<Alquiler> alquileres, long idDepartamento, long idCochera) throws Exception{
+        Inquilino unInquilino = new Inquilino(cantidadPersonas, apellido, nombre, dni, email, telefono, cuit, 0, impSemestres, descripcion, unGarante, alquileres);
         unaControladora.altaInquilino(unInquilino);
         
         if(idDepartamento != 0){
@@ -1251,7 +1262,7 @@ public class ControladoraL {
         }
     }
     
-    public void modificarInquilino(long idInquilino, int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, String descripcion, Garante unGarante, List<Alquiler> alquileres, long idDepartamento, long idCochera, long idEdificio) throws Exception{
+    public void modificarInquilino(long idInquilino, int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, float[] impSemestres, String descripcion, Garante unGarante, List<Alquiler> alquileres, long idDepartamento, long idCochera, long idEdificio) throws Exception{
         Inquilino unInquilino = obtenerInquilino(idInquilino);
         
         unInquilino.setCantidadPersonas(cantidadPersonas);
@@ -1262,6 +1273,7 @@ public class ControladoraL {
         unInquilino.setTelefono(telefono);
         unInquilino.setCuit(cuit);
         unInquilino.setSaldoMesAnt(saldoMesAnt);
+        unInquilino.setImpSemestres(impSemestres);
         unInquilino.setDescripcion(descripcion);
         unInquilino.setUnGarante(unGarante);
         unInquilino.setAlquileres(alquileres);

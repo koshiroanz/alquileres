@@ -25,7 +25,7 @@ public class Alquiler implements Serializable {
     @Basic
     private long idDepartamento;
     @Basic
-    private int GeneracionAuto;
+    private int[] GeneracionAuto = new int[2];
     @Basic
     private float monto;
     @Basic
@@ -41,7 +41,7 @@ public class Alquiler implements Serializable {
     public Alquiler() {
     }
 
-    public Alquiler(Date fecha, long idCochera, long idDepartamento, int GeneracionAuto, float monto, float otraFactura, float total, String descripcion,  Pago unPago) {
+    public Alquiler(Date fecha, long idCochera, long idDepartamento, int[] GeneracionAuto, float monto, float otraFactura, float total, String descripcion,  Pago unPago) {
         this.fecha = fecha;
         this.idCochera = idCochera;
         this.idDepartamento = idDepartamento;
@@ -81,11 +81,11 @@ public class Alquiler implements Serializable {
         this.idDepartamento = idDepartamento;
     }
 
-    public int getGeneracionAuto() {
+    public int[] getGeneracionAuto() {
         return GeneracionAuto;
     }
 
-    public void setGeneracionAuto(int GeneracionAuto) {
+    public void setGeneracionAuto(int[] GeneracionAuto) {
         this.GeneracionAuto = GeneracionAuto;
     }
 

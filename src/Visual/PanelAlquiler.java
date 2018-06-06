@@ -66,9 +66,12 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         jLabelTotal = new javax.swing.JLabel();
         jTextFieldTotal = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabelMonto1 = new javax.swing.JLabel();
+        jLabelNAlquiler = new javax.swing.JLabel();
         jSeparatorMonto1 = new javax.swing.JSeparator();
         jTextFieldNumAlquiler = new javax.swing.JTextField();
+        jLabelSemestre = new javax.swing.JLabel();
+        jTextFieldSemestre = new javax.swing.JTextField();
+        jSeparatorMonto2 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableAlquiler = new javax.swing.JTable();
@@ -233,12 +236,19 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             }
         });
 
-        jLabelMonto1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabelMonto1.setText("N° Alquiler");
+        jLabelNAlquiler.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabelNAlquiler.setText("N° Alquiler");
 
         jTextFieldNumAlquiler.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldNumAlquiler.setText("1");
         jTextFieldNumAlquiler.setBorder(null);
+
+        jLabelSemestre.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabelSemestre.setText("Semestre");
+
+        jTextFieldSemestre.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jTextFieldSemestre.setText("1");
+        jTextFieldSemestre.setBorder(null);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -258,11 +268,26 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                             .addComponent(jLabelMonto)
                             .addComponent(jLabelTotal)
                             .addComponent(jLabelFecha)
-                            .addComponent(jLabelMonto1))
+                            .addComponent(jLabelNAlquiler))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jComboBoxDepartamento, javax.swing.GroupLayout.Alignment.LEADING, 0, 248, Short.MAX_VALUE)
+                                    .addComponent(jDateChooserFecha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(113, 113, 113))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextFieldNumAlquiler)
+                                            .addComponent(jSeparatorMonto1))
+                                        .addGap(49, 49, 49)
+                                        .addComponent(jLabelSemestre)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextFieldSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jSeparatorMonto2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(jTextFieldMonto, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jSeparatorMonto)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -270,17 +295,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                                             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
                                             .addComponent(jTextFieldTotal, javax.swing.GroupLayout.Alignment.LEADING))
                                         .addGap(0, 0, Short.MAX_VALUE)))
-                                .addGap(114, 114, 114))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jComboBoxDepartamento, javax.swing.GroupLayout.Alignment.LEADING, 0, 248, Short.MAX_VALUE)
-                                    .addComponent(jDateChooserFecha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(113, 113, 113))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jSeparatorMonto1, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldNumAlquiler, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(114, 114, 114)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,7 +348,11 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabelDescripcion)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelSemestre))
+                        .addComponent(jSeparatorMonto2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
@@ -346,7 +365,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                                 .addGap(18, 30, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                                     .addComponent(jTextFieldNumAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelMonto1))))
+                                    .addComponent(jLabelNAlquiler))))
                         .addComponent(jSeparatorMonto1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -615,7 +634,9 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                 String descripcion = jTextAreaDescripcion.getText();
                 float monto = Float.valueOf(jTextFieldMonto.getText()), 
                       otraFactura = Float.valueOf(jTextFieldOtraFactura.getText());
-                int generacionAuto = Integer.valueOf(jTextFieldNumAlquiler.getText());
+                int[] generacionAuto = new int[2];
+                generacionAuto[1] = Integer.valueOf(jTextFieldNumAlquiler.getText());
+                generacionAuto[2] = Integer.valueOf(jTextFieldSemestre.getText());
                 Logica.Inquilino unInquilino = (Logica.Inquilino) comboInquilino.getElementAt(jComboBoxInquilino.getSelectedIndex());
                 
                 float tot = Float.valueOf(jTextFieldTotal.getText());
@@ -1048,9 +1069,10 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelFecha;
     private javax.swing.JLabel jLabelInquilino;
     private javax.swing.JLabel jLabelMonto;
-    private javax.swing.JLabel jLabelMonto1;
+    private javax.swing.JLabel jLabelNAlquiler;
     private javax.swing.JLabel jLabelOtraFactura;
     private javax.swing.JLabel jLabelRefresh;
+    private javax.swing.JLabel jLabelSemestre;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JPanel jPanel1;
@@ -1066,11 +1088,13 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparatorMonto;
     private javax.swing.JSeparator jSeparatorMonto1;
+    private javax.swing.JSeparator jSeparatorMonto2;
     private javax.swing.JTable jTableAlquiler;
     private javax.swing.JTextArea jTextAreaDescripcion;
     private javax.swing.JTextField jTextFieldMonto;
     private javax.swing.JTextField jTextFieldNumAlquiler;
     private javax.swing.JTextField jTextFieldOtraFactura;
+    private javax.swing.JTextField jTextFieldSemestre;
     private javax.swing.JTextField jTextFieldTotal;
     // End of variables declaration//GEN-END:variables
 }

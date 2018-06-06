@@ -329,12 +329,12 @@ public final class PanelPrincipal extends javax.swing.JPanel {
         if(idEdificio != 0){
             /*vtReporte ventanaReporte = new vtReporte(idEdificio);
             ventanaReporte.setVisible(true);*/
-            if(unaControladora.existenExpensas(idEdificio)){
+            //if(unaControladora.existenExpensas(idEdificio)){
                 vtnReporte ventanaReporte = new vtnReporte(idEdificio);
                 ventanaReporte.setVisible(true);
-            }else{
+            /*}else{
                 JOptionPane.showMessageDialog(null, "No es posible generar el documento debido a que no existe ningún alquiler/expensa registrado.");
-            }
+            }*/
         }else{
             JOptionPane.showMessageDialog(null, "No es posible generar el documento debido a que no se encuentra seleccionado un Edificio. Por favor Seleccione un Edificio");
         }        

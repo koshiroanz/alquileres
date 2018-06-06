@@ -48,11 +48,11 @@ public class ControladoraV {
 /*------------------------------------------------------------------------------
                                 ALQUILER
 ------------------------------------------------------------------------------*/
-    public void altaAlquiler(Date fecha, long cochera, long departamento, int GeneracionAuto, float monto, float otraFactura, float total, String descripcion, Logica.Pago unPago, long idInquilino) throws Exception{
+    public void altaAlquiler(Date fecha, long cochera, long departamento, int[] GeneracionAuto, float monto, float otraFactura, float total, String descripcion, Logica.Pago unPago, long idInquilino) throws Exception{
         unaControladora.altaAlquiler(fecha, cochera, departamento, GeneracionAuto, monto, otraFactura, total, descripcion, unPago, idInquilino);
     }
     
-    public void modificarAlquiler(long id, Date fecha, long cochera, long departamento, int GeneracionAuto, float monto, float otraFactura, float total, String descripcion, Logica.Pago unPago) throws Exception{
+    public void modificarAlquiler(long id, Date fecha, long cochera, long departamento, int[] GeneracionAuto, float monto, float otraFactura, float total, String descripcion, Logica.Pago unPago) throws Exception{
         unaControladora.modificarAlquiler(id, fecha, cochera, departamento, GeneracionAuto, monto, otraFactura, total, descripcion, unPago);
     }
     
@@ -367,12 +367,12 @@ public class ControladoraV {
 /*------------------------------------------------------------------------------
                                 INQUILINO
 ------------------------------------------------------------------------------*/
-    public void altaInquilino(int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, String descripcion, Logica.Garante unGarante, List<Logica.Alquiler> alquileres, long idDepartamento, long idCochera) throws Exception{
-        unaControladora.altaInquilino(cantidadPersonas, apellido, nombre, dni, email, telefono, cuit, saldoMesAnt, descripcion, unGarante, alquileres, idDepartamento, idCochera);
+    public void altaInquilino(int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, float[] impSemestres, String descripcion, Logica.Garante unGarante, List<Logica.Alquiler> alquileres, long idDepartamento, long idCochera) throws Exception{
+        unaControladora.altaInquilino(cantidadPersonas, apellido, nombre, dni, email, telefono, cuit, saldoMesAnt, impSemestres, descripcion, unGarante, alquileres, idDepartamento, idCochera);
     }
     
-    public void modificarInquilino(long idInquilino, int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, String descripcion, Logica.Garante unGarante, List<Logica.Alquiler> alquileres, long idDepartamento, long idCochera, long idEdificio) throws Exception{
-        unaControladora.modificarInquilino(idInquilino, cantidadPersonas, apellido, nombre, dni, email, telefono, cuit, saldoMesAnt, descripcion, unGarante, alquileres, idDepartamento, idCochera, idEdificio);
+    public void modificarInquilino(long idInquilino, int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, float[] impSemestres, String descripcion, Logica.Garante unGarante, List<Logica.Alquiler> alquileres, long idDepartamento, long idCochera, long idEdificio) throws Exception{
+        unaControladora.modificarInquilino(idInquilino, cantidadPersonas, apellido, nombre, dni, email, telefono, cuit, saldoMesAnt, impSemestres, descripcion, unGarante, alquileres, idDepartamento, idCochera, idEdificio);
     }
     
     public void modificarSaldo(long idInquilino, float saldoMesAnt) throws Exception{

@@ -33,6 +33,8 @@ public class Inquilino implements Serializable {
     @Basic
     private float saldoMesAnt;
     @Basic
+    private float[] impSemestres = new float[4];
+    @Basic
     private String descripcion;
     @OneToOne(cascade=CascadeType.REMOVE)
     private Garante unGarante;
@@ -42,7 +44,7 @@ public class Inquilino implements Serializable {
     public Inquilino() {
     }
 
-    public Inquilino(int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, String descripcion, Garante unGarante, List<Alquiler> alquileres) {
+    public Inquilino(int cantidadPersonas, String apellido, String nombre, String dni, String email, String telefono, String cuit, float saldoMesAnt, float[] impSemestres, String descripcion, Garante unGarante, List<Alquiler> alquileres) {
         this.cantidadPersonas = cantidadPersonas;
         this.apellido = apellido;
         this.nombre = nombre;
@@ -54,6 +56,7 @@ public class Inquilino implements Serializable {
         this.descripcion = descripcion;
         this.unGarante = unGarante;
         this.alquileres = alquileres;
+        this.impSemestres = impSemestres;
     }
 
     public long getId() {
@@ -130,6 +133,14 @@ public class Inquilino implements Serializable {
 
     public void setSaldoMesAnt(float saldoMesAnt) {
         this.saldoMesAnt = saldoMesAnt;
+    }
+
+    public float[] getImpSemestres() {
+        return impSemestres;
+    }
+
+    public void setImpSemestres(float[] impSemestres) {
+        this.impSemestres = impSemestres;
     }
 
     public String getDescripcion() {

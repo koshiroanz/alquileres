@@ -4,13 +4,11 @@ import java.awt.Color;
 import java.util.List;
 import java.util.LinkedList;
 import javax.swing.ImageIcon;
-import javax.swing.RowSorter;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import java.util.logging.Logger;
 import javax.swing.table.TableModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.table.TableRowSorter;
 import javax.swing.table.DefaultTableModel;
 import static java.awt.event.KeyEvent.VK_MINUS;
 import static java.awt.event.KeyEvent.VK_SPACE;
@@ -64,13 +62,16 @@ public class PanelInquilino extends javax.swing.JPanel {
         jSeparatorEmail = new javax.swing.JSeparator();
         jSeparatorTelefono = new javax.swing.JSeparator();
         jSeparatorCantFamiliares = new javax.swing.JSeparator();
-        jLabelCochera = new javax.swing.JLabel();
-        jComboBoxCochera = new javax.swing.JComboBox<>();
+        jLabelSemestres = new javax.swing.JLabel();
+        jComboBoxSemestres = new javax.swing.JComboBox<>();
         jLabelDescripcion = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextAreaDescripcion = new javax.swing.JTextArea();
         jPanelButtonRefrescar = new javax.swing.JPanel();
         jLabelRefrescar = new javax.swing.JLabel();
+        jLabelCochera = new javax.swing.JLabel();
+        jComboBoxCochera = new javax.swing.JComboBox<>();
+        jButtonSemesttre = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jTextFieldBuscar = new javax.swing.JTextField();
         jSeparatorBuscar = new javax.swing.JSeparator();
@@ -131,7 +132,7 @@ public class PanelInquilino extends javax.swing.JPanel {
         });
 
         jLabelCuit.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabelCuit.setText("CUIT/CUIL");
+        jLabelCuit.setText("CUIT");
 
         jLabelTelefono.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelTelefono.setText("Teléfono");
@@ -179,16 +180,16 @@ public class PanelInquilino extends javax.swing.JPanel {
             }
         });
 
-        jLabelCochera.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabelCochera.setText("Cochera");
+        jLabelSemestres.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabelSemestres.setText("Imp. Semestres");
 
-        jComboBoxCochera.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jComboBoxCochera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "Sin cochera" }));
-        jComboBoxCochera.setBorder(null);
-        jComboBoxCochera.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jComboBoxCochera.addKeyListener(new java.awt.event.KeyAdapter() {
+        jComboBoxSemestres.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jComboBoxSemestres.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción" }));
+        jComboBoxSemestres.setBorder(null);
+        jComboBoxSemestres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jComboBoxSemestres.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jComboBoxCocheraKeyTyped(evt);
+                jComboBoxSemestresKeyTyped(evt);
             }
         });
 
@@ -233,6 +234,26 @@ public class PanelInquilino extends javax.swing.JPanel {
             .addComponent(jLabelRefrescar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
         );
 
+        jLabelCochera.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabelCochera.setText("Cochera");
+
+        jComboBoxCochera.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jComboBoxCochera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "Sin cochera" }));
+        jComboBoxCochera.setBorder(null);
+        jComboBoxCochera.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jComboBoxCochera.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jComboBoxCocheraKeyTyped(evt);
+            }
+        });
+
+        jButtonSemesttre.setText("+");
+        jButtonSemesttre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSemesttreActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -251,41 +272,40 @@ public class PanelInquilino extends javax.swing.JPanel {
                             .addComponent(jLabelDni)
                             .addComponent(jLabelTelefono)
                             .addComponent(jLabelCantFamiliares)
-                            .addComponent(jLabelCochera))
+                            .addComponent(jLabelSemestres)
+                            .addComponent(jLabelDescripcion))
                         .addGap(34, 34, 34)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxCochera, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2)
                             .addComponent(jSeparatorCantFamiliares)
+                            .addComponent(jTextFieldCantFamiliares)
                             .addComponent(jSeparatorTelefono)
+                            .addComponent(jTextFieldTelefono)
                             .addComponent(jSeparatorDni)
+                            .addComponent(jTextFieldDni)
                             .addComponent(jSeparatorNombre)
                             .addComponent(jTextFieldNombre)
-                            .addComponent(jTextFieldDni, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                            .addComponent(jTextFieldTelefono)
-                            .addComponent(jTextFieldCantFamiliares))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(108, 108, 108)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelApellido)
-                                    .addComponent(jLabelCuit)
-                                    .addComponent(jLabelEmail))
-                                .addGap(55, 55, 55))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelDescripcion)
-                                    .addComponent(jLabelDepartamento))
-                                .addGap(18, 18, 18)))
+                                .addComponent(jComboBoxSemestres, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jButtonSemesttre)))
+                        .addGap(78, 78, 78)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelCuit)
+                            .addComponent(jLabelApellido)
+                            .addComponent(jLabelEmail)
+                            .addComponent(jLabelDepartamento)
+                            .addComponent(jLabelCochera))
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxCochera, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jTextFieldCuit)
                             .addComponent(jTextFieldApellido)
                             .addComponent(jTextFieldEmail)
-                            .addComponent(jComboBoxDepartamento, 0, 288, Short.MAX_VALUE)
+                            .addComponent(jComboBoxDepartamento, 0, 345, Short.MAX_VALUE)
                             .addComponent(jSeparatorApellido)
                             .addComponent(jSeparatorCuit)
-                            .addComponent(jSeparatorEmail)
-                            .addComponent(jScrollPane2))))
+                            .addComponent(jSeparatorEmail))))
                 .addGap(22, 22, 22))
         );
         jPanel1Layout.setVerticalGroup(
@@ -305,7 +325,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparatorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparatorApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                         .addComponent(jTextFieldDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -317,7 +337,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparatorDni, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparatorCuit, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -325,7 +345,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                             .addComponent(jLabelEmail))
                         .addGap(0, 0, 0)
                         .addComponent(jSeparatorEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jLabelCantFamiliares)
                             .addComponent(jTextFieldCantFamiliares, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -337,19 +357,19 @@ public class PanelInquilino extends javax.swing.JPanel {
                             .addComponent(jLabelTelefono))
                         .addGap(0, 0, 0)
                         .addComponent(jSeparatorTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jSeparatorCantFamiliares, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jComboBoxCochera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelCochera)
+                    .addComponent(jComboBoxSemestres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelSemestres)
+                    .addComponent(jButtonSemesttre))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSeparatorCantFamiliares, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabelDescripcion)
-                            .addComponent(jComboBoxCochera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelCochera))
-                        .addGap(0, 43, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                    .addComponent(jLabelDescripcion)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -420,7 +440,7 @@ public class PanelInquilino extends javax.swing.JPanel {
             jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonEliminarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonEliminarLayout.setVerticalGroup(
@@ -456,7 +476,7 @@ public class PanelInquilino extends javax.swing.JPanel {
             jPanelButtonAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonAgregarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAgregarLayout.setVerticalGroup(
@@ -526,9 +546,9 @@ public class PanelInquilino extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 617, Short.MAX_VALUE)
+                                .addGap(0, 659, Short.MAX_VALUE)
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -550,7 +570,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                 .addGap(0, 0, 0)
                 .addComponent(jSeparatorBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -560,14 +580,14 @@ public class PanelInquilino extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -605,8 +625,14 @@ public class PanelInquilino extends javax.swing.JPanel {
                 cuit = jTextFieldCuit.getText(),
                 email = jTextFieldEmail.getText().toUpperCase();
                 
+                float[] impSemestres = new float[4];
+                impSemestres[0] = Float.valueOf(jComboBoxSemestres.getItemAt(1));
+                impSemestres[1] = Float.valueOf(jComboBoxSemestres.getItemAt(1));
+                impSemestres[2] = Float.valueOf(jComboBoxSemestres.getItemAt(2));
+                impSemestres[3] = Float.valueOf(jComboBoxSemestres.getItemAt(3));
+                
                 if(!modificar){
-                    unaControladora.altaInquilino(Integer.valueOf(cantFamilia), apellido, nombre, dni, email, telefono, cuit, 0/* saldoMesAnt*/, jTextAreaDescripcion.getText(), null/*unGarante*/, null/*alquileres*/, idDepartamento, idCochera);
+                    unaControladora.altaInquilino(Integer.valueOf(cantFamilia), apellido, nombre, dni, email, telefono, cuit, 0/* saldoMesAnt*/, impSemestres, jTextAreaDescripcion.getText(), null/*unGarante*/, null/*alquileres*/, idDepartamento, idCochera);
                     limpiarComponentes();
                 }else{
                     int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -614,7 +640,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                         Logica.Garante unGarante = unaControladora.obtenerInquilino(idInquilino).getUnGarante();
                         List<Logica.Alquiler> alquileres = unaControladora.obtenerInquilino(idInquilino).getAlquileres();
                         float saldoMesAnt = unaControladora.obtenerInquilino(idInquilino).getSaldoMesAnt();
-                        unaControladora.modificarInquilino(idInquilino, Integer.valueOf(cantFamilia), apellido, nombre, dni, email, telefono, cuit, saldoMesAnt, jTextAreaDescripcion.getText(), unGarante, alquileres, idDepartamento, idCochera, idEdificio);
+                        unaControladora.modificarInquilino(idInquilino, Integer.valueOf(cantFamilia), apellido, nombre, dni, email, telefono, cuit, saldoMesAnt, impSemestres, jTextAreaDescripcion.getText(), unGarante, alquileres, idDepartamento, idCochera, idEdificio);
                         limpiarComponentes();
                     }
                 }
@@ -782,11 +808,11 @@ public class PanelInquilino extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTextFieldCuitKeyTyped
 
-    private void jComboBoxCocheraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBoxCocheraKeyTyped
+    private void jComboBoxSemestresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBoxSemestresKeyTyped
         if (evt.getKeyChar() == evt.VK_ENTER) {
             jPanelButtonAgregarMouseClicked(null);
         }
-    }//GEN-LAST:event_jComboBoxCocheraKeyTyped
+    }//GEN-LAST:event_jComboBoxSemestresKeyTyped
 
     private void jTextFieldTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldTelefonoKeyTyped
         if (evt.getKeyChar() == evt.VK_ENTER) {
@@ -802,6 +828,31 @@ public class PanelInquilino extends javax.swing.JPanel {
             jPanelButtonAgregarMouseClicked(null);
         }
     }//GEN-LAST:event_jTextFieldEmailKeyTyped
+
+    private void jComboBoxCocheraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBoxCocheraKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAgregarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jComboBoxCocheraKeyTyped
+
+    private void jButtonSemesttreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSemesttreActionPerformed
+        if(jButtonSemesttre.getText().equals("-")){
+            if(jComboBoxSemestres.getSelectedIndex() > 0){
+                jComboBoxSemestres.remove(jComboBoxSemestres.getSelectedIndex());
+            }
+        }
+        
+        try{
+            while(jComboBoxSemestres.getItemCount() < 5){
+                String importe = JOptionPane.showInputDialog(null, "Importe");
+                jComboBoxSemestres.addItem(importe);
+            }
+            jComboBoxSemestres.requestFocus();
+        }catch(Exception e){
+            System.out.print("Aprieta para agregar servicio, le da ok y no escribio nada. No ocurre ningun problema ;)"+e);
+            jButtonSemesttreActionPerformed(null);
+        }
+    }//GEN-LAST:event_jButtonSemesttreActionPerformed
 
     public void cargarTablaInquilino(String buscar){
         String colTablaInquilino[] = {"Id", "Apellido", "Nombre", "DNI", "Tel.", "E-mail", "Departamento", "Cochera", "Descripción"};
@@ -887,7 +938,7 @@ public class PanelInquilino extends javax.swing.JPanel {
         }
         comboCochera.addElement("Sin cochera");
         
-        this.jComboBoxCochera.setModel(comboCochera);
+        this.jComboBoxSemestres.setModel(comboCochera);
     }
     
     private void cargarPanelDatos(long idInquilino){
@@ -1030,8 +1081,10 @@ public class PanelInquilino extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonSemesttre;
     private javax.swing.JComboBox<String> jComboBoxCochera;
     private javax.swing.JComboBox<String> jComboBoxDepartamento;
+    private javax.swing.JComboBox<String> jComboBoxSemestres;
     private javax.swing.JLabel jLabelAceptar;
     private javax.swing.JLabel jLabelApellido;
     private javax.swing.JLabel jLabelBuscar;
@@ -1045,6 +1098,7 @@ public class PanelInquilino extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelEmail;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelRefrescar;
+    private javax.swing.JLabel jLabelSemestres;
     private javax.swing.JLabel jLabelTelefono;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel1;
