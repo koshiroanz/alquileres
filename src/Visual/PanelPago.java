@@ -310,6 +310,11 @@ public final class PanelPago extends javax.swing.JPanel {
                 jTablePagoMouseClicked(evt);
             }
         });
+        jTablePago.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTablePagoKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTablePago);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -1020,6 +1025,12 @@ public final class PanelPago extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Debe ingresar una Fecha para continuar.", "", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jComboBoxInquilinoFocusGained
+
+    private void jTablePagoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTablePagoKeyTyped
+        if (evt.getKeyChar() == evt.VK_DELETE) {
+            jPanelButtonEliminarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jTablePagoKeyTyped
 
     public void cargarComboInquilino(){
         List<Logica.Inquilino> inquilinosSinPago = unaControladora.obtenerInquilinosSinPago(idEdificio);

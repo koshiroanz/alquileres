@@ -25,7 +25,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel1" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-              <Component id="jPanel2" pref="340" max="32767" attributes="0"/>
+              <Component id="jPanel2" pref="339" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -74,7 +74,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jComboBoxSemestres" max="32767" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                  <Component id="jButtonSemesttre" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButtonSemestre" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
@@ -164,15 +164,15 @@
                           <Component id="jSeparatorTelefono" min="-2" pref="10" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="jSeparatorCantFamiliares" min="-2" pref="10" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jComboBoxCochera" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelCochera" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jComboBoxSemestres" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelSemestres" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButtonSemesttre" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonSemestre" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -412,6 +412,7 @@
             </Property>
           </Properties>
           <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jComboBoxSemestresItemStateChanged"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jComboBoxSemestresKeyTyped"/>
           </Events>
           <AuxValues>
@@ -519,12 +520,13 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonSemesttre">
+        <Component class="javax.swing.JButton" name="jButtonSemestre">
           <Properties>
             <Property name="text" type="java.lang.String" value="+"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSemesttreActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSemestreActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jButtonSemestreKeyTyped"/>
           </Events>
         </Component>
       </SubComponents>
@@ -581,7 +583,7 @@
                   <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                   <Component id="jSeparatorBuscar" min="-2" pref="10" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="227" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="226" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -638,6 +640,7 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableInquilinoMouseClicked"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTableInquilinoKeyTyped"/>
               </Events>
             </Component>
           </SubComponents>

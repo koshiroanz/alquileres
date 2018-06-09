@@ -324,7 +324,7 @@ public class ControladoraL {
                         int[] GeneracionAuto = new int[2];
                         GeneracionAuto[0] = 1;
                         GeneracionAuto[1] = unAlquiler.getGeneracionAuto()[1]+1;
-                        altaAlquiler(fecha, unAlquiler.getCochera(), unAlquiler.getDepartamento(), GeneracionAuto, unInquilino.getImpSemestres()[GeneracionAuto[2]], 0, unAlquiler.getTotal(), unAlquiler.getDescripcion(), null, unInquilino.getId());
+                        altaAlquiler(fecha, unAlquiler.getCochera(), unAlquiler.getDepartamento(), GeneracionAuto, unInquilino.getImpSemestres()[GeneracionAuto[1]], 0, unAlquiler.getTotal(), unAlquiler.getDescripcion(), null, unInquilino.getId());
                         cantAlquileresGenerados++;
                     }
                 }

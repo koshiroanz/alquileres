@@ -461,6 +461,11 @@ public final class PanelExpensa extends javax.swing.JPanel {
                 jTableBuscarExpensaMouseClicked(evt);
             }
         });
+        jTableBuscarExpensa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTableBuscarExpensaKeyTyped(evt);
+            }
+        });
         jScrollPane4.setViewportView(jTableBuscarExpensa);
         jTableBuscarExpensa.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jTableBuscarExpensa.getColumnModel().getColumnCount() > 0) {
@@ -758,6 +763,12 @@ public final class PanelExpensa extends javax.swing.JPanel {
     private void jComboBoxMesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBoxMesFocusLost
         entro = false;
     }//GEN-LAST:event_jComboBoxMesFocusLost
+
+    private void jTableBuscarExpensaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableBuscarExpensaKeyTyped
+        if (evt.getKeyChar() == evt.VK_DELETE) {
+            jPanelButtonEliminarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jTableBuscarExpensaKeyTyped
     
     public void cargarTablaExpensa(long idEdificio, long idDepartamento) throws Exception{
         limpiarTablaExpensa();

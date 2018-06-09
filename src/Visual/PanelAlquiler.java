@@ -47,8 +47,6 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         jLabelFecha = new javax.swing.JLabel();
         jDateChooserFecha = new com.toedter.calendar.JDateChooser();
         jLabelMonto = new javax.swing.JLabel();
-        jTextFieldMonto = new javax.swing.JTextField();
-        jSeparatorMonto = new javax.swing.JSeparator();
         jLabelDepartamento = new javax.swing.JLabel();
         jComboBoxDepartamento = new javax.swing.JComboBox<>();
         jLabelInquilino = new javax.swing.JLabel();
@@ -72,6 +70,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         jLabelSemestre = new javax.swing.JLabel();
         jTextFieldSemestre = new javax.swing.JTextField();
         jSeparatorMonto2 = new javax.swing.JSeparator();
+        jComboBoxMonto = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableAlquiler = new javax.swing.JTable();
@@ -104,23 +103,6 @@ public final class PanelAlquiler extends javax.swing.JPanel {
 
         jLabelMonto.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelMonto.setText("Monto");
-
-        jTextFieldMonto.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jTextFieldMonto.setText("0");
-        jTextFieldMonto.setBorder(null);
-        jTextFieldMonto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextFieldMontoMouseClicked(evt);
-            }
-        });
-        jTextFieldMonto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextFieldMontoKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldMontoKeyTyped(evt);
-            }
-        });
 
         jLabelDepartamento.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelDepartamento.setText("Departamento");
@@ -250,6 +232,13 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         jTextFieldSemestre.setText("1");
         jTextFieldSemestre.setBorder(null);
 
+        jComboBoxMonto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción" }));
+        jComboBoxMonto.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxMontoItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -271,31 +260,30 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                             .addComponent(jLabelNAlquiler))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jComboBoxDepartamento, javax.swing.GroupLayout.Alignment.LEADING, 0, 248, Short.MAX_VALUE)
-                                    .addComponent(jDateChooserFecha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(113, 113, 113))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextFieldNumAlquiler)
-                                            .addComponent(jSeparatorMonto1))
+                                            .addComponent(jTextFieldNumAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jSeparatorMonto1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(49, 49, 49)
                                         .addComponent(jLabelSemestre)
                                         .addGap(18, 18, 18)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jTextFieldSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jSeparatorMonto2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jTextFieldMonto, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSeparatorMonto)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
                                             .addComponent(jTextFieldTotal, javax.swing.GroupLayout.Alignment.LEADING))
                                         .addGap(0, 0, Short.MAX_VALUE)))
-                                .addGap(114, 114, 114)))
+                                .addGap(114, 114, 114))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jComboBoxMonto, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxDepartamento, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jDateChooserFecha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(113, 113, 113)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,22 +317,20 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                     .addComponent(jLabelInquilino)
                     .addComponent(jDateChooserFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelFecha))
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jComboBoxCochera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelCochera)
                     .addComponent(jComboBoxDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelDepartamento))
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextFieldOtraFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelMonto)
-                    .addComponent(jLabelOtraFactura))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparatorMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
+                    .addComponent(jLabelOtraFactura)
+                    .addComponent(jComboBoxMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabelDescripcion)
@@ -362,12 +348,12 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                                     .addComponent(jLabelTotal))
                                 .addGap(0, 0, 0)
                                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 30, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                                     .addComponent(jTextFieldNumAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabelNAlquiler))))
                         .addComponent(jSeparatorMonto1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -395,6 +381,11 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         jTableAlquiler.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableAlquilerMouseClicked(evt);
+            }
+        });
+        jTableAlquiler.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTableAlquilerKeyTyped(evt);
             }
         });
         jScrollPane1.setViewportView(jTableAlquiler);
@@ -583,7 +574,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
@@ -632,11 +623,11 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             try {
                 Date fecha = jDateChooserFecha.getDate();
                 String descripcion = jTextAreaDescripcion.getText();
-                float monto = Float.valueOf(jTextFieldMonto.getText()), 
+                float monto = Float.valueOf(jComboBoxMonto.getSelectedIndex()), 
                       otraFactura = Float.valueOf(jTextFieldOtraFactura.getText());
                 int[] generacionAuto = new int[2];
-                generacionAuto[1] = Integer.valueOf(jTextFieldNumAlquiler.getText());
-                generacionAuto[2] = Integer.valueOf(jTextFieldSemestre.getText());
+                generacionAuto[0] = Integer.valueOf(jTextFieldNumAlquiler.getText());
+                generacionAuto[1] = Integer.valueOf(jTextFieldSemestre.getText());
                 Logica.Inquilino unInquilino = (Logica.Inquilino) comboInquilino.getElementAt(jComboBoxInquilino.getSelectedIndex());
                 
                 float tot = Float.valueOf(jTextFieldTotal.getText());
@@ -700,7 +691,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     private void jComboBoxInquilinoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxInquilinoItemStateChanged
         if(jComboBoxInquilino.getSelectedIndex() > 0 && entro){
             Logica.Inquilino unInquilino = (Logica.Inquilino) comboInquilino.getElementAt(jComboBoxInquilino.getSelectedIndex());
-            cargarCombos(unInquilino.getId());
+            cargarCombos(unInquilino.getId(),1);
         }
     }//GEN-LAST:event_jComboBoxInquilinoItemStateChanged
 
@@ -723,15 +714,6 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
-    private void jTextFieldMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMontoKeyTyped
-        if (evt.getKeyChar() == evt.VK_ENTER) {
-            jPanelButtonAgregarMouseClicked(null);
-        }else if(!Character.isDigit(evt.getKeyChar()) && (evt.getKeyChar() != VK_SPACE) && (evt.getKeyChar() != VK_PERIOD) && (evt.getKeyChar() != VK_BACK_SPACE)){
-            getToolkit().beep();
-            evt.consume();
-        }
-    }//GEN-LAST:event_jTextFieldMontoKeyTyped
-
     private void jTextFieldOtraFacturaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldOtraFacturaKeyTyped
         if (evt.getKeyChar() == evt.VK_ENTER) {
             jPanelButtonAgregarMouseClicked(null);
@@ -741,24 +723,17 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTextFieldOtraFacturaKeyTyped
 
-    private void jTextFieldMontoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldMontoMouseClicked
-        if(jTextFieldMonto.getText().isEmpty() || jTextFieldMonto.getText().equals("0")){
-            jTextFieldMonto.setText(null);
-        }
-        if(jTextFieldOtraFactura.getText().isEmpty()){
-            jTextFieldOtraFactura.setText("0");
-        }
-        actualizarTotal();
-    }//GEN-LAST:event_jTextFieldMontoMouseClicked
-
     private void jTextFieldOtraFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldOtraFacturaMouseClicked
         if(jTextFieldOtraFactura.getText().isEmpty() || jTextFieldOtraFactura.getText().equals("0")){
             jTextFieldOtraFactura.setText(null);
         }
-        if(jTextFieldMonto.getText().isEmpty()){
-            jTextFieldMonto.setText("0");
+        
+        if(jComboBoxMonto.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(null, "Debe Seleccionar una opcion en monto.");
+            jComboBoxMonto.requestFocus();
+        }else{
+            actualizarTotal();
         }
-        actualizarTotal();
     }//GEN-LAST:event_jTextFieldOtraFacturaMouseClicked
 
     private void jComboBoxInquilinoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBoxInquilinoFocusGained
@@ -793,13 +768,22 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jDateChooserFechaKeyTyped
 
-    private void jTextFieldMontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMontoKeyReleased
-        actualizarTotal();
-    }//GEN-LAST:event_jTextFieldMontoKeyReleased
-
     private void jTextFieldOtraFacturaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldOtraFacturaKeyReleased
         actualizarTotal();
     }//GEN-LAST:event_jTextFieldOtraFacturaKeyReleased
+
+    private void jComboBoxMontoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxMontoItemStateChanged
+        if(jComboBoxMonto.getSelectedIndex() > 0){
+            jTextFieldSemestre.setText(String.valueOf(jComboBoxMonto.getSelectedIndex()));
+            actualizarTotal();
+        }
+    }//GEN-LAST:event_jComboBoxMontoItemStateChanged
+
+    private void jTableAlquilerKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableAlquilerKeyTyped
+        if (evt.getKeyChar() == evt.VK_DELETE) {
+            jPanelButtonEliminarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jTableAlquilerKeyTyped
 
     public boolean validar(){
         boolean validar = false;
@@ -816,12 +800,9 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         }else if(jComboBoxCochera.getSelectedItem() == "Seleccione una opción"){
             JOptionPane.showMessageDialog(null, "Debe seleccionar una Cochera.", "", JOptionPane.WARNING_MESSAGE);
             jComboBoxCochera.requestFocus();
-        }else if(jTextFieldMonto.getText().isEmpty()){
-            if(JOptionPane.showConfirmDialog(null, "Desea continuar con Monto en 0?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
-                jTextFieldMonto.requestFocus();
-            }else{
-                jTextFieldMonto.setText("0");
-            }
+        }else if(jComboBoxMonto.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(null, "Debe Seleccionar una opcion en monto.");
+            jComboBoxMonto.requestFocus();
         }else if(jTextFieldOtraFactura.getText().isEmpty()){
             if(JOptionPane.showConfirmDialog(null, "Desea continuar con Otras Facturas en 0?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
                 jTextFieldOtraFactura.requestFocus();
@@ -853,19 +834,18 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         this.jLabelAceptar.setText("Actualizar");
         modificar = true;
         Logica.Alquiler unAlquiler = unaControladora.obtenerAlquiler(idAlquiler);
-        float tot = unAlquiler.getTotal();
         long idInquilino = unaControladora.obtenerInquilinoPorAlquiler(idEdificio, idAlquiler).getId();
         jTextFieldNumAlquiler.setText(String.valueOf(unAlquiler.getGeneracionAuto()));
         jDateChooserFecha.setDate(unAlquiler.getFecha());
-        jTextFieldMonto.setText(String.valueOf(unAlquiler.getMonto()));
         jTextFieldOtraFactura.setText(String.valueOf(unAlquiler.getOtraFactura()));
-        if(unAlquiler.getCochera() > 0){
-            actualizarTotal();
-        }
-        jTextFieldTotal.setText(String.valueOf(tot));
+        
+        jComboBoxMonto.removeAllItems();
+        jComboBoxMonto.addItem(String.valueOf(unAlquiler.getMonto()));
+        
+        jTextFieldTotal.setText(String.valueOf(unAlquiler.getTotal()));
         cargarComboInquilino(idEdificio, idInquilino);
         jTextAreaDescripcion.setText(unAlquiler.getDescripcion());
-        cargarCombos(idInquilino);
+        cargarCombos(idInquilino,0);
         
         icono("afuera");
     }
@@ -949,12 +929,12 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         jLabelAceptar.setText("Aceptar");
         jTextFieldNumAlquiler.setText("1");
         jDateChooserFecha.setDate(null);
-        jTextFieldMonto.setText("0");
+        jComboBoxMonto.setSelectedIndex(0);
         jTextFieldOtraFactura.setText("0");
         jTextFieldTotal.setText("0");
         jTextAreaDescripcion.setText(null);
         cargarComboInquilino(idEdificio, 0);
-        cargarCombos(0);
+        cargarCombos(0,0);
         limpiarTabla();
         cargarComboAnio();
         
@@ -993,7 +973,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         this.jComboBoxInquilino.setModel(comboInquilino);
     }
     
-    public void cargarCombos(long idInquilino){
+    public void cargarCombos(long idInquilino, int nuevoAlqui){
         jComboBoxDepartamento.removeAllItems();
         jComboBoxCochera.removeAllItems();
         
@@ -1013,6 +993,15 @@ public final class PanelAlquiler extends javax.swing.JPanel {
                 precioCochera = 0;
                 comboCochera.addElement("Sin Cochera.");
             }
+            
+            if(nuevoAlqui == 1){
+                jComboBoxMonto.removeAllItems();
+                jComboBoxMonto.addItem("Seleccione una opción");
+                for (int i = 0; i < 4; i++) {
+                    jComboBoxMonto.addItem(String.valueOf(unaControladora.obtenerInquilino(idInquilino).getImpSemestres()[i]));
+                }
+            }
+            
             actualizarTotal();
         }else{
             comboDepartamento.addElement("Seleccione una opción");
@@ -1036,20 +1025,14 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     }
     
     public void actualizarTotal(){
-        float monto, otraFactura;
-        if(jTextFieldMonto.getText().isEmpty()){
+        float monto;
+        if(jComboBoxMonto.getSelectedIndex() == 0){
             monto = 0;
         }else{
-            monto = Float.valueOf(jTextFieldMonto.getText());
+            monto = Float.valueOf(String.valueOf(jComboBoxMonto.getSelectedItem()));
         }
         
-        if(jTextFieldOtraFactura.getText().isEmpty()){
-            otraFactura = 0;
-        }else{
-            otraFactura = Float.valueOf(jTextFieldOtraFactura.getText());
-        }
-        
-        float tot = precioCochera + monto + otraFactura;
+        float tot = precioCochera + monto;
         jTextFieldTotal.setText(String.valueOf(tot));
     }
 
@@ -1059,6 +1042,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBoxDepartamento;
     private javax.swing.JComboBox<String> jComboBoxInquilino;
     private javax.swing.JComboBox<String> jComboBoxMesBusqueda;
+    private javax.swing.JComboBox<String> jComboBoxMonto;
     private com.toedter.calendar.JDateChooser jDateChooserFecha;
     private javax.swing.JLabel jLabelAceptar;
     private javax.swing.JLabel jLabelBuscar;
@@ -1086,12 +1070,10 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparatorMonto;
     private javax.swing.JSeparator jSeparatorMonto1;
     private javax.swing.JSeparator jSeparatorMonto2;
     private javax.swing.JTable jTableAlquiler;
     private javax.swing.JTextArea jTextAreaDescripcion;
-    private javax.swing.JTextField jTextFieldMonto;
     private javax.swing.JTextField jTextFieldNumAlquiler;
     private javax.swing.JTextField jTextFieldOtraFactura;
     private javax.swing.JTextField jTextFieldSemestre;

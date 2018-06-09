@@ -16,7 +16,7 @@ import static java.awt.event.KeyEvent.VK_PERIOD;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
 import java.util.Collections;
 
-public class PanelInquilino extends javax.swing.JPanel {
+public final class PanelInquilino extends javax.swing.JPanel {
     private TableModel modelo;
     private final long idEdificio;
     private boolean modificar = false, eliminar = false;
@@ -71,7 +71,7 @@ public class PanelInquilino extends javax.swing.JPanel {
         jLabelRefrescar = new javax.swing.JLabel();
         jLabelCochera = new javax.swing.JLabel();
         jComboBoxCochera = new javax.swing.JComboBox<>();
-        jButtonSemesttre = new javax.swing.JButton();
+        jButtonSemestre = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jTextFieldBuscar = new javax.swing.JTextField();
         jSeparatorBuscar = new javax.swing.JSeparator();
@@ -187,6 +187,11 @@ public class PanelInquilino extends javax.swing.JPanel {
         jComboBoxSemestres.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción" }));
         jComboBoxSemestres.setBorder(null);
         jComboBoxSemestres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jComboBoxSemestres.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxSemestresItemStateChanged(evt);
+            }
+        });
         jComboBoxSemestres.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jComboBoxSemestresKeyTyped(evt);
@@ -247,10 +252,15 @@ public class PanelInquilino extends javax.swing.JPanel {
             }
         });
 
-        jButtonSemesttre.setText("+");
-        jButtonSemesttre.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSemestre.setText("+");
+        jButtonSemestre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSemesttreActionPerformed(evt);
+                jButtonSemestreActionPerformed(evt);
+            }
+        });
+        jButtonSemestre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jButtonSemestreKeyTyped(evt);
             }
         });
 
@@ -288,7 +298,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jComboBoxSemestres, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(0, 0, 0)
-                                .addComponent(jButtonSemesttre)))
+                                .addComponent(jButtonSemestre)))
                         .addGap(78, 78, 78)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelCuit)
@@ -357,15 +367,15 @@ public class PanelInquilino extends javax.swing.JPanel {
                             .addComponent(jLabelTelefono))
                         .addGap(0, 0, 0)
                         .addComponent(jSeparatorTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(jSeparatorCantFamiliares, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jComboBoxCochera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelCochera)
                     .addComponent(jComboBoxSemestres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelSemestres)
-                    .addComponent(jButtonSemesttre))
+                    .addComponent(jButtonSemestre))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelDescripcion)
@@ -406,6 +416,11 @@ public class PanelInquilino extends javax.swing.JPanel {
         jTableInquilino.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableInquilinoMouseClicked(evt);
+            }
+        });
+        jTableInquilino.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTableInquilinoKeyTyped(evt);
             }
         });
         jScrollPane1.setViewportView(jTableInquilino);
@@ -570,7 +585,7 @@ public class PanelInquilino extends javax.swing.JPanel {
                 .addGap(0, 0, 0)
                 .addComponent(jSeparatorBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -587,7 +602,7 @@ public class PanelInquilino extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -624,12 +639,14 @@ public class PanelInquilino extends javax.swing.JPanel {
                 apellido = jTextFieldApellido.getText().toUpperCase(),
                 cuit = jTextFieldCuit.getText(),
                 email = jTextFieldEmail.getText().toUpperCase();
-                
                 float[] impSemestres = new float[4];
-                impSemestres[0] = Float.valueOf(jComboBoxSemestres.getItemAt(1));
-                impSemestres[1] = Float.valueOf(jComboBoxSemestres.getItemAt(1));
-                impSemestres[2] = Float.valueOf(jComboBoxSemestres.getItemAt(2));
-                impSemestres[3] = Float.valueOf(jComboBoxSemestres.getItemAt(3));
+                
+                if(jComboBoxSemestres.getItemCount() > 1){
+                    impSemestres[0] = Float.valueOf(jComboBoxSemestres.getItemAt(1));
+                    impSemestres[1] = Float.valueOf(jComboBoxSemestres.getItemAt(2));
+                    impSemestres[2] = Float.valueOf(jComboBoxSemestres.getItemAt(3));
+                    impSemestres[3] = Float.valueOf(jComboBoxSemestres.getItemAt(4));
+                }
                 
                 if(!modificar){
                     unaControladora.altaInquilino(Integer.valueOf(cantFamilia), apellido, nombre, dni, email, telefono, cuit, 0/* saldoMesAnt*/, impSemestres, jTextAreaDescripcion.getText(), null/*unGarante*/, null/*alquileres*/, idDepartamento, idCochera);
@@ -835,10 +852,10 @@ public class PanelInquilino extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jComboBoxCocheraKeyTyped
 
-    private void jButtonSemesttreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSemesttreActionPerformed
-        if(jButtonSemesttre.getText().equals("-")){
+    private void jButtonSemestreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSemestreActionPerformed
+        if(jButtonSemestre.getText().equals("-")){
             if(jComboBoxSemestres.getSelectedIndex() > 0){
-                jComboBoxSemestres.remove(jComboBoxSemestres.getSelectedIndex());
+                jComboBoxSemestres.removeItemAt(jComboBoxSemestres.getSelectedIndex());
             }
         }
         
@@ -850,9 +867,29 @@ public class PanelInquilino extends javax.swing.JPanel {
             jComboBoxSemestres.requestFocus();
         }catch(Exception e){
             System.out.print("Aprieta para agregar servicio, le da ok y no escribio nada. No ocurre ningun problema ;)"+e);
-            jButtonSemesttreActionPerformed(null);
+            jButtonSemestreActionPerformed(null);
         }
-    }//GEN-LAST:event_jButtonSemesttreActionPerformed
+    }//GEN-LAST:event_jButtonSemestreActionPerformed
+
+    private void jButtonSemestreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonSemestreKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jButtonSemestreActionPerformed(null);
+        }
+    }//GEN-LAST:event_jButtonSemestreKeyTyped
+
+    private void jComboBoxSemestresItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxSemestresItemStateChanged
+        if(jComboBoxSemestres.getSelectedIndex() > 0){
+            jButtonSemestre.setText("-");
+        }else{
+            jButtonSemestre.setText("+");
+        }
+    }//GEN-LAST:event_jComboBoxSemestresItemStateChanged
+
+    private void jTableInquilinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableInquilinoKeyTyped
+        if (evt.getKeyChar() == evt.VK_DELETE) {
+            jPanelButtonEliminarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jTableInquilinoKeyTyped
 
     public void cargarTablaInquilino(String buscar){
         String colTablaInquilino[] = {"Id", "Apellido", "Nombre", "DNI", "Tel.", "E-mail", "Departamento", "Cochera", "Descripción"};
@@ -938,7 +975,7 @@ public class PanelInquilino extends javax.swing.JPanel {
         }
         comboCochera.addElement("Sin cochera");
         
-        this.jComboBoxSemestres.setModel(comboCochera);
+        this.jComboBoxCochera.setModel(comboCochera);
     }
     
     private void cargarPanelDatos(long idInquilino){
@@ -992,6 +1029,9 @@ public class PanelInquilino extends javax.swing.JPanel {
         }
         comboCochera.addElement("Sin cochera");
         
+        for (int i = 0; i < 4; i++) {
+            jComboBoxSemestres.addItem(String.valueOf(unInquilino.getImpSemestres()[i]));
+        }
     }
     
     private boolean validar(){
@@ -1069,11 +1109,13 @@ public class PanelInquilino extends javax.swing.JPanel {
         jTextFieldCantFamiliares.setText(null);
         jTextAreaDescripcion.setText(null);
         jTextFieldBuscar.setText("Ingrese un apellido para buscar");
-        cargarComboDepartamento(idEdificio);
-        cargarComboCochera(idEdificio);
         this.jTextFieldNombre.requestFocus();
         eliminar = false;
         modificar = false;
+        
+        jComboBoxSemestres.removeAllItems();
+        jComboBoxSemestres.addItem("Seleccione una opcion");
+        
         cargarComboDepartamento(idEdificio);
         cargarComboCochera(idEdificio);
         cargarTablaInquilino("");
@@ -1081,7 +1123,7 @@ public class PanelInquilino extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonSemesttre;
+    private javax.swing.JButton jButtonSemestre;
     private javax.swing.JComboBox<String> jComboBoxCochera;
     private javax.swing.JComboBox<String> jComboBoxDepartamento;
     private javax.swing.JComboBox<String> jComboBoxSemestres;

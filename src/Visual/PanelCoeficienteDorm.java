@@ -261,7 +261,7 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
             jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonEliminarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonEliminarLayout.setVerticalGroup(
@@ -297,7 +297,7 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
             jPanelButtonAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonAgregarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAgregarLayout.setVerticalGroup(
@@ -375,6 +375,11 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
         jTableCoeficienteDorm.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableCoeficienteDormMouseClicked(evt);
+            }
+        });
+        jTableCoeficienteDorm.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTableCoeficienteDormKeyTyped(evt);
             }
         });
         jScrollPane2.setViewportView(jTableCoeficienteDorm);
@@ -581,6 +586,12 @@ public final class PanelCoeficienteDorm extends javax.swing.JPanel {
     private void jTextFieldBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldBuscarMouseClicked
         jTextFieldBuscar.setText(null);
     }//GEN-LAST:event_jTextFieldBuscarMouseClicked
+
+    private void jTableCoeficienteDormKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableCoeficienteDormKeyTyped
+        if (evt.getKeyChar() == evt.VK_DELETE) {
+            jPanelButtonEliminarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jTableCoeficienteDormKeyTyped
     
     public void cargarTablaCoeficienteDorm(String buscar){
         limpiarComponentes();

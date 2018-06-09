@@ -364,7 +364,7 @@ public final class PanelServicio extends javax.swing.JPanel {
             jPanelButtonAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonAgregarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(jLabelAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonAgregarLayout.setVerticalGroup(
@@ -400,7 +400,7 @@ public final class PanelServicio extends javax.swing.JPanel {
             jPanelButtonEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonEliminarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(jLabelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelButtonEliminarLayout.setVerticalGroup(
@@ -474,6 +474,11 @@ public final class PanelServicio extends javax.swing.JPanel {
         jTableServicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableServicioMouseClicked(evt);
+            }
+        });
+        jTableServicio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTableServicioKeyTyped(evt);
             }
         });
         jScrollPane3.setViewportView(jTableServicio);
@@ -753,6 +758,12 @@ public final class PanelServicio extends javax.swing.JPanel {
             jPanelButtonAgregarMouseClicked(null);
         }
     }//GEN-LAST:event_jDateChooserFechaVencimientoKeyTyped
+
+    private void jTableServicioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableServicioKeyTyped
+        if (evt.getKeyChar() == evt.VK_DELETE) {
+            jPanelButtonEliminarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jTableServicioKeyTyped
 
     private void cargarPanelDatos(long idServicio){
         int i = 0;

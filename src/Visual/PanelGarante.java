@@ -245,6 +245,11 @@ public class PanelGarante extends javax.swing.JPanel {
                 jTableGaranteMouseClicked(evt);
             }
         });
+        jTableGarante.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTableGaranteKeyTyped(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTableGarante);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -743,6 +748,12 @@ public class PanelGarante extends javax.swing.JPanel {
             jPanelButtonAgregarMouseClicked(null);
         }
     }//GEN-LAST:event_jComboBoxInquilinoKeyTyped
+
+    private void jTableGaranteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableGaranteKeyTyped
+        if (evt.getKeyChar() == evt.VK_DELETE) {
+            jPanelButtonEliminarMouseClicked(null);
+        }
+    }//GEN-LAST:event_jTableGaranteKeyTyped
 
     private void cargarTablaGarante(String buscar){
         if(tablaGarante.getRowCount() > 0){
