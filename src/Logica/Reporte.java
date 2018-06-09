@@ -89,7 +89,7 @@ public class Reporte{
 
     public XSSFWorkbook crearLibro(){
         XSSFWorkbook libro = new XSSFWorkbook(); 
-        //DataFormat df = libro.createDataFormat();
+        DataFormat df = libro.createDataFormat();
         
         estilo5 = libro.createCellStyle();                                      // ESTILOS PARA TABLA ALQUILER
         estilo5.setBorderTop(BorderStyle.THIN);
@@ -130,7 +130,7 @@ public class Reporte{
         estilo10.setBorderLeft(BorderStyle.THIN);
         estilo10.setBorderBottom(BorderStyle.THIN);
         estilo10.setBorderRight(BorderStyle.THIN);
-        //estilo10.setDataFormat(df.getFormat("$#,#0.00"));
+        estilo10.setDataFormat(df.getFormat("$#,#0.00"));
         
         estilo11 = libro.createCellStyle();
         estilo11.setWrapText(true);
@@ -155,7 +155,7 @@ public class Reporte{
         estilo3.setBorderLeft(BorderStyle.THIN);
         estilo3.setBorderBottom(BorderStyle.THIN);
         estilo3.setBorderRight(BorderStyle.THIN);
-        //estilo3.setDataFormat(df.getFormat("$#,#0.00"));
+        estilo3.setDataFormat(df.getFormat("$#,#0.00"));
         
         estilo4 = libro.createCellStyle();                                      // Estilo 4: Encuadre de fila y Negrita. Para col "CONCEPTO" y col "MONTO"
         estilo4.setFont(fuente2);

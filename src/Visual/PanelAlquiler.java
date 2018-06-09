@@ -623,7 +623,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
             try {
                 Date fecha = jDateChooserFecha.getDate();
                 String descripcion = jTextAreaDescripcion.getText();
-                float monto = Float.valueOf(jComboBoxMonto.getSelectedIndex()), 
+                float monto = Float.valueOf((String) jComboBoxMonto.getSelectedItem()), 
                       otraFactura = Float.valueOf(jTextFieldOtraFactura.getText());
                 int[] generacionAuto = new int[2];
                 generacionAuto[0] = Integer.valueOf(jTextFieldNumAlquiler.getText());
