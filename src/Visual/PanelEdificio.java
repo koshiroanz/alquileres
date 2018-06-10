@@ -1,7 +1,6 @@
 package Visual;
 
 import java.awt.Color;
-import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JButton;

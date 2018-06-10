@@ -855,7 +855,28 @@ public final class PanelInquilino extends javax.swing.JPanel {
     private void jButtonSemestreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSemestreActionPerformed
         if(jButtonSemestre.getText().equals("-")){
             if(jComboBoxSemestres.getSelectedIndex() > 0){
+                int indice = jComboBoxSemestres.getSelectedIndex();
+                String[] montos = new String[4]; 
                 jComboBoxSemestres.removeItemAt(jComboBoxSemestres.getSelectedIndex());
+                
+                for (int i = 0; i < (jComboBoxSemestres.getItemCount()-1); i++) {
+                    montos[i] = jComboBoxSemestres.getItemAt(i+1);
+                }
+                
+                jComboBoxSemestres.removeAllItems();
+                
+                for (int i = 0; i < 4; i++) {
+                    if(i == indice){
+                        String importe = JOptionPane.showInputDialog(null, "Importe");
+                        jComboBoxSemestres.addItem(importe);
+                    }else{
+                        if(!montos[i].isEmpty()){
+                            jComboBoxSemestres.addItem(montos[i]);
+                        }
+                    }
+                }
+                
+                
             }
         }
         
