@@ -192,6 +192,7 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
                                       <Component id="jTextFieldNumAlquiler" min="-2" pref="20" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                       <Component id="jSeparatorMonto1" min="-2" pref="10" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -493,6 +494,9 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBoxMonto">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI Semibold" size="12" style="0"/>
+            </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="1">
                 <StringItem index="0" value="Seleccione una opci&#xf3;n"/>
@@ -654,7 +658,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabelAceptar" pref="76" max="32767" attributes="0"/>
+                          <Component id="jLabelAceptar" pref="80" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -703,7 +707,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabelEliminar" pref="76" max="32767" attributes="0"/>
+                          <Component id="jLabelEliminar" pref="80" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>

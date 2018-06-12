@@ -323,8 +323,17 @@ public class ControladoraL {
                     if(unAlquiler.getGeneracionAuto()[1] < 4){
                         int[] GeneracionAuto = new int[2];
                         GeneracionAuto[0] = 1;
-                        GeneracionAuto[1] = unAlquiler.getGeneracionAuto()[1];
-                        altaAlquiler(fecha, unAlquiler.getCochera(), unAlquiler.getDepartamento(), GeneracionAuto, unInquilino.getImpSemestres()[GeneracionAuto[1]], 0, unAlquiler.getTotal(), unAlquiler.getDescripcion(), null, unInquilino.getId());
+                        int numGeneracion = unAlquiler.getGeneracionAuto()[1];
+                        GeneracionAuto[1] = numGeneracion+1;
+                        float tot;
+                                
+                        if(unAlquiler.getCochera() != 0){
+                            tot = (unInquilino.getImpSemestres()[GeneracionAuto[1]-1])+obtenerCochera(unAlquiler.getCochera()).getPrecio();
+                        }else{
+                            tot = (unInquilino.getImpSemestres()[GeneracionAuto[1]-1]);
+                        }
+                        
+                        altaAlquiler(fecha, unAlquiler.getCochera(), unAlquiler.getDepartamento(), GeneracionAuto, unInquilino.getImpSemestres()[GeneracionAuto[1]-1], 0, tot, unAlquiler.getDescripcion(), null, unInquilino.getId());
                         cantAlquileresGenerados++;
                     }
                 }

@@ -1,6 +1,8 @@
 package Visual;
 
 import java.awt.Color;
+import java.awt.HeadlessException;
+import java.awt.event.ItemEvent;
 import java.util.List;
 import java.util.LinkedList;
 import javax.swing.ImageIcon;
@@ -24,6 +26,7 @@ public final class PanelInquilino extends javax.swing.JPanel {
     private final ControladoraV unaControladora = new ControladoraV();
     private final DefaultComboBoxModel comboDepartamento = new DefaultComboBoxModel();
     private final DefaultComboBoxModel comboCochera = new DefaultComboBoxModel();
+    private final DefaultComboBoxModel comboSemestre = new DefaultComboBoxModel();
     
     public PanelInquilino(long idEdificio) {
         initComponents();
@@ -190,6 +193,11 @@ public final class PanelInquilino extends javax.swing.JPanel {
         jComboBoxSemestres.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBoxSemestresItemStateChanged(evt);
+            }
+        });
+        jComboBoxSemestres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxSemestresMouseClicked(evt);
             }
         });
         jComboBoxSemestres.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -641,12 +649,15 @@ public final class PanelInquilino extends javax.swing.JPanel {
                 email = jTextFieldEmail.getText().toUpperCase();
                 float[] impSemestres = new float[4];
                 
-                if(jComboBoxSemestres.getItemCount() > 1){
+                for(int i = 1; i < comboSemestre.getSize(); i++){
+                    impSemestres[i-1] = (float)comboSemestre.getElementAt(i);
+                }
+                /*if(jComboBoxSemestres.getItemCount() > 1){
                     impSemestres[0] = Float.valueOf(jComboBoxSemestres.getItemAt(1));
                     impSemestres[1] = Float.valueOf(jComboBoxSemestres.getItemAt(2));
                     impSemestres[2] = Float.valueOf(jComboBoxSemestres.getItemAt(3));
                     impSemestres[3] = Float.valueOf(jComboBoxSemestres.getItemAt(4));
-                }
+                }*/
                 
                 if(!modificar){
                     unaControladora.altaInquilino(Integer.valueOf(cantFamilia), apellido, nombre, dni, email, telefono, cuit, 0/* saldoMesAnt*/, impSemestres, jTextAreaDescripcion.getText(), null/*unGarante*/, null/*alquileres*/, idDepartamento, idCochera);
@@ -856,6 +867,34 @@ public final class PanelInquilino extends javax.swing.JPanel {
         if(jButtonSemestre.getText().equals("-")){
             if(jComboBoxSemestres.getSelectedIndex() > 0){
                 int indice = jComboBoxSemestres.getSelectedIndex();
+                String importe = JOptionPane.showInputDialog(null, "Importe");
+                comboSemestre.removeElementAt(indice);
+                comboSemestre.insertElementAt(Float.valueOf(importe), indice);
+                jComboBoxSemestres.setModel(comboSemestre);
+                jComboBoxSemestres.setSelectedIndex(indice);
+            }
+        }else{
+            try{
+                jComboBoxSemestres.removeAllItems();
+                comboSemestre.addElement("Seleccione una opción");
+                int i = 0;
+                while(i < 4){
+                    String importe = JOptionPane.showInputDialog(null, "Importe");
+                    comboSemestre.addElement(Float.valueOf(importe));
+                    i++;
+                }
+                
+                jComboBoxSemestres.setModel(comboSemestre);
+                jComboBoxSemestres.requestFocus();
+            }catch(HeadlessException | NumberFormatException e){
+                System.out.print("Aprieta para agregar servicio, le da ok y no escribio nada. No ocurre ningun problema ;)"+e);
+                jButtonSemestreActionPerformed(null);
+            }
+        }
+        
+        /*if(jButtonSemestre.getText().equals("-")){
+            if(jComboBoxSemestres.getSelectedIndex() > 0){
+                int indice = jComboBoxSemestres.getSelectedIndex();
                 String[] montos = new String[4]; 
                 jComboBoxSemestres.removeItemAt(jComboBoxSemestres.getSelectedIndex());
                 
@@ -889,7 +928,7 @@ public final class PanelInquilino extends javax.swing.JPanel {
         }catch(Exception e){
             System.out.print("Aprieta para agregar servicio, le da ok y no escribio nada. No ocurre ningun problema ;)"+e);
             jButtonSemestreActionPerformed(null);
-        }
+        }*/
     }//GEN-LAST:event_jButtonSemestreActionPerformed
 
     private void jButtonSemestreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonSemestreKeyTyped
@@ -911,6 +950,10 @@ public final class PanelInquilino extends javax.swing.JPanel {
             jPanelButtonEliminarMouseClicked(null);
         }
     }//GEN-LAST:event_jTableInquilinoKeyTyped
+
+    private void jComboBoxSemestresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxSemestresMouseClicked
+        
+    }//GEN-LAST:event_jComboBoxSemestresMouseClicked
 
     public void cargarTablaInquilino(String buscar){
         String colTablaInquilino[] = {"Id", "Apellido", "Nombre", "DNI", "Tel.", "E-mail", "Departamento", "Cochera", "Descripción"};
@@ -1050,9 +1093,15 @@ public final class PanelInquilino extends javax.swing.JPanel {
         }
         comboCochera.addElement("Sin cochera");
         
+        comboSemestre.removeAllElements();
+        comboSemestre.addElement("Seleccione una opción");
         for (int i = 0; i < 4; i++) {
-            jComboBoxSemestres.addItem(String.valueOf(unInquilino.getImpSemestres()[i]));
+            comboSemestre.addElement(unInquilino.getImpSemestres()[i]);
         }
+        jComboBoxSemestres.setModel(comboSemestre);
+        /*for (int i = 0; i < 4; i++) {
+            jComboBoxSemestres.addItem(String.valueOf(unInquilino.getImpSemestres()[i]));
+        }*/
     }
     
     private boolean validar(){
@@ -1082,7 +1131,7 @@ public final class PanelInquilino extends javax.swing.JPanel {
             cochera = true;
         }
         
-        if(!jTextFieldNombre.getText().isEmpty() && !jTextFieldApellido.getText().isEmpty() && !jTextFieldDni.getText().isEmpty() && !jTextFieldTelefono.getText().isEmpty() && !jTextFieldCantFamiliares.getText().isEmpty() && departamento && cochera){
+        if(!jTextFieldNombre.getText().isEmpty() && !jTextFieldApellido.getText().isEmpty() && !jTextFieldCantFamiliares.getText().isEmpty() && departamento && cochera){
             if(idDepartamento == 0 && idCochera == 0){
                 validar = false;    // Imposible dejar a un Inquilino sin Departamento y sin Cochera al mismo tiempo.
                 JOptionPane.showMessageDialog(null, "No es posible guardar un Inquilino sin departamento ni cochera. Intentelo nuevamente", "", JOptionPane.ERROR_MESSAGE);
@@ -1102,10 +1151,6 @@ public final class PanelInquilino extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Debe completar el campo: Nombre.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldApellido.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Debe completar el campo: Apellido.", "", JOptionPane.WARNING_MESSAGE);
-        }else if(jTextFieldDni.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: DNI.", "", JOptionPane.WARNING_MESSAGE);
-        }else if(jTextFieldTelefono.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo: Teléfono.", "", JOptionPane.WARNING_MESSAGE);
         }else if(jTextFieldCantFamiliares.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Debe completar el campo: Cantidad Familiares.", "", JOptionPane.WARNING_MESSAGE);
         }else if(!departamento){
@@ -1135,7 +1180,10 @@ public final class PanelInquilino extends javax.swing.JPanel {
         modificar = false;
         
         jComboBoxSemestres.removeAllItems();
-        jComboBoxSemestres.addItem("Seleccione una opcion");
+        comboSemestre.addElement("Seleccione una opción");
+        jComboBoxSemestres.setModel(comboSemestre);
+        /*jComboBoxSemestres.removeAllItems();
+        jComboBoxSemestres.addItem("Seleccione una opción");*/
         
         cargarComboDepartamento(idEdificio);
         cargarComboCochera(idEdificio);

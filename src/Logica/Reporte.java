@@ -20,10 +20,10 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.RegionUtil;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 public class Reporte{
@@ -43,7 +43,6 @@ public class Reporte{
     public boolean generarReporte(long idEdificio, String obsAlquiler, String obsExpensa){
         boolean respuesta = false;
         Date fechaActual = new Date();
-        long inicio = System.currentTimeMillis();
         Edificio unEdificio = unaControladora.obtenerEdificio(idEdificio);
         XSSFWorkbook libro = crearLibro();                                      // Devuelve el libro con los Estilos y Fuentes configurados para TABLA ALQUILER
         
@@ -51,7 +50,7 @@ public class Reporte{
         
         for (Departamento unDepartamento : unEdificio.getDepartamentos()) {     // GENERA EXPENSAS POR DEPARTAMENTO
             if (unDepartamento.getUnInquilino() != null){                       // Si existe Inquilino se crea una hoja dentro del Libro Excel (Departamento-Expensa). De lo contrario.. no existe un Inquilino por ende no se genera Expensa.
-                libro = generarExpensas(libro, unDepartamento, unEdificio, obsExpensa/*getObsExpensa()*/);     // Parametros: Libro con alquileres, se generan las hojas "Expensas" por Departamentos de un Edificio.
+                libro = generarExpensas(libro, unDepartamento, fechaActual, unEdificio, obsExpensa);     // Parametros: Libro con alquileres, se generan las hojas "Expensas" por Departamentos de un Edificio.
             }
         }
         
@@ -76,9 +75,6 @@ public class Reporte{
                 }
             }
             
-            long fin = System.currentTimeMillis();
-            double tiempo = (double)((fin-inicio)/1000);
-            System.out.println("El tiempo de ejecución del Reporte es de: "+tiempo+"s");
         } catch (IOException ex) {
             Logger.getLogger(Reporte.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+ex);
@@ -163,14 +159,8 @@ public class Reporte{
         estilo4.setBorderLeft(BorderStyle.THIN);
         estilo4.setBorderBottom(BorderStyle.THIN);
         estilo4.setBorderRight(BorderStyle.THIN);
-        
-        /*moneda = libro.createCellStyle();
-        moneda.setDataFormat((short)8);*/
-        
-        /*CellStyle dollarStyle=wb.createCellStyle();
-        DataFormat df = wb.createDataFormat();
-        dollarStyle.setDataFormat(df.getFormat("$#,#0.00"));*/
-        
+        estilo4.setDataFormat(df.getFormat("$#,#0.00"));
+                
         return libro;
     }
     
@@ -281,7 +271,6 @@ public class Reporte{
                 saldoMesAnterior = unaControladora.obtenerSaldoUltimoPago(unInquilino.getId());
             }
             
-            //System.out.println("Dpto: "+ubicacionDepto+" - Inqui: "+unInquilino.getApellido()+", "+unInquilino.getNombre()+" - Alquiler: $"+montoAlquiler+" - Otras F.: $"+otrasFacturas+" - Expensa: $"+formatoDecimal.format(montoExpensa)+" - Cochera: $"+precioCochera+" - IntxAtr.: $"+totalesPorIntereses+" - Saldo M.A: $"+saldoMesAnterior+" - Total: $"+totales+" - Saldo: $"+saldo);                     
             Row fila = hojaAlquiler.createRow(fi++);
             fila.setHeight(tamFilaDefault);
             fila.createCell(1).setCellValue(ubicacionDepto);
@@ -338,8 +327,24 @@ public class Reporte{
             fila.getCell(14).setCellStyle(estilo10);
         }
         
+        int ultiF = fi;
+        
+        // FILA TOTALES
+        String[] columnas;
+        columnas = configurarColumnas(11);
+        Row fila = hojaAlquiler.createRow(fi++);
+        fila.createCell(2).setCellValue("TOTALES");
+        fila.getCell(2).setCellStyle(estilo5);
+        int col = 3;
+        for(int i = 0; i < columnas.length; i++){
+            fila.createCell(col).setCellFormula("SUM("+columnas[i]+"5:"+columnas[i]+""+ultiF+")");
+            fila.getCell(col).setCellStyle(estilo10);
+            fila.getCell(col).getNumericCellValue();
+            col++;
+        }
+        
         if(!obsAlquiler.isEmpty()){
-            Row fila = hojaAlquiler.createRow(fi+1);
+            fila = hojaAlquiler.createRow(fi+1);
             fila.createCell(0).setCellValue("");
             fila.getCell(0).setCellValue("");
 
@@ -387,7 +392,7 @@ public class Reporte{
         
         fila = hojaAlquiler.createRow(1);                                       // FILA 1
         fila.createCell(0).setCellValue("");
-        fila.createCell(1).setCellValue("EDIFICIO "+unEdificio.getNombre());
+        fila.createCell(1).setCellValue("EDIFICIO: "+unEdificio.getNombre()+ " - "+unEdificio.getDireccion());
         
         RegionUtil.setBorderTop(BorderStyle.THIN, rango, hojaAlquiler);
         RegionUtil.setBorderLeft(BorderStyle.THIN, rango, hojaAlquiler);
@@ -450,10 +455,10 @@ public class Reporte{
         return hojaAlquiler;
     }
     
-    public XSSFWorkbook generarExpensas(XSSFWorkbook libro, Departamento unDepartamento, Edificio unEdificio, String obsExpensa){
+    public XSSFWorkbook generarExpensas(XSSFWorkbook libro, Departamento unDepartamento, Date fechaActual, Edificio unEdificio, String obsExpensa){
         Sheet hojaExpensa = libro.createSheet("Expensa " + unDepartamento.getUbicacion()); // Se genera una hoja dentro del Libro Excel
         hojaExpensa = configurarHojaExpensa(hojaExpensa, unDepartamento, unEdificio);
-        
+        int[] periodoExpensa = obtenerPeriodoExpensa(fechaActual);
         // FILA 5
         Row fila = hojaExpensa.createRow(5);
         fila.createCell(0).setCellValue("");
@@ -464,7 +469,7 @@ public class Reporte{
             Expensa ultimaExpensa = unaControladora.obtenerUltimaExpensa(unDepartamento.getId());
             int f = 7, indice, cantidadServicioExpensa = ultimaExpensa.getServiciosExpensa().size();
 
-            fila.createCell(2).setCellValue("EXPENSAS "+ultimaExpensa.getMes()+"/"+ultimaExpensa.getAnio()); // Traer el último período y año de la Expensa
+            fila.createCell(2).setCellValue("EXPENSAS "+periodoExpensa[0]+"/"+periodoExpensa[1]); // Traer el último período y año de la Expensa
             fila.getCell(2).setCellStyle(estilo2);
 
             // FILA 6
@@ -474,18 +479,19 @@ public class Reporte{
             fila.getCell(1).setCellStyle(estilo3);
             fila.createCell(2).setCellValue("MONTO");
             fila.getCell(2).setCellStyle(estilo3);
-
-            // Se autogeneran las filas de servicios que posee esta expensa.
-            for(indice = 0; indice < cantidadServicioExpensa; indice++){
-                fila = hojaExpensa.createRow(f++);
-                fila.createCell(0).setCellValue("");
-                fila.createCell(1).setCellValue(ultimaExpensa.getServiciosExpensa().get(indice).getNombre());
-                fila.getCell(1).setCellStyle(estilo3);
-                String montoSinComa = unaControladora.reemplazarString(formatoDecimal.format(ultimaExpensa.getServiciosExpensa().get(indice).getMonto()));
-                Double montoFinal = Double.valueOf(montoSinComa);
-                fila.createCell(2).setCellValue(montoFinal);
-                fila.getCell(2).setCellStyle(estilo3);
-                fila.getCell(2).getNumericCellValue();// Hacer algo al respecto con esto.. y con el Simbolo $ en montoFinal. Linea 331
+            if(ultimaExpensa.getMes() == periodoExpensa[0] && ultimaExpensa.getAnio() == periodoExpensa[1]){
+                // Se autogeneran las filas de servicios que posee esta expensa.
+                for(indice = 0; indice < cantidadServicioExpensa; indice++){
+                    fila = hojaExpensa.createRow(f++);
+                    fila.createCell(0).setCellValue("");
+                    fila.createCell(1).setCellValue(ultimaExpensa.getServiciosExpensa().get(indice).getNombre());
+                    fila.getCell(1).setCellStyle(estilo3);
+                    String montoSinComa = unaControladora.reemplazarString(formatoDecimal.format(ultimaExpensa.getServiciosExpensa().get(indice).getMonto()));
+                    Double montoFinal = Double.valueOf(montoSinComa);
+                    fila.createCell(2).setCellValue(montoFinal);
+                    fila.getCell(2).setCellStyle(estilo3);
+                    fila.getCell(2).getNumericCellValue();// Hacer algo al respecto con esto.. y con el Simbolo $ en montoFinal. Linea 331
+                }
             }
             
             ultimaFila = f;
@@ -512,6 +518,17 @@ public class Reporte{
                 RegionUtil.setBorderRight(BorderStyle.THIN, rango, hojaExpensa);
                 RegionUtil.setBorderBottom(BorderStyle.THIN, rango, hojaExpensa);
             }
+        }else{
+            fila.createCell(2).setCellValue("EXPENSAS "+periodoExpensa[0]+"/"+periodoExpensa[1]); // Traer el último período y año de la Expensa
+            fila.getCell(2).setCellStyle(estilo2);
+
+            // FILA 6
+            fila = hojaExpensa.createRow(6);
+            fila.createCell(0).setCellValue("");
+            fila.createCell(1).setCellValue("CONCEPTOS");
+            fila.getCell(1).setCellStyle(estilo3);
+            fila.createCell(2).setCellValue("MONTO");
+            fila.getCell(2).setCellStyle(estilo3);
         }
         
         return libro;
@@ -563,5 +580,38 @@ public class Reporte{
         }
         
         return saldoMesAnterior;
+    }
+    
+    public int[] obtenerPeriodoExpensa(Date fechaActual){
+        int[] periodo = new int[2];
+        int mesActual = Integer.valueOf(formatoMes.format(fechaActual)), anioActual = Integer.valueOf(formatoAnio.format(fechaActual));
+        
+        if(mesActual == 12){
+            periodo[0] = 1;
+            periodo[1] = anioActual-1;
+        }else{
+            periodo[0] = mesActual-1;
+            periodo[1] = anioActual;
+        }
+        
+        return periodo;
+    }
+    
+    public String[] configurarColumnas(int tamanio){
+        String[] columnas = new String[tamanio];
+        // COLUMNAS DEL EXCEL
+        columnas[0] = "D";
+        columnas[1] = "E";
+        columnas[2] = "F";
+        columnas[3] = "G";
+        columnas[4] = "H";
+        columnas[5] = "I";
+        columnas[6] = "J";
+        columnas[7] = "K";
+        columnas[8] = "L";
+        columnas[9] = "M";
+        columnas[10] = "N";
+        
+        return columnas;
     }
 }
