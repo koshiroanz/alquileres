@@ -159,7 +159,7 @@ public class ControladoraL {
                         saldo += interesesPorAtraso(new Date(), unAlquiler.getFecha(), saldo);
                     }
                 }else{
-                    saldo = unAlquiler.getUnPago().getSaldo();
+                    saldo = unAlquiler.getUnPago().getMonto()-(unAlquiler.getUnPago().getEfectivo()+unAlquiler.getUnPago().getBanco()+unAlquiler.getUnPago().getTarjeta());
                 }
             }
         }
