@@ -3,12 +3,12 @@ package Visual;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.List;
-import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.table.DefaultTableModel;
@@ -19,14 +19,19 @@ public final class Inicio extends javax.swing.JFrame {
     private final String colTablaEdificio[] = {"Id", "Nombre", "Dirección"};
     private final DefaultTableModel tablaEdificio = new DefaultTableModel(null, colTablaEdificio);
     
-    public Inicio() throws Exception {
+    public Inicio(JFrame inicio) throws Exception {
         initComponents();
+        this.setTitle("Sistema de Gestión de Alquileres");
         this.setLocationRelativeTo(null);
         cargarCoeficiente();
         cargarEdificios("");
         generarAlquileres();
         cargarNotificaciones();
         eliminarEdificioSeleccionado();
+        this.setResizable(false);
+        if(inicio != null){
+            inicio.dispose();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -431,15 +436,6 @@ public final class Inicio extends javax.swing.JFrame {
     private void jPanelButtonCrearEdificioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonCrearEdificioMouseClicked
         vtnEdificio ventanaEdificio = new vtnEdificio(this);
         ventanaEdificio.setVisible(true);
-        /*
-        if(unaControladora.obtenerCoeficiente() != null){
-            new mainFrame(0,"").setVisible(true);    // Parametro 0 = idEdificio.
-            this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(null, "Ingrese valor coeficiente.", "", JOptionPane.WARNING_MESSAGE);
-            jLabelCoeficiente.setForeground(Color.red);
-            jTextFieldCoeficiente.requestFocus();
-        }*/
     }//GEN-LAST:event_jPanelButtonCrearEdificioMouseClicked
 
     private void jPanelButtonAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonAceptarMouseClicked
@@ -564,21 +560,21 @@ public final class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCoefienteActionPerformed
     
     public void cargarEdificios(String buscar){
+        limpiarTabla();
         String datos[] = new String[3];
-        Logica.Edificio unEdi = null;
         List<Logica.Edificio> edificios = unaControladora.obtenerEdificios();
         
         if(busqueda){
-            unEdi = unaControladora.buscarEdificioPorNombre(buscar);
+            Logica.Edificio unEdi = unaControladora.buscarEdificioPorNombre(buscar);
+            
+            if(unEdi != null){
+                limpiarTabla();
+                edificios.clear();
+                edificios.add(unEdi);
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe el Edificio: "+buscar+".");
+            }
         }
-        
-        if(unEdi != null){
-            List<Logica.Edificio> edificioBusqueda = new LinkedList();
-            edificioBusqueda.clear();
-            edificioBusqueda.add(unEdi);
-            edificios.clear();
-            edificios = edificioBusqueda;
-        }     
         
         for(Logica.Edificio unEdificio : edificios){
             datos[0] = String.valueOf(unEdificio.getId());
@@ -589,6 +585,13 @@ public final class Inicio extends javax.swing.JFrame {
         }
         
         this.jTableEdificio.setModel(tablaEdificio);
+    }
+    
+    public void limpiarTabla(){
+        int tam = tablaEdificio.getRowCount();
+        for(int i = 0; i < tam; i++){
+            tablaEdificio.removeRow(0);
+        }
     }
     
     public void generarAlquileres() throws Exception{
@@ -645,7 +648,7 @@ public final class Inicio extends javax.swing.JFrame {
             jTextFieldCoeficiente.requestFocus();
         }
     }
-    
+    /*
     public static void main(String args[]) {
         
         try {
@@ -671,7 +674,7 @@ public final class Inicio extends javax.swing.JFrame {
                 System.out.println("Error: "+ex);
             }
         });
-    }
+    }*/
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCoefiente;
     private javax.swing.JLabel jLabelAceptar;

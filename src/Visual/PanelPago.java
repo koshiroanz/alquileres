@@ -3,8 +3,6 @@ package Visual;
 import java.awt.Color;
 import java.util.Date;
 import java.util.List;
-import Logica.Alquiler;
-import Logica.Inquilino;
 import java.awt.event.ItemEvent;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
 import static java.awt.event.KeyEvent.VK_PERIOD;
@@ -855,7 +853,7 @@ public final class PanelPago extends javax.swing.JPanel {
                     Collections.sort(alquileresInpagos, (Logica.Alquiler a1, Logica.Alquiler a2) -> a1.getFecha().compareTo(a2.getFecha()));
                 }
 
-                for(Alquiler unAlquiler : alquileresInpagos){
+                for(Logica.Alquiler unAlquiler : alquileresInpagos){
                     comboAlquiler.addElement(unAlquiler);
                 }
 

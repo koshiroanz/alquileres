@@ -18,6 +18,7 @@ public class mainFrame extends javax.swing.JFrame {
     
     public mainFrame(long idEdificio, String nombreEdificio) {
         initComponents();
+        this.setTitle("Sistema de Gestión de Alquileres");
         this.idEdificio = idEdificio;
         this.nombreEdificio = nombreEdificio;
         if(idEdificio == 0){
@@ -880,7 +881,7 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void jPanelButtonSeleccionarEdificioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonSeleccionarEdificioMouseClicked
         try {
-            new Inicio().setVisible(true);
+            new Inicio(null).setVisible(true);
             this.dispose();
         } catch (Exception ex) {
             Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);

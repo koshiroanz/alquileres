@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
-//import pruebaReporte.vtReporte;
 
 public final class PanelPrincipal extends javax.swing.JPanel {
     private final long idEdificio;
@@ -302,7 +301,7 @@ public final class PanelPrincipal extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, "Seleccione un Alquiler");
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "No existe registro de ningún Edificio");
+                JOptionPane.showMessageDialog(null, "No se ha encontrado ningún registro. Intente seleccionar un Edificio nuevamente");
             }
         }
     }//GEN-LAST:event_jTableAlquilerMouseClicked
@@ -377,12 +376,13 @@ public final class PanelPrincipal extends javax.swing.JPanel {
                          formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 
         for(Logica.Inquilino unInquilino : inquilinosEdificio){
+            float saldoMesAnterior = 0;
             List<Logica.Alquiler> alquileresInpagos = unaControladora.obtenerAlquileresInpagos(unInquilino.getId());
             if(!alquileresInpagos.isEmpty()){
                 for(Logica.Alquiler unAlquiler : alquileresInpagos){
                     
                     Logica.Expensa unaExpensa = null;
-                    float total = 0, interesPorAtraso, montoExpensa = 0;
+                    float total = 0, interesPorAtraso;
                     int mesExpensa = Integer.valueOf(formatoMes.format(unAlquiler.getFecha())),
                             anioExpensa = Integer.valueOf(formatoAnio.format(unAlquiler.getFecha()));
                     Logica.Departamento unDepartamento = unaControladora.obtenerDepartamento(unAlquiler.getDepartamento());
@@ -400,7 +400,6 @@ public final class PanelPrincipal extends javax.swing.JPanel {
                     if (unaExpensa != null) {   // En teoría debería tener siempre su expensa..
                         total += unaExpensa.getMonto();
                         datos[5] = formatoDecimal.format(unaExpensa.getMonto());
-                        montoExpensa = unaExpensa.getMonto();
                     } else {
                         datos[5] = "Sin expensa.";  // Creo que no debería entrar, salvo que no se haya generado la Expensa para este MES/AÑO.
                     }
@@ -420,11 +419,11 @@ public final class PanelPrincipal extends javax.swing.JPanel {
                         datos[7] = "0.0";
                     }
                     
-                    float saldoAnterior = unInquilino.getSaldoMesAnt() + unaControladora.calcularSaldo(idEdificio, unInquilino.getId(), Integer.valueOf(formatoMes.format(unAlquiler.getFecha())), Integer.valueOf(formatoAnio.format(unAlquiler.getFecha())));
+                    saldoMesAnterior += unaControladora.obtenerSaldoMesAnterior(idEdificio, unInquilino.getId(), Integer.valueOf(formatoMes.format(unAlquiler.getFecha())), Integer.valueOf(formatoAnio.format(unAlquiler.getFecha())));
                     
-                    if(saldoAnterior != 0){
-                        total += saldoAnterior;
-                        datos[8] = formatoDecimal.format(saldoAnterior);
+                    if(saldoMesAnterior != 0){
+                        total += saldoMesAnterior;
+                        datos[8] = formatoDecimal.format(saldoMesAnterior);
                     }else{
                         datos[8] = "0.0";
                     }

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.LinkedList;
 import Persistencia.ControladoraP;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -13,6 +14,11 @@ public class ControladoraL {
     
     private int cantAlquileresGenerados = 0; // Cantidad de alquileres que se generaron automaticamento
     private final ControladoraP unaControladora = new ControladoraP();
+    
+    
+    public boolean comprobarConexion() throws SQLException{
+        return unaControladora.comprobarConexion();
+    }
     
 /*------------------------------------------------------------------------------
                            NOTIFICACIONES
@@ -124,6 +130,43 @@ public class ControladoraL {
 /*------------------------------------------------------------------------------
                            SALDO MES ANTERIOR
 ------------------------------------------------------------------------------*/
+    public float obtenerSaldoMesAnterior(long idEdificio, long idInquilino, int mes, int anio){
+        float saldo = 0, montoExpensa = 0;
+        Expensa unaExpensa = null;
+        
+        mes -= 1;
+        
+        if(mes == 0){
+            mes = 12;
+            anio -= 1;
+        }
+        
+        SimpleDateFormat formatoMes = new SimpleDateFormat("MM"),
+                         formatoAnio = new SimpleDateFormat("yyyy");
+                         
+        List<Alquiler> alquileres = obtenerInquilino(idInquilino).getAlquileres();
+        
+        for(Alquiler unAlquiler : alquileres){
+            if(Integer.valueOf(formatoMes.format(unAlquiler.getFecha())) == mes && Integer.valueOf(formatoAnio.format(unAlquiler.getFecha())) == anio){
+                if(unAlquiler.getUnPago() == null){
+                    if(unAlquiler.getDepartamento() > 0){
+                        unaExpensa = obtenerExpensa(unAlquiler.getDepartamento(), mes, anio);
+                        if(unaExpensa != null){
+                            montoExpensa = unaExpensa.getMonto();
+                        }
+                        
+                        saldo = unAlquiler.getTotal()+montoExpensa;
+                        saldo += interesesPorAtraso(new Date(), unAlquiler.getFecha(), saldo);
+                    }
+                }else{
+                    saldo = unAlquiler.getUnPago().getSaldo();
+                }
+            }
+        }
+        
+        return saldo;
+    }
+    
     public float calcularSaldo(long idEdificio, long idInquilino, int mes, int anio){
         float saldo = 0;
         Expensa unaExpensa = null;
@@ -137,7 +180,8 @@ public class ControladoraL {
                 if(Integer.valueOf(formatoMes.format(unAlquiler.getFecha())) < mes){
                     if(Integer.valueOf(formatoAnio.format(unAlquiler.getFecha())) <= anio){
                         if(unAlquiler.getDepartamento() > 0){
-                            unaExpensa = obtenerExpensa(obtenerDepartamentoInquilino(idEdificio, idInquilino).getId(), mes, anio);
+                            unaExpensa = obtenerExpensa(obtenerDepartamentoInquilino(idEdificio, idInquilino).getId(), Integer.valueOf(formatoMes.format(unAlquiler.getFecha())), Integer.valueOf(formatoAnio.format(unAlquiler.getFecha())));
+                            //unaExpensa = obtenerExpensa(obtenerDepartamentoInquilino(idEdificio, idInquilino).getId(), mes, anio);
                         }
                         
                         if(unaExpensa != null){
@@ -362,6 +406,12 @@ public class ControladoraL {
             anioAlquiler = Integer.parseInt(formatoAnio.format(alquileres.get(ultimoIndex).getFecha()));
             if((mesAlquiler == mesActual) && (anioAlquiler == anioActual)){
                  ultimoAlquiler = alquileres.get(ultimoIndex);
+            }else{
+                for(Alquiler unAlqui : unInquilino.getAlquileres()){
+                    if(mesActual == Integer.valueOf(formatoMes.format(unAlqui.getFecha())) && (anioActual == Integer.valueOf(formatoAnio.format(unAlqui.getFecha())))){
+                        ultimoAlquiler = unAlqui;
+                    } 
+                }
             }
         }
         
@@ -819,7 +869,7 @@ public class ControladoraL {
     }
     
     public Edificio buscarEdificioPorNombre(String nombreEdificio){
-        Edificio unEdificio = new Edificio();
+        Edificio unEdificio = null;
         List<Edificio> edificios = unaControladora.obtenerEdificios();
         
         for(Edificio unEdi : edificios){
@@ -1047,8 +1097,8 @@ public class ControladoraL {
         mesAlquiler -= 1;
         
         if(mesAlquiler == 0){
-                mesAlquiler = 12;
-                anioAlquiler -= 1;
+            mesAlquiler = 12;
+            anioAlquiler -= 1;
         }
         List<Expensa> expensas = obtenerDepartamento(idDepartamento).getExpensas();
         if(expensas.size() > 0){

@@ -3,10 +3,15 @@ package Visual;
 import java.util.Date;
 import java.util.List;
 import Logica.ControladoraL;
+import java.sql.SQLException;
 
 public class ControladoraV {
     private final ControladoraL unaControladora = new ControladoraL();
 
+    
+    public boolean comprobarConexion() throws SQLException{
+        return unaControladora.comprobarConexion();
+    }
 /*------------------------------------------------------------------------------
                            REPORTE
 ------------------------------------------------------------------------------*/
@@ -41,6 +46,10 @@ public class ControladoraV {
 /*------------------------------------------------------------------------------
                            SALDO MES ANTERIOR
 ------------------------------------------------------------------------------*/
+    public float obtenerSaldoMesAnterior(long idEdificio, long idInquilino, int mesAlquiler, int anioAlquiler){
+        return unaControladora.obtenerSaldoMesAnterior(idEdificio, idInquilino, mesAlquiler, anioAlquiler);
+    }
+    
     public float calcularSaldo(long idEdificio, long idInquilino, int mes, int anio){
         return unaControladora.calcularSaldo(idEdificio, idInquilino, mes, anio);
     }
