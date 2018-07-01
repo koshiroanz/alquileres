@@ -470,12 +470,12 @@ public class ControladoraV {
 /*------------------------------------------------------------------------------
                                 SERVICIO
 ------------------------------------------------------------------------------*/
-    public void altaServicio(String nombre, int mes, int anio, Date fechaEmision, Date fechaVencimiento, float monto, String descripcion, long idEdificio) throws Exception{
-        unaControladora.altaServicio(nombre, mes, anio, fechaEmision, fechaVencimiento, monto, descripcion, idEdificio);
+    public void altaServicio(String nombre, int mes, int anio, boolean calculoxPersona, Date fechaEmision, Date fechaVencimiento, float monto, String descripcion, long idEdificio) throws Exception{
+        unaControladora.altaServicio(nombre, mes, anio, calculoxPersona, fechaEmision, fechaVencimiento, monto, descripcion, idEdificio);
     }
     
-    public void modificarServicio(long idServicio, String nombre, int mes, int anio, Date fechaEmision, Date fechaVencimiento, float monto, String descripcion) throws Exception{
-        unaControladora.modificarServicio(idServicio, nombre, mes, anio, fechaEmision, fechaVencimiento, monto, descripcion);
+    public void modificarServicio(long idServicio, String nombre, int mes, int anio, boolean calculoxPersona, Date fechaEmision, Date fechaVencimiento, float monto, String descripcion) throws Exception{
+        unaControladora.modificarServicio(idServicio, nombre, mes, anio, calculoxPersona, fechaEmision, fechaVencimiento, monto, descripcion);
     }
     
     public void bajaServicio(long idServicio, long idEdificio) throws Exception{

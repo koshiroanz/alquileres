@@ -75,7 +75,7 @@
                           </Group>
                           <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="2" attributes="0">
-                              <Component id="jScrollPane2" alignment="2" pref="255" max="32767" attributes="0"/>
+                              <Component id="jScrollPane2" alignment="2" pref="228" max="32767" attributes="0"/>
                               <Component id="jSeparator2" alignment="2" max="32767" attributes="0"/>
                               <Component id="jTextFieldMonto" alignment="2" max="32767" attributes="0"/>
                               <Component id="jDateChooserFechaEmision" alignment="2" max="32767" attributes="0"/>
@@ -85,32 +85,17 @@
                                   <Component id="jButtonNombre" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
-                                  <Component id="jLabelEdificio" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jLabelMes" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jLabelFechaVencimiento" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
+                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelEdificio" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelFechaVencimiento" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelMes" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jDateChooserFechaVencimiento" max="32767" attributes="0"/>
-                              <Component id="jTextFieldEdificio" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jSeparator4" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jComboBoxMes" pref="174" max="32767" attributes="0"/>
+                                  <Component id="jComboBoxMes" pref="173" max="32767" attributes="0"/>
                                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
@@ -118,6 +103,13 @@
                                       <Component id="jTextFieldAnio" pref="68" max="32767" attributes="0"/>
                                       <Component id="jSeparator5" max="32767" attributes="0"/>
                                   </Group>
+                              </Group>
+                              <Component id="jSeparator4" alignment="1" max="32767" attributes="0"/>
+                              <Component id="jTextFieldEdificio" alignment="1" max="32767" attributes="0"/>
+                              <Component id="jDateChooserFechaVencimiento" alignment="1" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jCheckBoxCalculoXpersona" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -129,7 +121,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace pref="23" max="32767" attributes="0"/>
+                  <EmptySpace pref="25" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <Component id="jPanelButtonRefresh" min="-2" pref="37" max="-2" attributes="0"/>
@@ -168,8 +160,10 @@
                   </Group>
                   <EmptySpace pref="43" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabelDescripcion" min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelDescripcion" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jCheckBoxCalculoXpersona" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="48" max="32767" attributes="0"/>
               </Group>
@@ -454,6 +448,21 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
+        <Component class="javax.swing.JCheckBox" name="jCheckBoxCalculoXpersona">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel3">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI Semibold" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Calcular por persona"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel2">
@@ -505,7 +514,7 @@
                   </Group>
                   <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPane3" pref="306" max="32767" attributes="0"/>
+                  <Component id="jScrollPane3" pref="310" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel3" min="-2" pref="49" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>

@@ -1019,16 +1019,16 @@ public class ControladoraL {
             }
         }
         
-        porcentajeDeptosOcupados = (float)cantDeptosOcupados/cantDeptos;
+        //porcentajeDeptosOcupados = (float)cantDeptosOcupados/cantDeptos;
         
         for(int i = 0;i<serviciosEdif.size();i++){
             if(serviciosEdif.get(i).getMes() == mes && serviciosEdif.get(i).getAnio() == anio){
-                if("AGUA Y CLOACA".equals(serviciosEdif.get(i).getNombre())){
+                if(serviciosEdif.get(i).isCalculoxPersona()){
                     montoExpensa = serviciosEdif.get(i).getMonto()/obtenerCantidadPersonas(idEdificio);
                     montoExpensa *= unDepartamento.getUnInquilino().getCantidadPersonas();
                 }else{
                     importeServicio = serviciosEdif.get(i).getMonto();
-                    montoExpensa = (importeServicio/cantDeptos*coeficiente)*porcentajeDeptosOcupados;
+                    montoExpensa = (importeServicio/cantDeptosOcupados)*coeficiente;
                 }
                 
                 if(montoExpensa > 0){
@@ -1733,8 +1733,8 @@ public class ControladoraL {
 /*------------------------------------------------------------------------------
                                 SERVICIO
 ------------------------------------------------------------------------------*/
-    public void altaServicio(String nombre, int mes, int anio, Date fechaEmision, Date fechaVencimiento, float monto, String descripcion, long idEdificio) throws Exception{
-        Servicio unServicio = new Servicio(nombre, mes, anio, fechaEmision, fechaVencimiento, monto, descripcion);
+    public void altaServicio(String nombre, int mes, int anio, boolean calculoxPersona, Date fechaEmision, Date fechaVencimiento, float monto, String descripcion, long idEdificio) throws Exception{
+        Servicio unServicio = new Servicio(nombre, mes, anio, calculoxPersona, fechaEmision, fechaVencimiento, monto, descripcion);
         
         unaControladora.altaServicio(unServicio);
         ServicioExpensa unServicioExpensa = new ServicioExpensa(nombre, mes, anio, monto, descripcion);
@@ -1746,12 +1746,13 @@ public class ControladoraL {
         unaControladora.modificarEdificio(unEdificio);
     }
     
-    public void modificarServicio(long idServicio, String nombre, int mes, int anio, Date fechaEmision, Date fechaVencimiento, float monto, String descripcion) throws Exception{
+    public void modificarServicio(long idServicio, String nombre, int mes, int anio, boolean calculoxPersona, Date fechaEmision, Date fechaVencimiento, float monto, String descripcion) throws Exception{
         Servicio unServicio = obtenerServicio(idServicio);
         
         unServicio.setNombre(nombre);
         unServicio.setMes(mes);
         unServicio.setAnio(anio);
+        unServicio.setCalculoxPersona(calculoxPersona);
         unServicio.setFechaEmision(fechaEmision);
         unServicio.setFechaVencimiento(fechaVencimiento);
         unServicio.setMonto(monto);

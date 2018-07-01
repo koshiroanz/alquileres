@@ -547,11 +547,11 @@ public final class Inicio extends javax.swing.JFrame {
                 if(unaControladora.obtenerCoeficiente() != null){
                     if(unaControladora.obtenerCoeficiente().getValor() != valor){
                         unaControladora.modificarCoeficiente(unaControladora.obtenerCoeficiente().getId(), unaControladora.obtenerCoeficiente().getNombre(), valor);
-                        JOptionPane.showMessageDialog(null, "El Coeficiente se ah modificado con exito.", "", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "El Coeficiente se ha modificado con éxito.", "", JOptionPane.WARNING_MESSAGE);
                     }
                 }else{
                     unaControladora.altaCoeficiente("Coeficiente", valor);
-                    JOptionPane.showMessageDialog(null, "El Coeficiente se ah guardado con exito.", "", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "El Coeficiente se ha guardado con éxito.", "", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (Exception ex) {
                 Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);

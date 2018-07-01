@@ -140,13 +140,13 @@ public class splash extends javax.swing.JFrame implements Runnable{
     @Override
     public void run() {
         try {
-            if(unaControladora.comprobarConexion()){
+            //if(unaControladora.comprobarConexion()){
                 new Inicio(this).setVisible(true);
-            }else{
+            /*}else{
                 JOptionPane.showMessageDialog(null, "Lo sentimos, no posee conexión a la Base de Datos. Intentelo nuevamente mas tarde.");
                 Thread.sleep(500);
                 this.dispose();
-            }
+            }*/
         } catch (InterruptedException ex) {
             Logger.getLogger(splash.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {

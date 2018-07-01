@@ -69,6 +69,8 @@ public final class PanelServicio extends javax.swing.JPanel {
         jLabelRefresh = new javax.swing.JLabel();
         jButtonNombre = new javax.swing.JButton();
         jComboBoxNombre = new javax.swing.JComboBox<>();
+        jCheckBoxCalculoXpersona = new javax.swing.JCheckBox();
+        jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jTextFieldBuscar = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
@@ -224,6 +226,11 @@ public final class PanelServicio extends javax.swing.JPanel {
             }
         });
 
+        jCheckBoxCalculoXpersona.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabel3.setText("Calcular por persona");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -244,7 +251,7 @@ public final class PanelServicio extends javax.swing.JPanel {
                             .addComponent(jLabelDescripcion))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                             .addComponent(jSeparator2)
                             .addComponent(jTextFieldMonto)
                             .addComponent(jDateChooserFechaEmision, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -252,38 +259,34 @@ public final class PanelServicio extends javax.swing.JPanel {
                                 .addComponent(jComboBoxNombre, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(0, 0, 0)
                                 .addComponent(jButtonNombre)))
+                        .addGap(98, 98, 98)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(98, 98, 98)
-                                .addComponent(jLabelEdificio)
-                                .addGap(64, 64, 64))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabelMes)
-                                        .addGap(85, 85, 85))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabelFechaVencimiento)
-                                        .addGap(18, 18, 18)))))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabelEdificio)
+                            .addComponent(jLabelFechaVencimiento)
+                            .addComponent(jLabelMes))
+                        .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jDateChooserFechaVencimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextFieldEdificio)
-                            .addComponent(jSeparator4)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jComboBoxMes, 0, 174, Short.MAX_VALUE)
+                                .addComponent(jComboBoxMes, 0, 173, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel2)
                                 .addGap(5, 5, 5)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTextFieldAnio, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
-                                    .addComponent(jSeparator5))))))
+                                    .addComponent(jSeparator5)))
+                            .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextFieldEdificio, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jDateChooserFechaVencimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jCheckBoxCalculoXpersona)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(22, 22, 22))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(jPanelButtonRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -316,7 +319,9 @@ public final class PanelServicio extends javax.swing.JPanel {
                     .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
                     .addComponent(jLabelDescripcion)
+                    .addComponent(jCheckBoxCalculoXpersona)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
@@ -514,7 +519,7 @@ public final class PanelServicio extends javax.swing.JPanel {
                     .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
@@ -566,16 +571,20 @@ public final class PanelServicio extends javax.swing.JPanel {
             Date fechaE = jDateChooserFechaEmision.getDate(),
                  fechaV = jDateChooserFechaVencimiento.getDate();
             int mes = jComboBoxMes.getSelectedIndex();
+            boolean calculoxPersona = false;
+            if(jCheckBoxCalculoXpersona.isSelected()){
+                calculoxPersona = true;
+            }
             
             try{
                 if(!modificar){
-                    unaControladora.altaServicio(nombre, mes, Integer.parseInt(jTextFieldAnio.getText()), fechaE, fechaV, Float.valueOf(monto), jTextAreaDescripcion.getText(), this.idEdificio);
+                    unaControladora.altaServicio(nombre, mes, Integer.parseInt(jTextFieldAnio.getText()), calculoxPersona, fechaE, fechaV, Float.valueOf(monto), jTextAreaDescripcion.getText(), this.idEdificio);
                     cargarTablaServicio("");
                 }else{
                     int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){
                         idServicio = unaControladora.obtenerServicio(idEdificio, String.valueOf(jComboBoxNombre.getSelectedItem())).getId();
-                        unaControladora.modificarServicio(idServicio, nombre, mes, Integer.parseInt(jTextFieldAnio.getText()), fechaE, fechaV, Float.valueOf(monto), jTextAreaDescripcion.getText());
+                        unaControladora.modificarServicio(idServicio, nombre, mes, Integer.parseInt(jTextFieldAnio.getText()), calculoxPersona, fechaE, fechaV, Float.valueOf(monto), jTextAreaDescripcion.getText());
                         modificar = false;
                         cargarTablaServicio("");
                     }
@@ -786,6 +795,7 @@ public final class PanelServicio extends javax.swing.JPanel {
         jTextFieldMonto.setText(String.valueOf(unServicio.getMonto()));
         jTextFieldEdificio.setText(unaControladora.obtenerEdificio(idEdificio).getNombre());
         jTextFieldAnio.setText(String.valueOf(formatoAnio.format(anio)));
+        jCheckBoxCalculoXpersona.setSelected(unServicio.isCalculoxPersona());
         
         icono("afuera");
     }
@@ -870,6 +880,7 @@ public final class PanelServicio extends javax.swing.JPanel {
         jLabelAceptar.setText("Aceptar");
         jTextFieldEdificio.setText(unaControladora.obtenerEdificio(idEdificio).getNombre());
         jTextFieldAnio.setText(String.valueOf(formatoAnio.format(anio)));
+        jCheckBoxCalculoXpersona.setSelected(false);
         limpiarTabla();
         
         icono("afuera");
@@ -933,12 +944,14 @@ public final class PanelServicio extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonNombre;
+    private javax.swing.JCheckBox jCheckBoxCalculoXpersona;
     private javax.swing.JComboBox<String> jComboBoxMes;
     private javax.swing.JComboBox<String> jComboBoxNombre;
     private com.toedter.calendar.JDateChooser jDateChooserFechaEmision;
     private com.toedter.calendar.JDateChooser jDateChooserFechaVencimiento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelAceptar;
     private javax.swing.JLabel jLabelBuscar;
     private javax.swing.JLabel jLabelDescripcion;

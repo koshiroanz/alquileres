@@ -21,6 +21,8 @@ public class Servicio implements Serializable {
     @Basic
     private int anio;
     @Basic
+    private boolean calculoxPersona;
+    @Basic
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaEmision;
     @Basic
@@ -34,10 +36,11 @@ public class Servicio implements Serializable {
     public Servicio() {
     }
 
-    public Servicio(String nombre, int mes, int anio, Date fechaEmision, Date fechaVencimiento, float monto, String descripcion) {
+    public Servicio(String nombre, int mes, int anio, boolean calculoxPersona, Date fechaEmision, Date fechaVencimiento, float monto, String descripcion) {
         this.nombre = nombre;
         this.mes = mes;
         this.anio = anio;
+        this.calculoxPersona = calculoxPersona;
         this.fechaEmision = fechaEmision;
         this.fechaVencimiento = fechaVencimiento;
         this.monto = monto;
@@ -70,6 +73,14 @@ public class Servicio implements Serializable {
 
     public void setAnio(int anio) {
         this.anio = anio;
+    }
+
+    public boolean isCalculoxPersona() {
+        return calculoxPersona;
+    }
+
+    public void setCalculoxPersona(boolean calculoxPersona) {
+        this.calculoxPersona = calculoxPersona;
     }
 
     public Date getFechaEmision() {

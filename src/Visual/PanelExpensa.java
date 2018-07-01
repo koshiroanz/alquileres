@@ -814,7 +814,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
             }
             
         }
-
+        
         this.jTableExpensa.setModel(tablaExpensa);
     }
     
