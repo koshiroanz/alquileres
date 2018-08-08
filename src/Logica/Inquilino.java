@@ -118,10 +118,11 @@ public class Inquilino implements Serializable {
     public void setCuit(String cuit) {
         this.cuit = cuit;
     }
-
+    
     public Garante getUnGarante() {
         return unGarante;
     }
+    
 
     public void setUnGarante(Garante unGarante) {
         this.unGarante = unGarante;
