@@ -7,14 +7,25 @@ import java.sql.SQLException;
 
 public class ControladoraV {
     private final ControladoraL unaControladora = new ControladoraL();
-
+    
+    public int getCantAlquileresGenerados(){
+        return unaControladora.getCantAlquileresGenerados();
+    }
     
     public boolean comprobarConexion() throws SQLException{
         return unaControladora.comprobarConexion();
     }
+    
+    public List<Integer> obtenerAniosServicios(){
+        return unaControladora.obtenerAniosServicios();
+    }
 /*------------------------------------------------------------------------------
                            REPORTE
-------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/    
+    public boolean generarRepo(long idEdificio, int mesAbuscar, int anioAbuscar, List<Logica.Inquilino> inquilinosReporte, String obsAlquiler, String obsExpensa, int opcion){
+        return unaControladora.generarRepo(idEdificio, mesAbuscar, anioAbuscar, inquilinosReporte, obsAlquiler, obsExpensa, opcion);
+    }
+    
     public void altaNotificaciones(long idEdificio, String obsAlquiler, String obsExpensa) throws Exception{
         unaControladora.altaNotificaciones(idEdificio, obsAlquiler, obsExpensa);
     }
@@ -25,8 +36,8 @@ public class ControladoraV {
 /*------------------------------------------------------------------------------
                            NOTIFICACIONES
 ------------------------------------------------------------------------------*/
-    public List<String> notificaciones(){
-        return unaControladora.notificaciones();
+    public List<String> notificaciones(int idEdificio){
+        return unaControladora.notificaciones(idEdificio);
     }
     
 /*------------------------------------------------------------------------------
@@ -459,12 +470,12 @@ public class ControladoraV {
         return unaControladora.obtenerPagosEdificio(idEdificio);
     }
     
-    public float obtenerTotalPago(){
-        return unaControladora.obtenerTotalPago();
-    }
-    
     public float obtenerSaldoUltimoPago(long idInquilino){
         return unaControladora.obtenerSaldoUltimoPago(idInquilino);
+    }
+    
+    public Logica.Pago buscarUltimoPago(Logica.Inquilino unInqui){
+        return unaControladora.buscarUltimoPago(unInqui);
     }
     
 /*------------------------------------------------------------------------------

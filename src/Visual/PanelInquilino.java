@@ -652,12 +652,6 @@ public final class PanelInquilino extends javax.swing.JPanel {
                 for(int i = 1; i < comboSemestre.getSize(); i++){
                     impSemestres[i-1] = (float)comboSemestre.getElementAt(i);
                 }
-                /*if(jComboBoxSemestres.getItemCount() > 1){
-                    impSemestres[0] = Float.valueOf(jComboBoxSemestres.getItemAt(1));
-                    impSemestres[1] = Float.valueOf(jComboBoxSemestres.getItemAt(2));
-                    impSemestres[2] = Float.valueOf(jComboBoxSemestres.getItemAt(3));
-                    impSemestres[3] = Float.valueOf(jComboBoxSemestres.getItemAt(4));
-                }*/
                 
                 if(!modificar){
                     unaControladora.altaInquilino(Integer.valueOf(cantFamilia), apellido, nombre, dni, email, telefono, cuit, 0/* saldoMesAnt*/, impSemestres, jTextAreaDescripcion.getText(), null/*unGarante*/, null/*alquileres*/, idDepartamento, idCochera);
@@ -891,44 +885,6 @@ public final class PanelInquilino extends javax.swing.JPanel {
                 jButtonSemestreActionPerformed(null);
             }
         }
-        
-        /*if(jButtonSemestre.getText().equals("-")){
-            if(jComboBoxSemestres.getSelectedIndex() > 0){
-                int indice = jComboBoxSemestres.getSelectedIndex();
-                String[] montos = new String[4]; 
-                jComboBoxSemestres.removeItemAt(jComboBoxSemestres.getSelectedIndex());
-                
-                for (int i = 0; i < (jComboBoxSemestres.getItemCount()-1); i++) {
-                    montos[i] = jComboBoxSemestres.getItemAt(i+1);
-                }
-                
-                jComboBoxSemestres.removeAllItems();
-                
-                for (int i = 0; i < 4; i++) {
-                    if(i == indice){
-                        String importe = JOptionPane.showInputDialog(null, "Importe");
-                        jComboBoxSemestres.addItem(importe);
-                    }else{
-                        if(!montos[i].isEmpty()){
-                            jComboBoxSemestres.addItem(montos[i]);
-                        }
-                    }
-                }
-                
-                
-            }
-        }
-        
-        try{
-            while(jComboBoxSemestres.getItemCount() < 5){
-                String importe = JOptionPane.showInputDialog(null, "Importe");
-                jComboBoxSemestres.addItem(importe);
-            }
-            jComboBoxSemestres.requestFocus();
-        }catch(Exception e){
-            System.out.print("Aprieta para agregar servicio, le da ok y no escribio nada. No ocurre ningun problema ;)"+e);
-            jButtonSemestreActionPerformed(null);
-        }*/
     }//GEN-LAST:event_jButtonSemestreActionPerformed
 
     private void jButtonSemestreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonSemestreKeyTyped

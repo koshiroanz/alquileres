@@ -26,7 +26,6 @@ public final class Inicio extends javax.swing.JFrame {
         cargarCoeficiente();
         cargarEdificios("");
         generarAlquileres();
-        cargarNotificaciones();
         eliminarEdificioSeleccionado();
         this.setResizable(false);
         if(inicio != null){
@@ -353,6 +352,12 @@ public final class Inicio extends javax.swing.JFrame {
 
         jListNotificaciones.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jListNotificaciones.setForeground(new java.awt.Color(51, 51, 51));
+        jListNotificaciones.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "- Bienvenido a Kunz Alquileres!!" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jListNotificaciones.setToolTipText("");
         jListNotificaciones.setEnabled(false);
         jListNotificaciones.setFocusable(false);
         jListNotificaciones.setRequestFocusEnabled(false);
@@ -388,8 +393,7 @@ public final class Inicio extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanelButtonCrearEdificio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanelButtonAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
-                        .addGap(0, 0, 0))
+                            .addComponent(jPanelButtonAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)))
                     .addComponent(jScrollPane1)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE))
                 .addContainerGap())
@@ -413,7 +417,31 @@ public final class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTableEdificioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEdificioMouseClicked
-        if(evt.getClickCount() == 2){
+        if(evt.getClickCount() == 1){
+            DefaultListModel listaNotificaciones = new DefaultListModel();
+            String nomEdif = String.valueOf(jTableEdificio.getValueAt(jTableEdificio.getSelectedRow(),1));
+            int idEdificio = Integer.valueOf(String.valueOf(jTableEdificio.getValueAt(jTableEdificio.getSelectedRow(),0)));
+            
+            if(unaControladora.getCantAlquileresGenerados()  > 0){
+                listaNotificaciones.addElement("Se han generado "+unaControladora.getCantAlquileresGenerados()+" Alquileres.");
+            }else{
+                listaNotificaciones.addElement("No se han generado nuevos alquileres.");
+            }
+            listaNotificaciones.addElement(" ");
+            
+            listaNotificaciones.addElement("Bienvenido a "+nomEdif+"!!");
+            listaNotificaciones.addElement(" ");
+
+            if(unaControladora.obtenerEdificios().isEmpty()){
+                listaNotificaciones.addElement("Todo listo para empezar su utilizacion.");
+            }
+        
+            for(String msj : unaControladora.notificaciones(idEdificio)){
+                listaNotificaciones.addElement("- "+msj+".");
+            }
+            
+            jListNotificaciones.setModel(listaNotificaciones);
+        }else if(evt.getClickCount() == 2){
             if(this.jTableEdificio.isRowSelected(jTableEdificio.getSelectedRow())){
                 int fila = jTableEdificio.getSelectedRow();
                 String id = jTableEdificio.getValueAt(fila, 0).toString();
@@ -596,23 +624,6 @@ public final class Inicio extends javax.swing.JFrame {
     
     public void generarAlquileres() throws Exception{
         unaControladora.generarAlquiler();
-    }
-    
-    public void cargarNotificaciones(){
-        DefaultListModel listaNotificaciones = new DefaultListModel();
-        
-        listaNotificaciones.addElement("Bienvenido a KunzAlquiler!!");
-        listaNotificaciones.addElement(" ");
-        
-        if(unaControladora.obtenerEdificios().isEmpty()){
-            listaNotificaciones.addElement("Todo listo para empezar su utilizacion.");
-        }else{
-            for(String msj : unaControladora.notificaciones()){
-                listaNotificaciones.addElement("- "+msj+".");
-            }
-        }
-        
-        jListNotificaciones.setModel(listaNotificaciones);
     }
     
     private void eliminarEdificioSeleccionado(){

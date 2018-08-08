@@ -15,19 +15,21 @@ import javax.swing.JOptionPane;
 import java.util.logging.Logger;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Comparator;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
 public final class PanelPago extends javax.swing.JPanel {
     private final long idEdificio;
-    private long idPago, idExpensa, idInquilino;
+    private long idPago = 0, idInquilino = 0;
+    private DecimalFormat formatoDecimal = new DecimalFormat("#0.00");
     private final ControladoraV unaControladora = new ControladoraV();
     private boolean modificar = false, eliminar = false, entro = false;
     private final DefaultComboBoxModel comboInquilino = new DefaultComboBoxModel();
     private final DefaultComboBoxModel comboBusquedaInquilino = new DefaultComboBoxModel();
     private final DefaultComboBoxModel comboAlquiler = new DefaultComboBoxModel();
     private final DefaultComboBoxModel comboAnio = new DefaultComboBoxModel();
-    private final String colTablaPago[] = {"Id", "Fecha", "Inquilino", "Alquiler", "Departamento", "Cochera", "Total", "Descripción"};
+    private final String colTablaPago[] = {"Id", "Fecha", "Inquilino", "Alquiler", "Departamento", "Cochera", "Efectivo", "Banco", "Tarjeta", "Total", "Descripción"};
     private final DefaultTableModel tablaPago = new DefaultTableModel(null, colTablaPago);
     
     public PanelPago(long idEdificio) {
@@ -257,6 +259,9 @@ public final class PanelPago extends javax.swing.JPanel {
         jTextFieldInteres.setBorder(null);
         jTextFieldInteres.setPreferredSize(new java.awt.Dimension(2, 20));
         jTextFieldInteres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldInteresKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextFieldInteresKeyTyped(evt);
             }
@@ -705,8 +710,8 @@ public final class PanelPago extends javax.swing.JPanel {
             if(evt.getClickCount() == 1){
                 eliminar = true;
             }else if(evt.getClickCount() == 2){
-                cargarPanelDatos(idPago);
                 eliminar = false;
+                cargarPanelDatos(idPago);
             }
         }else{
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila valida.", "", JOptionPane.WARNING_MESSAGE);
@@ -716,12 +721,23 @@ public final class PanelPago extends javax.swing.JPanel {
     private void jPanelButtonAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonAceptarMouseClicked
         if(validar()){
             try {
+                SimpleDateFormat formatoMes = new SimpleDateFormat("MM"), formatoAnio = new SimpleDateFormat("yyyy");
                 Logica.Inquilino unInquilino = (Logica.Inquilino) comboInquilino.getElementAt(jComboBoxInquilino.getSelectedIndex());
                 Logica.Alquiler unAlquiler = (Logica.Alquiler) comboAlquiler.getElementAt(jComboBoxAlquiler.getSelectedIndex());
-                
+                long idExp = 0;
+                if(unAlquiler.getDepartamento() > 0){
+                    Logica.Expensa unaExpensa = unaControladora.obtenerExpensa(unAlquiler.getDepartamento(), Integer.valueOf(formatoMes.format(unAlquiler.getFecha())), Integer.valueOf(formatoAnio.format(unAlquiler.getFecha())));
+                    if(unaExpensa != null){
+                        idExp = unaExpensa.getId();
+                    }
+                }
+                        
                 long idAlquiler = unAlquiler.getId();
                 Date fechaPago = jDateChooserFecha.getDate();
-                float interesPorAtraso = Float.valueOf(unaControladora.reemplazarString(jTextFieldInteres.getText()));
+                float interesPorAtraso = 0;
+                if(!jTextFieldInteres.getText().isEmpty()){
+                    interesPorAtraso = Float.valueOf(unaControladora.reemplazarString(jTextFieldInteres.getText()));
+                }
                 float total = Float.valueOf(unaControladora.reemplazarString(jTextFieldTotal.getText()));
                 float efectivo = Float.valueOf(jTextFieldEfectivo.getText());
                 float tarjeta = Float.valueOf(jTextFieldTarjeta.getText());
@@ -729,20 +745,20 @@ public final class PanelPago extends javax.swing.JPanel {
                 float saldoMesAnt = Float.valueOf(unaControladora.reemplazarString(jTextFieldSaldoMesAnterior.getText()));
                 
                 if(!modificar){
-                    unaControladora.altaPago(fechaPago, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, total, jTextAreaDescripcion.getText(), idAlquiler, idExpensa, unInquilino.getId());
+                    unaControladora.altaPago(fechaPago, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, total, jTextAreaDescripcion.getText(), idAlquiler, idExp, unInquilino.getId());
                 }else{
                     int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){
-                        unaControladora.modificarPago(idPago, fechaPago, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, total, jTextAreaDescripcion.getText(), idAlquiler, idExpensa, unInquilino.getId());
+                        unaControladora.modificarPago(idPago, fechaPago, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, total, jTextAreaDescripcion.getText(), idAlquiler, idExp, unInquilino.getId());
                     }
                 }
             } catch (Exception ex) {
                 Logger.getLogger(Logica.Pago.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "No se ha podido realizar la operación.", "", JOptionPane.ERROR_MESSAGE);
             }
+            limpiarComponentes();
         }
-            
-        limpiarComponentes();
+        
         cargarTablaPago(0, 0);
     }//GEN-LAST:event_jPanelButtonAceptarMouseClicked
 
@@ -753,11 +769,9 @@ public final class PanelPago extends javax.swing.JPanel {
                     int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){
                         unaControladora.bajaPago(idPago, idEdificio);
-                        eliminar = false;
-                        cargarTablaPago(0, 0);
                     }
                 }else{
-                    JOptionPane.showMessageDialog(null, "No se puede willy");
+                    JOptionPane.showMessageDialog(null, "No es posible eliminar el Pago.");
                 }
             }catch(Exception ex){
                 Logger.getLogger(Logica.Pago.class.getName()).log(Level.SEVERE, null, ex);
@@ -768,6 +782,7 @@ public final class PanelPago extends javax.swing.JPanel {
         }else{
             JOptionPane.showMessageDialog(null, "Debe seleccionar un Pago de la tabla.", "", JOptionPane.WARNING_MESSAGE);
         }
+        eliminar = false;
     }//GEN-LAST:event_jPanelButtonEliminarMouseClicked
 
     private void jPanelButtonAceptarMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelButtonAceptarMouseMoved
@@ -834,9 +849,10 @@ public final class PanelPago extends javax.swing.JPanel {
                 Logica.Inquilino unInquilino = (Logica.Inquilino)jComboBoxInquilino.getSelectedItem();
                 jTextFieldDepartamento.setText(null);
                 jTextFieldCochera.setText(null);
-                if(unaControladora.obtenerDepartamentoInquilino(idEdificio, unInquilino.getId()) != null){
-                    jTextFieldDepartamento.setText(unaControladora.obtenerDepartamentoInquilino(idEdificio, unInquilino.getId()).getUbicacion());
-                }else{
+                Logica.Departamento unDeptoInquilino = unaControladora.obtenerDepartamentoInquilino(idEdificio, unInquilino.getId());
+                if(unDeptoInquilino != null){
+                    jTextFieldDepartamento.setText(unDeptoInquilino.getUbicacion());
+                    }else{
                     jTextFieldDepartamento.setText("Sin Departamento.");
                 }
 
@@ -849,15 +865,14 @@ public final class PanelPago extends javax.swing.JPanel {
                 comboAlquiler.removeAllElements();
                 comboAlquiler.addElement("Seleccione una opción.");
                 List<Logica.Alquiler> alquileresInpagos = unaControladora.obtenerAlquileresInpagos(unInquilino.getId());
-                if(alquileresInpagos.size() > 1){
+                if(alquileresInpagos.size() > 0){
                     Collections.sort(alquileresInpagos, (Logica.Alquiler a1, Logica.Alquiler a2) -> a1.getFecha().compareTo(a2.getFecha()));
-                }
+                    for(Logica.Alquiler unAlquiler : alquileresInpagos){
+                        comboAlquiler.addElement(unAlquiler);
+                    }
 
-                for(Logica.Alquiler unAlquiler : alquileresInpagos){
-                    comboAlquiler.addElement(unAlquiler);
+                    jComboBoxAlquiler.setModel(comboAlquiler);
                 }
-
-                jComboBoxAlquiler.setModel(comboAlquiler);
             }
         }
         
@@ -867,30 +882,32 @@ public final class PanelPago extends javax.swing.JPanel {
     private void jComboBoxAlquilerItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxAlquilerItemStateChanged
         if(evt.getStateChange() == ItemEvent.SELECTED){
             if(jComboBoxAlquiler.getSelectedIndex() > 0){
-                
-                DecimalFormat formatoDecimal = new DecimalFormat("#.00");
-                SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy"), 
-                                 monthFormat = new SimpleDateFormat("MM");
-                float totalPago, precioCochera;
+                Date fechaActual = new Date();
+                float montoExpensa = 0, saldoMesAnt = 0, interes = 0;
+                boolean bandera = false;
+                SimpleDateFormat formatoAnio = new SimpleDateFormat("yyyy"), 
+                                 formatoMes = new SimpleDateFormat("MM");
+                float totalPago = 0;
                 int mes, anio;
 
                 Logica.Alquiler unAlquiler = (Logica.Alquiler)jComboBoxAlquiler.getSelectedItem();
 
-                mes = Integer.parseInt(monthFormat.format(unAlquiler.getFecha()));
-                anio = Integer.valueOf(yearFormat.format(unAlquiler.getFecha()));
+                mes = Integer.parseInt(formatoMes.format(unAlquiler.getFecha()));
+                anio = Integer.valueOf(formatoAnio.format(unAlquiler.getFecha()));
 
                 Logica.Inquilino unInquilino = (Logica.Inquilino)jComboBoxInquilino.getSelectedItem();
                 Logica.Departamento unDepartamento = unaControladora.obtenerDepartamento(idEdificio, jTextFieldDepartamento.getText());
 
                 if(unAlquiler.getCochera() != 0){
-                    jTextFieldCochera.setText(String.valueOf(unaControladora.obtenerCochera(unAlquiler.getCochera()).getPrecio()));
+                    jTextFieldCochera.setText(unaControladora.obtenerCochera(unAlquiler.getCochera()).getUbicacion());
+                }else{
+                    jTextFieldCochera.setText("Sin Cochera.");
                 }
 
                 if(unDepartamento != null){
                     Logica.Expensa unaExpensa = unaControladora.obtenerExpensa(unDepartamento.getId(), mes, anio);
                     if(unaExpensa != null){
-                        idExpensa = unaExpensa.getId();
-                        jTextFieldMontoExpensa.setText(unaControladora.reemplazarString(formatoDecimal.format(unaControladora.calcularMonto(unaExpensa.getServiciosExpensa()))));
+                        montoExpensa = unaExpensa.getMonto();
                     }else{
                         if(mes == 1){
                             mes = 12;
@@ -899,29 +916,19 @@ public final class PanelPago extends javax.swing.JPanel {
                         }
                         JOptionPane.showMessageDialog(null, "No es posible generar el Pago. Debido a que no existe una Expensa del mes: "+mes+", para el Departamento: "+unDepartamento.getUbicacion(),"",JOptionPane.WARNING_MESSAGE);
                     }
-                }else{
-                    jTextFieldMontoExpensa.setText("0.0");
-                }
-
-                jTextFieldTotalAlquiler.setText(unaControladora.reemplazarString(formatoDecimal.format(unAlquiler.getTotal())));
-                /*float saldoAnterior = unaControladora.obtenerSaldoUltimoPago(unInquilino.getId());
-                if(saldoAnterior != 0){
-                    jTextFieldSaldoMesAnterior.setText(unaControladora.reemplazarString(formatoDecimal.format(saldoAnterior)));
-                }else{
-                    jTextFieldSaldoMesAnterior.setText("0.0");
-                }*/
-                jTextFieldSaldoMesAnterior.setText(String.valueOf(unInquilino.getSaldoMesAnt()));
-                
-                totalPago = Float.valueOf(jTextFieldTotalAlquiler.getText())+Float.valueOf(jTextFieldSaldoMesAnterior.getText())+Float.valueOf(jTextFieldMontoExpensa.getText());
-                float interes = unaControladora.interesesPorAtraso(jDateChooserFecha.getDate(), unAlquiler.getFecha(), totalPago);
-
-                if(interes > 0){
-                    jTextFieldInteres.setText(unaControladora.reemplazarString(formatoDecimal.format(interes)));
-                }else{
-                    jTextFieldInteres.setText(unaControladora.reemplazarString(String.valueOf(interes)));
                 }
                 
-                totalPago += Float.valueOf(unaControladora.reemplazarString(jTextFieldInteres.getText()));
+                jTextFieldMontoExpensa.setText(formatoDecimal.format(montoExpensa));
+
+                jTextFieldTotalAlquiler.setText(formatoDecimal.format(unAlquiler.getTotal()));
+                saldoMesAnt = unaControladora.obtenerSaldoMesAnterior(idEdificio, unInquilino.getId(), Integer.valueOf(formatoMes.format(unAlquiler.getFecha())), Integer.valueOf(formatoAnio.format(unAlquiler.getFecha())));
+                
+                jTextFieldSaldoMesAnterior.setText(formatoDecimal.format(saldoMesAnt));
+                totalPago = unAlquiler.getTotal()+montoExpensa; 
+                interes = unaControladora.interesesPorAtraso(fechaActual, unAlquiler.getFecha(), totalPago);
+                jTextFieldInteres.setText(formatoDecimal.format(interes));
+                totalPago += interes;
+                totalPago += saldoMesAnt;
                 jTextFieldTotal.setText(formatoDecimal.format(totalPago));
             }
         }
@@ -932,6 +939,7 @@ public final class PanelPago extends javax.swing.JPanel {
         if(modificar){
             modificar = false;
         }
+        limpiarComponentes();
         cargarTablaPago(0,0);
     }//GEN-LAST:event_jPanelButtonRefreshMouseClicked
 
@@ -1030,6 +1038,10 @@ public final class PanelPago extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTablePagoKeyTyped
 
+    private void jTextFieldInteresKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldInteresKeyReleased
+        actualizarTotal();
+    }//GEN-LAST:event_jTextFieldInteresKeyReleased
+
     public void cargarComboInquilino(){
         List<Logica.Inquilino> inquilinosSinPago = unaControladora.obtenerInquilinosSinPago(idEdificio);
         jComboBoxInquilino.removeAllItems();
@@ -1048,8 +1060,7 @@ public final class PanelPago extends javax.swing.JPanel {
     }
     
     public void cargarTablaPago(long idInquilino, int anio){
-        limpiarComponentes();
-        DecimalFormat formatoDecimal = new DecimalFormat("#.00");
+        limpiarTabla();
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy"),
                          monthFormat = new SimpleDateFormat("MM"),
                          yearFormat = new SimpleDateFormat("yyyy");
@@ -1058,7 +1069,7 @@ public final class PanelPago extends javax.swing.JPanel {
             mesActual = Integer.valueOf(monthFormat.format(fechaActual)),
             anioActual = Integer.valueOf(yearFormat.format(fechaActual));
         List<Logica.Pago> pagos = new LinkedList();
-        Object datos[] = new Object[8];
+        Object datos[] = new Object[11];
         
         if(idInquilino > 0 && anio > 0){ 
             List<Logica.Pago> pagosInquilino = unaControladora.obtenerPagosInquilino(idInquilino);
@@ -1106,9 +1117,11 @@ public final class PanelPago extends javax.swing.JPanel {
             }else{
                 datos[5] = ""; 
             }
-            
-            datos[6] = unPago.getMonto();
-            datos[7] = unPago.getDescripcion();
+            datos[6] = unPago.getEfectivo();
+            datos[7] = unPago.getBanco();
+            datos[8] = unPago.getTarjeta();
+            datos[9] = unPago.getMonto();
+            datos[10] = unPago.getDescripcion();
             
             tablaPago.addRow(datos);
         }
@@ -1130,7 +1143,7 @@ public final class PanelPago extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un Alquiler.", "", JOptionPane.WARNING_MESSAGE);
             jComboBoxAlquiler.requestFocus();
         }else if(Float.valueOf(jTextFieldEfectivo.getText()) == 0 && Float.valueOf(jTextFieldTarjeta.getText()) == 0 && Float.valueOf(jTextFieldBanco.getText()) == 0){
-            JOptionPane.showMessageDialog(null, "El pago no puede ser efectuado sin un monto  mayor a 0.", "", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El pago no puede ser efectuado sin un monto mayor a 0.", "", JOptionPane.WARNING_MESSAGE);
         }else{
             validar = true;
         }
@@ -1139,12 +1152,11 @@ public final class PanelPago extends javax.swing.JPanel {
     }
     
     private void cargarPanelDatos(long idPago){
+        jTextFieldMontoExpensa.setText(null);
         modificar = true;
-        float montoExpensa = 0;
         Logica.Pago unPago = unaControladora.obtenerPago(idPago);
         Logica.Inquilino unInquilino = unaControladora.obtenerInquilinoPago(idEdificio, idPago);
         Logica.Alquiler unAlquiler = unaControladora.obtenerAlquilerPago(idPago);
-        DecimalFormat formatoDecimal = new DecimalFormat("#.00");
         jDateChooserFecha.setDate(unPago.getFecha());
         
         comboInquilino.removeAllElements();
@@ -1157,7 +1169,7 @@ public final class PanelPago extends javax.swing.JPanel {
             jTextFieldDepartamento.setText("Sin Departamento.");
         }
         if(unaControladora.obtenerCochera(unAlquiler.getCochera()) != null){
-            jTextFieldCochera.setText(String.valueOf(unaControladora.obtenerCochera(unAlquiler.getCochera()).getUbicacion()));
+            jTextFieldCochera.setText(unaControladora.obtenerCochera(unAlquiler.getCochera()).getUbicacion());
         }else{
             jTextFieldCochera.setText("Sin Cochera.");
         }
@@ -1167,15 +1179,17 @@ public final class PanelPago extends javax.swing.JPanel {
         jComboBoxAlquiler.setModel(comboAlquiler);
         
         jTextFieldTotalAlquiler.setText(String.valueOf(unAlquiler.getTotal()));
-        jTextFieldSaldoMesAnterior.setText(String.valueOf(unPago.getSaldo()));
-        if(unaControladora.obtenerExpensa(unPago.getIdExpensa()) != null){
-            montoExpensa = unaControladora.obtenerExpensa(unPago.getIdExpensa()).getMonto();
-            jTextFieldMontoExpensa.setText(unaControladora.reemplazarString(formatoDecimal.format(montoExpensa)));
-        }else{
-            jTextFieldMontoExpensa.setText("0");
+        jTextFieldSaldoMesAnterior.setText(formatoDecimal.format(unPago.getSaldo()));
+        if(unPago.getIdExpensa() != 0){
+            Logica.Expensa unaExpensaPaga = unaControladora.obtenerExpensa(unPago.getIdExpensa());
+            if(unaExpensaPaga != null){
+                jTextFieldMontoExpensa.setText(formatoDecimal.format(unaExpensaPaga.getMonto()));
+            }else{
+                jTextFieldMontoExpensa.setText("0.00");
+            }
         }
+        jTextFieldInteres.setText(formatoDecimal.format(unPago.getInteresPorAtraso()));
         
-        jTextFieldInteres.setText(String.valueOf(unPago.getInteresPorAtraso()));
         jTextFieldTotal.setText(String.valueOf(unPago.getMonto()));
         jTextAreaDescripcion.setText(unPago.getDescripcion());
         jTextFieldBanco.setText(String.valueOf(unPago.getBanco()));
@@ -1253,6 +1267,42 @@ public final class PanelPago extends javax.swing.JPanel {
                 comboAnio.addElement(i);
             }
         }
+    }
+    
+    public void actualizarTotal(){
+        float tot, total = Float.valueOf(unaControladora.reemplazarString(jTextFieldTotalAlquiler.getText()))+Float.valueOf(unaControladora.reemplazarString(jTextFieldSaldoMesAnterior.getText()))+Float.valueOf(unaControladora.reemplazarString(jTextFieldMontoExpensa.getText()));
+        
+        if(!jTextFieldInteres.getText().isEmpty()){
+            tot = Float.valueOf(unaControladora.reemplazarString(jTextFieldInteres.getText()))+total;
+        }else{
+            tot = total;
+        }
+        
+        jTextFieldTotal.setText(formatoDecimal.format(tot));
+    }
+    
+    public Logica.Expensa obtenerUltimoPagoExpensa(Logica.Pago ultimoPago, Logica.Departamento deptoInquilino){
+        Logica.Expensa expensaBuscada = null;
+        Logica.Alquiler ultimoAlquilerPagado = unaControladora.obtenerAlquiler(ultimoPago.getIdAlquiler());
+        int[] periodos = new int[2];
+        periodos = ultimoAlquilerPagado.getGeneracionAuto();
+        if(periodos[0] == 6 && periodos[1] == 4){
+            Logica.Expensa ultimaExpensa = unaControladora.obtenerUltimaExpensa(deptoInquilino.getId());
+            if(ultimoPago.getIdExpensa() != ultimaExpensa.getId()){
+                Logica.Expensa ultimaExpensaPaga = unaControladora.obtenerExpensa(ultimoPago.getIdExpensa());
+                if(ultimaExpensa.getMes() > ultimaExpensaPaga.getMes() && ultimaExpensa.getAnio() >= ultimaExpensaPaga.getAnio()){
+                    expensaBuscada = ultimaExpensa;
+                }
+            }
+        }
+        
+        return expensaBuscada;
+    }
+    
+    public long calcularTiempo(Date fechaAlquiler, Date fechaActual){        
+        long difDias = ((fechaActual.getTime()-fechaAlquiler.getTime())/86400000);
+        
+        return difDias;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

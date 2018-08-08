@@ -3,7 +3,6 @@ package Visual;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
-import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -15,6 +14,7 @@ import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -155,7 +155,11 @@ public final class PanelExpensa extends javax.swing.JPanel {
 
         jTextFieldAnio.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldAnio.setBorder(null);
-        jTextFieldAnio.setFocusable(false);
+        jTextFieldAnio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldAnioKeyTyped(evt);
+            }
+        });
 
         jLabelDescripcion.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelDescripcion.setText("Descripción");
@@ -391,7 +395,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
         );
 
         jComboBoxAnio.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jComboBoxAnio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione año", "2018" }));
+        jComboBoxAnio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione año" }));
         jComboBoxAnio.setBorder(null);
         jComboBoxAnio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -663,7 +667,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
         if(jComboBoxMesBusqueda.getSelectedIndex() == 0 || jComboBoxAnio.getSelectedIndex() == 0){
             JOptionPane.showMessageDialog(null, "Debe ingresar una clave de busqueda.", "", JOptionPane.WARNING_MESSAGE);
         }else{
-            int anio = Integer.parseInt((String)jComboBoxAnio.getSelectedItem());
+            int anio = Integer.valueOf(String.valueOf(jComboBoxAnio.getSelectedItem()));
             try {
                 cargarTablaBuscarExpensa(jComboBoxMesBusqueda.getSelectedIndex(), anio);
             } catch (Exception ex) {
@@ -769,11 +773,18 @@ public final class PanelExpensa extends javax.swing.JPanel {
             jPanelButtonEliminarMouseClicked(null);
         }
     }//GEN-LAST:event_jTableBuscarExpensaKeyTyped
+
+    private void jTextFieldAnioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldAnioKeyTyped
+        if(Character.isLetter(evt.getKeyChar())){
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldAnioKeyTyped
     
     public void cargarTablaExpensa(long idEdificio, long idDepartamento) throws Exception{
         limpiarTablaExpensa();
         String datos[] = new String[5];
-        DecimalFormat formatoDecimal = new DecimalFormat("#.00");
+        DecimalFormat formatoDecimal = new DecimalFormat("#0.00");
         formatoDecimal.setMinimumFractionDigits(2);
         
         if(idDepartamento != 0){
@@ -794,7 +805,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
 
                     this.tablaExpensa.addRow(datos);
                 }
-
+                
                 jTextFieldMonto.setText(formatoDecimal.format(unaControladora.calcularMonto(serviciosExpensa)));
 
             }else{
@@ -822,7 +833,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
         limpiarTablaBusqueda();
         List<Logica.Expensa> expensas = new LinkedList();
         String datos[] = new String[6];
-        DecimalFormat formatoDecimal = new DecimalFormat("#.00");
+        DecimalFormat formatoDecimal = new DecimalFormat("#0.00");
         formatoDecimal.setMinimumFractionDigits(2);
         
         if(mes != 0 && anio != 0){
@@ -865,7 +876,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
             int fila = jTableExpensa.getSelectedRow();
             
             if(fila >= 0){
-                DecimalFormat formatoDecimal = new DecimalFormat("#.00");
+                DecimalFormat formatoDecimal = new DecimalFormat("#0.00");
                 String precioString = unaControladora.reemplazarString(jTableExpensa.getValueAt(fila, 4).toString());
                 float precioFloat = Float.parseFloat(precioString), total;
                 tablaExpensa.removeRow(fila);
@@ -884,8 +895,7 @@ public final class PanelExpensa extends javax.swing.JPanel {
         modificar = true;
         String datos[] = new String[5];
         jLabelAceptar.setText("Actualizar");
-        DecimalFormat formatoDecimal = new DecimalFormat("#.00");
-        formatoDecimal.setMinimumFractionDigits(2);
+        DecimalFormat formatoDecimal = new DecimalFormat("#0.00");
         Logica.Expensa unaExpensa = unaControladora.obtenerExpensa(idExpensa);
         Logica.Departamento unDepartamento = unaControladora.obtenerDepartamentoPorExpensa(idEdificio, idExpensa);
         
@@ -1015,14 +1025,17 @@ public final class PanelExpensa extends javax.swing.JPanel {
     }
     
     public void cargarComboAnio(){
+        comboAnio.removeAllElements();
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
         Date fechaActual = new Date();
         int anioActual = Integer.valueOf(yearFormat.format(fechaActual));
         
-        if(anioActual > 2018){
-            for(int i = 2018; i < anioActual;i++){
+        if(anioActual >= 2018){
+            comboAnio.addElement("Seleccione año");
+            for(int i = 2018; i <= anioActual;i++){
                 comboAnio.addElement(i);
             }
+            jComboBoxAnio.setModel(comboAnio);
         }
     }
 

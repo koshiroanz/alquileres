@@ -521,7 +521,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         );
 
         jComboBoxAnio.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jComboBoxAnio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione año", "2018" }));
+        jComboBoxAnio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione año" }));
         jComboBoxAnio.setBorder(null);
         jComboBoxAnio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -675,7 +675,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
         if(jComboBoxMesBusqueda.getSelectedIndex() == 0 || jComboBoxAnio.getSelectedIndex() == 0){
             JOptionPane.showMessageDialog(null, "Seleccione un mes y año para buscar.", "", JOptionPane.WARNING_MESSAGE);
         }else{
-            int anio = Integer.parseInt((String)jComboBoxAnio.getSelectedItem());
+            int anio = Integer.parseInt(String.valueOf(jComboBoxAnio.getSelectedItem()));
             cargarTablaAlquiler(jComboBoxMesBusqueda.getSelectedIndex(), anio);
         }
     }//GEN-LAST:event_jPanelButtonBuscarMouseClicked
@@ -855,7 +855,7 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     private void cargarTablaAlquiler(int mesBusqueda, int anioBusqueda){
         limpiarComponentes();
         int mesAlquiler, anioAlquiler;
-        String datos[] = new String[6];
+        String datos[] = new String[7];
         List<Logica.Alquiler> alquileres = new LinkedList();
         SimpleDateFormat monthFormat = new SimpleDateFormat("MM"),
                          yearFormat = new SimpleDateFormat("yyyy"),
@@ -1018,14 +1018,17 @@ public final class PanelAlquiler extends javax.swing.JPanel {
     }
     
     public void cargarComboAnio(){
+        comboAnio.removeAllElements();
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
         Date fechaActual = new Date();
         int anioActual = Integer.valueOf(yearFormat.format(fechaActual));
         
-        if(anioActual > 2018){
-            for(int i = 2018; i < anioActual;i++){
+        if(anioActual >= 2018){
+            comboAnio.addElement("Seleccione año");
+            for(int i = 2018; i <= anioActual;i++){
                 comboAnio.addElement(i);
             }
+            jComboBoxAnio.setModel(comboAnio);
         }
     }
     

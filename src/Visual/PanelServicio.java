@@ -154,11 +154,9 @@ public final class PanelServicio extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel2.setText("Año");
 
-        jTextFieldAnio.setEditable(false);
         jTextFieldAnio.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldAnio.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextFieldAnio.setBorder(null);
-        jTextFieldAnio.setFocusable(false);
 
         jLabelDescripcion.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelDescripcion.setText("Descripción");
@@ -290,19 +288,18 @@ public final class PanelServicio extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(jPanelButtonRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jTextFieldAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBoxMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelMes)
-                    .addComponent(jButtonNombre)
                     .addComponent(jComboBoxNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNombre)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextFieldAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                    .addComponent(jButtonNombre)
+                    .addComponent(jLabelNombre))
+                .addGap(1, 1, 1)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jDateChooserFechaVencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelFechaVencimiento)
@@ -789,12 +786,13 @@ public final class PanelServicio extends javax.swing.JPanel {
             i++;
         }
         
+        jTextFieldAnio.setText(String.valueOf(unServicio.getAnio()));
         jComboBoxMes.setSelectedIndex(unServicio.getMes());
         jDateChooserFechaEmision.setDate(unServicio.getFechaEmision());
         jDateChooserFechaVencimiento.setDate(unServicio.getFechaVencimiento());
         jTextFieldMonto.setText(String.valueOf(unServicio.getMonto()));
         jTextFieldEdificio.setText(unaControladora.obtenerEdificio(idEdificio).getNombre());
-        jTextFieldAnio.setText(String.valueOf(formatoAnio.format(anio)));
+        //jTextFieldAnio.setText(String.valueOf(formatoAnio.format(anio)));
         jCheckBoxCalculoXpersona.setSelected(unServicio.isCalculoxPersona());
         
         icono("afuera");
