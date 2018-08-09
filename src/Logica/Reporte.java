@@ -441,7 +441,7 @@ public class Reporte{
         }
         
         if(!obsAlquiler.isEmpty()){
-            fila = hojaAlquiler.createRow(j+1);
+            fila = hojaAlquiler.createRow(j+3);
             fila.createCell(0).setCellValue("");
             fila.getCell(0).setCellValue("");
 
