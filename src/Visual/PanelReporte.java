@@ -89,11 +89,6 @@ public final class PanelReporte extends javax.swing.JFrame {
 
         jComboBoxMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
 
-        jTableInquilino = new javax.swing.JTable(){
-            public boolean isCellEditable(int row, int col){
-                return false;
-            }
-        };
         jTableInquilino.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
