@@ -28,7 +28,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Reporte{
     private int ultimaFila;
-    private Date fechaActual = new Date();
+    private final Date fechaActual = new Date();
     private final SimpleDateFormat formatoMes = new SimpleDateFormat("MM"),
             formatoAnio = new SimpleDateFormat("yyyy"),
             formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
@@ -188,7 +188,7 @@ public class Reporte{
             String fechaPago = "";
             Expensa unaExp = null;
             float saldoMesAnterior = 0, saldo = 0, precioCochera = 0, interesPorAtraso = 0, otrasFactura = 0, 
-                  montoAlquilerPedido, montoExpensaAlquilerPedido = 0, totales = 0, efectivo = 0, banco = 0, tarjeta = 0;
+                  montoAlquilerPedido, montoExpensaAlquilerPedido = 0, otros = 0, totales = 0, efectivo = 0, banco = 0, tarjeta = 0;
             List<Alquiler> alquileresInquilino = unInqui.getAlquileres();
             Collections.sort(alquileresInquilino, (Alquiler a1, Alquiler a2) -> (a1.getFecha().compareTo(a2.getFecha())));
             Alquiler alquilerPedido = alquilerAbuscar(mesAbuscar, anioAbuscar, alquileresInquilino);
@@ -208,7 +208,8 @@ public class Reporte{
                 if(alquilerPedido.getUnPago() != null){ // Si existe se guardan los datos para cargar directamente al Excel.
                     interesPorAtraso = alquilerPedido.getUnPago().getInteresPorAtraso();
                     saldoMesAnterior = unaControladora.obtenerSaldoMesAnterior(idEdificio, unInqui.getId(), mesAbuscar, anioAbuscar);
-                    totales = alquilerPedido.getTotal() + interesPorAtraso + saldoMesAnterior + montoExpensaAlquilerPedido;
+                    otros = alquilerPedido.getUnPago().getOtros();
+                    totales = alquilerPedido.getUnPago().getMonto();
                     efectivo = alquilerPedido.getUnPago().getEfectivo();
                     banco = alquilerPedido.getUnPago().getBanco();
                     tarjeta = alquilerPedido.getUnPago().getTarjeta();
@@ -255,7 +256,7 @@ public class Reporte{
                     }
                 }
                 fi++;
-                hojaAlquiler = cargarCuerpoHojaAlquiler(hojaAlquiler, fi, tamFilaDefault, ubicacionDepto, unInqui.getApellido(), unInqui.getNombre(), montoAlquilerPedido, otrasFactura, montoExpensaAlquilerPedido, precioCochera, interesPorAtraso, saldoMesAnterior, totales, efectivo, tarjeta, banco, saldo, fechaPago, obsAlquiler);
+                hojaAlquiler = cargarCuerpoHojaAlquiler(hojaAlquiler, fi, tamFilaDefault, ubicacionDepto, unInqui.getApellido(), unInqui.getNombre(), montoAlquilerPedido, otrasFactura, montoExpensaAlquilerPedido, precioCochera, interesPorAtraso, saldoMesAnterior, otros, totales, efectivo, tarjeta, banco, saldo, fechaPago, obsAlquiler);
                 
             } //else = No existe alquiler para el mes y año ingresado para este Inquilino.
             
@@ -270,13 +271,13 @@ public class Reporte{
     public Sheet configurarHojaCabeceraAlquiler(Sheet hojaAlquiler, Edificio unEdificio, int mesActual, int anioActual2){
         int periodoExpensa[] = unaControladora.obtenerPeriodoExpensa(mesActual, anioActual2);
         
-        CellRangeAddress rango = new CellRangeAddress(1, 1, 1, 14), rango2 = new CellRangeAddress(2, 2, 1, 14);
+        CellRangeAddress rango = new CellRangeAddress(1, 1, 1, 15), rango2 = new CellRangeAddress(2, 2, 1, 15);
         hojaAlquiler.addMergedRegion(rango);                                    // Fusiona las columnas de los 2 últimos parametros
         hojaAlquiler.addMergedRegion(rango2);
         
         short tamFila3 = 600;                                                   // Se setea el tamaño de filas
         
-                                                                                // Se setea el tamaño de las columnas
+        // Seteo de tamaños de columnas                                                                        
         hojaAlquiler.setColumnWidth(1, 1500);                                   // Columna n° 1 (B), tamaño [DPTO]
         hojaAlquiler.setColumnWidth(2, 7800);                                   // Columna n° 2 (B), tamaño [INQUILINO]
         hojaAlquiler.setColumnWidth(3, 3300);                                   // Columna n° 3 (C), tamaño [ALQUILER]
@@ -285,12 +286,13 @@ public class Reporte{
         hojaAlquiler.setColumnWidth(6, 2700);                                   // Columna n° 6 (C), tamaño [COCHERAS]
         hojaAlquiler.setColumnWidth(7, 4000);                                   // Columna n° 7 (C), tamaño [INTERESESxATRASOS]
         hojaAlquiler.setColumnWidth(8, 3500);                                   // Columna n° 8 (C), tamaño [SALDOmesANTERIOR]
-        hojaAlquiler.setColumnWidth(9, 3300);                                   // Columna n° 9 (C), tamaño [TOTAL]
-        hojaAlquiler.setColumnWidth(10, 3900);                                  // Columna n° 10 (C), tamaño [PAGOEFECTIVO]
-        hojaAlquiler.setColumnWidth(11, 3700);                                  // Columna n° 11 (C), tamaño [PAGOTARJETA]
-        hojaAlquiler.setColumnWidth(12, 3500);                                  // Columna n° 12 (C), tamaño [PAGOBANCO]
-        hojaAlquiler.setColumnWidth(13, 3200);                                  // Columna n° 13 (C), tamaño [SALDO]
-        hojaAlquiler.setColumnWidth(14, 3200);                                  // Columna n° 13 (C), tamaño [FECHAPAGO]
+        hojaAlquiler.setColumnWidth(9, 3200);                                   // Columna n° 9 (C), tamaño [OTROS]
+        hojaAlquiler.setColumnWidth(10, 3300);                                   // Columna n° 10 (C), tamaño [TOTAL]
+        hojaAlquiler.setColumnWidth(11, 4100);                                  // Columna n° 11 (C), tamaño [PAGOEFECTIVO]
+        hojaAlquiler.setColumnWidth(12, 3700);                                  // Columna n° 12 (C), tamaño [PAGOTARJETA]
+        hojaAlquiler.setColumnWidth(13, 3500);                                  // Columna n° 13 (C), tamaño [PAGOBANCO]
+        hojaAlquiler.setColumnWidth(14, 3200);                                  // Columna n° 14 (C), tamaño [SALDO]
+        hojaAlquiler.setColumnWidth(15, 3200);                                  // Columna n° 15 (C), tamaño [FECHAPAGO]
                 
         Row fila = hojaAlquiler.createRow(0);                                   // FILA 0
         fila.createCell(0).setCellValue("");
@@ -339,31 +341,34 @@ public class Reporte{
         
         encabezado.createCell(8).setCellValue("saldo mes ant.");                // COLUMNA 8, FILA 3
         encabezado.getCell(8).setCellStyle(estilo7);
-            
-        encabezado.createCell(9).setCellValue("TOTAL");                         // COLUMNA 9, FILA 3
-        encabezado.getCell(9).setCellStyle(estilo7);
         
-        encabezado.createCell(10).setCellValue("PAGO EFECTIVO");                // COLUMNA 10, FILA 3
+        encabezado.createCell(9).setCellValue("OTROS");                         // COLUMNA 9, FILA 3
+        encabezado.getCell(9).setCellStyle(estilo7);
+            
+        encabezado.createCell(10).setCellValue("TOTAL");                         // COLUMNA 10, FILA 3
         encabezado.getCell(10).setCellStyle(estilo7);
         
-        encabezado.createCell(11).setCellValue("PAGO TARJETA");                 // COLUMNA 11, FILA 3
+        encabezado.createCell(11).setCellValue("PAGO EFECTIVO");                // COLUMNA 11, FILA 3
         encabezado.getCell(11).setCellStyle(estilo7);
         
-        encabezado.createCell(12).setCellValue("PAGO BANCO");                   // COLUMNA 12, FILA 3
+        encabezado.createCell(12).setCellValue("PAGO TARJETA");                 // COLUMNA 12, FILA 3
         encabezado.getCell(12).setCellStyle(estilo7);
         
-        encabezado.createCell(13).setCellValue("SALDO");// COLUMNA 13, FILA 3
+        encabezado.createCell(13).setCellValue("PAGO BANCO");                   // COLUMNA 13, FILA 3
         encabezado.getCell(13).setCellStyle(estilo7);
         
-        encabezado.createCell(14).setCellValue("FECHA PAGO");                   // COLUMNA 14, FILA 3
+        encabezado.createCell(14).setCellValue("SALDO");                        // COLUMNA 14, FILA 3
         encabezado.getCell(14).setCellStyle(estilo7);
+        
+        encabezado.createCell(15).setCellValue("FECHA PAGO");                   // COLUMNA 15, FILA 3
+        encabezado.getCell(15).setCellStyle(estilo7);
         
         return hojaAlquiler;
     }
     
     public Sheet cargarCuerpoHojaAlquiler(Sheet hojaAlquiler, int fi, short tamFilaDefault, String ubicacionDepto, String apellidoInquilino, 
             String nombreInquilino, float montoAlquiler, float otrasFacturas, float montoExpensa, float precioCochera, float totalesPorIntereses,
-            float saldoMesAnterior, float totales, float efectivo, float tarjeta, float banco, float saldo, String fechaPago, String obsAlquiler){
+            float saldoMesAnterior, float otros, float totales, float efectivo, float tarjeta, float banco, float saldo, String fechaPago, String obsAlquiler){
             
             Row fila = hojaAlquiler.createRow(fi);
             fila.setHeight(tamFilaDefault);
@@ -397,28 +402,32 @@ public class Reporte{
             fila.getCell(8).setCellStyle(estilo10);
             fila.getCell(8).getNumericCellValue();
             
-            fila.createCell(9).setCellValue(totales);
+            fila.createCell(9).setCellValue(otros);
             fila.getCell(9).setCellStyle(estilo10);
             fila.getCell(9).getNumericCellValue();
             
-            fila.createCell(10).setCellValue(efectivo);
+            fila.createCell(10).setCellValue(totales);
             fila.getCell(10).setCellStyle(estilo10);
             fila.getCell(10).getNumericCellValue();
             
-            fila.createCell(11).setCellValue(tarjeta);
+            fila.createCell(11).setCellValue(efectivo);
             fila.getCell(11).setCellStyle(estilo10);
             fila.getCell(11).getNumericCellValue();
             
-            fila.createCell(12).setCellValue(banco);
+            fila.createCell(12).setCellValue(tarjeta);
             fila.getCell(12).setCellStyle(estilo10);
             fila.getCell(12).getNumericCellValue();
             
-            fila.createCell(13).setCellValue(saldo);          
+            fila.createCell(13).setCellValue(banco);
             fila.getCell(13).setCellStyle(estilo10);
             fila.getCell(13).getNumericCellValue();
             
-            fila.createCell(14).setCellValue(fechaPago);
+            fila.createCell(14).setCellValue(saldo);          
             fila.getCell(14).setCellStyle(estilo10);
+            fila.getCell(14).getNumericCellValue();
+            
+            fila.createCell(15).setCellValue(fechaPago);
+            fila.getCell(15).setCellStyle(estilo10);
             
         return hojaAlquiler;
     }
@@ -427,7 +436,7 @@ public class Reporte{
         int ultiF = j;
         // FILA TOTALES
         String[] columnas;
-        columnas = configurarColumnas(11);
+        columnas = configurarColumnas(12);
         Row fila = hojaAlquiler.createRow(j+1);
         ultiF = ultiF+1;
         fila.createCell(2).setCellValue("TOTALES");
@@ -692,6 +701,7 @@ public class Reporte{
         columnas[8] = "L";
         columnas[9] = "M";
         columnas[10] = "N";
+        columnas[11] = "O";
         
         return columnas;
     }
