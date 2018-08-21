@@ -99,6 +99,10 @@ public final class PanelPago extends javax.swing.JPanel {
         jTextFieldCochera = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
         jLabelCochera = new javax.swing.JLabel();
+        jLabelOtros = new javax.swing.JLabel();
+        jTextFieldOtros = new javax.swing.JTextField();
+        jSeparator8 = new javax.swing.JSeparator();
+        jSeparator13 = new javax.swing.JSeparator();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -483,7 +487,7 @@ public final class PanelPago extends javax.swing.JPanel {
                     .addComponent(jComboBoxAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanelButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
@@ -535,6 +539,20 @@ public final class PanelPago extends javax.swing.JPanel {
         jLabelCochera.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabelCochera.setText("Cochera");
 
+        jLabelOtros.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jLabelOtros.setText("Otros");
+
+        jTextFieldOtros.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jTextFieldOtros.setBorder(null);
+        jTextFieldOtros.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldOtrosKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldOtrosKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -580,30 +598,36 @@ public final class PanelPago extends javax.swing.JPanel {
                                     .addComponent(jTextFieldBanco)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jSeparator4)
+                                    .addComponent(jTextFieldSaldoMesAnterior)
+                                    .addComponent(jComboBoxAlquiler, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldDepartamento)
+                                    .addComponent(jDateChooserFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jSeparator12, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jSeparator2)
-                                        .addGap(175, 175, 175))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextFieldSaldoMesAnterior, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jComboBoxAlquiler, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jTextFieldDepartamento, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jDateChooserFecha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jSeparator12)
-                                            .addComponent(jTextFieldInteres, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGap(77, 77, 77)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel3)
-                                                .addGap(42, 42, 42))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel11)
-                                                    .addComponent(jLabelCochera)
-                                                    .addComponent(jLabel13)
-                                                    .addComponent(jLabel15))
-                                                .addGap(13, 13, 13)))))
+                                            .addComponent(jTextFieldInteres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jSeparator2))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, 0)
+                                        .addComponent(jLabelOtros)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jSeparator8)
+                                            .addComponent(jTextFieldOtros))))
+                                .addGap(77, 77, 77)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(42, 42, 42))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel11)
+                                            .addComponent(jLabelCochera)
+                                            .addComponent(jLabel13)
+                                            .addComponent(jLabel15))
+                                        .addGap(13, 13, 13)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jComboBoxInquilino, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -625,13 +649,13 @@ public final class PanelPago extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jPanelButtonRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel2)
                     .addComponent(jDateChooserFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jComboBoxInquilino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextFieldDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
@@ -640,14 +664,14 @@ public final class PanelPago extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextFieldTotalAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
                     .addComponent(jComboBoxAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextFieldMontoExpensa, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
@@ -656,21 +680,28 @@ public final class PanelPago extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel15)
-                            .addComponent(jTextFieldInteres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                    .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel15)
+                                    .addComponent(jTextFieldInteres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelOtros)
+                                    .addComponent(jTextFieldOtros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, 0)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jSeparator8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelDescripcion)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jTextFieldEfectivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -739,17 +770,18 @@ public final class PanelPago extends javax.swing.JPanel {
                     interesPorAtraso = Float.valueOf(unaControladora.reemplazarString(jTextFieldInteres.getText()));
                 }
                 float total = Float.valueOf(unaControladora.reemplazarString(jTextFieldTotal.getText()));
+                float otros = Float.valueOf(unaControladora.reemplazarString(jTextFieldOtros.getText()));
                 float efectivo = Float.valueOf(jTextFieldEfectivo.getText());
                 float tarjeta = Float.valueOf(jTextFieldTarjeta.getText());
                 float banco = Float.valueOf(jTextFieldBanco.getText());
                 float saldoMesAnt = Float.valueOf(unaControladora.reemplazarString(jTextFieldSaldoMesAnterior.getText()));
                 
                 if(!modificar){
-                    unaControladora.altaPago(fechaPago, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, total, jTextAreaDescripcion.getText(), idAlquiler, idExp, unInquilino.getId());
+                    unaControladora.altaPago(fechaPago, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, total, otros, jTextAreaDescripcion.getText(), idAlquiler, idExp, unInquilino.getId());
                 }else{
                     int confirmacion = JOptionPane.showConfirmDialog(null, "Desea realizar esta operación?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirmacion == 0){
-                        unaControladora.modificarPago(idPago, fechaPago, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, total, jTextAreaDescripcion.getText(), idAlquiler, idExp, unInquilino.getId());
+                        unaControladora.modificarPago(idPago, fechaPago, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, total, otros, jTextAreaDescripcion.getText(), idAlquiler, idExp, unInquilino.getId());
                     }
                 }
             } catch (Exception ex) {
@@ -883,7 +915,7 @@ public final class PanelPago extends javax.swing.JPanel {
         if(evt.getStateChange() == ItemEvent.SELECTED){
             if(jComboBoxAlquiler.getSelectedIndex() > 0){
                 Date fechaActual = new Date();
-                float montoExpensa = 0, saldoMesAnt = 0, interes = 0;
+                float montoExpensa = 0, saldoMesAnt = 0, interes = 0, otros = 0;
                 boolean bandera = false;
                 SimpleDateFormat formatoAnio = new SimpleDateFormat("yyyy"), 
                                  formatoMes = new SimpleDateFormat("MM");
@@ -927,6 +959,7 @@ public final class PanelPago extends javax.swing.JPanel {
                 totalPago = unAlquiler.getTotal()+montoExpensa; 
                 interes = unaControladora.interesesPorAtraso(fechaActual, unAlquiler.getFecha(), totalPago);
                 jTextFieldInteres.setText(formatoDecimal.format(interes));
+                jTextFieldOtros.setText(formatoDecimal.format(otros));
                 totalPago += interes;
                 totalPago += saldoMesAnt;
                 jTextFieldTotal.setText(formatoDecimal.format(totalPago));
@@ -1041,6 +1074,19 @@ public final class PanelPago extends javax.swing.JPanel {
     private void jTextFieldInteresKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldInteresKeyReleased
         actualizarTotal();
     }//GEN-LAST:event_jTextFieldInteresKeyReleased
+
+    private void jTextFieldOtrosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldOtrosKeyTyped
+        if (evt.getKeyChar() == evt.VK_ENTER) {
+            jPanelButtonAceptarMouseClicked(null);
+        }else if(Character.isLetter(evt.getKeyChar())){
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldOtrosKeyTyped
+
+    private void jTextFieldOtrosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldOtrosKeyReleased
+        actualizarTotal();
+    }//GEN-LAST:event_jTextFieldOtrosKeyReleased
 
     public void cargarComboInquilino(){
         List<Logica.Inquilino> inquilinosSinPago = unaControladora.obtenerInquilinosSinPago(idEdificio);
@@ -1190,7 +1236,8 @@ public final class PanelPago extends javax.swing.JPanel {
         }
         jTextFieldInteres.setText(formatoDecimal.format(unPago.getInteresPorAtraso()));
         
-        jTextFieldTotal.setText(String.valueOf(unPago.getMonto()));
+        jTextFieldTotal.setText(formatoDecimal.format(unPago.getMonto()));
+        jTextFieldOtros.setText(String.valueOf(unPago.getOtros()));
         jTextAreaDescripcion.setText(unPago.getDescripcion());
         jTextFieldBanco.setText(String.valueOf(unPago.getBanco()));
         jTextFieldEfectivo.setText(String.valueOf(unPago.getEfectivo()));
@@ -1211,6 +1258,7 @@ public final class PanelPago extends javax.swing.JPanel {
         jTextFieldMontoExpensa.setText(null);
         jTextFieldSaldoMesAnterior.setText(null);
         jTextFieldTarjeta.setText("0");
+        jTextFieldOtros.setText(null);
         jTextFieldTotal.setText(null);
         jTextFieldDepartamento.setText(null);
         
@@ -1270,15 +1318,17 @@ public final class PanelPago extends javax.swing.JPanel {
     }
     
     public void actualizarTotal(){
-        float tot, total = Float.valueOf(unaControladora.reemplazarString(jTextFieldTotalAlquiler.getText()))+Float.valueOf(unaControladora.reemplazarString(jTextFieldSaldoMesAnterior.getText()))+Float.valueOf(unaControladora.reemplazarString(jTextFieldMontoExpensa.getText()));
+        float total = Float.valueOf(unaControladora.reemplazarString(jTextFieldTotalAlquiler.getText()))+Float.valueOf(unaControladora.reemplazarString(jTextFieldSaldoMesAnterior.getText()))+Float.valueOf(unaControladora.reemplazarString(jTextFieldMontoExpensa.getText()));
         
         if(!jTextFieldInteres.getText().isEmpty()){
-            tot = Float.valueOf(unaControladora.reemplazarString(jTextFieldInteres.getText()))+total;
-        }else{
-            tot = total;
+            total += Float.valueOf(unaControladora.reemplazarString(jTextFieldInteres.getText()));
         }
         
-        jTextFieldTotal.setText(formatoDecimal.format(tot));
+        if(!jTextFieldOtros.getText().isEmpty()){
+            total += Float.valueOf(unaControladora.reemplazarString(jTextFieldOtros.getText()));
+        }
+        
+        jTextFieldTotal.setText(formatoDecimal.format(total));
     }
     
     public Logica.Expensa obtenerUltimoPagoExpensa(Logica.Pago ultimoPago, Logica.Departamento deptoInquilino){
@@ -1329,6 +1379,7 @@ public final class PanelPago extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelCochera;
     private javax.swing.JLabel jLabelDescripcion;
     private javax.swing.JLabel jLabelEliminar;
+    private javax.swing.JLabel jLabelOtros;
     private javax.swing.JLabel jLabelRefresh;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -1343,12 +1394,14 @@ public final class PanelPago extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
+    private javax.swing.JSeparator jSeparator13;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTable jTablePago;
     private javax.swing.JTextArea jTextAreaDescripcion;
@@ -1358,6 +1411,7 @@ public final class PanelPago extends javax.swing.JPanel {
     private javax.swing.JTextField jTextFieldEfectivo;
     private javax.swing.JTextField jTextFieldInteres;
     private javax.swing.JTextField jTextFieldMontoExpensa;
+    private javax.swing.JTextField jTextFieldOtros;
     private javax.swing.JTextField jTextFieldSaldoMesAnterior;
     private javax.swing.JTextField jTextFieldTarjeta;
     private javax.swing.JTextField jTextFieldTotal;

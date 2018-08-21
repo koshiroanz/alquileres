@@ -93,36 +93,42 @@
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="jSeparator2" max="32767" attributes="0"/>
-                                          <EmptySpace min="-2" pref="175" max="-2" attributes="0"/>
+                                      <Component id="jSeparator4" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldSaldoMesAnterior" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jComboBoxAlquiler" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldDepartamento" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jDateChooserFecha" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jSeparator12" alignment="1" max="32767" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jTextFieldInteres" max="32767" attributes="0"/>
+                                              <Component id="jSeparator2" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                                          <Component id="jSeparator13" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                                          <Component id="jLabelOtros" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jSeparator8" max="32767" attributes="0"/>
+                                              <Component id="jTextFieldOtros" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
-                                          <Group type="103" groupAlignment="1" attributes="0">
-                                              <Component id="jSeparator4" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jTextFieldSaldoMesAnterior" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jComboBoxAlquiler" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jTextFieldDepartamento" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jDateChooserFecha" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jSeparator12" alignment="1" max="32767" attributes="0"/>
-                                              <Component id="jTextFieldInteres" alignment="0" max="32767" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="77" pref="77" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabelCochera" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel15" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabelCochera" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel15" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
+                                          <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -154,14 +160,14 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <Component id="jPanelButtonRefresh" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="14" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jLabel2" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jDateChooserFecha" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jComboBoxInquilino" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="16" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jTextFieldDepartamento" alignment="2" min="-2" pref="22" max="-2" attributes="0"/>
                       <Component id="jLabel9" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -172,7 +178,7 @@
                       <Component id="jSeparator7" min="-2" pref="10" max="-2" attributes="0"/>
                       <Component id="jSeparator12" min="-2" pref="10" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="10" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jTextFieldTotalAlquiler" alignment="2" min="-2" pref="24" max="-2" attributes="0"/>
                       <Component id="jLabel11" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -180,7 +186,7 @@
                       <Component id="jLabel10" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jSeparator6" min="-2" pref="10" max="-2" attributes="0"/>
-                  <EmptySpace pref="10" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jTextFieldMontoExpensa" alignment="2" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="jLabel13" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -190,26 +196,35 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jSeparator4" min="-2" pref="10" max="-2" attributes="0"/>
-                          <EmptySpace pref="12" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="2" attributes="0">
-                              <Component id="jTextFieldTotal" alignment="2" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel15" alignment="2" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextFieldInteres" alignment="2" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel14" alignment="2" min="-2" pref="21" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jSeparator2" alignment="1" min="-2" pref="10" max="-2" attributes="0"/>
-                              <Component id="jSeparator1" alignment="1" min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="2" attributes="0">
+                                      <Component id="jTextFieldTotal" alignment="2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel15" alignment="2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jTextFieldInteres" alignment="2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel14" alignment="2" min="-2" pref="21" max="-2" attributes="0"/>
+                                      <Component id="jLabelOtros" alignment="2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jTextFieldOtros" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jSeparator2" alignment="1" min="-2" pref="10" max="-2" attributes="0"/>
+                                      <Component id="jSeparator1" alignment="1" min="-2" pref="10" max="-2" attributes="0"/>
+                                      <Component id="jSeparator8" alignment="1" min="-2" pref="10" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Component id="jSeparator13" min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="jSeparator3" alignment="0" min="-2" pref="10" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="12" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabelDescripcion" min="-2" max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="15" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldEfectivo" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -612,7 +627,7 @@
                           <Component id="jPanelButtonBuscar" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="251" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="244" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
@@ -957,6 +972,32 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Cochera"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelOtros">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI Semibold" size="12" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Otros"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldOtros">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI Semibold" size="12" style="0"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldOtrosKeyReleased"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldOtrosKeyTyped"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JSeparator" name="jSeparator8">
+        </Component>
+        <Component class="javax.swing.JSeparator" name="jSeparator13">
         </Component>
       </SubComponents>
     </Container>
