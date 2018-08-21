@@ -35,12 +35,14 @@ public class Pago implements Serializable {
     @Basic
     private float monto;
     @Basic
+    private float otros;
+    @Basic
     private String descripcion;
 
     public Pago() {
     }
 
-    public Pago(Date fecha, float efectivo, float tarjeta, float banco, float saldo, float interesPorAtraso, float monto, String descripcion, long idAlquiler, long idExpensa) {
+    public Pago(Date fecha, float efectivo, float tarjeta, float banco, float saldo, float interesPorAtraso, float monto, float otros, String descripcion, long idAlquiler, long idExpensa) {
         this.fecha = fecha;
         this.efectivo = efectivo;
         this.tarjeta = tarjeta;
@@ -48,6 +50,7 @@ public class Pago implements Serializable {
         this.saldo = saldo;
         this.interesPorAtraso = interesPorAtraso;
         this.monto = monto;
+        this.otros = otros;
         this.descripcion = descripcion;
         this.idAlquiler = idAlquiler;
         this.idExpensa = idExpensa;
@@ -111,6 +114,14 @@ public class Pago implements Serializable {
 
     public void setMonto(float monto) {
         this.monto = monto;
+    }
+
+    public float getOtros() {
+        return otros;
+    }
+
+    public void setOtros(float otros) {
+        this.otros = otros;
     }
 
     public String getDescripcion() {
