@@ -442,12 +442,12 @@ public class ControladoraV {
 /*------------------------------------------------------------------------------
                                 PAGO
 ------------------------------------------------------------------------------*/
-    public void altaPago(Date fecha, float efectivo, float tarjeta, float banco, float saldoMesAnt, float interesPorAtraso, float monto, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
-        unaControladora.altaPago(fecha, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, monto, descripcion, idAlquiler, idExpensa, idInquilino);
+    public void altaPago(Date fecha, float efectivo, float tarjeta, float banco, float saldoMesAnt, float interesPorAtraso, float monto, float otros, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
+        unaControladora.altaPago(fecha, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, monto, otros, descripcion, idAlquiler, idExpensa, idInquilino);
     }
     
-    public void modificarPago(long idPago, Date fecha, float efectivo, float tarjeta, float banco, float saldoMesAnt, float interesPorAtraso, float monto, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
-        unaControladora.modificarPago(idPago, fecha, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, monto, descripcion, idAlquiler, idExpensa, idInquilino);
+    public void modificarPago(long idPago, Date fecha, float efectivo, float tarjeta, float banco, float saldoMesAnt, float interesPorAtraso, float monto, float otros, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
+        unaControladora.modificarPago(idPago, fecha, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, monto, otros, descripcion, idAlquiler, idExpensa, idInquilino);
     }
     
     public void bajaPago(long idPago, long idEdificio) throws Exception{
