@@ -1644,8 +1644,8 @@ public class ControladoraL {
 /*------------------------------------------------------------------------------
                                 PAGO
 ------------------------------------------------------------------------------*/
-    public void altaPago(Date fecha, float efectivo, float tarjeta, float banco, float saldoMesAnt, float interesPorAtraso, float monto, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
-        Pago unPago = new Pago(fecha, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, monto, descripcion, idAlquiler, idExpensa);
+    public void altaPago(Date fecha, float efectivo, float tarjeta, float banco, float saldoMesAnt, float interesPorAtraso, float monto, float otros, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
+        Pago unPago = new Pago(fecha, efectivo, tarjeta, banco, saldoMesAnt, interesPorAtraso, monto, otros, descripcion, idAlquiler, idExpensa);
                 
         unaControladora.altaPago(unPago);
         
@@ -1654,7 +1654,7 @@ public class ControladoraL {
         unaControladora.modificarAlquiler(unAlquiler);
     }
     
-    public void modificarPago(long idPago, Date fecha, float efectivo, float tarjeta, float banco, float saldoMesAnt, float interesPorAtraso, float monto, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
+    public void modificarPago(long idPago, Date fecha, float efectivo, float tarjeta, float banco, float saldoMesAnt, float interesPorAtraso, float monto, float otros, String descripcion, long idAlquiler, long idExpensa, long idInquilino) throws Exception{
         Pago unPago = obtenerPago(idPago);
         
         unPago.setFecha(fecha);
@@ -1664,6 +1664,7 @@ public class ControladoraL {
         unPago.setSaldo(saldoMesAnt);
         unPago.setInteresPorAtraso(interesPorAtraso);
         unPago.setMonto(monto);
+        unPago.setOtros(otros);
         unPago.setDescripcion(descripcion);
         unPago.setIdAlquiler(idAlquiler);
         unPago.setIdExpensa(idExpensa);
@@ -1672,68 +1673,12 @@ public class ControladoraL {
     }
     
     public void bajaPago(long idPago, long idEdificio) throws Exception{
-        /* ESTAMOS EN MES 5
-        
-        SI ES EL ULTIMO -> BOORO MES 5
-            ASIGNO EN INQUILINO EL SALDO DEL ANTERIOR.
-        SINO -> BORRO MES 3
-            SUMAR SALDO DEL ANTERIOR AL QUE BORRE A LO QUE YA TIENE INQUILINO
-        
-        BORRO MES 3:
-            VENIS A PAGAR EL ALQUILER DEL MES TRES, EL SALDO VA A SER EL QUE TENIAS
-            HASTA EL MOMENTO O MAS EL ACTUAL?
-        */
-        /*
-        Inquilino unInquilino = obtenerInquilinoPago(idEdificio, idPago);
-        List<Alquiler> alquileres = new LinkedList();
-        Alquiler unAlquiler = obtenerAlquilerPago(idPago);
-        
-        for(Alquiler unAlqui : unInquilino.getAlquileres()){
-            alquileres.add(unAlqui);
-        }
-        
-        Collections.sort(alquileres, (Alquiler t, Alquiler t1) -> t.getFecha().compareTo(t1.getFecha()));
-            
-        if(alquileres.get(0).getId() == unAlquiler.getId()){
-            unInquilino.setSaldoMesAnt(0);
-        }else{
-            SimpleDateFormat formatMonth = new SimpleDateFormat("MM");
-            SimpleDateFormat formatYear = new SimpleDateFormat("yyyy");
-            long idUltimoAlqui = unInquilino.getAlquileres().get(unInquilino.getAlquileres().size()-1).getId();
-            int mesAlquiAnt = 0, anioAlquiAnt = 0,
-                mesAlquiler = Integer.valueOf(formatMonth.format(unAlquiler.getFecha())),
-                anioAlquiler = Integer.valueOf(formatYear.format(unAlquiler.getFecha()));
-            
-            if(mesAlquiler - 1 == 0){
-                mesAlquiler = 12;
-                anioAlquiler -=1;
-            }
-            
-            for(Alquiler alquiAnt : alquileres){
-                mesAlquiAnt = Integer.valueOf(formatMonth.format(alquiAnt.getFecha()));
-                anioAlquiAnt = Integer.valueOf(formatYear.format(alquiAnt.getFecha()));
-                
-                if(mesAlquiAnt == mesAlquiler && anioAlquiAnt == anioAlquiler){
-                    if(unAlquiler.getId() == idUltimoAlqui){
-                         unInquilino.setSaldoMesAnt(alquiAnt.getUnPago().getSaldo());
-                    }else{
-                        Pago unPago = unaControladora.obtenerPago(idPago);
-                        float saldoPago = unPago.getMonto() - (unPago.getEfectivo() + unPago.getBanco() + unPago.getTarjeta()),
-                              saldo = saldoPago - unInquilino.getSaldoMesAnt();
-                        
-                        unInquilino.setSaldoMesAnt(saldo);
-                    }
-                }
-            }
-        }*/
-        
         Pago unPago = obtenerPago(idPago);
         Alquiler unAlquiler = obtenerAlquiler(unPago.getIdAlquiler());
         
         unAlquiler.setUnPago(null);
         unaControladora.modificarAlquiler(unAlquiler);        
         unaControladora.bajaPago(idPago);
-        //unaControladora.modificarInquilino(unInquilino);
     }
     
     public Pago obtenerPago(long idPago){
