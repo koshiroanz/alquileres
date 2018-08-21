@@ -244,9 +244,9 @@ public final class vtnBotonDepartamento extends javax.swing.JFrame {
     public final void cargarDepartamentos(long idEdificio){
         List<Logica.Departamento> departamentos = unaControladora.obtenerEdificio(idEdificio).getDepartamentos();
         String nombreEdi = unaControladora.obtenerEdificio(idEdificio).getNombre();
-        String colTablaDepartamento[] = {"Id", "Ubicación", "N° Dormitorios", "Inquilino", "Edificio"};
+        String colTablaDepartamento[] = {"Id", "Ubicación", "N° Dormitorios", "Inquilino", "Cant. Familiar", "Edificio"};
         int i = 0, tamanio = departamentos.size();
-        Object[][] filas = new Object[tamanio][5];
+        Object[][] filas = new Object[tamanio][6];
         
         if(departamentos.size() > 0){
             List<Logica.Departamento> departamentosOrdenados = new LinkedList();
@@ -262,10 +262,12 @@ public final class vtnBotonDepartamento extends javax.swing.JFrame {
                 filas[i][2] = unDepto.getCantDormitorios();
                 if(unDepto.getUnInquilino() == null){
                     filas[i][3] = "--";
+                    filas[i][4] = "--";
                 }else{
                     filas[i][3] = unDepto.getUnInquilino().getApellido()+", "+unDepto.getUnInquilino().getNombre();
+                    filas[i][4] = unDepto.getUnInquilino().getCantidadPersonas();
                 } 
-                filas[i][4] = nombreEdi;
+                filas[i][5] = nombreEdi;
                 i++;
             }
             TableModel modelo = new DefaultTableModel(filas,colTablaDepartamento);
