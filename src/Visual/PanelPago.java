@@ -914,7 +914,7 @@ public final class PanelPago extends javax.swing.JPanel {
     private void jComboBoxAlquilerItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxAlquilerItemStateChanged
         if(evt.getStateChange() == ItemEvent.SELECTED){
             if(jComboBoxAlquiler.getSelectedIndex() > 0){
-                Date fechaActual = new Date();
+                Date fechaActual = jDateChooserFecha.getDate();
                 float montoExpensa = 0, saldoMesAnt = 0, interes = 0, otros = 0;
                 boolean bandera = false;
                 SimpleDateFormat formatoAnio = new SimpleDateFormat("yyyy"), 
